@@ -588,6 +588,8 @@ function normalizeRestCountry(country, populationByName = new Map()) {
     query: `${landmark.name}, ${commonName}`,
     ...landmark,
   }));
+  const exportCatalog = typeof COUNTRY_EXPORTS !== "undefined" ? COUNTRY_EXPORTS : {};
+  const manualExports = manualContent?.exports || exportCatalog[id] || [];
 
   return {
     id,
@@ -608,6 +610,7 @@ function normalizeRestCountry(country, populationByName = new Map()) {
     population: formatPopulation(population),
     capital,
     facts,
+    exports: manualExports,
     history: kidSummary,
     music: kidMusic,
     color: colorFromId(id),
@@ -749,8 +752,8 @@ function renderCountryPanel() {
   countryName.textContent = country.name;
   countryPopulation.textContent = country.population;
   countryCapital.textContent = country.capital;
-  countryExports.innerHTML = (country.facts?.length ? country.facts : ["Dados complementares indisponiveis"])
-    .map((fact) => `<span class="export-chip">${fact}</span>`)
+  countryExports.innerHTML = (country.exports?.length ? country.exports : ["Exportações principais ainda não cadastradas"])
+    .map((item) => `<span class="export-chip">${item}</span>`)
     .join("");
   countryHistory.textContent = country.history;
   countryMusic.textContent = country.music;
@@ -774,7 +777,7 @@ function renderCountryPanel() {
   document.documentElement.style.setProperty("--selected-country-color", country.color);
 }
 
-function selectCountry(countryId, { openDetails = true } = {}) {
+function selectCountry(countryId, { openDetails = true, focusGlobe = false } = {}) {
   selectedCountryId = countryId;
   selectedLandmarkIndex = 0;
   renderCountryStrip();
@@ -783,7 +786,7 @@ function selectCountry(countryId, { openDetails = true } = {}) {
     show(countryPanel);
     hide(countryBrowser);
   }
-  globeApi?.focusCountry(countryId);
+  globeApi?.focusCountry(countryId, { rotate: focusGlobe });
 }
 
 function selectLandmark(index) {
@@ -1192,10 +1195,18 @@ function initGlobe() {
     return y + Math.min(lines.length, maxLines) * lineHeight;
   }
 
+  function drawInfoPill(context, text, x, y, width, color) {
+    context.fillStyle = color;
+    fillRoundRect(context, x, y, width, 54, 26);
+    context.fillStyle = "#24413c";
+    context.font = "800 30px Trebuchet MS, Arial, sans-serif";
+    context.fillText(text, x + 24, y + 13, width - 48);
+  }
+
   function createVrInfoTexture(country) {
     const canvas = document.createElement("canvas");
-    canvas.width = 1024;
-    canvas.height = 1024;
+    canvas.width = 1400;
+    canvas.height = 1800;
     const context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -1203,55 +1214,80 @@ function initGlobe() {
     panel.addColorStop(0, "rgba(255, 255, 255, 0.98)");
     panel.addColorStop(1, "rgba(226, 248, 242, 0.96)");
     context.fillStyle = panel;
-    fillRoundRect(context, 38, 34, 948, 948, 58);
+    fillRoundRect(context, 46, 44, 1308, 1712, 72);
 
     context.fillStyle = country.color;
-    fillRoundRect(context, 78, 74, 868, 178, 42);
+    fillRoundRect(context, 94, 92, 1212, 210, 52);
     context.fillStyle = "rgba(255, 255, 255, 0.22)";
-    fillRoundRect(context, 78, 74, 260, 178, 42);
+    fillRoundRect(context, 94, 92, 310, 210, 52);
 
     context.fillStyle = "#ffffff";
-    context.font = "900 116px Arial, sans-serif";
+    context.font = "900 134px Arial, sans-serif";
     context.textAlign = "left";
     context.textBaseline = "middle";
-    context.fillText(country.flag, 116, 165);
-    context.font = "900 64px Trebuchet MS, Arial, sans-serif";
-    context.fillText(country.name, 260, 147, 640);
-    context.font = "800 34px Trebuchet MS, Arial, sans-serif";
-    context.fillText(country.region, 264, 205, 620);
+    context.fillText(country.flag, 142, 200);
+    context.font = "900 76px Trebuchet MS, Arial, sans-serif";
+    context.fillText(country.name, 430, 177, 800);
+    context.font = "800 36px Trebuchet MS, Arial, sans-serif";
+    context.fillText(country.region, 434, 244, 790);
 
     context.fillStyle = "#24413c";
     context.textBaseline = "top";
-    context.font = "900 40px Trebuchet MS, Arial, sans-serif";
-    context.fillText("Capital", 92, 298);
-    context.fillText("Populacao", 540, 298);
-    context.font = "900 52px Trebuchet MS, Arial, sans-serif";
-    context.fillText(country.capital, 92, 344, 380);
-    context.fillText(country.population, 540, 344, 360);
+    context.font = "900 42px Trebuchet MS, Arial, sans-serif";
+    context.fillText("Capital", 110, 356);
+    context.fillText("Populacao", 738, 356);
+    context.font = "900 58px Trebuchet MS, Arial, sans-serif";
+    context.fillText(country.capital, 110, 406, 520);
+    context.fillText(country.population, 738, 406, 460);
+
+    let y = 530;
+    context.fillStyle = "#2c7a57";
+    context.font = "900 42px Trebuchet MS, Arial, sans-serif";
+    context.fillText("Principais exportacoes", 110, y);
+    context.fillStyle = "#24413c";
+    (country.exports?.length ? country.exports : ["Exportacoes ainda nao cadastradas"]).slice(0, 5).forEach((item, index) => {
+      const row = Math.floor(index / 2);
+      const column = index % 2;
+      drawInfoPill(context, item, 110 + column * 590, y + 64 + row * 70, 550, index % 2 === 0 ? "#eef6f5" : "#fff5c5");
+    });
+    y += 278;
 
     context.fillStyle = "#2c7a57";
-    context.font = "900 38px Trebuchet MS, Arial, sans-serif";
-    context.fillText("Coisas legais", 92, 448);
+    context.font = "900 42px Trebuchet MS, Arial, sans-serif";
+    context.fillText("Historia rapida", 110, y);
     context.fillStyle = "#24413c";
     context.font = "800 34px Trebuchet MS, Arial, sans-serif";
+    y = drawWrappedText(context, country.history, 110, y + 58, 1180, 44, 4) + 28;
+
+    context.fillStyle = "#2c7a57";
+    context.font = "900 42px Trebuchet MS, Arial, sans-serif";
+    context.fillText("Musica e cultura", 110, y);
+    context.fillStyle = "#24413c";
+    context.font = "800 34px Trebuchet MS, Arial, sans-serif";
+    y = drawWrappedText(context, country.music, 110, y + 58, 1180, 44, 3) + 26;
+
+    context.fillStyle = "#2c7a57";
+    context.font = "900 42px Trebuchet MS, Arial, sans-serif";
+    context.fillText("Pontos para visitar", 110, y);
+    context.fillStyle = "#24413c";
+    context.font = "800 34px Trebuchet MS, Arial, sans-serif";
+    country.landmarks.slice(0, 3).forEach((landmark, index) => {
+      context.fillText(`${index + 1}. ${landmark.name}`, 130, y + 58 + index * 46, 1120);
+    });
+    y += 218;
+
+    context.fillStyle = "#2c7a57";
+    context.font = "900 42px Trebuchet MS, Arial, sans-serif";
+    context.fillText("Dados reais", 110, y);
+    context.fillStyle = "#24413c";
+    context.font = "800 30px Trebuchet MS, Arial, sans-serif";
     (country.facts || []).slice(0, 3).forEach((fact, index) => {
-      const y = 504 + index * 52;
-      context.fillStyle = index % 2 === 0 ? "#eef6f5" : "#fff5c5";
-      fillRoundRect(context, 92, y - 12, 820, 44, 22);
-      context.fillStyle = "#24413c";
-      context.fillText(fact, 120, y - 5, 760);
+      context.fillText(`• ${fact}`, 130, y + 56 + index * 40, 1120);
     });
 
-    context.fillStyle = "#2c7a57";
-    context.font = "900 38px Trebuchet MS, Arial, sans-serif";
-    context.fillText("Historia rapida", 92, 676);
-    context.fillStyle = "#24413c";
-    context.font = "800 34px Trebuchet MS, Arial, sans-serif";
-    drawWrappedText(context, country.history, 92, 730, 820, 44, 4);
-
     context.fillStyle = "rgba(36, 65, 60, 0.72)";
-    context.font = "900 28px Trebuchet MS, Arial, sans-serif";
-    context.fillText("Aponte para o globo e aperte o gatilho para escolher outro pais.", 92, 926, 820);
+    context.font = "900 30px Trebuchet MS, Arial, sans-serif";
+    context.fillText("Aperte para escolher. Segure e mova o controle para girar o globo.", 110, 1672, 1180);
 
     const texture = new THREE.CanvasTexture(canvas);
     texture.anisotropy = 8;
@@ -1289,7 +1325,7 @@ function initGlobe() {
   globeRoot.add(vrLabel);
 
   const vrInfoPanel = new THREE.Mesh(
-    new THREE.PlaneGeometry(1.72, 1.72),
+    new THREE.PlaneGeometry(1.82, 2.34),
     new THREE.MeshBasicMaterial({
       map: createVrInfoTexture(getSelectedCountry()),
       transparent: true,
@@ -1297,7 +1333,7 @@ function initGlobe() {
       side: THREE.DoubleSide,
     }),
   );
-  vrInfoPanel.position.set(2.92, 0.55, 0.15);
+  vrInfoPanel.position.set(3.05, 0.48, 0.15);
   vrInfoPanel.rotation.y = -0.28;
   vrInfoPanel.visible = false;
   globeRoot.add(vrInfoPanel);
@@ -1315,6 +1351,95 @@ function initGlobe() {
     vrInfoPanel.material.map?.dispose();
     vrInfoPanel.material.map = nextTexture;
     vrInfoPanel.material.needsUpdate = true;
+  }
+
+  function setControllerRay(controller) {
+    tempMatrix.identity().extractRotation(controller.matrixWorld);
+    controllerRaycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
+    controllerRaycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
+  }
+
+  function findCountryFromEarthHit(hit) {
+    const localPoint = earth.worldToLocal(hit.point.clone());
+    const { lon, lat } = vectorToLatLon(localPoint);
+    return findCountryIdAtLonLat(lon, lat);
+  }
+
+  function getControllerTarget(controller) {
+    setControllerRay(controller);
+    const markerHit = markerGroup.visible ? controllerRaycaster.intersectObjects([...markers.values()])[0] : null;
+    if (markerHit?.object?.userData?.countryId) {
+      return { countryId: markerHit.object.userData.countryId, earthHit: null };
+    }
+
+    const earthHit = controllerRaycaster.intersectObject(earth)[0];
+    return {
+      countryId: earthHit ? findCountryFromEarthHit(earthHit) : null,
+      earthHit,
+    };
+  }
+
+  function controllerDirection(controller) {
+    setControllerRay(controller);
+    return controllerRaycaster.ray.direction.clone().normalize();
+  }
+
+  function normalizeAngleDelta(delta) {
+    let adjusted = delta;
+    while (adjusted > Math.PI) {
+      adjusted -= Math.PI * 2;
+    }
+    while (adjusted < -Math.PI) {
+      adjusted += Math.PI * 2;
+    }
+    return adjusted;
+  }
+
+  function startControllerInteraction(controller) {
+    const target = getControllerTarget(controller);
+    controller.userData.isDraggingGlobe = Boolean(target.countryId || target.earthHit);
+    controller.userData.dragMoved = false;
+    controller.userData.dragDistance = 0;
+    controller.userData.pendingCountryId = target.countryId;
+    controller.userData.lastDirection = controllerDirection(controller);
+  }
+
+  function updateControllerDrag(controller) {
+    if (!controller.userData.isDraggingGlobe) {
+      return;
+    }
+
+    const nextDirection = controllerDirection(controller);
+    const lastDirection = controller.userData.lastDirection || nextDirection;
+    const deltaYaw = normalizeAngleDelta(
+      Math.atan2(nextDirection.x, -nextDirection.z) - Math.atan2(lastDirection.x, -lastDirection.z),
+    );
+    const deltaPitch = Math.asin(nextDirection.y) - Math.asin(lastDirection.y);
+    const movement = Math.abs(deltaYaw) + Math.abs(deltaPitch);
+
+    if (movement > 0.0005) {
+      rotateBy(deltaPitch * 1.8, deltaYaw * 1.8);
+      controller.userData.dragDistance = (controller.userData.dragDistance || 0) + movement;
+      controller.userData.dragMoved = controller.userData.dragDistance > 0.035;
+    }
+
+    controller.userData.lastDirection = nextDirection;
+  }
+
+  function finishControllerInteraction(controller) {
+    if (!controller.userData.isDraggingGlobe) {
+      return;
+    }
+
+    const target = getControllerTarget(controller);
+    const countryId = target.countryId || controller.userData.pendingCountryId;
+    const shouldSelect = countryId && !controller.userData.dragMoved;
+    controller.userData.isDraggingGlobe = false;
+    controller.userData.pendingCountryId = null;
+
+    if (shouldSelect) {
+      selectCountry(countryId, { openDetails: false, focusGlobe: false });
+    }
   }
 
   function buildController(index) {
@@ -1335,36 +1460,11 @@ function initGlobe() {
     line.scale.z = 4;
     controller.add(line);
     scene.add(controller);
-    controller.addEventListener("select", () => pickCountryFromController(controller));
+    controller.addEventListener("selectstart", () => startControllerInteraction(controller));
+    controller.addEventListener("selectend", () => finishControllerInteraction(controller));
     return controller;
   }
-
-  function pickCountryFromController(controller) {
-    tempMatrix.identity().extractRotation(controller.matrixWorld);
-    controllerRaycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
-    controllerRaycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
-
-    const markerHit = markerGroup.visible ? controllerRaycaster.intersectObjects([...markers.values()])[0] : null;
-    if (markerHit?.object?.userData?.countryId) {
-      selectCountry(markerHit.object.userData.countryId, { openDetails: false });
-      return;
-    }
-
-    const earthHit = controllerRaycaster.intersectObject(earth)[0];
-    if (!earthHit) {
-      return;
-    }
-
-    const localPoint = earth.worldToLocal(earthHit.point.clone());
-    const { lon, lat } = vectorToLatLon(localPoint);
-    const countryId = findCountryIdAtLonLat(lon, lat);
-    if (countryId) {
-      selectCountry(countryId, { openDetails: false });
-    }
-  }
-
-  buildController(0);
-  buildController(1);
+  const controllers = [buildController(0), buildController(1)];
 
   function resize() {
     const { width, height } = globeStage.getBoundingClientRect();
@@ -1373,15 +1473,17 @@ function initGlobe() {
     camera.updateProjectionMatrix();
   }
 
-  function focusCountry(countryId) {
+  function focusCountry(countryId, { rotate = true } = {}) {
     const country = getCountries().find((item) => item.id === countryId);
     if (country) {
-      const target = latLonToVector3(country.coords.lat, country.coords.lon, 2);
-      const yRotation = Math.atan2(-target.x, target.z);
-      const zPrime = Math.sqrt(target.x * target.x + target.z * target.z);
-      const xRotation = Math.atan2(target.y, zPrime);
-      earthGroup.rotation.x = xRotation;
-      earthGroup.rotation.y = yRotation;
+      if (rotate) {
+        const target = latLonToVector3(country.coords.lat, country.coords.lon, 2);
+        const yRotation = Math.atan2(-target.x, target.z);
+        const zPrime = Math.sqrt(target.x * target.x + target.z * target.z);
+        const xRotation = Math.atan2(target.y, zPrime);
+        earthGroup.rotation.x = xRotation;
+        earthGroup.rotation.y = yRotation;
+      }
 
       const nextTexture = createEarthMapTexture(countryId);
       nextTexture.anisotropy = 8;
@@ -1435,7 +1537,7 @@ function initGlobe() {
     const { lon, lat } = vectorToLatLon(localPoint);
     const countryId = findCountryIdAtLonLat(lon, lat);
     if (countryId) {
-      selectCountry(countryId);
+      selectCountry(countryId, { focusGlobe: false });
     }
   }
 
@@ -1479,6 +1581,8 @@ function initGlobe() {
     const phase = ((sunAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
     const labels = ["amanhecer", "dia", "entardecer", "noite"];
     dayNightLabel.textContent = `Ciclo: ${labels[Math.floor((phase / (Math.PI * 2)) * labels.length)]}`;
+
+    controllers.forEach(updateControllerDrag);
 
     if (!renderer.xr.isPresenting) {
       controls.update();
@@ -1659,7 +1763,7 @@ countryStrip.addEventListener("click", (event) => {
     return;
   }
 
-  selectCountry(button.dataset.country);
+  selectCountry(button.dataset.country, { focusGlobe: true });
 });
 countrySearch.addEventListener("input", () => {
   countrySearchTerm = countrySearch.value;

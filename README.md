@@ -52,7 +52,8 @@ Em navegadores sem esse suporte, o botão VR aparece desativado.
 - Globo terrestre 3D com Three.js, rotação lenta e controle de pausa.
 - Controles para girar, aproximar, afastar e recentralizar o globo.
 - Modo WebXR/VR para óculos compatíveis, com o globo como objeto 3D no espaço,
-  seleção por controle e painel 3D com informações do país escolhido.
+  seleção por controle, arrasto do globo e painel 3D com informações completas
+  do país escolhido.
 - Simulação visual de Sol e ciclo dia/noite.
 - Geografia real importada por GeoJSON, com polígonos de países.
 - Primeira visualização em tela cheia, focada no globo.
@@ -60,8 +61,8 @@ Em navegadores sem esse suporte, o botão VR aparece desativado.
 - Detalhes do país em overlay.
 - Lista pesquisável com 250 países como painel opcional.
 - Bandeiras/atalhos do globo como opção separada.
-- Ficha com população, capital, bandeira, área, idiomas, moedas e resumo rápido
-  em linguagem infantil.
+- Ficha com população, capital, bandeira, principais exportações, área,
+  idiomas, moedas e resumo rápido em linguagem infantil.
 - Preview por iframe do Google Maps e botão separado para abrir Street View no
   Google Maps quando há coordenadas do ponto.
 
