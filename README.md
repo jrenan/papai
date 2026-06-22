@@ -1,7 +1,7 @@
-# Papai - Hub de Jogos Infantis
+# Trio do Saber - Jogos Infantis
 
-Hub de jogos infantis em HTML, CSS e JavaScript puro. O projeto agora reúne o
-jogo dos biomas e a primeira versão do jogo **Viagem pelo Mundo**.
+Tela inicial de jogos infantis em HTML, CSS e JavaScript puro. O projeto reúne
+o jogo dos biomas e a primeira versão do jogo **Viagem pelo Mundo**.
 
 ## Como abrir
 
@@ -41,11 +41,11 @@ Em navegadores sem esse suporte, o botão VR aparece desativado.
 
 ## O que está implementado
 
-### Hub
+### Tela Inicial
 
-- Tela inicial com seletor de jogos.
+- Tela inicial com a marca **Trio do Saber** e seletor de jogos.
 - Estrutura pronta para adicionar novas aventuras sem refazer a navegação.
-- Botões de retorno ao hub em cada jogo.
+- Botões de retorno ao início em cada jogo.
 
 ### Viagem pelo Mundo
 
@@ -165,6 +165,7 @@ O jogo calcula sozinho:
 Os assets em `assets/` foram gerados com a ferramenta integrada de imagem do Codex:
 
 - `guardioes-hero.png`: arte principal.
+- `trio-do-saber.png`: arte da marca usada na tela inicial.
 - `bioma-pantanal.png`, `bioma-caatinga.png`, `bioma-mata-atlantica.png`, `bioma-cerrado.png`, `bioma-amazonia.png`, `bioma-pampa.png`: cenários neutros da missão.
 - `especie-tuiuiu.png`, `especie-mandacaru.png`, `especie-mico.png`, `especie-lobo-guara.png`, `especie-boto.png`, `especie-ema.png`: cartas das espécies.
 

@@ -3,21 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Papai - Hub de Jogos</title>
+    <title>Trio do Saber - Jogos Infantis</title>
+    <link rel="icon" type="image/png" href="assets/trio-do-saber.png" />
+    <link rel="apple-touch-icon" href="assets/trio-do-saber.png" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="game-shell">
       <section class="hub-screen" id="gameHub" aria-labelledby="hub-title">
         <header class="hub-header">
-          <div>
-            <p class="eyebrow">Papai apresenta</p>
-            <h1 id="hub-title">Pequenas grandes aventuras</h1>
+          <div class="hub-copy">
+            <p class="eyebrow">Jogos para aprender brincando</p>
+            <h1 id="hub-title">Trio do Saber</h1>
+            <p>
+              Escolha uma aventura para explorar natureza, cultura, mapas e
+              descobertas com curiosidade de criança.
+            </p>
           </div>
-          <p>
-            Escolha um jogo para explorar natureza, cultura, mapas e descobertas
-            com curiosidade de criança.
-          </p>
+          <img
+            class="hub-brand-art"
+            src="assets/trio-do-saber.png"
+            alt="Ilustração do Trio do Saber com um adulto, duas crianças, blocos, livros e controle de jogo"
+          />
         </header>
 
         <div class="game-picker" aria-label="Jogos disponíveis">
@@ -64,7 +71,8 @@
               <p class="eyebrow">Em breve</p>
               <h2>Próxima aventura</h2>
               <p>
-                Um espaço reservado para encaixar novos jogos sem refazer o hub.
+                Um espaço reservado para encaixar novos jogos sem refazer a
+                tela inicial.
               </p>
             </div>
           </article>
@@ -72,7 +80,7 @@
       </section>
 
       <section class="hero-card map-hero biome-screen is-hidden" aria-labelledby="game-title">
-        <button class="back-button" type="button" data-back-hub>← Hub</button>
+        <button class="back-button" type="button" data-back-hub>← Início</button>
         <div class="map-stage">
           <p class="eyebrow">Mapa do Brasil</p>
           <h1 id="game-title">Guardiões dos Biomas</h1>
@@ -139,7 +147,7 @@
             <h2 id="missionTitle">Ajude o animal perdido</h2>
           </div>
           <div class="header-actions">
-            <button class="secondary-button" type="button" data-back-hub>Hub</button>
+            <button class="secondary-button" type="button" data-back-hub>Início</button>
             <button class="voice-button" id="voiceButton" type="button">
               🔊 Ouvir
             </button>
@@ -191,13 +199,13 @@
           Jogar de novo
         </button>
         <button class="secondary-button" type="button" data-back-hub>
-          Voltar ao hub
+          Voltar ao início
         </button>
       </section>
 
       <section class="world-game is-hidden" id="worldGame" aria-labelledby="worldTitle">
         <header class="world-header">
-          <button class="back-button" type="button" data-back-hub>← Hub</button>
+          <button class="back-button" type="button" data-back-hub>← Início</button>
           <div>
             <p class="eyebrow">Viagem pelo Mundo</p>
             <h1 id="worldTitle">Gire o planeta e escolha um país</h1>

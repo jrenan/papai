@@ -610,10 +610,15 @@ p {
 .hub-header,
 .world-header {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.62fr);
+  grid-template-columns: minmax(0, 0.92fr) minmax(300px, 0.78fr);
   gap: clamp(18px, 4vw, 48px);
-  align-items: end;
+  align-items: center;
   margin-bottom: 24px;
+}
+
+.hub-header {
+  min-height: min(64vh, 680px);
+  margin-bottom: clamp(20px, 4vw, 42px);
 }
 
 .world-header {
@@ -641,6 +646,16 @@ p {
   max-width: 12ch;
 }
 
+.hub-header h1 {
+  max-width: 9ch;
+  color: #0f4c89;
+  font-size: clamp(4rem, 9vw, 8.2rem);
+  line-height: 0.86;
+  text-shadow:
+    0 5px 0 #ffffff,
+    0 13px 24px rgba(15, 76, 137, 0.18);
+}
+
 .world-header h1 {
   max-width: 18ch;
   margin-bottom: 0;
@@ -653,6 +668,25 @@ p {
   max-width: 38rem;
   margin-bottom: 18px;
   font-weight: 900;
+}
+
+.hub-copy > p:not(.eyebrow) {
+  color: #31554d;
+  font-size: clamp(1.18rem, 2vw, 1.55rem);
+  line-height: 1.35;
+}
+
+.hub-brand-art {
+  justify-self: center;
+  width: min(100%, 510px);
+  aspect-ratio: 1;
+  border: 5px solid rgba(255, 255, 255, 0.92);
+  border-radius: 36px;
+  background: #fffaf0;
+  object-fit: contain;
+  box-shadow:
+    0 24px 60px rgba(15, 76, 137, 0.14),
+    0 10px 0 rgba(255, 255, 255, 0.55);
 }
 
 .world-header p {
@@ -1171,6 +1205,32 @@ p {
   .hero-card > img {
     min-height: 320px;
     order: -1;
+  }
+
+  .hub-header {
+    min-height: auto;
+    gap: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .hub-copy {
+    order: 2;
+  }
+
+  .hub-header h1 {
+    max-width: none;
+    font-size: clamp(3.4rem, 17vw, 5.2rem);
+  }
+
+  .hub-copy > p:not(.eyebrow) {
+    margin: 0 auto 8px;
+    font-size: 1.12rem;
+  }
+
+  .hub-brand-art {
+    order: 1;
+    width: min(100%, 360px);
   }
 
   .map-hero {
