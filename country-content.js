@@ -1,0 +1,642 @@
+const COUNTRY_CONTENT = {
+  bra: {
+    summary:
+      "O Brasil é um país enorme, cheio de florestas, praias, cidades grandes e muitos jeitos de falar, brincar, cozinhar e fazer música.",
+    music: "Samba, choro, forró e bossa nova são músicas brasileiras com ritmo, dança e instrumentos bem diferentes.",
+    landmarks: [
+      { name: "Brasília - Praça dos Três Poderes", lat: -15.7996, lon: -47.8645 },
+      { name: "Rio de Janeiro - Cristo Redentor", lat: -22.9519, lon: -43.2105 },
+      { name: "Manaus - Teatro Amazonas", lat: -3.1303, lon: -60.0233 },
+    ],
+  },
+  jpn: {
+    summary:
+      "O Japão é formado por ilhas. Lá existem cidades muito modernas, templos antigos, trens rápidos e muitas tradições cuidadosas.",
+    music: "No Japão há tambores taiko, flautas de bambu e também músicas pop muito animadas.",
+    landmarks: [
+      { name: "Tóquio - Shibuya", lat: 35.6595, lon: 139.7005 },
+      { name: "Quioto - Kiyomizu-dera", lat: 34.9949, lon: 135.785 },
+      { name: "Hiroshima - Memorial da Paz", lat: 34.3955, lon: 132.4536 },
+    ],
+  },
+  egy: {
+    summary:
+      "O Egito fica perto do rio Nilo. Há muito tempo, pessoas construíram pirâmides, templos e escreveram com desenhos chamados hieróglifos.",
+    music: "A música egípcia usa voz, percussão e instrumentos de corda como o oud.",
+    landmarks: [
+      { name: "Cairo - Museu Egípcio", lat: 30.0478, lon: 31.2336 },
+      { name: "Guizé - Pirâmides", lat: 29.9792, lon: 31.1342 },
+      { name: "Luxor - Templo de Karnak", lat: 25.7188, lon: 32.6573 },
+    ],
+  },
+  ken: {
+    summary:
+      "O Quênia tem savanas, montanhas e cidades movimentadas. Muitas famílias falam mais de uma língua e vivem perto de paisagens muito diferentes.",
+    music: "No Quênia há músicas com coros, tambores, guitarras e ritmos para dançar.",
+    landmarks: [
+      { name: "Nairóbi - Museu Nacional", lat: -1.2731, lon: 36.8147 },
+      { name: "Nairóbi - Giraffe Centre", lat: -1.3766, lon: 36.7423 },
+      { name: "Mombaça - Forte Jesus", lat: -4.0624, lon: 39.6796 },
+    ],
+  },
+  fra: {
+    summary:
+      "A França tem castelos, museus, montanhas, praias e cidades antigas. Paris é famosa por pontes, livros, arte e luzes.",
+    music: "A chanson francesa conta histórias cantadas, muitas vezes com acordeão e voz suave.",
+    landmarks: [
+      { name: "Paris - Torre Eiffel", lat: 48.8584, lon: 2.2945 },
+      { name: "Paris - Museu do Louvre", lat: 48.8606, lon: 2.3376 },
+      { name: "Versalhes - Palácio", lat: 48.8049, lon: 2.1204 },
+    ],
+  },
+  aus: {
+    summary:
+      "A Austrália é uma ilha-continente. Ela tem desertos, praias, cidades grandes e culturas aborígenes muito antigas.",
+    music: "O didgeridoo é um instrumento aborígene com som grave e comprido.",
+    landmarks: [
+      { name: "Camberra - Parlamento", lat: -35.3082, lon: 149.1245 },
+      { name: "Sydney - Opera House", lat: -33.8568, lon: 151.2153 },
+      { name: "Uluru", lat: -25.3444, lon: 131.0369 },
+    ],
+  },
+  usa: {
+    summary:
+      "Os Estados Unidos têm desertos, florestas, montanhas, cidades enormes e muitos povos que chegaram de vários lugares do mundo.",
+    music: "Jazz, blues, country, hip hop e rock são estilos muito importantes na música dos Estados Unidos.",
+    landmarks: [
+      { name: "Washington - Capitólio", lat: 38.8899, lon: -77.0091 },
+      { name: "Nova York - Estátua da Liberdade", lat: 40.6892, lon: -74.0445 },
+      { name: "Grand Canyon", lat: 36.1069, lon: -112.1129 },
+    ],
+  },
+  can: {
+    summary:
+      "O Canadá tem florestas, lagos, neve em muitas regiões e cidades onde se fala inglês e francês.",
+    music: "No Canadá há músicas indígenas, folk, pop e canções em inglês e francês.",
+    landmarks: [
+      { name: "Ottawa - Parlamento", lat: 45.4248, lon: -75.6992 },
+      { name: "Toronto - CN Tower", lat: 43.6426, lon: -79.3871 },
+      { name: "Niagara Falls", lat: 43.0962, lon: -79.0377 },
+    ],
+  },
+  mex: {
+    summary:
+      "O México tem pirâmides antigas, comidas coloridas, músicas alegres e cidades cheias de praças e mercados.",
+    music: "Mariachi é uma música mexicana com violinos, trompetes e vozes fortes.",
+    landmarks: [
+      { name: "Cidade do México - Zócalo", lat: 19.4326, lon: -99.1332 },
+      { name: "Teotihuacan", lat: 19.6925, lon: -98.8438 },
+      { name: "Chichén Itzá", lat: 20.6843, lon: -88.5678 },
+    ],
+  },
+  arg: {
+    summary:
+      "A Argentina tem pampas, montanhas, geleiras e uma capital cheia de ruas largas, teatros e cafés.",
+    music: "O tango é uma música argentina marcada por dança, bandoneón e emoção.",
+    landmarks: [
+      { name: "Buenos Aires - Obelisco", lat: -34.6037, lon: -58.3816 },
+      { name: "Iguazú - Cataratas", lat: -25.6953, lon: -54.4367 },
+      { name: "Perito Moreno", lat: -50.4967, lon: -73.1377 },
+    ],
+  },
+  chl: {
+    summary:
+      "O Chile é comprido e estreito. Tem deserto no norte, montanhas altas e gelo no sul.",
+    music: "A cueca é uma dança tradicional chilena com palmas, lenços e violão.",
+    landmarks: [
+      { name: "Santiago - Plaza de Armas", lat: -33.4372, lon: -70.6506 },
+      { name: "Valparaíso - Cerro Alegre", lat: -33.0393, lon: -71.628 },
+      { name: "Deserto do Atacama", lat: -23.8634, lon: -69.1328 },
+    ],
+  },
+  per: {
+    summary:
+      "O Peru tem montanhas dos Andes, floresta amazônica e cidades antigas feitas de pedra.",
+    music: "A música peruana usa flautas, tambores e danças dos Andes.",
+    landmarks: [
+      { name: "Lima - Plaza Mayor", lat: -12.0464, lon: -77.0306 },
+      { name: "Machu Picchu", lat: -13.1631, lon: -72.545 },
+      { name: "Cusco - Plaza de Armas", lat: -13.5167, lon: -71.9789 },
+    ],
+  },
+  gbr: {
+    summary:
+      "O Reino Unido reúne países com castelos, universidades antigas, chuva famosa e cidades cheias de ônibus vermelhos.",
+    music: "Bandas de rock, corais e músicas tradicionais fazem parte da cultura do Reino Unido.",
+    landmarks: [
+      { name: "Londres - Big Ben", lat: 51.5007, lon: -0.1246 },
+      { name: "Londres - Tower Bridge", lat: 51.5055, lon: -0.0754 },
+      { name: "Edimburgo - Castelo", lat: 55.9486, lon: -3.1999 },
+    ],
+  },
+  deu: {
+    summary:
+      "A Alemanha tem florestas, castelos, trens, cidades antigas e muitos museus de ciência, arte e história.",
+    music: "A Alemanha é conhecida por música clássica, corais e também música moderna.",
+    landmarks: [
+      { name: "Berlim - Portão de Brandemburgo", lat: 52.5163, lon: 13.3777 },
+      { name: "Munique - Marienplatz", lat: 48.1374, lon: 11.5755 },
+      { name: "Castelo de Neuschwanstein", lat: 47.5576, lon: 10.7498 },
+    ],
+  },
+  ita: {
+    summary:
+      "A Itália parece uma bota no mapa. Tem ruínas antigas, massas, praças, igrejas e muitas obras de arte.",
+    music: "A ópera italiana usa vozes grandes para contar histórias cantadas.",
+    landmarks: [
+      { name: "Roma - Coliseu", lat: 41.8902, lon: 12.4922 },
+      { name: "Veneza - Praça São Marcos", lat: 45.4342, lon: 12.3388 },
+      { name: "Pisa - Torre Inclinada", lat: 43.723, lon: 10.3966 },
+    ],
+  },
+  esp: {
+    summary:
+      "A Espanha tem praias, montanhas, cidades antigas, praças animadas e muitas festas com música e dança.",
+    music: "O flamenco usa palmas, violão, canto e dança forte.",
+    landmarks: [
+      { name: "Madri - Plaza Mayor", lat: 40.4154, lon: -3.7074 },
+      { name: "Barcelona - Sagrada Família", lat: 41.4036, lon: 2.1744 },
+      { name: "Granada - Alhambra", lat: 37.1761, lon: -3.5881 },
+    ],
+  },
+  prt: {
+    summary:
+      "Portugal fica perto do oceano Atlântico. Tem azulejos, castelos, praias e cidades com ruas de pedra.",
+    music: "O fado é uma música portuguesa cantada com emoção e guitarra portuguesa.",
+    landmarks: [
+      { name: "Lisboa - Torre de Belém", lat: 38.6916, lon: -9.216 },
+      { name: "Lisboa - Praça do Comércio", lat: 38.7077, lon: -9.1365 },
+      { name: "Porto - Ponte Dom Luís I", lat: 41.1405, lon: -8.6096 },
+    ],
+  },
+  chn: {
+    summary:
+      "A China é muito grande e tem desertos, montanhas, rios, cidades enormes e invenções muito antigas.",
+    music: "A música chinesa pode usar instrumentos como erhu, pipa e flautas.",
+    landmarks: [
+      { name: "Pequim - Cidade Proibida", lat: 39.9163, lon: 116.3972 },
+      { name: "Grande Muralha - Mutianyu", lat: 40.4319, lon: 116.5704 },
+      { name: "Xangai - Bund", lat: 31.2402, lon: 121.4903 },
+    ],
+  },
+  ind: {
+    summary:
+      "A Índia tem muitas línguas, comidas, religiões, festas coloridas, rios importantes e cidades muito movimentadas.",
+    music: "A música indiana pode usar tabla, sitar, canto e ritmos que parecem conversar.",
+    landmarks: [
+      { name: "Nova Délhi - India Gate", lat: 28.6129, lon: 77.2295 },
+      { name: "Agra - Taj Mahal", lat: 27.1751, lon: 78.0421 },
+      { name: "Jaipur - Hawa Mahal", lat: 26.9239, lon: 75.8267 },
+    ],
+  },
+  zaf: {
+    summary:
+      "A África do Sul tem praias, montanhas, savanas e muitas culturas vivendo juntas.",
+    music: "A música sul-africana tem coros fortes, percussão e estilos dançantes.",
+    landmarks: [
+      { name: "Cidade do Cabo - Table Mountain", lat: -33.9628, lon: 18.4098 },
+      { name: "Pretória - Union Buildings", lat: -25.7401, lon: 28.2119 },
+      { name: "Joanesburgo - Constitution Hill", lat: -26.1886, lon: 28.0423 },
+    ],
+  },
+  mar: {
+    summary:
+      "O Marrocos tem desertos, montanhas, mercados coloridos e cidades antigas com ruas estreitas.",
+    music: "A música marroquina mistura tambores, cordas, canto e palmas.",
+    landmarks: [
+      { name: "Rabat - Torre Hassan", lat: 34.024, lon: -6.8224 },
+      { name: "Marrakesh - Jemaa el-Fnaa", lat: 31.6258, lon: -7.9891 },
+      { name: "Casablanca - Mesquita Hassan II", lat: 33.6085, lon: -7.6326 },
+    ],
+  },
+  tur: {
+    summary:
+      "A Turquia liga a Europa e a Ásia. Tem mesquitas, mercados, ruínas antigas e paisagens com balões no céu.",
+    music: "A música turca usa instrumentos de corda, flautas e ritmos de dança.",
+    landmarks: [
+      { name: "Ancara - Anıtkabir", lat: 39.9251, lon: 32.8369 },
+      { name: "Istambul - Santa Sofia", lat: 41.0086, lon: 28.9802 },
+      { name: "Capadócia - Göreme", lat: 38.6431, lon: 34.8289 },
+    ],
+  },
+  kor: {
+    summary:
+      "A Coreia do Sul tem montanhas, cidades tecnológicas, palácios antigos e muita cultura pop.",
+    music: "Na Coreia do Sul há música tradicional com tambores e também K-pop.",
+    landmarks: [
+      { name: "Seul - Gyeongbokgung", lat: 37.5796, lon: 126.977 },
+      { name: "Seul - N Seoul Tower", lat: 37.5512, lon: 126.9882 },
+      { name: "Busan - Haeundae", lat: 35.1587, lon: 129.1604 },
+    ],
+  },
+  idn: {
+    summary:
+      "A Indonésia tem milhares de ilhas, vulcões, florestas, praias e muitas culturas diferentes.",
+    music: "O gamelão usa gongos e metalofones com sons brilhantes.",
+    landmarks: [
+      { name: "Jacarta - Monas", lat: -6.1754, lon: 106.8272 },
+      { name: "Borobudur", lat: -7.6079, lon: 110.2038 },
+      { name: "Bali - Ubud", lat: -8.5069, lon: 115.2625 },
+    ],
+  },
+  afg: {
+    summary:
+      "O Afeganistão tem montanhas muito altas, vales secos e cidades antigas por onde passaram muitos viajantes e comerciantes.",
+    music: "A música afegã usa instrumentos como rubab, tabla e cantos cheios de história.",
+    landmarks: [
+      { name: "Cabul - Jardins de Babur", lat: 34.5033, lon: 69.1581 },
+      { name: "Bamiyan - Vale dos Budas", lat: 34.832, lon: 67.826 },
+      { name: "Herat - Cidadela", lat: 34.3482, lon: 62.1997 },
+    ],
+  },
+  ala: {
+    summary:
+      "A Alândia é um grupo de ilhas no mar Báltico. Tem barcos, faróis, vento frio e vilas tranquilas perto da água.",
+    music: "Nas ilhas da Alândia há músicas nórdicas com acordeão, violino e canções de festa.",
+    landmarks: [
+      { name: "Mariehamn - Museu Marítimo", lat: 60.0973, lon: 19.9279 },
+      { name: "Castelo de Kastelholm", lat: 60.2308, lon: 20.0836 },
+      { name: "Farol de Märket", lat: 60.3008, lon: 19.1328 },
+    ],
+  },
+  alb: {
+    summary:
+      "A Albânia tem praias azuis, montanhas, castelos e cidades antigas com ruas de pedra.",
+    music: "A música albanesa tem cantos fortes, danças em roda e sons de clarinete e tambor.",
+    landmarks: [
+      { name: "Tirana - Praça Skanderbeg", lat: 41.3275, lon: 19.8187 },
+      { name: "Berat - Castelo", lat: 40.7086, lon: 19.9457 },
+      { name: "Butrinto", lat: 39.7459, lon: 20.0208 },
+    ],
+  },
+  and: {
+    summary:
+      "Andorra é um país pequeno nas montanhas dos Pireneus. No inverno, muita gente vai para lá ver neve.",
+    music: "Em Andorra aparecem músicas de montanha, danças tradicionais e sons de festa popular.",
+    landmarks: [
+      { name: "Andorra-a-Velha - Casa de la Vall", lat: 42.5064, lon: 1.5218 },
+      { name: "Santuário de Meritxell", lat: 42.5547, lon: 1.5904 },
+      { name: "Vallnord - Pal Arinsal", lat: 42.5724, lon: 1.4891 },
+    ],
+  },
+  ago: {
+    summary:
+      "Angola tem praias, rios, savanas e uma capital perto do oceano. Muitas pessoas falam português.",
+    music: "Semba, kizomba e kuduro são ritmos de Angola com dança e batida animada.",
+    landmarks: [
+      { name: "Luanda - Fortaleza de São Miguel", lat: -8.8136, lon: 13.2302 },
+      { name: "Miradouro da Lua", lat: -9.4086, lon: 13.1421 },
+      { name: "Quedas de Kalandula", lat: -9.0744, lon: 16.0019 },
+    ],
+  },
+  aia: {
+    summary:
+      "Anguilla é uma ilha caribenha com praias claras, mar azul e barcos pequenos perto da areia.",
+    music: "Em Anguilla há calipso, reggae e músicas de ilha com tambores e guitarras.",
+    landmarks: [
+      { name: "The Valley - centro da ilha", lat: 18.2208, lon: -63.0517 },
+      { name: "Shoal Bay", lat: 18.2542, lon: -63.0368 },
+      { name: "Sandy Ground", lat: 18.2014, lon: -63.0894 },
+    ],
+  },
+  ata: {
+    summary:
+      "A Antártida é muito fria e coberta de gelo. Quase não há cidades: cientistas visitam para estudar o planeta.",
+    music: "Na Antártida não existe música tradicional de moradores, mas dá para imaginar o som do vento e do gelo.",
+    landmarks: [
+      { name: "Polo Sul", lat: -90, lon: 0 },
+      { name: "Estação McMurdo", lat: -77.8419, lon: 166.6863 },
+      { name: "Península Antártica", lat: -64.5, lon: -63.0 },
+    ],
+  },
+  atg: {
+    summary:
+      "Antígua e Barbuda são ilhas do Caribe com praias, recifes e muitos barcos coloridos.",
+    music: "Calipso, soca e steelpan aparecem em festas e desfiles das ilhas.",
+    landmarks: [
+      { name: "Saint John's - porto", lat: 17.1274, lon: -61.8468 },
+      { name: "Nelson's Dockyard", lat: 17.0085, lon: -61.7653 },
+      { name: "Shirley Heights", lat: 17.0027, lon: -61.7606 },
+    ],
+  },
+  sau: {
+    summary:
+      "A Arábia Saudita tem desertos, cidades grandes, oásis e lugares muito importantes para muitos muçulmanos.",
+    music: "A música saudita usa canto, palmas, tambores e danças em grupo.",
+    landmarks: [
+      { name: "Riad - Kingdom Centre", lat: 24.7113, lon: 46.6744 },
+      { name: "Diriyah - At-Turaif", lat: 24.734, lon: 46.5753 },
+      { name: "AlUla - Hegra", lat: 26.7989, lon: 37.9556 },
+    ],
+  },
+  dza: {
+    summary:
+      "A Argélia tem uma parte grande do deserto do Saara, cidades perto do mar e montanhas ao norte.",
+    music: "Na Argélia há raï, música chaabi e ritmos com tambores e cordas.",
+    landmarks: [
+      { name: "Argel - Casbá", lat: 36.7847, lon: 3.0606 },
+      { name: "Timgad", lat: 35.4846, lon: 6.4686 },
+      { name: "Ghardaïa - Vale do M'zab", lat: 32.489, lon: 3.6738 },
+    ],
+  },
+  arm: {
+    summary:
+      "A Armênia tem montanhas, mosteiros antigos e histórias guardadas em pedras, músicas e igrejas.",
+    music: "O duduk é um instrumento armênio de som doce e melancólico.",
+    landmarks: [
+      { name: "Erevan - Praça da República", lat: 40.1772, lon: 44.5126 },
+      { name: "Mosteiro de Geghard", lat: 40.1404, lon: 44.8185 },
+      { name: "Templo de Garni", lat: 40.1124, lon: 44.7301 },
+    ],
+  },
+  abw: {
+    summary:
+      "Aruba é uma ilha do Caribe com praias, cactus, vento e água clara para nadar.",
+    music: "Em Aruba há tumba, calipso, salsa e músicas animadas de carnaval.",
+    landmarks: [
+      { name: "Oranjestad - centro histórico", lat: 12.519, lon: -70.037 },
+      { name: "Farol California", lat: 12.613, lon: -70.0515 },
+      { name: "Eagle Beach", lat: 12.5486, lon: -70.0572 },
+    ],
+  },
+  aut: {
+    summary:
+      "A Áustria tem montanhas nevadas, lagos, palácios e cidades famosas por música clássica.",
+    music: "A valsa e a música clássica são muito lembradas na Áustria.",
+    landmarks: [
+      { name: "Viena - Palácio Schönbrunn", lat: 48.1845, lon: 16.3122 },
+      { name: "Viena - Catedral de Santo Estêvão", lat: 48.2085, lon: 16.3731 },
+      { name: "Salzburgo - Fortaleza Hohensalzburg", lat: 47.795, lon: 13.0477 },
+    ],
+  },
+  aze: {
+    summary:
+      "O Azerbaijão fica perto do mar Cáspio. Tem montanhas, cidades antigas e torres modernas em Baku.",
+    music: "O mugham é uma música tradicional do Azerbaijão com canto e instrumentos de corda.",
+    landmarks: [
+      { name: "Baku - Cidade Antiga", lat: 40.3667, lon: 49.8333 },
+      { name: "Baku - Torres Flame", lat: 40.3599, lon: 49.8277 },
+      { name: "Gobustão - paisagem de rochas", lat: 40.1049, lon: 49.4158 },
+    ],
+  },
+  bhs: {
+    summary:
+      "As Bahamas são ilhas com praias claras, mar azul, recifes e barcos que passam entre muitas ilhas.",
+    music: "Junkanoo é uma festa musical das Bahamas com tambores, sinos e fantasias coloridas.",
+    landmarks: [
+      { name: "Nassau - Parliament Square", lat: 25.0781, lon: -77.3383 },
+      { name: "Nassau - Queen's Staircase", lat: 25.0731, lon: -77.3385 },
+      { name: "Paradise Island - Atlantis", lat: 25.0843, lon: -77.3216 },
+    ],
+  },
+  bhr: {
+    summary:
+      "O Bahrein é um país de ilhas no Golfo Pérsico. Tem barcos, pérolas, mercados e prédios modernos.",
+    music: "O fidjeri é uma música ligada aos antigos mergulhadores de pérolas.",
+    landmarks: [
+      { name: "Manama - Bab Al Bahrain", lat: 26.2343, lon: 50.5751 },
+      { name: "Forte do Bahrein", lat: 26.2331, lon: 50.5208 },
+      { name: "Árvore da Vida", lat: 25.994, lon: 50.5831 },
+    ],
+  },
+  bgd: {
+    summary:
+      "Bangladesh tem muitos rios, barcos, plantações de arroz e cidades cheias de movimento.",
+    music: "A música bengali tem canções poéticas, tambores e instrumentos de corda.",
+    landmarks: [
+      { name: "Daca - Parlamento Nacional", lat: 23.7625, lon: 90.3786 },
+      { name: "Daca - Ahsan Manzil", lat: 23.7086, lon: 90.406 },
+      { name: "Sundarbans", lat: 21.9497, lon: 89.1833 },
+    ],
+  },
+  brb: {
+    summary:
+      "Barbados é uma ilha do Caribe com praias, cavernas, plantações antigas e festas com música.",
+    music: "Calipso, soca e tuk band aparecem em festas de Barbados.",
+    landmarks: [
+      { name: "Bridgetown - centro histórico", lat: 13.0969, lon: -59.6145 },
+      { name: "Harrison's Cave", lat: 13.1846, lon: -59.5888 },
+      { name: "Bathsheba Beach", lat: 13.2114, lon: -59.5251 },
+    ],
+  },
+  bel: {
+    summary:
+      "A Bélgica tem praças antigas, castelos, canais, quadrinhos famosos e cidades onde se fala mais de uma língua.",
+    music: "Na Bélgica há música clássica, bandas, jazz e canções em francês, neerlandês e alemão.",
+    landmarks: [
+      { name: "Bruxelas - Grand Place", lat: 50.8467, lon: 4.3525 },
+      { name: "Bruxelas - Atomium", lat: 50.8949, lon: 4.3415 },
+      { name: "Bruges - Markt", lat: 51.2089, lon: 3.2242 },
+    ],
+  },
+  blz: {
+    summary:
+      "Belize tem mar azul, recifes, florestas e ruínas maias escondidas entre árvores.",
+    music: "Em Belize há punta, reggae e músicas garífunas com tambores.",
+    landmarks: [
+      { name: "Belmopan - centro cívico", lat: 17.251, lon: -88.759 },
+      { name: "Great Blue Hole", lat: 17.3158, lon: -87.5345 },
+      { name: "Xunantunich", lat: 17.0893, lon: -89.1425 },
+    ],
+  },
+  ben: {
+    summary:
+      "Benin fica na África Ocidental. Tem mercados, lagos, palácios antigos e histórias de muitos povos.",
+    music: "A música do Benin tem tambores, vozes em coro e ritmos para dançar.",
+    landmarks: [
+      { name: "Porto-Novo - Grande Mesquita", lat: 6.4969, lon: 2.6289 },
+      { name: "Cotonou - mercado Dantokpa", lat: 6.3717, lon: 2.4286 },
+      { name: "Abomey - Palácios Reais", lat: 7.1853, lon: 1.9912 },
+    ],
+  },
+  bmu: {
+    summary:
+      "Bermudas são ilhas no oceano Atlântico, com casas coloridas, praias rosadas e muitos barcos.",
+    music: "Nas Bermudas há gombey, com tambores, dança e roupas coloridas.",
+    landmarks: [
+      { name: "Hamilton - Front Street", lat: 32.2948, lon: -64.782 },
+      { name: "Horseshoe Bay", lat: 32.2496, lon: -64.8207 },
+      { name: "St. George's", lat: 32.3818, lon: -64.677 },
+    ],
+  },
+  blr: {
+    summary:
+      "A Bielorrússia tem florestas, lagos, castelos e cidades com praças largas.",
+    music: "A música bielorrussa tem cantos populares, acordeão e danças de roda.",
+    landmarks: [
+      { name: "Minsk - Praça da Independência", lat: 53.8961, lon: 27.5486 },
+      { name: "Castelo de Mir", lat: 53.4513, lon: 26.4726 },
+      { name: "Castelo de Nesvizh", lat: 53.2226, lon: 26.6917 },
+    ],
+  },
+  bol: {
+    summary:
+      "A Bolívia tem montanhas altas, lagos, florestas e salares que parecem um chão branco gigante.",
+    music: "A música boliviana usa flautas andinas, charango e tambores.",
+    landmarks: [
+      { name: "Sucre - Plaza 25 de Mayo", lat: -19.0477, lon: -65.2591 },
+      { name: "La Paz - teleférico", lat: -16.4897, lon: -68.1193 },
+      { name: "Salar de Uyuni", lat: -20.1338, lon: -67.4891 },
+    ],
+  },
+  bih: {
+    summary:
+      "A Bósnia e Herzegovina tem montanhas, rios claros, pontes antigas e cidades com muitas histórias.",
+    music: "A sevdalinka é uma canção tradicional da Bósnia, cantada com muita emoção.",
+    landmarks: [
+      { name: "Sarajevo - Baščaršija", lat: 43.8596, lon: 18.4318 },
+      { name: "Mostar - Stari Most", lat: 43.3373, lon: 17.815 },
+      { name: "Jajce - cachoeira", lat: 44.342, lon: 17.2706 },
+    ],
+  },
+  bwa: {
+    summary:
+      "Botswana tem savanas, desertos e o delta do Okavango, onde a água cria caminhos para muitos animais.",
+    music: "Em Botswana há cantos, palmas, tambores e danças tradicionais.",
+    landmarks: [
+      { name: "Gaborone - Three Dikgosi Monument", lat: -24.6475, lon: 25.9099 },
+      { name: "Delta do Okavango", lat: -19.3, lon: 22.9 },
+      { name: "Parque Chobe", lat: -18.75, lon: 24.6667 },
+    ],
+  },
+  brn: {
+    summary:
+      "Brunei fica na ilha de Bornéu. Tem floresta tropical, rios e mesquitas douradas.",
+    music: "A música de Brunei tem gongos, tambores e canções de celebração.",
+    landmarks: [
+      { name: "Bandar Seri Begawan - Mesquita Omar Ali Saifuddien", lat: 4.8903, lon: 114.9398 },
+      { name: "Kampong Ayer", lat: 4.8833, lon: 114.9333 },
+      { name: "Parque Ulu Temburong", lat: 4.4786, lon: 115.2078 },
+    ],
+  },
+  bgr: {
+    summary:
+      "A Bulgária tem montanhas, mosteiros, rosas famosas e cidades antigas perto do mar Negro.",
+    music: "A música búlgara tem coros fortes, gaitas de fole e ritmos diferentes.",
+    landmarks: [
+      { name: "Sófia - Catedral Alexander Nevsky", lat: 42.6958, lon: 23.3329 },
+      { name: "Mosteiro de Rila", lat: 42.1335, lon: 23.3402 },
+      { name: "Plovdiv - teatro romano", lat: 42.1469, lon: 24.751 },
+    ],
+  },
+  bfa: {
+    summary:
+      "Burkina Faso fica na África Ocidental. Tem savanas, mercados e muitas tradições de máscaras e dança.",
+    music: "A música de Burkina Faso usa balafon, tambores e coros animados.",
+    landmarks: [
+      { name: "Ouagadougou - Place des Cinéastes", lat: 12.3714, lon: -1.5197 },
+      { name: "Ruínas de Loropéni", lat: 10.2503, lon: -3.5833 },
+      { name: "Banfora - Cascades de Karfiguéla", lat: 10.6333, lon: -4.75 },
+    ],
+  },
+  bdi: {
+    summary:
+      "Burundi tem colinas verdes, lagos e comunidades que usam tambores em festas importantes.",
+    music: "Os tambores reais do Burundi são fortes, rápidos e tocados em grupo.",
+    landmarks: [
+      { name: "Gitega - Museu Nacional", lat: -3.4264, lon: 29.9306 },
+      { name: "Bujumbura - Lago Tanganyika", lat: -3.3822, lon: 29.3644 },
+      { name: "Gishora - Santuário dos Tambores", lat: -3.4097, lon: 29.9489 },
+    ],
+  },
+  btn: {
+    summary:
+      "O Butão fica nos Himalaias. Tem montanhas altas, mosteiros coloridos e muitas bandeirinhas de oração.",
+    music: "A música butanesa usa cantos, tambores e danças com roupas tradicionais.",
+    landmarks: [
+      { name: "Thimphu - Tashichho Dzong", lat: 27.4896, lon: 89.6356 },
+      { name: "Paro - Ninho do Tigre", lat: 27.4918, lon: 89.3639 },
+      { name: "Punakha Dzong", lat: 27.5921, lon: 89.8774 },
+    ],
+  },
+  cpv: {
+    summary:
+      "Cabo Verde é feito de ilhas no oceano Atlântico. Tem praias, montanhas vulcânicas e muitas músicas.",
+    music: "Morna e funaná são músicas de Cabo Verde com voz, dança e instrumentos de corda.",
+    landmarks: [
+      { name: "Praia - Plateau", lat: 14.9177, lon: -23.5092 },
+      { name: "Cidade Velha", lat: 14.9153, lon: -23.6053 },
+      { name: "Ilha do Fogo - Pico do Fogo", lat: 14.95, lon: -24.35 },
+    ],
+  },
+  cmr: {
+    summary:
+      "Camarões tem praias, florestas, montanhas e savanas. Por isso às vezes é chamado de África em miniatura.",
+    music: "Makossa e bikutsi são ritmos camaroneses com guitarra, percussão e dança.",
+    landmarks: [
+      { name: "Yaoundé - Monumento da Reunificação", lat: 3.848, lon: 11.5021 },
+      { name: "Douala - La Nouvelle Liberté", lat: 4.0615, lon: 9.746 },
+      { name: "Monte Camarões", lat: 4.217, lon: 9.172 },
+    ],
+  },
+  khm: {
+    summary:
+      "O Camboja tem templos muito antigos, arrozais, rios e histórias do antigo império Khmer.",
+    music: "A música cambojana usa xilofones, gongos, flautas e danças delicadas.",
+    landmarks: [
+      { name: "Phnom Penh - Palácio Real", lat: 11.563, lon: 104.931 },
+      { name: "Angkor Wat", lat: 13.4125, lon: 103.867 },
+      { name: "Siem Reap - centro", lat: 13.3671, lon: 103.8448 },
+    ],
+  },
+  qat: {
+    summary:
+      "O Catar fica numa península pequena e quente. Tem deserto, mar, arranha-céus e museus modernos.",
+    music: "A música do Catar usa tambores, palmas e canções ligadas ao mar e aos barcos.",
+    landmarks: [
+      { name: "Doha - Corniche", lat: 25.2948, lon: 51.531 },
+      { name: "Doha - Museu de Arte Islâmica", lat: 25.2955, lon: 51.5392 },
+      { name: "Souq Waqif", lat: 25.2867, lon: 51.5333 },
+    ],
+  },
+  kaz: {
+    summary:
+      "O Cazaquistão tem estepes enormes, montanhas, cidades modernas e muito espaço aberto.",
+    music: "O dombra é um instrumento de duas cordas muito importante na música cazaque.",
+    landmarks: [
+      { name: "Astana - Bayterek", lat: 51.1282, lon: 71.4304 },
+      { name: "Almaty - Kok Tobe", lat: 43.2333, lon: 76.9769 },
+      { name: "Charyn Canyon", lat: 43.3508, lon: 79.0803 },
+    ],
+  },
+  tcd: {
+    summary:
+      "O Chade tem deserto, savanas e o lago Chade, que é importante para muitas pessoas e animais.",
+    music: "A música chadiana usa tambores, flautas, cordas e cantos de diferentes povos.",
+    landmarks: [
+      { name: "N'Djamena - Grande Mesquita", lat: 12.1131, lon: 15.0491 },
+      { name: "Lago Chade", lat: 13.0, lon: 14.0 },
+      { name: "Ennedi - formações rochosas", lat: 17.0417, lon: 21.8628 },
+    ],
+  },
+  cze: {
+    summary:
+      "A Chéquia tem castelos, pontes antigas, praças bonitas e cidades que parecem cenário de conto.",
+    music: "A música checa tem polcas, corais e compositores clássicos famosos.",
+    landmarks: [
+      { name: "Praga - Ponte Carlos", lat: 50.0865, lon: 14.4114 },
+      { name: "Praga - Castelo", lat: 50.0911, lon: 14.4016 },
+      { name: "Český Krumlov", lat: 48.8127, lon: 14.3175 },
+    ],
+  },
+  cyp: {
+    summary:
+      "Chipre é uma ilha no mar Mediterrâneo. Tem praias, sítios antigos e cidades com muitas histórias.",
+    music: "A música cipriota mistura sons gregos, turcos e instrumentos de corda.",
+    landmarks: [
+      { name: "Nicósia - Portão de Famagusta", lat: 35.1742, lon: 33.3692 },
+      { name: "Pafos - Parque Arqueológico", lat: 34.7564, lon: 32.4066 },
+      { name: "Larnaca - Igreja de São Lázaro", lat: 34.9114, lon: 33.6356 },
+    ],
+  },
+  vat: {
+    summary:
+      "A Cidade do Vaticano é o menor país do mundo. Fica dentro de Roma e tem igrejas, museus e obras de arte.",
+    music: "No Vaticano há canto coral e música sacra tocada em igrejas.",
+    landmarks: [
+      { name: "Basílica de São Pedro", lat: 41.9022, lon: 12.4539 },
+      { name: "Praça de São Pedro", lat: 41.9022, lon: 12.4573 },
+      { name: "Museus Vaticanos", lat: 41.9065, lon: 12.4536 },
+    ],
+  },
+};

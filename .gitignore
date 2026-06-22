@@ -1,0 +1,6 @@
+.DS_Store
+Thumbs.db
+*.log
+node_modules/
+data/Biomas_5000mil.zip
+data/biomas_5000mil/

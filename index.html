@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Papai - Hub de Jogos</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <section class="hub-screen" id="gameHub" aria-labelledby="hub-title">
+        <header class="hub-header">
+          <div>
+            <p class="eyebrow">Papai apresenta</p>
+            <h1 id="hub-title">Pequenas grandes aventuras</h1>
+          </div>
+          <p>
+            Escolha um jogo para explorar natureza, cultura, mapas e descobertas
+            com curiosidade de criança.
+          </p>
+        </header>
+
+        <div class="game-picker" aria-label="Jogos disponíveis">
+          <article class="game-tile world-tile">
+            <div class="tile-visual" aria-hidden="true">
+              <span class="tile-planet">🌎</span>
+              <span class="tile-sun">☀</span>
+            </div>
+            <div class="tile-copy">
+              <p class="eyebrow">Novo jogo</p>
+              <h2>Viagem pelo Mundo</h2>
+              <p>
+                Gire um globo 3D, escolha países e mergulhe em capitais,
+                músicas, histórias e pontos turísticos.
+              </p>
+              <button class="primary-button" type="button" data-open-game="world">
+                Explorar países
+              </button>
+            </div>
+          </article>
+
+          <article class="game-tile biome-tile">
+            <div class="tile-visual biome-preview" aria-hidden="true">
+              <span>Amazônia</span>
+              <span>Cerrado</span>
+              <span>Pampa</span>
+            </div>
+            <div class="tile-copy">
+              <p class="eyebrow">Jogo dos biomas</p>
+              <h2>Guardiões dos Biomas</h2>
+              <p>
+                Ajude animais e plantas a encontrar ambientes que combinam com
+                suas pistas de vida.
+              </p>
+              <button class="secondary-button" type="button" data-open-game="biomes">
+                Jogar biomas
+              </button>
+            </div>
+          </article>
+
+          <article class="game-tile coming-soon" aria-label="Espaço para próximo jogo">
+            <div class="tile-visual dotted-path" aria-hidden="true"></div>
+            <div class="tile-copy">
+              <p class="eyebrow">Em breve</p>
+              <h2>Próxima aventura</h2>
+              <p>
+                Um espaço reservado para encaixar novos jogos sem refazer o hub.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="hero-card map-hero biome-screen is-hidden" aria-labelledby="game-title">
+        <button class="back-button" type="button" data-back-hub>← Hub</button>
+        <div class="map-stage">
+          <p class="eyebrow">Mapa do Brasil</p>
+          <h1 id="game-title">Guardiões dos Biomas</h1>
+          <p>
+            Clique em um bioma para ouvir uma pequena história e descobrir suas
+            pistas antes da aventura.
+          </p>
+
+          <div class="brazil-map" aria-label="Mapa estilizado do Brasil com biomas">
+            <span class="map-hint">Clique nas regiões coloridas</span>
+            <svg
+              id="biomeMap"
+              viewBox="0 0 420 520"
+              role="img"
+              aria-label="Mapa do Brasil com regiões de biomas clicáveis"
+            >
+              <defs>
+                <clipPath id="brazilClip">
+                  <path
+                    d="M179.05 411.18 L191.69 398.26 L202.38 389.06 L208.75 385.2 L216.73 379.98 L216.92 372.41 L212.17 366.94 L207.47 368.76 L209.33 363.29 L210.62 357.69 L210.62 352.48 L207.21 350.76 L203.66 352.29 L200.12 351.87 L199.02 348.22 L198.14 339.54 L196.36 336.71 L189.96 334.14 L186.09 336.0 L176.09 334.18 L176.72 321.32 L173.92 316.05 L176.88 314.09 L175.97 308.69 L178.56 304.54 L180.25 297.07 L178.01 291.18 L172.83 288.52 L171.82 284.78 L173.21 279.31 L155.04 278.92 L151.4 267.88 L154.16 267.73 L154.04 263.64 L152.19 260.87 L151.77 255.39 L146.27 252.58 L140.31 252.68 L136.39 249.93 L129.98 248.05 L126.25 244.51 L115.64 242.94 L105.35 234.46 L106.11 228.1 L104.95 224.46 L105.96 217.36 L93.56 218.96 L88.56 222.52 L80.28 226.36 L78.16 229.23 L73.29 229.43 L66.24 228.63 L60.89 230.26 L56.58 229.18 L57.22 214.78 L49.44 220.37 L41.08 220.12 L37.5 215.07 L31.21 214.52 L33.21 210.45 L27.94 204.68 L24.0 196.15 L26.5 194.42 L26.49 190.41 L32.22 187.68 L31.27 182.56 L33.69 179.26 L34.38 174.84 L45.22 168.39 L52.98 166.56 L54.25 165.14 L62.79 165.58 L67.05 139.6 L67.27 135.49 L65.79 130.07 L61.59 126.61 L61.64 119.72 L66.97 118.16 L68.87 119.14 L69.19 115.51 L63.63 114.53 L63.52 108.6 L81.98 108.82 L85.11 105.55 L87.75 108.56 L89.59 114.15 L91.38 112.98 L96.6 117.99 L103.97 117.38 L105.8 114.48 L112.85 112.26 L116.75 110.71 L117.85 106.69 L124.62 104.0 L124.11 102.01 L116.08 101.19 L114.76 95.23 L115.15 88.87 L110.91 86.42 L112.68 85.54 L119.7 86.76 L127.23 89.12 L129.97 86.88 L136.78 85.41 L147.38 81.87 L150.85 78.25 L149.59 75.58 L154.52 75.16 L156.72 77.34 L155.49 81.5 L158.75 82.94 L160.92 87.34 L158.29 90.68 L156.78 98.75 L159.21 103.54 L159.9 107.92 L165.73 112.37 L170.38 112.84 L171.42 110.98 L174.42 110.57 L178.71 108.91 L181.79 106.39 L187.03 107.19 L189.34 106.85 L194.49 107.63 L195.34 105.69 L193.75 103.81 L194.7 101.07 L198.52 101.91 L203.0 100.94 L208.43 102.95 L212.56 104.9 L215.5 102.33 L217.62 102.73 L218.91 105.4 L223.45 104.72 L227.08 101.12 L229.99 94.14 L235.59 85.47 L238.82 85.02 L241.16 90.26 L246.48 106.84 L251.55 108.4 L251.8 114.94 L244.68 122.74 L247.62 125.6 L264.37 127.09 L264.72 136.58 L271.91 130.37 L283.84 133.77 L299.58 139.56 L304.2 145.11 L302.65 150.36 L313.67 147.44 L332.11 152.45 L346.26 152.08 L360.27 159.92 L372.37 170.54 L379.67 173.27 L387.78 173.65 L391.21 176.64 L394.43 188.71 L396.0 194.44 L392.23 210.1 L387.41 216.29 L374.05 229.48 L368.01 240.19 L361.0 248.4 L358.63 248.59 L355.98 255.56 L356.65 273.31 L354.01 287.92 L353.0 294.17 L350.01 297.91 L348.33 310.57 L338.72 322.94 L337.11 332.73 L329.44 336.84 L327.22 342.52 L316.93 342.5 L302.02 346.14 L295.35 350.35 L284.73 353.12 L273.58 360.67 L265.56 370.06 L264.18 377.14 L265.76 382.37 L263.99 391.95 L261.83 396.57 L255.21 401.78 L244.7 418.46 L236.37 425.98 L229.92 430.41 L225.6 439.42 L219.33 444.84 L216.71 439.48 L220.89 434.98 L215.41 428.53 L207.97 423.3 L198.22 417.22 L194.7 417.5 L185.2 410.17 L179.05 411.18 Z"
+                  />
+                </clipPath>
+              </defs>
+
+              <path
+                class="brazil-map-shape"
+                d="M179.05 411.18 L191.69 398.26 L202.38 389.06 L208.75 385.2 L216.73 379.98 L216.92 372.41 L212.17 366.94 L207.47 368.76 L209.33 363.29 L210.62 357.69 L210.62 352.48 L207.21 350.76 L203.66 352.29 L200.12 351.87 L199.02 348.22 L198.14 339.54 L196.36 336.71 L189.96 334.14 L186.09 336.0 L176.09 334.18 L176.72 321.32 L173.92 316.05 L176.88 314.09 L175.97 308.69 L178.56 304.54 L180.25 297.07 L178.01 291.18 L172.83 288.52 L171.82 284.78 L173.21 279.31 L155.04 278.92 L151.4 267.88 L154.16 267.73 L154.04 263.64 L152.19 260.87 L151.77 255.39 L146.27 252.58 L140.31 252.68 L136.39 249.93 L129.98 248.05 L126.25 244.51 L115.64 242.94 L105.35 234.46 L106.11 228.1 L104.95 224.46 L105.96 217.36 L93.56 218.96 L88.56 222.52 L80.28 226.36 L78.16 229.23 L73.29 229.43 L66.24 228.63 L60.89 230.26 L56.58 229.18 L57.22 214.78 L49.44 220.37 L41.08 220.12 L37.5 215.07 L31.21 214.52 L33.21 210.45 L27.94 204.68 L24.0 196.15 L26.5 194.42 L26.49 190.41 L32.22 187.68 L31.27 182.56 L33.69 179.26 L34.38 174.84 L45.22 168.39 L52.98 166.56 L54.25 165.14 L62.79 165.58 L67.05 139.6 L67.27 135.49 L65.79 130.07 L61.59 126.61 L61.64 119.72 L66.97 118.16 L68.87 119.14 L69.19 115.51 L63.63 114.53 L63.52 108.6 L81.98 108.82 L85.11 105.55 L87.75 108.56 L89.59 114.15 L91.38 112.98 L96.6 117.99 L103.97 117.38 L105.8 114.48 L112.85 112.26 L116.75 110.71 L117.85 106.69 L124.62 104.0 L124.11 102.01 L116.08 101.19 L114.76 95.23 L115.15 88.87 L110.91 86.42 L112.68 85.54 L119.7 86.76 L127.23 89.12 L129.97 86.88 L136.78 85.41 L147.38 81.87 L150.85 78.25 L149.59 75.58 L154.52 75.16 L156.72 77.34 L155.49 81.5 L158.75 82.94 L160.92 87.34 L158.29 90.68 L156.78 98.75 L159.21 103.54 L159.9 107.92 L165.73 112.37 L170.38 112.84 L171.42 110.98 L174.42 110.57 L178.71 108.91 L181.79 106.39 L187.03 107.19 L189.34 106.85 L194.49 107.63 L195.34 105.69 L193.75 103.81 L194.7 101.07 L198.52 101.91 L203.0 100.94 L208.43 102.95 L212.56 104.9 L215.5 102.33 L217.62 102.73 L218.91 105.4 L223.45 104.72 L227.08 101.12 L229.99 94.14 L235.59 85.47 L238.82 85.02 L241.16 90.26 L246.48 106.84 L251.55 108.4 L251.8 114.94 L244.68 122.74 L247.62 125.6 L264.37 127.09 L264.72 136.58 L271.91 130.37 L283.84 133.77 L299.58 139.56 L304.2 145.11 L302.65 150.36 L313.67 147.44 L332.11 152.45 L346.26 152.08 L360.27 159.92 L372.37 170.54 L379.67 173.27 L387.78 173.65 L391.21 176.64 L394.43 188.71 L396.0 194.44 L392.23 210.1 L387.41 216.29 L374.05 229.48 L368.01 240.19 L361.0 248.4 L358.63 248.59 L355.98 255.56 L356.65 273.31 L354.01 287.92 L353.0 294.17 L350.01 297.91 L348.33 310.57 L338.72 322.94 L337.11 332.73 L329.44 336.84 L327.22 342.52 L316.93 342.5 L302.02 346.14 L295.35 350.35 L284.73 353.12 L273.58 360.67 L265.56 370.06 L264.18 377.14 L265.76 382.37 L263.99 391.95 L261.83 396.57 L255.21 401.78 L244.7 418.46 L236.37 425.98 L229.92 430.41 L225.6 439.42 L219.33 444.84 L216.71 439.48 L220.89 434.98 L215.41 428.53 L207.97 423.3 L198.22 417.22 L194.7 417.5 L185.2 410.17 L179.05 411.18 Z"
+              />
+              <g clip-path="url(#brazilClip)" id="biomeRegions"></g>
+              <g class="biome-map-labels" id="biomeMapLabels"></g>
+              <path
+                class="brazil-map-outline"
+                d="M179.05 411.18 L191.69 398.26 L202.38 389.06 L208.75 385.2 L216.73 379.98 L216.92 372.41 L212.17 366.94 L207.47 368.76 L209.33 363.29 L210.62 357.69 L210.62 352.48 L207.21 350.76 L203.66 352.29 L200.12 351.87 L199.02 348.22 L198.14 339.54 L196.36 336.71 L189.96 334.14 L186.09 336.0 L176.09 334.18 L176.72 321.32 L173.92 316.05 L176.88 314.09 L175.97 308.69 L178.56 304.54 L180.25 297.07 L178.01 291.18 L172.83 288.52 L171.82 284.78 L173.21 279.31 L155.04 278.92 L151.4 267.88 L154.16 267.73 L154.04 263.64 L152.19 260.87 L151.77 255.39 L146.27 252.58 L140.31 252.68 L136.39 249.93 L129.98 248.05 L126.25 244.51 L115.64 242.94 L105.35 234.46 L106.11 228.1 L104.95 224.46 L105.96 217.36 L93.56 218.96 L88.56 222.52 L80.28 226.36 L78.16 229.23 L73.29 229.43 L66.24 228.63 L60.89 230.26 L56.58 229.18 L57.22 214.78 L49.44 220.37 L41.08 220.12 L37.5 215.07 L31.21 214.52 L33.21 210.45 L27.94 204.68 L24.0 196.15 L26.5 194.42 L26.49 190.41 L32.22 187.68 L31.27 182.56 L33.69 179.26 L34.38 174.84 L45.22 168.39 L52.98 166.56 L54.25 165.14 L62.79 165.58 L67.05 139.6 L67.27 135.49 L65.79 130.07 L61.59 126.61 L61.64 119.72 L66.97 118.16 L68.87 119.14 L69.19 115.51 L63.63 114.53 L63.52 108.6 L81.98 108.82 L85.11 105.55 L87.75 108.56 L89.59 114.15 L91.38 112.98 L96.6 117.99 L103.97 117.38 L105.8 114.48 L112.85 112.26 L116.75 110.71 L117.85 106.69 L124.62 104.0 L124.11 102.01 L116.08 101.19 L114.76 95.23 L115.15 88.87 L110.91 86.42 L112.68 85.54 L119.7 86.76 L127.23 89.12 L129.97 86.88 L136.78 85.41 L147.38 81.87 L150.85 78.25 L149.59 75.58 L154.52 75.16 L156.72 77.34 L155.49 81.5 L158.75 82.94 L160.92 87.34 L158.29 90.68 L156.78 98.75 L159.21 103.54 L159.9 107.92 L165.73 112.37 L170.38 112.84 L171.42 110.98 L174.42 110.57 L178.71 108.91 L181.79 106.39 L187.03 107.19 L189.34 106.85 L194.49 107.63 L195.34 105.69 L193.75 103.81 L194.7 101.07 L198.52 101.91 L203.0 100.94 L208.43 102.95 L212.56 104.9 L215.5 102.33 L217.62 102.73 L218.91 105.4 L223.45 104.72 L227.08 101.12 L229.99 94.14 L235.59 85.47 L238.82 85.02 L241.16 90.26 L246.48 106.84 L251.55 108.4 L251.8 114.94 L244.68 122.74 L247.62 125.6 L264.37 127.09 L264.72 136.58 L271.91 130.37 L283.84 133.77 L299.58 139.56 L304.2 145.11 L302.65 150.36 L313.67 147.44 L332.11 152.45 L346.26 152.08 L360.27 159.92 L372.37 170.54 L379.67 173.27 L387.78 173.65 L391.21 176.64 L394.43 188.71 L396.0 194.44 L392.23 210.1 L387.41 216.29 L374.05 229.48 L368.01 240.19 L361.0 248.4 L358.63 248.59 L355.98 255.56 L356.65 273.31 L354.01 287.92 L353.0 294.17 L350.01 297.91 L348.33 310.57 L338.72 322.94 L337.11 332.73 L329.44 336.84 L327.22 342.52 L316.93 342.5 L302.02 346.14 L295.35 350.35 L284.73 353.12 L273.58 360.67 L265.56 370.06 L264.18 377.14 L265.76 382.37 L263.99 391.95 L261.83 396.57 L255.21 401.78 L244.7 418.46 L236.37 425.98 L229.92 430.41 L225.6 439.42 L219.33 444.84 L216.71 439.48 L220.89 434.98 L215.41 428.53 L207.97 423.3 L198.22 417.22 L194.7 417.5 L185.2 410.17 L179.05 411.18 Z"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <aside class="biome-info-card" id="biomeInfo" aria-live="polite">
+          <p class="eyebrow">Escolha um bioma</p>
+          <h2 id="biomeInfoTitle">Vamos explorar?</h2>
+          <img
+            id="biomeInfoImage"
+            src="assets/guardioes-hero.png"
+            alt="Robozinho explorador diante de biomas brasileiros"
+          />
+          <p id="biomeInfoShort">
+            Toque em uma parte do mapa para conhecer uma historinha do bioma.
+          </p>
+          <div class="clues biome-info-facts" id="biomeInfoFacts"></div>
+          <p class="biome-story" id="biomeInfoStory">
+            Cada lugar tem pistas: água, sol, árvores, campo, comida e abrigo.
+          </p>
+          <button class="primary-button" id="startButton" type="button">
+            Começar aventura
+          </button>
+        </aside>
+      </section>
+
+      <section class="mission-card biome-screen is-hidden" id="mission" aria-live="polite">
+        <header class="mission-header">
+          <div>
+            <p class="eyebrow" id="roundLabel">Ambiente 1 de 3</p>
+            <h2 id="missionTitle">Ajude o animal perdido</h2>
+          </div>
+          <div class="header-actions">
+            <button class="secondary-button" type="button" data-back-hub>Hub</button>
+            <button class="voice-button" id="voiceButton" type="button">
+              🔊 Ouvir
+            </button>
+          </div>
+        </header>
+
+        <div class="environment-panel" id="environmentPanel">
+          <div class="environment-art" id="environmentArt" role="img"></div>
+          <div class="environment-info">
+            <p class="narration" id="narration"></p>
+            <div class="clues" id="clues"></div>
+          </div>
+        </div>
+
+        <div class="choice-grid exploration-grid" id="choiceGrid" aria-label="Lugares para explorar"></div>
+
+        <section class="feedback is-hidden" id="feedback">
+          <div class="feedback-badge" id="feedbackBadge"></div>
+          <div>
+            <h3 id="feedbackTitle"></h3>
+            <p id="feedbackText"></p>
+          </div>
+        </section>
+
+        <section class="adaptation-card is-hidden" id="adaptationCard">
+          <p class="eyebrow">Pista do corpo</p>
+          <h3 id="adaptationQuestion"></h3>
+          <div class="adaptation-options" id="adaptationOptions"></div>
+        </section>
+
+        <div class="mission-actions">
+          <button class="secondary-button" id="tryAgainButton" type="button">
+            Tentar outro
+          </button>
+          <button class="primary-button" id="nextButton" type="button">
+            Próximo lugar
+          </button>
+        </div>
+      </section>
+
+      <section class="complete-card biome-screen is-hidden" id="completeCard">
+        <p class="eyebrow">Missão completa</p>
+        <h2>Você descobriu onde a vida combina!</h2>
+        <p>
+          Você explorou lugares, comparou pistas e descobriu que os seres vivos
+          ficam melhor quando o ambiente combina com o que eles precisam.
+        </p>
+        <button class="primary-button" id="restartButton" type="button">
+          Jogar de novo
+        </button>
+        <button class="secondary-button" type="button" data-back-hub>
+          Voltar ao hub
+        </button>
+      </section>
+
+      <section class="world-game is-hidden" id="worldGame" aria-labelledby="worldTitle">
+        <header class="world-header">
+          <button class="back-button" type="button" data-back-hub>← Hub</button>
+          <div>
+            <p class="eyebrow">Viagem pelo Mundo</p>
+            <h1 id="worldTitle">Gire o planeta e escolha um país</h1>
+          </div>
+          <button class="secondary-button" type="button" id="toggleCountryBrowser">
+            Países
+          </button>
+        </header>
+
+        <div class="world-layout">
+          <section class="globe-panel" aria-label="Globo terrestre 3D">
+            <div class="globe-toolbar">
+              <span id="dayNightLabel">Ciclo: amanhecer</span>
+              <div class="globe-toolbar-actions">
+                <button class="icon-button vr-button" type="button" id="vrButton" aria-label="Entrar em realidade virtual">
+                  VR
+                </button>
+                <button class="icon-button" type="button" id="toggleFlagsButton" aria-label="Mostrar bandeiras">
+                  ⚑
+                </button>
+                <button class="icon-button" type="button" id="pauseGlobeButton" aria-label="Pausar globo">
+                  ⏸
+                </button>
+              </div>
+            </div>
+            <div class="globe-controls" aria-label="Controles do globo">
+              <button class="globe-control-button" type="button" data-globe-control="up" aria-label="Girar para cima">↑</button>
+              <button class="globe-control-button" type="button" data-globe-control="left" aria-label="Girar para a esquerda">←</button>
+              <button class="globe-control-button" type="button" data-globe-control="right" aria-label="Girar para a direita">→</button>
+              <button class="globe-control-button" type="button" data-globe-control="down" aria-label="Girar para baixo">↓</button>
+              <button class="globe-control-button" type="button" data-globe-control="zoom-in" aria-label="Aproximar">+</button>
+              <button class="globe-control-button" type="button" data-globe-control="zoom-out" aria-label="Afastar">−</button>
+              <button class="globe-control-button reset" type="button" data-globe-control="reset" aria-label="Centralizar país">◎</button>
+            </div>
+            <div id="globeStage" class="globe-stage">
+              <canvas id="globeCanvas" aria-label="Globo terrestre com países clicáveis"></canvas>
+            </div>
+            <div class="country-browser is-hidden" id="countryBrowser">
+              <div class="country-browser-header">
+                <div>
+                  <p class="eyebrow">Escolha por lista</p>
+                  <span class="source-status" id="sourceStatus">Carregando dados reais...</span>
+                </div>
+                <button class="icon-button" type="button" id="closeCountryBrowser" aria-label="Fechar países">
+                  ×
+                </button>
+              </div>
+              <div class="country-tools">
+                <label class="country-search-label" for="countrySearch">Buscar país</label>
+                <input
+                  id="countrySearch"
+                  class="country-search"
+                  type="search"
+                  autocomplete="off"
+                  aria-label="Buscar país"
+                />
+              </div>
+              <div class="country-strip" id="countryStrip" aria-label="Lista de países"></div>
+            </div>
+          </section>
+
+          <aside class="country-panel is-hidden" id="countryPanel" aria-live="polite">
+            <button class="country-panel-close" type="button" id="closeCountryPanel" aria-label="Fechar detalhes">
+              ×
+            </button>
+            <div class="country-heading">
+              <span class="country-flag" id="countryFlag">🌎</span>
+              <div>
+                <p class="eyebrow" id="countryRegion">Planeta Terra</p>
+                <h2 id="countryName">Escolha um país</h2>
+              </div>
+            </div>
+
+            <dl class="country-stats">
+              <div>
+                <dt>População</dt>
+                <dd id="countryPopulation">-</dd>
+              </div>
+              <div>
+                <dt>Capital</dt>
+                <dd id="countryCapital">-</dd>
+              </div>
+            </dl>
+
+            <section class="country-section">
+              <h3>Dados reais</h3>
+              <div class="export-list" id="countryExports"></div>
+            </section>
+
+            <section class="country-section">
+              <h3>História rápida</h3>
+              <p id="countryHistory"></p>
+            </section>
+
+            <section class="country-section music-row">
+              <div>
+                <h3>Cultura e música</h3>
+                <p id="countryMusic"></p>
+              </div>
+              <button class="voice-button" type="button" id="musicButton">Ouvir</button>
+            </section>
+
+            <section class="country-section">
+              <h3>Google Maps / Street View</h3>
+              <div class="landmark-list" id="landmarkList"></div>
+              <div class="map-actions">
+                <a class="map-link" id="mapsLink" href="#" target="_blank" rel="noopener noreferrer">Abrir mapa</a>
+                <a class="map-link street" id="streetViewLink" href="#" target="_blank" rel="noopener noreferrer">Abrir Street View</a>
+              </div>
+              <iframe
+                id="streetViewFrame"
+                class="street-view-frame"
+                title="Exploração do ponto selecionado no Google Maps"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </section>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <script src="game-data.js"></script>
+    <script src="world-data.js"></script>
+    <script src="country-content.js"></script>
+    <script src="biome-geometry.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
