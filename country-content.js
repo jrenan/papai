@@ -669,10 +669,10 @@ const COUNTRY_AUDIO = {
   },
   arg: {
     greeting: {
-      phrase: "Hola",
+      phrase: "Buenos días",
       language: "espanhol",
-      translation: "Quer dizer oi.",
-      file: "LL-Q1321 (spa)-CaroEspinoza-HOLA.wav",
+      translation: "Quer dizer bom dia.",
+      file: "LL-Q1321 (spa)-Rodrigo5260-buenos días.wav",
       credit: "Lingua Libre / Wikimedia Commons",
     },
     music: {
@@ -684,10 +684,10 @@ const COUNTRY_AUDIO = {
   },
   per: {
     greeting: {
-      phrase: "Hola",
+      phrase: "Buenos días",
       language: "espanhol",
-      translation: "Quer dizer oi.",
-      file: "LL-Q1321 (spa)-CaroEspinoza-HOLA.wav",
+      translation: "Quer dizer bom dia.",
+      file: "LL-Q1321 (spa)-Rodrigo5260-buenos días.wav",
       credit: "Lingua Libre / Wikimedia Commons",
     },
     music: {
@@ -699,10 +699,10 @@ const COUNTRY_AUDIO = {
   },
   ven: {
     greeting: {
-      phrase: "Hola",
+      phrase: "Buenos días",
       language: "espanhol",
-      translation: "Quer dizer oi.",
-      file: "LL-Q1321 (spa)-CaroEspinoza-HOLA.wav",
+      translation: "Quer dizer bom dia.",
+      file: "LL-Q1321 (spa)-Rodrigo5260-buenos días.wav",
       credit: "Lingua Libre / Wikimedia Commons",
     },
     music: {
@@ -714,10 +714,10 @@ const COUNTRY_AUDIO = {
   },
   usa: {
     greeting: {
-      phrase: "Hello",
+      phrase: "Good morning",
       language: "inglês",
-      translation: "Quer dizer olá.",
-      file: "En-us-hello.ogg",
+      translation: "Quer dizer bom dia.",
+      file: "En-uk-good morning.ogg",
       credit: "Wikimedia Commons",
     },
     music: {
@@ -729,10 +729,10 @@ const COUNTRY_AUDIO = {
   },
   can: {
     greeting: {
-      phrase: "Bonjour",
+      phrase: "Comment ça va?",
       language: "francês",
-      translation: "Quer dizer bom dia ou olá.",
-      file: "LL-Q150 (fra)-Platinium12-Mbalatsara (Bonjour).wav",
+      translation: "Quer dizer como vai?",
+      file: "LL-Q150 (fra)-LoquaxFR-comment ça va.wav",
       credit: "Lingua Libre / Wikimedia Commons",
     },
     music: {
@@ -744,10 +744,10 @@ const COUNTRY_AUDIO = {
   },
   mex: {
     greeting: {
-      phrase: "Hola",
+      phrase: "Buenos días",
       language: "espanhol",
-      translation: "Quer dizer oi.",
-      file: "LL-Q1321 (spa)-CaroEspinoza-HOLA.wav",
+      translation: "Quer dizer bom dia.",
+      file: "LL-Q1321 (spa)-Rodrigo5260-buenos días.wav",
       credit: "Lingua Libre / Wikimedia Commons",
     },
     music: {
@@ -759,10 +759,10 @@ const COUNTRY_AUDIO = {
   },
   fra: {
     greeting: {
-      phrase: "Bonjour",
+      phrase: "Comment ça va?",
       language: "francês",
-      translation: "Quer dizer bom dia ou olá.",
-      file: "LL-Q150 (fra)-Platinium12-Mbalatsara (Bonjour).wav",
+      translation: "Quer dizer como vai?",
+      file: "LL-Q150 (fra)-LoquaxFR-comment ça va.wav",
       credit: "Lingua Libre / Wikimedia Commons",
     },
     music: {
@@ -774,10 +774,10 @@ const COUNTRY_AUDIO = {
   },
   esp: {
     greeting: {
-      phrase: "Hola",
+      phrase: "Buenos días",
       language: "espanhol",
-      translation: "Quer dizer oi.",
-      file: "LL-Q1321 (spa)-CaroEspinoza-HOLA.wav",
+      translation: "Quer dizer bom dia.",
+      file: "LL-Q1321 (spa)-Rodrigo5260-buenos días.wav",
       credit: "Lingua Libre / Wikimedia Commons",
     },
     music: {
@@ -804,10 +804,10 @@ const COUNTRY_AUDIO = {
   },
   ita: {
     greeting: {
-      phrase: "Ciao",
+      phrase: "Come stai?",
       language: "italiano",
-      translation: "Quer dizer oi ou tchau.",
-      file: "It-ciao.ogg",
+      translation: "Quer dizer como vai?",
+      file: "It-come stai.ogg",
       credit: "Wikimedia Commons",
     },
     music: {
@@ -819,10 +819,10 @@ const COUNTRY_AUDIO = {
   },
   irl: {
     greeting: {
-      phrase: "Hello",
+      phrase: "Good morning",
       language: "inglês",
-      translation: "Quer dizer olá.",
-      file: "En-us-hello.ogg",
+      translation: "Quer dizer bom dia.",
+      file: "En-uk-good morning.ogg",
       credit: "Wikimedia Commons",
     },
     music: {
@@ -834,10 +834,10 @@ const COUNTRY_AUDIO = {
   },
   chn: {
     greeting: {
-      phrase: "你好",
+      phrase: "你好吗?",
       language: "mandarim",
-      translation: "Quer dizer olá.",
-      file: "LL-Q9192 (cmn)-Luilui6666-你好.wav",
+      translation: "Quer dizer como vai?",
+      file: "LL-Q9192 (cmn)-Luilui6666-你好吗?.wav",
       credit: "Lingua Libre / Wikimedia Commons",
     },
     music: {
@@ -864,10 +864,10 @@ const COUNTRY_AUDIO = {
   },
   aus: {
     greeting: {
-      phrase: "Hello",
+      phrase: "Good morning",
       language: "inglês",
-      translation: "Quer dizer olá.",
-      file: "En-us-hello.ogg",
+      translation: "Quer dizer bom dia.",
+      file: "En-uk-good morning.ogg",
       credit: "Wikimedia Commons",
     },
     music: {
@@ -879,10 +879,10 @@ const COUNTRY_AUDIO = {
   },
   ner: {
     greeting: {
-      phrase: "Bonjour",
+      phrase: "Comment ça va?",
       language: "francês",
-      translation: "Quer dizer bom dia ou olá. No Níger também se falam muitas línguas locais.",
-      file: "LL-Q150 (fra)-Platinium12-Mbalatsara (Bonjour).wav",
+      translation: "Quer dizer como vai? No Níger também se falam muitas línguas locais.",
+      file: "LL-Q150 (fra)-LoquaxFR-comment ça va.wav",
       credit: "Lingua Libre / Wikimedia Commons",
     },
   },
