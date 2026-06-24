@@ -11,7 +11,7 @@ const COUNTRY_CONTENT = {
   },
   jpn: {
     summary:
-      "O Japão é formado por ilhas. Lá existem cidades muito modernas, templos antigos, trens rápidos e muitas tradições cuidadosas.",
+      "O Japão é formado por ilhas. Ele é lembrado por trens muito rápidos, tecnologia, desenhos animados, templos antigos e jardins bem cuidados.",
     music: "No Japão há tambores taiko, flautas de bambu e também músicas pop muito animadas.",
     landmarks: [
       { name: "Tóquio - Shibuya", lat: 35.6595, lon: 139.7005 },
@@ -41,7 +41,7 @@ const COUNTRY_CONTENT = {
   },
   fra: {
     summary:
-      "A França tem castelos, museus, montanhas, praias e cidades antigas. Paris é famosa por pontes, livros, arte e luzes.",
+      "A França é lembrada por Paris, a Torre Eiffel, museus, castelos, pães, queijos e muitas obras de arte.",
     music: "A chanson francesa conta histórias cantadas, muitas vezes com acordeão e voz suave.",
     landmarks: [
       { name: "Paris - Torre Eiffel", lat: 48.8584, lon: 2.2945 },
@@ -51,7 +51,7 @@ const COUNTRY_CONTENT = {
   },
   aus: {
     summary:
-      "A Austrália é uma ilha-continente. Ela tem desertos, praias, cidades grandes e culturas aborígenes muito antigas.",
+      "A Austrália é uma ilha-continente. Ela tem desertos, praias, cidades grandes, animais famosos e culturas aborígenes muito antigas.",
     music: "O didgeridoo é um instrumento aborígene com som grave e comprido.",
     landmarks: [
       { name: "Camberra - Parlamento", lat: -35.3082, lon: 149.1245 },
@@ -61,7 +61,7 @@ const COUNTRY_CONTENT = {
   },
   usa: {
     summary:
-      "Os Estados Unidos têm desertos, florestas, montanhas, cidades enormes e muitos povos que chegaram de vários lugares do mundo.",
+      "Os Estados Unidos têm cidades enormes, filmes, tecnologia, universidades, parques nacionais e muitos povos que chegaram de vários lugares do mundo.",
     music: "Jazz, blues, country, hip hop e rock são estilos muito importantes na música dos Estados Unidos.",
     landmarks: [
       { name: "Washington - Capitólio", lat: 38.8899, lon: -77.0091 },
@@ -71,7 +71,7 @@ const COUNTRY_CONTENT = {
   },
   can: {
     summary:
-      "O Canadá tem florestas, lagos, neve em muitas regiões e cidades onde se fala inglês e francês.",
+      "O Canadá tem florestas, lagos, neve em muitas regiões, povos indígenas e cidades onde se fala inglês e francês.",
     music: "No Canadá há músicas indígenas, folk, pop e canções em inglês e francês.",
     landmarks: [
       { name: "Ottawa - Parlamento", lat: 45.4248, lon: -75.6992 },
@@ -81,7 +81,7 @@ const COUNTRY_CONTENT = {
   },
   mex: {
     summary:
-      "O México tem pirâmides antigas, comidas coloridas, músicas alegres e cidades cheias de praças e mercados.",
+      "O México tem pirâmides antigas, comidas coloridas, mariachi, son jarocho e cidades cheias de praças e mercados.",
     music: "Mariachi é uma música mexicana com violinos, trompetes e vozes fortes.",
     landmarks: [
       { name: "Cidade do México - Zócalo", lat: 19.4326, lon: -99.1332 },
@@ -91,7 +91,7 @@ const COUNTRY_CONTENT = {
   },
   arg: {
     summary:
-      "A Argentina tem pampas, montanhas, geleiras e uma capital cheia de ruas largas, teatros e cafés.",
+      "A Argentina tem pampas, montanhas, geleiras, futebol, tango e uma capital cheia de teatros e cafés.",
     music: "O tango é uma música argentina marcada por dança, bandoneón e emoção.",
     landmarks: [
       { name: "Buenos Aires - Obelisco", lat: -34.6037, lon: -58.3816 },
@@ -111,7 +111,7 @@ const COUNTRY_CONTENT = {
   },
   per: {
     summary:
-      "O Peru tem montanhas dos Andes, floresta amazônica e cidades antigas feitas de pedra.",
+      "O Peru tem montanhas dos Andes, floresta amazônica, lhamas, comidas famosas e cidades antigas feitas de pedra.",
     music: "A música peruana usa flautas, tambores e danças dos Andes.",
     landmarks: [
       { name: "Lima - Plaza Mayor", lat: -12.0464, lon: -77.0306 },
@@ -121,7 +121,7 @@ const COUNTRY_CONTENT = {
   },
   gbr: {
     summary:
-      "O Reino Unido reúne países com castelos, universidades antigas, chuva famosa e cidades cheias de ônibus vermelhos.",
+      "O Reino Unido reúne países com castelos, universidades antigas, chuva famosa, reis e rainhas, música pop e ônibus vermelhos.",
     music: "Bandas de rock, corais e músicas tradicionais fazem parte da cultura do Reino Unido.",
     landmarks: [
       { name: "Londres - Big Ben", lat: 51.5007, lon: -0.1246 },
@@ -131,7 +131,7 @@ const COUNTRY_CONTENT = {
   },
   deu: {
     summary:
-      "A Alemanha tem florestas, castelos, trens, cidades antigas e muitos museus de ciência, arte e história.",
+      "A Alemanha tem florestas, castelos, carros, trens, cidades antigas e muitos museus de ciência, arte e história.",
     music: "A Alemanha é conhecida por música clássica, corais e também música moderna.",
     landmarks: [
       { name: "Berlim - Portão de Brandemburgo", lat: 52.5163, lon: 13.3777 },
@@ -141,7 +141,7 @@ const COUNTRY_CONTENT = {
   },
   ita: {
     summary:
-      "A Itália parece uma bota no mapa. Tem ruínas antigas, massas, praças, igrejas e muitas obras de arte.",
+      "A Itália parece uma bota no mapa. Ela é lembrada por massas, pizzas, ruínas antigas, praças, igrejas e muitas obras de arte.",
     music: "A ópera italiana usa vozes grandes para contar histórias cantadas.",
     landmarks: [
       { name: "Roma - Coliseu", lat: 41.8902, lon: 12.4922 },
@@ -151,7 +151,7 @@ const COUNTRY_CONTENT = {
   },
   esp: {
     summary:
-      "A Espanha tem praias, montanhas, cidades antigas, praças animadas e muitas festas com música e dança.",
+      "A Espanha tem praias, montanhas, cidades antigas, futebol, praças animadas e festas com música e dança.",
     music: "O flamenco usa palmas, violão, canto e dança forte.",
     landmarks: [
       { name: "Madri - Plaza Mayor", lat: 40.4154, lon: -3.7074 },
@@ -161,7 +161,7 @@ const COUNTRY_CONTENT = {
   },
   prt: {
     summary:
-      "Portugal fica perto do oceano Atlântico. Tem azulejos, castelos, praias e cidades com ruas de pedra.",
+      "Portugal fica perto do oceano Atlântico. Tem azulejos, castelos, praias, bacalhau, fado e cidades com ruas de pedra.",
     music: "O fado é uma música portuguesa cantada com emoção e guitarra portuguesa.",
     landmarks: [
       { name: "Lisboa - Torre de Belém", lat: 38.6916, lon: -9.216 },
@@ -171,7 +171,7 @@ const COUNTRY_CONTENT = {
   },
   chn: {
     summary:
-      "A China é muito grande e tem desertos, montanhas, rios, cidades enormes e invenções muito antigas.",
+      "A China é muito grande e tem desertos, montanhas, rios, cidades enormes, invenções antigas e algumas das maiores fábricas do mundo.",
     music: "A música chinesa pode usar instrumentos como erhu, pipa e flautas.",
     landmarks: [
       { name: "Pequim - Cidade Proibida", lat: 39.9163, lon: 116.3972 },
@@ -207,6 +207,16 @@ const COUNTRY_CONTENT = {
       { name: "Rabat - Torre Hassan", lat: 34.024, lon: -6.8224 },
       { name: "Marrakesh - Jemaa el-Fnaa", lat: 31.6258, lon: -7.9891 },
       { name: "Casablanca - Mesquita Hassan II", lat: 33.6085, lon: -7.6326 },
+    ],
+  },
+  ner: {
+    summary:
+      "O Níger fica no Sahel, perto do deserto do Saara. Ele tem cidades, rios, caravanas, povos nômades e muitas histórias contadas em família.",
+    music: "No Níger há músicas haúsa, zarma-songhai, tuaregues e fulas, com tambores, cordas, palmas e canto.",
+    landmarks: [
+      { name: "Niamey - Museu Nacional Boubou Hama", lat: 13.5166, lon: 2.1157 },
+      { name: "Niamey - Grande Mesquita", lat: 13.5253, lon: 2.1157 },
+      { name: "Agadez - Grande Mesquita", lat: 16.9742, lon: 7.9865 },
     ],
   },
   tur: {
@@ -641,6 +651,243 @@ const COUNTRY_CONTENT = {
   },
 };
 
+const COUNTRY_AUDIO = {
+  bra: {
+    greeting: {
+      phrase: "Bom dia",
+      language: "português",
+      translation: "Um jeito carinhoso de dizer bom dia.",
+      file: "LL-Q5146 (por)-Nelson Ricardo 2500-Bom dia..wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Samba de fato",
+      description: "Um samba brasileiro antigo, com ritmo de dança e história popular.",
+      file: "Samba de fato 1932.ogg",
+      credit: "Wikimedia Commons",
+    },
+  },
+  arg: {
+    greeting: {
+      phrase: "Hola",
+      language: "espanhol",
+      translation: "Quer dizer oi.",
+      file: "LL-Q1321 (spa)-CaroEspinoza-HOLA.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Tango rioplatense",
+      description: "Uma amostra de tango, música ligada a Buenos Aires e à região do Rio da Prata.",
+      file: "PDP-UY - Arturo de Nava, baritone solo with guitar - Tango de los negros - Victor-62206a-f87.flac",
+      credit: "Wikimedia Commons",
+    },
+  },
+  per: {
+    greeting: {
+      phrase: "Hola",
+      language: "espanhol",
+      translation: "Quer dizer oi.",
+      file: "LL-Q1321 (spa)-CaroEspinoza-HOLA.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Serranita - Huaynito",
+      description: "Um huayno andino antigo, com som que lembra as montanhas dos Andes.",
+      file: "Serranita - Huaynito - Escobedo y Núñez - Lima 22 Septiembre 1913.ogg",
+      credit: "Wikimedia Commons",
+    },
+  },
+  ven: {
+    greeting: {
+      phrase: "Hola",
+      language: "espanhol",
+      translation: "Quer dizer oi.",
+      file: "LL-Q1321 (spa)-CaroEspinoza-HOLA.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Alma Llanera no arpa",
+      description: "Uma melodia llanera tocada no arpa, instrumento muito lembrado nos llanos.",
+      file: "Alma Llanera - Instrumental al arpa.ogg",
+      credit: "Wikimedia Commons",
+    },
+  },
+  usa: {
+    greeting: {
+      phrase: "Hello",
+      language: "inglês",
+      translation: "Quer dizer olá.",
+      file: "En-us-hello.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Flauta nativa norte-americana",
+      description: "Um som de flauta ligado a povos indígenas da América do Norte.",
+      file: "Native American Flute.ogg",
+      credit: "Wikimedia Commons",
+    },
+  },
+  can: {
+    greeting: {
+      phrase: "Bonjour",
+      language: "francês",
+      translation: "Quer dizer bom dia ou olá.",
+      file: "LL-Q150 (fra)-Platinium12-Mbalatsara (Bonjour).wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Tambores e cantos First Nations",
+      description: "Um registro de Pow-Wow no Canadá, com tambores e vozes em grupo.",
+      file: "AUDIO First Nations Pow-Wow Drums and singers stereo.ogg",
+      credit: "Wikimedia Commons",
+    },
+  },
+  mex: {
+    greeting: {
+      phrase: "Hola",
+      language: "espanhol",
+      translation: "Quer dizer oi.",
+      file: "LL-Q1321 (spa)-CaroEspinoza-HOLA.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Son jarocho - La Bamba",
+      description: "Um trecho de son jarocho, tradição musical de Veracruz.",
+      file: "Yacatecuhtli, Son jarocho toca la Bamba.ogv",
+      credit: "Wikimedia Commons",
+    },
+  },
+  fra: {
+    greeting: {
+      phrase: "Bonjour",
+      language: "francês",
+      translation: "Quer dizer bom dia ou olá.",
+      file: "LL-Q150 (fra)-Platinium12-Mbalatsara (Bonjour).wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Chanson réaliste",
+      description: "Uma canção francesa urbana, estilo que conta histórias com voz bem expressiva.",
+      file: "J'ai soif, Chanson réaliste.ogg",
+      credit: "Wikimedia Commons",
+    },
+  },
+  esp: {
+    greeting: {
+      phrase: "Hola",
+      language: "espanhol",
+      translation: "Quer dizer oi.",
+      file: "LL-Q1321 (spa)-CaroEspinoza-HOLA.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Amostra de flamenco",
+      description: "Flamenco com violão e ritmo forte, muito associado à Andaluzia.",
+      file: "Flamenco sample by FRANCISCOKEEP.ogg",
+      credit: "Wikimedia Commons",
+    },
+  },
+  prt: {
+    greeting: {
+      phrase: "Bom dia",
+      language: "português",
+      translation: "Um jeito carinhoso de dizer bom dia.",
+      file: "LL-Q5146 (por)-Nelson Ricardo 2500-Bom dia..wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Tic Tac Fado Instrumental",
+      description: "Uma amostra instrumental de fado, tradição portuguesa cheia de sentimento.",
+      file: "Tic Tac Fado Instrumental.ogg",
+      credit: "Wikimedia Commons",
+    },
+  },
+  ita: {
+    greeting: {
+      phrase: "Ciao",
+      language: "italiano",
+      translation: "Quer dizer oi ou tchau.",
+      file: "It-ciao.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Tarantella napoletana",
+      description: "Uma tarantella italiana, dança rápida e alegre do sul da Itália.",
+      file: "Tarantella.ogg",
+      credit: "Wikimedia Commons",
+    },
+  },
+  irl: {
+    greeting: {
+      phrase: "Hello",
+      language: "inglês",
+      translation: "Quer dizer olá.",
+      file: "En-us-hello.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "The Mountain Road",
+      description: "Um reel irlandês tocado no bouzouki, com ritmo de dança tradicional.",
+      file: "The Mountain Road - Medium - Bouzouki.ogg",
+      credit: "Wikimedia Commons",
+    },
+  },
+  chn: {
+    greeting: {
+      phrase: "你好",
+      language: "mandarim",
+      translation: "Quer dizer olá.",
+      file: "LL-Q9192 (cmn)-Luilui6666-你好.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Yangguan Sandie no guqin",
+      description: "Uma peça tocada no guqin, instrumento chinês muito antigo.",
+      file: "Guqin-Yangguan Sandie.ogg",
+      credit: "Wikimedia Commons",
+    },
+  },
+  jpn: {
+    greeting: {
+      phrase: "こんにちは",
+      language: "japonês",
+      translation: "Quer dizer olá ou boa tarde.",
+      file: "Ja-konnichiwa.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Koto",
+      description: "Uma apresentação de koto, instrumento japonês de cordas.",
+      file: "Koto performance.ogg",
+      credit: "Wikimedia Commons",
+    },
+  },
+  aus: {
+    greeting: {
+      phrase: "Hello",
+      language: "inglês",
+      translation: "Quer dizer olá.",
+      file: "En-us-hello.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Didgeridoo",
+      description: "Uma amostra de didgeridoo, instrumento ligado a povos aborígenes da Austrália.",
+      file: "Hidden Tribe - Didgeridoo 1 Live.ogg",
+      credit: "Wikimedia Commons",
+    },
+  },
+  ner: {
+    greeting: {
+      phrase: "Bonjour",
+      language: "francês",
+      translation: "Quer dizer bom dia ou olá. No Níger também se falam muitas línguas locais.",
+      file: "LL-Q150 (fra)-Platinium12-Mbalatsara (Bonjour).wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+  },
+};
+
 const COUNTRY_EXPORTS = {
   bra: ["soja", "minério de ferro", "petróleo", "café", "carne"],
   jpn: ["carros", "máquinas", "eletrônicos", "peças de veículos", "robótica"],
@@ -663,6 +910,7 @@ const COUNTRY_EXPORTS = {
   ind: ["remédios", "petróleo refinado", "diamantes", "arroz", "roupas"],
   zaf: ["ouro", "platina", "carros", "minério de ferro", "frutas"],
   mar: ["fertilizantes", "carros", "roupas", "peixes", "frutas"],
+  ner: ["urânio", "ouro", "gado", "cebola", "feijão-fradinho"],
   tur: ["carros", "roupas", "máquinas", "aço", "alimentos"],
   kor: ["semicondutores", "carros", "navios", "eletrônicos", "máquinas"],
   idn: ["carvão", "óleo de palma", "gás natural", "níquel", "borracha"],

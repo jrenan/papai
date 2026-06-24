@@ -1177,6 +1177,51 @@ p {
   justify-content: space-between;
 }
 
+.country-audio-section {
+  display: grid;
+  gap: 10px;
+}
+
+.country-audio-card {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 3px solid #eef6f5;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #fff, #f4fbfa);
+}
+
+.country-audio-card .audio-label {
+  margin: 0 0 4px;
+  color: var(--green-dark);
+  font-size: 0.9rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.country-audio-card strong,
+.country-audio-card span {
+  display: block;
+}
+
+.country-audio-card audio {
+  width: 100%;
+}
+
+.country-audio-card video {
+  width: 100%;
+  max-height: 220px;
+  border-radius: 14px;
+  background: #16332e;
+}
+
+.country-audio-card a {
+  width: fit-content;
+  color: #4976d1;
+  font-weight: 900;
+}
+
 .street-view-frame {
   width: 100%;
   aspect-ratio: 16 / 9;

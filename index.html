@@ -308,6 +308,29 @@
               <button class="voice-button" type="button" id="musicButton">Ouvir</button>
             </section>
 
+            <section class="country-section country-audio-section is-hidden" id="countryAudioSection">
+              <h3>Fala e som do país</h3>
+              <div class="country-audio-card" id="greetingAudioCard">
+                <div>
+                  <p class="audio-label">Saudação</p>
+                  <strong id="greetingPhrase"></strong>
+                  <span id="greetingTranslation"></span>
+                </div>
+                <audio id="greetingAudio" controls preload="none"></audio>
+                <a id="greetingCredit" href="#" target="_blank" rel="noopener noreferrer">Fonte</a>
+              </div>
+              <div class="country-audio-card" id="musicAudioCard">
+                <div>
+                  <p class="audio-label">Música tradicional</p>
+                  <strong id="musicSampleTitle"></strong>
+                  <span id="musicSampleDescription"></span>
+                </div>
+                <audio id="musicSampleAudio" controls preload="none"></audio>
+                <video id="musicSampleVideo" class="country-audio-video is-hidden" controls playsinline preload="none"></video>
+                <a id="musicSampleCredit" href="#" target="_blank" rel="noopener noreferrer">Fonte</a>
+              </div>
+            </section>
+
             <section class="country-section">
               <h3>Google Maps / Street View</h3>
               <div class="landmark-list" id="landmarkList"></div>

@@ -63,6 +63,18 @@ const countryCapital = document.querySelector("#countryCapital");
 const countryExports = document.querySelector("#countryExports");
 const countryHistory = document.querySelector("#countryHistory");
 const countryMusic = document.querySelector("#countryMusic");
+const countryAudioSection = document.querySelector("#countryAudioSection");
+const greetingAudioCard = document.querySelector("#greetingAudioCard");
+const greetingPhrase = document.querySelector("#greetingPhrase");
+const greetingTranslation = document.querySelector("#greetingTranslation");
+const greetingAudio = document.querySelector("#greetingAudio");
+const greetingCredit = document.querySelector("#greetingCredit");
+const musicAudioCard = document.querySelector("#musicAudioCard");
+const musicSampleTitle = document.querySelector("#musicSampleTitle");
+const musicSampleDescription = document.querySelector("#musicSampleDescription");
+const musicSampleAudio = document.querySelector("#musicSampleAudio");
+const musicSampleVideo = document.querySelector("#musicSampleVideo");
+const musicSampleCredit = document.querySelector("#musicSampleCredit");
 const landmarkList = document.querySelector("#landmarkList");
 const streetViewFrame = document.querySelector("#streetViewFrame");
 const mapsLink = document.querySelector("#mapsLink");
@@ -590,6 +602,8 @@ function normalizeRestCountry(country, populationByName = new Map()) {
   }));
   const exportCatalog = typeof COUNTRY_EXPORTS !== "undefined" ? COUNTRY_EXPORTS : {};
   const manualExports = manualContent?.exports || exportCatalog[id] || [];
+  const audioCatalog = typeof COUNTRY_AUDIO !== "undefined" ? COUNTRY_AUDIO : {};
+  const audio = manualContent?.audio || audioCatalog[id] || null;
 
   return {
     id,
@@ -613,6 +627,7 @@ function normalizeRestCountry(country, populationByName = new Map()) {
     exports: manualExports,
     history: kidSummary,
     music: kidMusic,
+    audio,
     color: colorFromId(id),
     mapsUrl: country.maps?.googleMaps,
     landmarks: manualLandmarks?.length ? manualLandmarks : [defaultLandmark],
@@ -701,6 +716,18 @@ function hasStreetViewCoordinates(landmark) {
   return Number.isFinite(landmark.lat) && Number.isFinite(landmark.lon);
 }
 
+function commonsFileUrl(filename) {
+  return `https://commons.wikimedia.org/wiki/Special:Redirect/file/${encodeURIComponent(filename)}`;
+}
+
+function commonsPageUrl(filename) {
+  return `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(filename).replaceAll("%20", "_")}`;
+}
+
+function isVideoMedia(filename) {
+  return /\.(ogv|webm|mp4|mov)$/i.test(filename);
+}
+
 function getLandmarkQuery(landmark) {
   if (hasStreetViewCoordinates(landmark)) {
     return `${landmark.lat},${landmark.lon}`;
@@ -723,6 +750,48 @@ function makeStreetViewUrlForNewTab(landmark) {
   }
 
   return `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${encodeURIComponent(`${landmark.lat},${landmark.lon}`)}`;
+}
+
+function renderCountryAudio(country) {
+  const { audio } = country;
+  const hasGreeting = Boolean(audio?.greeting?.file);
+  const hasMusic = Boolean(audio?.music?.file);
+  countryAudioSection.classList.toggle("is-hidden", !hasGreeting && !hasMusic);
+
+  greetingAudioCard.classList.toggle("is-hidden", !hasGreeting);
+  if (hasGreeting) {
+    const greeting = audio.greeting;
+    greetingPhrase.textContent = `${greeting.phrase} (${greeting.language})`;
+    greetingTranslation.textContent = greeting.translation || "";
+    greetingAudio.src = commonsFileUrl(greeting.file);
+    greetingCredit.href = commonsPageUrl(greeting.file);
+    greetingCredit.textContent = greeting.credit || "Lingua Libre / Wikimedia Commons";
+  } else {
+    greetingAudio.removeAttribute("src");
+  }
+
+  musicAudioCard.classList.toggle("is-hidden", !hasMusic);
+  if (hasMusic) {
+    const music = audio.music;
+    const mediaUrl = commonsFileUrl(music.file);
+    const useVideo = isVideoMedia(music.file);
+    musicSampleTitle.textContent = music.title || "Áudio cultural";
+    musicSampleDescription.textContent = music.description || "";
+    musicSampleAudio.classList.toggle("is-hidden", useVideo);
+    musicSampleVideo.classList.toggle("is-hidden", !useVideo);
+    if (useVideo) {
+      musicSampleVideo.src = mediaUrl;
+      musicSampleAudio.removeAttribute("src");
+    } else {
+      musicSampleAudio.src = mediaUrl;
+      musicSampleVideo.removeAttribute("src");
+    }
+    musicSampleCredit.href = commonsPageUrl(music.file);
+    musicSampleCredit.textContent = music.credit || "Wikimedia Commons";
+  } else {
+    musicSampleAudio.removeAttribute("src");
+    musicSampleVideo.removeAttribute("src");
+  }
 }
 
 function renderCountryStrip() {
@@ -757,6 +826,7 @@ function renderCountryPanel() {
     .join("");
   countryHistory.textContent = country.history;
   countryMusic.textContent = country.music;
+  renderCountryAudio(country);
   landmarkList.innerHTML = country.landmarks
     .map(
       (item, index) => `
