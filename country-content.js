@@ -131,8 +131,8 @@ const COUNTRY_CONTENT = {
   },
   gbr: {
     summary:
-      "O Reino Unido reúne países com castelos, universidades antigas, chuva famosa, reis e rainhas, música pop e ônibus vermelhos.",
-    music: "Bandas de rock, corais e músicas tradicionais fazem parte da cultura do Reino Unido.",
+      "O Reino Unido reúne Inglaterra, Escócia, País de Gales e Irlanda do Norte. Tem castelos, universidades antigas, chuva famosa, reis e rainhas, música pop e ônibus vermelhos.",
+    music: "Bandas de rock, corais, música celta, gaitas de fole e canções tradicionais fazem parte da cultura do Reino Unido.",
     landmarks: [
       { name: "Londres - Big Ben", lat: 51.5007, lon: -0.1246 },
       { name: "Londres - Tower Bridge", lat: 51.5055, lon: -0.0754 },
@@ -481,8 +481,8 @@ const COUNTRY_CONTENT = {
   },
   blr: {
     summary:
-      "A Bielorrússia tem florestas, lagos, castelos e cidades com praças largas.",
-    music: "A música bielorrussa tem cantos populares, acordeão e danças de roda.",
+      "Belarus fica no leste da Europa. Tem florestas, lagos, castelos, cidades com praças largas, tratores, potássio e invernos bem frios.",
+    music: "A música bielorrussa tem cantos populares, acordeão, címbalo e danças de roda.",
     landmarks: [
       { name: "Minsk - Praça da Independência", lat: 53.8961, lon: 27.5486 },
       { name: "Castelo de Mir", lat: 53.4513, lon: 26.4726 },
@@ -591,8 +591,8 @@ const COUNTRY_CONTENT = {
   },
   khm: {
     summary:
-      "O Camboja tem templos muito antigos, arrozais, rios e histórias do antigo império Khmer.",
-    music: "A música cambojana usa xilofones, gongos, flautas e danças delicadas.",
+      "O Camboja fica no sudeste da Ásia. Tem templos muito antigos, arrozais, rios, mercados e histórias do antigo império Khmer.",
+    music: "A música cambojana usa roneat, gongos, flautas, tambores e danças delicadas.",
     landmarks: [
       { name: "Phnom Penh - Palácio Real", lat: 11.563, lon: 104.931 },
       { name: "Angkor Wat", lat: 13.4125, lon: 103.867 },
@@ -1047,6 +1047,126 @@ const COUNTRY_CONTENT = {
       { name: "Wellington - Parlamento Beehive", lat: -41.2784, lon: 174.7767 },
       { name: "Auckland - Sky Tower", lat: -36.8485, lon: 174.7622 },
       { name: "Milford Sound", lat: -44.6414, lon: 167.8974 },
+    ],
+  },
+  gab: {
+    summary:
+      "O Gabão fica na África Central, com muita floresta tropical e costa no Atlântico. Tem petróleo, manganês, gorilas, elefantes da floresta e parques nacionais enormes.",
+    music: "A música gabonesa usa tambores, canto, danças de máscaras e instrumentos de corda como o mvett em algumas tradições.",
+    landmarks: [
+      { name: "Libreville - Boulevard de l'Indépendance", lat: 0.3924, lon: 9.4536 },
+      { name: "Parque Nacional Loango", lat: -2.1667, lon: 9.6167 },
+      { name: "Lambaréné - rio Ogooué", lat: -0.7001, lon: 10.2406 },
+    ],
+  },
+  gin: {
+    summary:
+      "A Guiné fica na África Ocidental. Tem montanhas, rios que nascem por lá, bauxita, mercados, florestas e muitas tradições de dança e percussão.",
+    music: "A música guineense usa djembê, balafon, kora, canto e ritmos que chamam pessoas para dançar em roda.",
+    landmarks: [
+      { name: "Conacri - Grande Mesquita", lat: 9.537, lon: -13.6785 },
+      { name: "Conacri - Museu Nacional", lat: 9.5092, lon: -13.7122 },
+      { name: "Fouta Djallon - Dalaba", lat: 10.7, lon: -12.25 },
+    ],
+  },
+  uga: {
+    summary:
+      "Uganda fica no leste da África, perto do Lago Vitória. Tem nascentes do Nilo, montanhas, café, chá, gorilas-das-montanhas e muitas línguas.",
+    music: "A música ugandense usa tambores, amadinda, harpas, canto e danças de diferentes reinos e comunidades.",
+    landmarks: [
+      { name: "Kampala - Mesquita Nacional", lat: 0.3156, lon: 32.5736 },
+      { name: "Jinja - nascente do Nilo", lat: 0.4312, lon: 33.1856 },
+      { name: "Bwindi - floresta dos gorilas", lat: -1.052, lon: 29.62 },
+    ],
+  },
+  gha: {
+    summary:
+      "Gana fica na África Ocidental, no Golfo da Guiné. Tem cacau, ouro, tecidos kente, fortes antigos, mercados cheios e muita música dançante.",
+    music: "Highlife, hiplife, tambores, sinos e cantos em grupo fazem parte dos sons de Gana.",
+    landmarks: [
+      { name: "Acra - Black Star Square", lat: 5.5467, lon: -0.1914 },
+      { name: "Cape Coast Castle", lat: 5.1036, lon: -1.2417 },
+      { name: "Parque Nacional Kakum", lat: 5.3506, lon: -1.3831 },
+    ],
+  },
+  rou: {
+    summary:
+      "A Romênia fica no leste da Europa. Tem montanhas dos Cárpatos, o rio Danúbio, castelos, vilas antigas, trigo, carros e histórias famosas da Transilvânia.",
+    music: "A música romena usa violino, acordeão, flautas, cimbalom e danças rápidas em festas.",
+    landmarks: [
+      { name: "Bucareste - Palácio do Parlamento", lat: 44.4275, lon: 26.0875 },
+      { name: "Castelo de Bran", lat: 45.5151, lon: 25.367 },
+      { name: "Sibiu - Piața Mare", lat: 45.797, lon: 24.1512 },
+    ],
+  },
+  lao: {
+    summary:
+      "Laos fica no sudeste da Ásia e não tem saída para o mar. Tem o rio Mekong, montanhas, templos budistas, arroz, vilas tranquilas e elefantes em sua história.",
+    music: "A música do Laos usa khene, canto lam, tambores e melodias que acompanham danças e festas.",
+    landmarks: [
+      { name: "Vientiane - Pha That Luang", lat: 17.9769, lon: 102.635 },
+      { name: "Luang Prabang - Monte Phousi", lat: 19.8897, lon: 102.1367 },
+      { name: "Planície dos Jarros", lat: 19.43, lon: 103.15 },
+    ],
+  },
+  guy: {
+    summary:
+      "A Guiana fica no norte da América do Sul. Tem floresta amazônica, rios, cachoeiras enormes, ouro, arroz, açúcar e muitas culturas vivendo juntas.",
+    music: "Calipso, chutney, soca e músicas indígenas misturam tambores, cordas, canto e ritmos do Caribe e da América do Sul.",
+    landmarks: [
+      { name: "Georgetown - Stabroek Market", lat: 6.8136, lon: -58.1661 },
+      { name: "Kaieteur Falls", lat: 5.175, lon: -59.4808 },
+      { name: "Georgetown - Catedral de St. George", lat: 6.8127, lon: -58.1623 },
+    ],
+  },
+  kgz: {
+    summary:
+      "O Quirguistão fica na Ásia Central. Tem montanhas altíssimas, lagos azuis, cavalos, iurtas, nozes, ouro e antigas rotas de viajantes.",
+    music: "A música quirguiz usa komuz, canto épico, harpas de boca e melodias que lembram cavalos e montanhas.",
+    landmarks: [
+      { name: "Bishkek - Ala-Too Square", lat: 42.8765, lon: 74.6038 },
+      { name: "Lago Issyk-Kul", lat: 42.45, lon: 77.25 },
+      { name: "Tash Rabat", lat: 40.8226, lon: 75.2887 },
+    ],
+  },
+  sen: {
+    summary:
+      "O Senegal fica na África Ocidental, de frente para o Atlântico. Tem Dakar, pesca, amendoim, baobás, muitas línguas e a ilha de Gorée, que guarda memórias importantes.",
+    music: "Mbalax, sabar, kora, tambores e cantos de griôs fazem a música senegalesa soar viva e cheia de ritmo.",
+    landmarks: [
+      { name: "Dakar - Monumento da Renascença Africana", lat: 14.7229, lon: -17.4942 },
+      { name: "Ilha de Gorée", lat: 14.667, lon: -17.3984 },
+      { name: "Lago Rosa", lat: 14.8386, lon: -17.2347 },
+    ],
+  },
+  syr: {
+    summary:
+      "A Síria fica no Oriente Médio. Tem cidades muito antigas, desertos, oliveiras, mercados históricos e lugares que guardam histórias de muitos povos.",
+    music: "A música síria usa oud, qanun, ney, darbuka e canto árabe com melodias cheias de curvas.",
+    landmarks: [
+      { name: "Damasco - Mesquita dos Omíadas", lat: 33.5115, lon: 36.3064 },
+      { name: "Aleppo - Cidadela", lat: 36.1991, lon: 37.1629 },
+      { name: "Palmira - ruínas antigas", lat: 34.55, lon: 38.2667 },
+    ],
+  },
+  ury: {
+    summary:
+      "O Uruguai fica no sul da América do Sul. Tem pampas, praias, futebol, carne, mate, cidades tranquilas e muita ligação com o Rio da Prata.",
+    music: "Candombe, murga e tango uruguaio usam tambores, coros, teatro de rua e melodias do Rio da Prata.",
+    landmarks: [
+      { name: "Montevidéu - Plaza Independencia", lat: -34.9065, lon: -56.1991 },
+      { name: "Colonia del Sacramento", lat: -34.4706, lon: -57.845 },
+      { name: "Punta del Este - Los Dedos", lat: -34.9596, lon: -54.9378 },
+    ],
+  },
+  sur: {
+    summary:
+      "O Suriname fica no norte da América do Sul. Tem muita floresta amazônica, rios, ouro, arroz e uma mistura de povos indígenas, africanos, indianos, javaneses e europeus.",
+    music: "Kaseko, kawina e músicas de várias comunidades usam tambores, sopros, canto e ritmos de festa.",
+    landmarks: [
+      { name: "Paramaribo - centro histórico", lat: 5.8269, lon: -55.1613 },
+      { name: "Forte Zeelandia", lat: 5.8256, lon: -55.1507 },
+      { name: "Reserva Natural Central do Suriname", lat: 4.0, lon: -56.5 },
     ],
   },
   cze: {
@@ -2067,6 +2187,189 @@ const COUNTRY_AUDIO = {
       description: "Cantos, haka, poi e instrumentos tradicionais contam histórias de lugares e ancestrais.",
     },
   },
+  gab: {
+    greeting: {
+      phrase: "Comment ça va?",
+      language: "francês",
+      translation: "Quer dizer como vai? No Gabão também se falam muitas línguas locais.",
+      file: "LL-Q150 (fra)-LoquaxFR-comment ça va.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Mvett, tambores e danças",
+      description: "Tradições gabonesas usam canto, tambores, danças de máscara e instrumentos de corda.",
+    },
+  },
+  gin: {
+    greeting: {
+      phrase: "Comment ça va?",
+      language: "francês",
+      translation: "Quer dizer como vai? A Guiné também tem muitas línguas africanas.",
+      file: "LL-Q150 (fra)-LoquaxFR-comment ça va.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Djembê, kora e balafon",
+      description: "Percussão forte, cordas e coros chamam as pessoas para dançar em roda.",
+    },
+  },
+  gbr: {
+    greeting: {
+      phrase: "Good morning",
+      language: "inglês",
+      translation: "Quer dizer bom dia.",
+      file: "En-uk-good morning.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Folk celta, corais e gaitas",
+      description: "Violinos, gaitas de fole, coros e bandas contam muitos pedaços da música do Reino Unido.",
+    },
+  },
+  uga: {
+    greeting: {
+      phrase: "Good morning",
+      language: "inglês",
+      translation: "Quer dizer bom dia. Em Uganda também se falam luganda, suaíli e muitas outras línguas.",
+      file: "En-uk-good morning.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Tambores e amadinda",
+      description: "Tambores, xilofones amadinda, harpas e cantos acompanham danças de muitas comunidades.",
+    },
+  },
+  gha: {
+    greeting: {
+      phrase: "Good morning",
+      language: "inglês",
+      translation: "Quer dizer bom dia. Em Gana também se falam akan, ewe, ga e outras línguas.",
+      file: "En-uk-good morning.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Highlife e tambores",
+      description: "Highlife mistura guitarras, metais, percussão e canto; tambores também contam histórias.",
+    },
+  },
+  rou: {
+    greeting: {
+      phrase: "Bună dimineața",
+      language: "romeno",
+      translation: "Quer dizer bom dia.",
+    },
+    music: {
+      title: "Violino, cimbalom e danças",
+      description: "A música romena pode ser rápida, com violino, acordeão, cimbalom e palmas.",
+    },
+  },
+  lao: {
+    greeting: {
+      phrase: "ສະບາຍດີ",
+      language: "laosiano",
+      translation: "Sabaidee, um jeito de dizer olá.",
+    },
+    music: {
+      title: "Khene e lam",
+      description: "O khene é um instrumento de sopro de bambu usado em músicas e danças do Laos.",
+    },
+  },
+  guy: {
+    greeting: {
+      phrase: "Good morning",
+      language: "inglês",
+      translation: "Quer dizer bom dia.",
+      file: "En-uk-good morning.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Calipso, chutney e soca",
+      description: "Ritmos do Caribe e da América do Sul aparecem com tambores, cordas e canto.",
+    },
+  },
+  blr: {
+    greeting: {
+      phrase: "Добрай раніцы",
+      language: "bielorrusso",
+      translation: "Quer dizer bom dia.",
+    },
+    music: {
+      title: "Acordeão e címbalo",
+      description: "Cantos populares, acordeão, címbalo e danças de roda aparecem em festas bielorrussas.",
+    },
+  },
+  kgz: {
+    greeting: {
+      phrase: "Салам",
+      language: "quirguiz",
+      translation: "Quer dizer olá.",
+    },
+    music: {
+      title: "Komuz e canto épico",
+      description: "O komuz tem três cordas e acompanha histórias cantadas de montanhas e cavalos.",
+    },
+  },
+  sen: {
+    greeting: {
+      phrase: "Comment ça va?",
+      language: "francês",
+      translation: "Quer dizer como vai? No Senegal também se fala wolof e outras línguas.",
+      file: "LL-Q150 (fra)-LoquaxFR-comment ça va.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Mbalax, sabar e kora",
+      description: "Tambores sabar, kora e canto de griôs dão muito ritmo à música senegalesa.",
+    },
+  },
+  syr: {
+    greeting: {
+      phrase: "صباح الخير",
+      language: "árabe",
+      translation: "Quer dizer bom dia.",
+      file: "Ṣabāḥ al-kháyr2.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Oud, qanun e maqam",
+      description: "A música síria usa cordas, flautas, percussão e canto árabe com melodias expressivas.",
+    },
+  },
+  khm: {
+    greeting: {
+      phrase: "ជំរាបសួរ",
+      language: "khmer",
+      translation: "Uma forma educada de dizer olá.",
+    },
+    music: {
+      title: "Roneat, gongos e danças khmer",
+      description: "Xilofones, gongos, flautas e tambores acompanham danças tradicionais do Camboja.",
+    },
+  },
+  ury: {
+    greeting: {
+      phrase: "Buenos días",
+      language: "espanhol",
+      translation: "Quer dizer bom dia.",
+      file: "LL-Q1321 (spa)-Rodrigo5260-buenos días.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Candombe e murga",
+      description: "Tambores, coros e teatro de rua fazem parte de sons muito uruguaios.",
+    },
+  },
+  sur: {
+    greeting: {
+      phrase: "Goedemorgen",
+      language: "holandês",
+      translation: "Quer dizer bom dia. No Suriname também se fala sranan tongo e outras línguas.",
+    },
+    music: {
+      title: "Kaseko e kawina",
+      description: "Tambores, sopros e canto mostram a mistura cultural do Suriname.",
+    },
+  },
 };
 
 const COUNTRY_EXPORTS = {
@@ -2132,6 +2435,18 @@ const COUNTRY_EXPORTS = {
   omn: ["petróleo", "gás natural liquefeito", "plásticos", "peixes", "tâmaras"],
   ecu: ["petróleo", "camarão", "banana", "flores", "cacau"],
   nzl: ["laticínios", "carne", "madeira", "vinho", "lã"],
+  gab: ["petróleo", "manganês", "madeira", "borracha", "óleo de palma"],
+  gin: ["bauxita", "ouro", "alumínio", "café", "peixes"],
+  uga: ["café", "ouro", "chá", "peixes", "cacau"],
+  gha: ["ouro", "cacau", "petróleo", "castanha de caju", "manganês"],
+  rou: ["carros", "máquinas", "trigo", "produtos de petróleo", "eletrônicos"],
+  lao: ["eletricidade", "cobre", "ouro", "café", "borracha"],
+  guy: ["petróleo", "ouro", "arroz", "açúcar", "bauxita"],
+  kgz: ["ouro", "algodão", "feijão", "tecidos", "carne"],
+  sen: ["peixes", "fosfatos", "amendoim", "ouro", "cimento"],
+  syr: ["azeite", "algodão", "fosfatos", "frutas", "tecidos"],
+  ury: ["carne bovina", "celulose", "soja", "laticínios", "arroz"],
+  sur: ["ouro", "petróleo", "arroz", "banana", "madeira"],
   kor: ["semicondutores", "carros", "navios", "eletrônicos", "máquinas"],
   idn: ["carvão", "óleo de palma", "gás natural", "níquel", "borracha"],
   afg: ["carvão", "tapetes", "frutas secas", "uva-passa", "plantas medicinais"],
