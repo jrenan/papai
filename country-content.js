@@ -111,8 +111,8 @@ const COUNTRY_CONTENT = {
   },
   chl: {
     summary:
-      "O Chile é comprido e estreito. Tem deserto no norte, montanhas altas e gelo no sul.",
-    music: "A cueca é uma dança tradicional chilena com palmas, lenços e violão.",
+      "O Chile parece uma fita comprida na beira da América do Sul. Tem o deserto do Atacama no norte, os Andes ao lado, vinhas, cidades costeiras e gelo perto da Patagônia.",
+    music: "A cueca é uma dança tradicional chilena com lenços, palmas, violão e jeito de brincadeira dançada.",
     landmarks: [
       { name: "Santiago - Plaza de Armas", lat: -33.4372, lon: -70.6506 },
       { name: "Valparaíso - Cerro Alegre", lat: -33.0393, lon: -71.628 },
@@ -231,8 +231,8 @@ const COUNTRY_CONTENT = {
   },
   tur: {
     summary:
-      "A Turquia liga a Europa e a Ásia. Tem mesquitas, mercados, ruínas antigas e paisagens com balões no céu.",
-    music: "A música turca usa instrumentos de corda, flautas e ritmos de dança.",
+      "A Turquia fica entre a Europa e a Ásia. Tem mercados cheios de cores, mesquitas, ruínas de povos antigos, comidas famosas e a Capadócia, onde balões sobem no céu.",
+    music: "A música turca usa saz, darbuka, ney, canto e ritmos de dança que aparecem em festas, histórias e cerimônias.",
     landmarks: [
       { name: "Ancara - Anıtkabir", lat: 39.9251, lon: 32.8369 },
       { name: "Istambul - Santa Sofia", lat: 41.0086, lon: 28.9802 },
@@ -261,8 +261,8 @@ const COUNTRY_CONTENT = {
   },
   afg: {
     summary:
-      "O Afeganistão tem montanhas muito altas, vales secos e cidades antigas por onde passaram muitos viajantes e comerciantes.",
-    music: "A música afegã usa instrumentos como rubab, tabla e cantos cheios de história.",
+      "O Afeganistão tem montanhas muito altas, vales secos e cidades antigas por onde já passaram caravanas, estudiosos e comerciantes entre a Ásia Central e o sul da Ásia.",
+    music: "A música afegã usa rubab, tabla, harmônio e cantos que contam histórias de família, viagem e saudade.",
     landmarks: [
       { name: "Cabul - Jardins de Babur", lat: 34.5033, lon: 69.1581 },
       { name: "Bamiyan - Vale dos Budas", lat: 34.832, lon: 67.826 },
@@ -727,6 +727,126 @@ const COUNTRY_CONTENT = {
       { name: "Dodoma - centro da capital", lat: -6.163, lon: 35.7516 },
       { name: "Monte Kilimanjaro", lat: -3.0674, lon: 37.3556 },
       { name: "Zanzibar - Stone Town", lat: -6.1622, lon: 39.1921 },
+    ],
+  },
+  nga: {
+    summary:
+      "A Nigéria fica na África Ocidental e é o país com mais pessoas da África. Tem cidades enormes como Lagos, a capital Abuja, muitos idiomas, filmes de Nollywood, rios, mercados e petróleo.",
+    music: "Na Nigéria há afrobeats, juju, highlife, fuji, tambores falantes e muitos ritmos que fazem as cidades dançarem.",
+    landmarks: [
+      { name: "Abuja - Mesquita Nacional", lat: 9.0579, lon: 7.4891 },
+      { name: "Lagos - National Theatre", lat: 6.4769, lon: 3.3703 },
+      { name: "Olumo Rock", lat: 7.1611, lon: 3.3486 },
+    ],
+  },
+  ven: {
+    summary:
+      "A Venezuela fica no norte da América do Sul, com costa no Caribe, planícies chamadas llanos, petróleo, montanhas e o Salto Ángel, a cachoeira mais alta do mundo.",
+    music: "O joropo é uma música venezuelana ligada aos llanos, com harpa, cuatro, maracas e dança rápida.",
+    landmarks: [
+      { name: "Caracas - Plaza Bolívar", lat: 10.5061, lon: -66.9146 },
+      { name: "Salto Ángel", lat: 5.9675, lon: -62.5356 },
+      { name: "Canaima - lagoa e quedas", lat: 6.2411, lon: -62.8548 },
+    ],
+  },
+  pak: {
+    summary:
+      "O Paquistão fica no sul da Ásia. Tem o rio Indo, montanhas altíssimas, desertos, campos de trigo, cidades como Karachi e Lahore, tecidos coloridos e muita paixão por críquete.",
+    music: "Qawwali, ghazal e músicas folclóricas usam vozes fortes, tabla, harmônio e palmas para criar canções cheias de energia.",
+    landmarks: [
+      { name: "Islamabad - Mesquita Faisal", lat: 33.7294, lon: 73.0371 },
+      { name: "Lahore - Forte de Lahore", lat: 31.5889, lon: 74.3159 },
+      { name: "Karachi - Mausoléu Mazar-e-Quaid", lat: 24.8758, lon: 67.0408 },
+    ],
+  },
+  nam: {
+    summary:
+      "A Namíbia fica no sudoeste da África. Tem dunas gigantes no deserto do Namibe, costa com neblina, animais selvagens, povos antigos e lugares onde o céu parece muito grande.",
+    music: "Na Namíbia há cantos em grupo, tambores, danças de comunidades locais e músicas modernas como oviritje e kwaito namibiano.",
+    landmarks: [
+      { name: "Windhoek - Christuskirche", lat: -22.5674, lon: 17.0877 },
+      { name: "Sossusvlei - dunas vermelhas", lat: -24.7397, lon: 15.2867 },
+      { name: "Swakopmund - Mole", lat: -22.6789, lon: 14.5272 },
+    ],
+  },
+  moz: {
+    summary:
+      "Moçambique fica na costa leste da África, de frente para o oceano Índico. Fala português, tem praias, ilhas, Maputo, mercados, carvão, gás natural e muita vida perto do mar.",
+    music: "Marrabenta, timbila, tufo e ritmos de dança misturam xilos, tambores, guitarras e vozes de festas populares.",
+    landmarks: [
+      { name: "Maputo - Estação Central", lat: -25.9681, lon: 32.5729 },
+      { name: "Ilha de Moçambique", lat: -15.0348, lon: 40.7358 },
+      { name: "Arquipélago de Bazaruto", lat: -21.655, lon: 35.46 },
+    ],
+  },
+  zmb: {
+    summary:
+      "A Zâmbia fica no sul da África. Tem savanas, rios, cobre no subsolo, muitas línguas e as Cataratas Vitória, onde a água cai fazendo uma nuvem de spray.",
+    music: "Kalindula, tambores, coros e canções de dança aparecem em festas e contam histórias das comunidades zambianas.",
+    landmarks: [
+      { name: "Lusaka - National Museum", lat: -15.4234, lon: 28.2921 },
+      { name: "Cataratas Vitória - lado da Zâmbia", lat: -17.9243, lon: 25.8572 },
+      { name: "Parque Nacional South Luangwa", lat: -13.0576, lon: 31.6932 },
+    ],
+  },
+  mmr: {
+    summary:
+      "Myanmar fica no sudeste da Ásia. Tem o rio Irauádi, pagodes dourados, arrozais, montanhas, muitos povos diferentes e cidades cheias de templos.",
+    music: "A música birmanesa usa a harpa saung, gongos, tambores e conjuntos hsaing waing com sons rápidos e brilhantes.",
+    landmarks: [
+      { name: "Naypyidaw - Uppatasanti Pagoda", lat: 19.7633, lon: 96.0785 },
+      { name: "Yangon - Pagode Shwedagon", lat: 16.7983, lon: 96.1496 },
+      { name: "Bagan - templos antigos", lat: 21.1717, lon: 94.8585 },
+    ],
+  },
+  som: {
+    summary:
+      "A Somália fica no Chifre da África e tem uma costa muito longa no oceano Índico. Tem camelos, barcos, desertos, poesia oral e cidades antigas de comércio.",
+    music: "A música somali mistura poesia cantada, oud, tambores, palmas e melodias que muitas vezes contam histórias de coragem e família.",
+    landmarks: [
+      { name: "Mogadíscio - Arco do Triunfo", lat: 2.0367, lon: 45.3421 },
+      { name: "Laas Geel - pinturas rupestres", lat: 9.7803, lon: 44.4619 },
+      { name: "Berbera - cidade costeira", lat: 10.4396, lon: 45.0143 },
+    ],
+  },
+  caf: {
+    summary:
+      "A República Centro-Africana fica bem no meio da África. Tem florestas, savanas, rios, diamantes, ouro e povos que conhecem muito bem os sons da natureza.",
+    music: "Há cantos em grupo, tambores e polifonias de povos da floresta, em que várias vozes se encaixam como peças de música.",
+    landmarks: [
+      { name: "Bangui - Catedral Notre-Dame", lat: 4.3654, lon: 18.5587 },
+      { name: "Bangui - Mercado Central", lat: 4.374, lon: 18.562 },
+      { name: "Cachoeiras de Boali", lat: 4.8855, lon: 18.0431 },
+    ],
+  },
+  ssd: {
+    summary:
+      "O Sudão do Sul é um país jovem no leste da África. O rio Nilo passa por lá, há grandes áreas alagadas, gado importante para muitas famílias e muitas línguas locais.",
+    music: "Canções com tambores, palmas e coros aparecem em festas, cerimônias e histórias de comunidades do Nilo e das savanas.",
+    landmarks: [
+      { name: "Juba - Ponte sobre o Nilo", lat: 4.8487, lon: 31.6046 },
+      { name: "Juba - Catedral de Santa Teresa", lat: 4.8466, lon: 31.6118 },
+      { name: "Sudd - pântanos do Nilo", lat: 7.5, lon: 31.5 },
+    ],
+  },
+  ukr: {
+    summary:
+      "A Ucrânia fica no leste da Europa. Tem campos grandes de trigo e girassol, cidades antigas como Kyiv, montanhas nos Cárpatos, mar Negro e muita história de resistência.",
+    music: "A bandura, os coros e as canções folclóricas ucranianas são conhecidos por melodias fortes, às vezes alegres e às vezes bem emocionadas.",
+    landmarks: [
+      { name: "Kyiv - Praça da Independência", lat: 50.45, lon: 30.5233 },
+      { name: "Lviv - Praça Rynok", lat: 49.8419, lon: 24.0315 },
+      { name: "Cárpatos - Hoverla", lat: 48.1607, lon: 24.5001 },
+    ],
+  },
+  mdg: {
+    summary:
+      "Madagascar é uma ilha grande perto da África. Tem lêmures, baobás, camaleões, arrozais, montanhas e muitos animais que quase não existem em outro lugar.",
+    music: "A valiha, uma espécie de cítara de bambu, aparece em músicas malgaxes junto com canto, palmas e ritmos de dança.",
+    landmarks: [
+      { name: "Antananarivo - Rova", lat: -18.9237, lon: 47.5322 },
+      { name: "Avenida dos Baobás", lat: -20.2508, lon: 44.4197 },
+      { name: "Parque Nacional Isalo", lat: -22.55, lon: 45.4 },
     ],
   },
   cze: {
@@ -1271,6 +1391,174 @@ const COUNTRY_AUDIO = {
       description: "Taarab, tambores ngoma e bongo flava mostram sons das ilhas, aldeias e cidades da Tanzânia.",
     },
   },
+  nga: {
+    greeting: {
+      phrase: "Good morning",
+      language: "inglês",
+      translation: "Quer dizer bom dia. Na Nigéria também se falam iorubá, haúsa, igbo e muitas outras línguas.",
+      file: "En-uk-good morning.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Afrobeats, juju e highlife",
+      description: "A Nigéria tem tambores falantes, guitarras, coros e ritmos modernos que influenciam músicas do mundo todo.",
+    },
+  },
+  pak: {
+    greeting: {
+      phrase: "السلام علیکم",
+      language: "urdu",
+      translation: "Quer dizer que a paz esteja com você.",
+    },
+    music: {
+      title: "Qawwali e tabla",
+      description: "Qawwali usa vozes fortes, harmônio, tabla e palmas; muitas canções parecem uma conversa cantada.",
+    },
+  },
+  nam: {
+    greeting: {
+      phrase: "Good morning",
+      language: "inglês",
+      translation: "Quer dizer bom dia. Na Namíbia também se falam oshiwambo, nama, afrikaans e outras línguas.",
+      file: "En-uk-good morning.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Cantos, danças e oviritje",
+      description: "A música namibiana mistura coros, palmas, dança, histórias de comunidades locais e estilos urbanos.",
+    },
+  },
+  moz: {
+    greeting: {
+      phrase: "Bom dia",
+      language: "português",
+      translation: "Um jeito de desejar uma boa manhã. Moçambique também tem muitas línguas nacionais.",
+    },
+    music: {
+      title: "Marrabenta e timbila",
+      description: "Marrabenta tem guitarras e dança; timbila usa xilos de madeira tocados em conjunto.",
+    },
+  },
+  tur: {
+    greeting: {
+      phrase: "Merhaba",
+      language: "turco",
+      translation: "Quer dizer olá.",
+    },
+    music: {
+      title: "Saz, ney e darbuka",
+      description: "A música turca pode ter cordas, flautas, percussão e ritmos de dança de várias regiões.",
+    },
+  },
+  chl: {
+    greeting: {
+      phrase: "Buenos días",
+      language: "espanhol",
+      translation: "Quer dizer bom dia.",
+      file: "LL-Q1321 (spa)-Rodrigo5260-buenos días.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Cueca chilena",
+      description: "A cueca é uma dança com lenços, palmas, violão e um jeito brincalhão de se aproximar e se afastar.",
+    },
+  },
+  zmb: {
+    greeting: {
+      phrase: "Good morning",
+      language: "inglês",
+      translation: "Quer dizer bom dia. A Zâmbia também tem muitas línguas nacionais.",
+      file: "En-uk-good morning.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Kalindula e coros",
+      description: "Kalindula usa guitarra, baixo, percussão e canto para músicas de dança e histórias locais.",
+    },
+  },
+  mmr: {
+    greeting: {
+      phrase: "မင်္ဂလာပါ",
+      language: "birmanês",
+      translation: "Quer dizer olá, como uma saudação de bons desejos.",
+    },
+    music: {
+      title: "Saung e hsaing waing",
+      description: "A harpa saung e conjuntos de gongos e tambores criam sons brilhantes em Myanmar.",
+    },
+  },
+  afg: {
+    greeting: {
+      phrase: "سلام",
+      language: "dari",
+      translation: "Quer dizer olá ou paz.",
+      file: "Salām.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Rubab e tabla",
+      description: "O rubab é um instrumento de cordas muito lembrado no Afeganistão, acompanhado por tabla e canto.",
+    },
+  },
+  som: {
+    greeting: {
+      phrase: "Iska warran?",
+      language: "somali",
+      translation: "Quer dizer como vão as notícias? É uma forma de perguntar como a pessoa está.",
+    },
+    music: {
+      title: "Poesia cantada somali",
+      description: "A música somali usa poesia, oud, tambores, palmas e melodias que contam histórias.",
+    },
+  },
+  caf: {
+    greeting: {
+      phrase: "Comment ça va?",
+      language: "francês",
+      translation: "Quer dizer como vai? Também se fala sango e muitas línguas locais.",
+      file: "LL-Q150 (fra)-LoquaxFR-comment ça va.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Cantos da floresta e tambores",
+      description: "Vozes em grupo, palmas e tambores podem formar músicas em que cada pessoa encaixa uma parte.",
+    },
+  },
+  ssd: {
+    greeting: {
+      phrase: "Good morning",
+      language: "inglês",
+      translation: "Quer dizer bom dia. O Sudão do Sul também tem muitas línguas locais.",
+      file: "En-uk-good morning.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Tambores e coros do Nilo",
+      description: "Muitas músicas do Sudão do Sul usam tambores, palmas e canto em grupo para festas e cerimônias.",
+    },
+  },
+  ukr: {
+    greeting: {
+      phrase: "Добрий день",
+      language: "ucraniano",
+      translation: "Quer dizer bom dia ou boa tarde.",
+    },
+    music: {
+      title: "Bandura e coros ucranianos",
+      description: "A bandura tem muitas cordas e acompanha canções que podem soar doces, fortes ou emocionadas.",
+    },
+  },
+  mdg: {
+    greeting: {
+      phrase: "Manao ahoana?",
+      language: "malgaxe",
+      translation: "Quer dizer como vai?",
+    },
+    music: {
+      title: "Valiha e hiragasy",
+      description: "A valiha é um instrumento de bambu; o hiragasy mistura música, dança e histórias apresentadas em grupo.",
+    },
+  },
 };
 
 const COUNTRY_EXPORTS = {
@@ -1287,6 +1575,11 @@ const COUNTRY_EXPORTS = {
   arg: ["soja", "milho", "trigo", "carne", "vinho"],
   chl: ["cobre", "frutas", "peixes", "vinho", "celulose"],
   per: ["cobre", "ouro", "zinco", "uvas", "café"],
+  nga: ["petróleo", "gás natural", "cacau", "sementes de gergelim", "fertilizantes"],
+  ven: ["petróleo", "ouro", "metanol", "ferro", "cacau"],
+  pak: ["roupas", "tecidos", "arroz", "algodão", "instrumentos cirúrgicos"],
+  nam: ["diamantes", "urânio", "peixes", "carne bovina", "cobre"],
+  moz: ["carvão", "alumínio", "gás natural", "eletricidade", "castanha de caju"],
   lby: ["petróleo", "gás natural", "produtos petroquímicos", "ferro", "tâmaras"],
   irn: ["petróleo", "produtos petroquímicos", "pistache", "tapetes", "aço"],
   mng: ["carvão", "cobre", "ouro", "caxemira", "carne"],
@@ -1304,6 +1597,13 @@ const COUNTRY_EXPORTS = {
   ner: ["urânio", "ouro", "gado", "cebola", "feijão-fradinho"],
   mli: ["ouro", "algodão", "gado", "gergelim", "manga"],
   tur: ["carros", "roupas", "máquinas", "aço", "alimentos"],
+  zmb: ["cobre", "cobalto", "tabaco", "açúcar", "flores"],
+  mmr: ["gás natural", "roupas", "arroz", "feijão", "madeira"],
+  som: ["gado", "banana", "peixes", "goma e resinas", "gergelim"],
+  caf: ["ouro", "diamantes", "madeira", "algodão", "café"],
+  ssd: ["petróleo", "gado", "goma arábica", "madeira", "sementes oleaginosas"],
+  ukr: ["grãos", "óleo de girassol", "minério de ferro", "aço", "máquinas"],
+  mdg: ["baunilha", "níquel", "cobalto", "cravo", "roupas"],
   kor: ["semicondutores", "carros", "navios", "eletrônicos", "máquinas"],
   idn: ["carvão", "óleo de palma", "gás natural", "níquel", "borracha"],
   afg: ["carvão", "tapetes", "frutas secas", "uva-passa", "plantas medicinais"],
