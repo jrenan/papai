@@ -31,8 +31,8 @@ const COUNTRY_CONTENT = {
   },
   egy: {
     summary:
-      "O Egito fica perto do rio Nilo. Há muito tempo, pessoas construíram pirâmides, templos e escreveram com desenhos chamados hieróglifos.",
-    music: "A música egípcia usa voz, percussão e instrumentos de corda como o oud.",
+      "O Egito fica no nordeste da África, perto do rio Nilo. Tem deserto, cidades grandes, pirâmides, templos e histórias muito antigas com hieróglifos.",
+    music: "A música egípcia usa voz, percussão, flautas e instrumentos de corda como o oud; há sons antigos, populares e modernos.",
     landmarks: [
       { name: "Cairo - Museu Egípcio", lat: 30.0478, lon: 31.2336 },
       { name: "Guizé - Pirâmides", lat: 29.9792, lon: 31.1342 },
@@ -121,8 +121,8 @@ const COUNTRY_CONTENT = {
   },
   per: {
     summary:
-      "O Peru tem montanhas dos Andes, floresta amazônica, lhamas, comidas famosas e cidades antigas feitas de pedra.",
-    music: "A música peruana usa flautas, tambores e danças dos Andes.",
+      "O Peru fica na América do Sul. Tem montanhas dos Andes, floresta amazônica, lhamas, comidas famosas e cidades antigas de pedra como Machu Picchu.",
+    music: "A música peruana usa quenas, charangos, tambores e danças dos Andes; alguns ritmos parecem caminhar pelas montanhas.",
     landmarks: [
       { name: "Lima - Plaza Mayor", lat: -12.0464, lon: -77.0306 },
       { name: "Machu Picchu", lat: -13.1631, lon: -72.545 },
@@ -201,8 +201,8 @@ const COUNTRY_CONTENT = {
   },
   zaf: {
     summary:
-      "A África do Sul tem praias, montanhas, savanas e muitas culturas vivendo juntas.",
-    music: "A música sul-africana tem coros fortes, percussão e estilos dançantes.",
+      "A África do Sul fica na ponta sul da África. Tem praias, montanhas, savanas, grandes cidades, muitos idiomas e culturas vivendo juntas.",
+    music: "A música sul-africana tem coros fortes, percussão, danças, jazz, gospel e estilos populares como mbaqanga e kwaito.",
     landmarks: [
       { name: "Cidade do Cabo - Table Mountain", lat: -33.9628, lon: 18.4098 },
       { name: "Pretória - Union Buildings", lat: -25.7401, lon: 28.2119 },
@@ -221,8 +221,8 @@ const COUNTRY_CONTENT = {
   },
   ner: {
     summary:
-      "O Níger fica no Sahel, perto do deserto do Saara. Ele tem cidades, rios, caravanas, povos nômades e muitas histórias contadas em família.",
-    music: "No Níger há músicas haúsa, zarma-songhai, tuaregues e fulas, com tambores, cordas, palmas e canto.",
+      "O Níger fica no Sahel, perto do deserto do Saara. Tem cidades, rios, caravanas, povos nômades, mercados e muitas histórias contadas em família.",
+    music: "No Níger há músicas haúsa, zarma-songhai, tuaregues e fulas, com tambores, cordas, palmas, canto e guitarras do deserto.",
     landmarks: [
       { name: "Niamey - Museu Nacional Boubou Hama", lat: 13.5166, lon: 2.1157 },
       { name: "Niamey - Grande Mesquita", lat: 13.5253, lon: 2.1157 },
@@ -301,8 +301,8 @@ const COUNTRY_CONTENT = {
   },
   ago: {
     summary:
-      "Angola tem praias, rios, savanas e uma capital perto do oceano. Muitas pessoas falam português.",
-    music: "Semba, kizomba e kuduro são ritmos de Angola com dança e batida animada.",
+      "Angola fica na costa oeste da África. Tem praias, rios, savanas, petróleo, diamantes e uma capital perto do oceano onde muitas pessoas falam português.",
+    music: "Semba, kizomba e kuduro são ritmos de Angola com dança, batidas animadas e histórias de cidade e de família.",
     landmarks: [
       { name: "Luanda - Fortaleza de São Miguel", lat: -8.8136, lon: 13.2302 },
       { name: "Miradouro da Lua", lat: -9.4086, lon: 13.1421 },
@@ -491,8 +491,8 @@ const COUNTRY_CONTENT = {
   },
   bol: {
     summary:
-      "A Bolívia tem montanhas altas, lagos, florestas e salares que parecem um chão branco gigante.",
-    music: "A música boliviana usa flautas andinas, charango e tambores.",
+      "A Bolívia fica no coração da América do Sul. Tem montanhas altas, lagos, florestas, cidades andinas e salares que parecem um chão branco gigante.",
+    music: "A música boliviana usa flautas andinas, charango, tambores e danças como morenada, caporales e tinku.",
     landmarks: [
       { name: "Sucre - Plaza 25 de Mayo", lat: -19.0477, lon: -65.2591 },
       { name: "La Paz - teleférico", lat: -16.4897, lon: -68.1193 },
@@ -641,12 +641,92 @@ const COUNTRY_CONTENT = {
   },
   tcd: {
     summary:
-      "O Chade tem deserto, savanas e o lago Chade, que é importante para muitas pessoas e animais.",
-    music: "A música chadiana usa tambores, flautas, cordas e cantos de diferentes povos.",
+      "O Chade fica no centro-norte da África. Tem deserto, savanas, rochas enormes no Ennedi e o lago Chade, importante para pessoas e animais.",
+    music: "A música chadiana usa tambores, flautas, cordas e cantos de diferentes povos, com ritmos do Sahel e da bacia do lago Chade.",
     landmarks: [
       { name: "N'Djamena - Grande Mesquita", lat: 12.1131, lon: 15.0491 },
       { name: "Lago Chade", lat: 13.0, lon: 14.0 },
       { name: "Ennedi - formações rochosas", lat: 17.0417, lon: 21.8628 },
+    ],
+  },
+  lby: {
+    summary:
+      "A Líbia fica no norte da África. Tem muito deserto do Saara, cidades perto do mar Mediterrâneo, oásis e ruínas antigas de romanos e gregos.",
+    music: "A música líbia mistura canto árabe, palmas, tambores, poesia e sons do deserto e das cidades costeiras.",
+    landmarks: [
+      { name: "Trípoli - Arco de Marco Aurélio", lat: 32.8972, lon: 13.1809 },
+      { name: "Leptis Magna", lat: 32.6386, lon: 14.2919 },
+      { name: "Ghadames - cidade antiga", lat: 30.1337, lon: 9.5007 },
+    ],
+  },
+  irn: {
+    summary:
+      "O Irã fica no oeste da Ásia. Tem desertos, montanhas, jardins, bazares, cidades antigas e poesias muito importantes para muitas famílias.",
+    music: "A música persa usa instrumentos como tar, setar, santur, ney e tombak; muitas melodias parecem conversa entre poesia e som.",
+    landmarks: [
+      { name: "Teerã - Torre Azadi", lat: 35.6997, lon: 51.3378 },
+      { name: "Isfahan - Praça Naqsh-e Jahan", lat: 32.6573, lon: 51.6776 },
+      { name: "Persépolis", lat: 29.9355, lon: 52.8916 },
+    ],
+  },
+  mng: {
+    summary:
+      "A Mongólia fica entre a Rússia e a China. Tem estepes enormes, cavalos, famílias nômades, tendas chamadas gers e o deserto de Gobi.",
+    music: "A música mongol é lembrada pelo morin khuur, um instrumento de cordas, e pelo canto de garganta, que parece fazer mais de um som ao mesmo tempo.",
+    landmarks: [
+      { name: "Ulaanbaatar - Praça Sükhbaatar", lat: 47.9185, lon: 106.9176 },
+      { name: "Mosteiro Gandantegchinlen", lat: 47.9231, lon: 106.8947 },
+      { name: "Deserto de Gobi - Khongoryn Els", lat: 43.8041, lon: 102.1746 },
+    ],
+  },
+  mli: {
+    summary:
+      "O Mali fica no oeste da África. Tem deserto, o rio Níger, cidades antigas de comércio e histórias de grandes impérios africanos.",
+    music: "A música do Mali usa kora, ngoni, balafon, tambores e vozes que contam histórias de famílias, viajantes e griôs.",
+    landmarks: [
+      { name: "Bamako - Museu Nacional", lat: 12.6492, lon: -8.0006 },
+      { name: "Djenne - Grande Mesquita", lat: 13.9054, lon: -4.555 },
+      { name: "Timbuktu - Mesquita Djinguereber", lat: 16.7735, lon: -3.0074 },
+    ],
+  },
+  col: {
+    summary:
+      "A Colômbia fica no norte da América do Sul. Tem montanhas, florestas, praias no Caribe e no Pacífico, café, cidades coloridas e muita dança.",
+    music: "Cumbia, vallenato e bambuco são sons colombianos com tambores, acordeão, flautas e histórias cantadas.",
+    landmarks: [
+      { name: "Bogotá - Plaza de Bolívar", lat: 4.5981, lon: -74.0758 },
+      { name: "Cartagena - cidade murada", lat: 10.4236, lon: -75.5505 },
+      { name: "Medellín - Plaza Botero", lat: 6.2525, lon: -75.5683 },
+    ],
+  },
+  eth: {
+    summary:
+      "A Etiópia fica no leste da África. Tem montanhas altas, igrejas antigas escavadas na pedra, café, muitos idiomas e um calendário próprio.",
+    music: "A música etíope usa escalas especiais, canto, krar, masenqo e tambores; muitas melodias têm um balanço diferente do que se ouve em outros lugares.",
+    landmarks: [
+      { name: "Adis Abeba - Museu Nacional", lat: 9.0388, lon: 38.7616 },
+      { name: "Lalibela - igrejas escavadas", lat: 12.0316, lon: 39.0476 },
+      { name: "Gondar - Fasil Ghebbi", lat: 12.6076, lon: 37.4697 },
+    ],
+  },
+  mrt: {
+    summary:
+      "A Mauritânia fica no noroeste da África. Tem muito Saara, cidades-oásis, caravanas, costa no Atlântico e trens enormes levando minério pelo deserto.",
+    music: "A música mauritana usa canto poético, tidinit, ardine e ritmos do deserto, muitas vezes guardados por famílias de músicos.",
+    landmarks: [
+      { name: "Nouakchott - mercado de peixes", lat: 18.0858, lon: -15.9785 },
+      { name: "Chinguetti - cidade antiga", lat: 20.463, lon: -12.362 },
+      { name: "Parque Nacional Banc d'Arguin", lat: 20.234, lon: -16.108 },
+    ],
+  },
+  tza: {
+    summary:
+      "A Tanzânia fica no leste da África. Tem savanas, o monte Kilimanjaro, ilhas como Zanzibar, muitos animais e povos com línguas e costumes diferentes.",
+    music: "Na Tanzânia há taarab em Zanzibar, ngoma com tambores e danças, além de bongo flava nas cidades.",
+    landmarks: [
+      { name: "Dodoma - centro da capital", lat: -6.163, lon: 35.7516 },
+      { name: "Monte Kilimanjaro", lat: -3.0674, lon: 37.3556 },
+      { name: "Zanzibar - Stone Town", lat: -6.1622, lon: 39.1921 },
     ],
   },
   cze: {
@@ -740,6 +820,43 @@ const COUNTRY_AUDIO = {
       description: "Um huayno andino antigo, com som que lembra as montanhas dos Andes.",
       file: "Serranita - Huaynito - Escobedo y Núñez - Lima 22 Septiembre 1913.ogg",
       credit: "Wikimedia Commons",
+    },
+  },
+  lby: {
+    greeting: {
+      phrase: "صباح الخير",
+      language: "árabe",
+      translation: "Quer dizer bom dia.",
+      file: "Ṣabāḥ al-kháyr2.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Música líbia",
+      description: "Cantos, palmas, tambores e poesia aparecem em tradições líbias do deserto e do Mediterrâneo. O áudio ainda está em curadoria.",
+    },
+  },
+  irn: {
+    greeting: {
+      phrase: "سلام",
+      language: "persa",
+      translation: "Quer dizer olá ou paz.",
+      file: "Salām.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Música persa",
+      description: "Tar, setar, santur, ney e tombak aparecem em muitas tradições musicais do Irã. O áudio ainda está em curadoria.",
+    },
+  },
+  mng: {
+    greeting: {
+      phrase: "Сайн байна уу",
+      language: "mongol",
+      translation: "Um jeito educado de dizer olá.",
+    },
+    music: {
+      title: "Morin khuur e canto de garganta",
+      description: "O morin khuur é um instrumento de cordas, e o canto de garganta pode fazer sons graves e agudos ao mesmo tempo.",
     },
   },
   ven: {
@@ -963,6 +1080,19 @@ const COUNTRY_AUDIO = {
       credit: "Wikimedia Commons",
     },
   },
+  tcd: {
+    greeting: {
+      phrase: "صباح الخير",
+      language: "árabe",
+      translation: "Quer dizer bom dia. No Chade também se fala francês e muitas línguas locais.",
+      file: "Ṣabāḥ al-kháyr2.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Ritmos do Chade",
+      description: "Tambores, flautas, cordas e cantos aparecem em muitas comunidades do Chade. O áudio ainda está em curadoria.",
+    },
+  },
   cod: {
     greeting: {
       phrase: "Comment ça va?",
@@ -1025,6 +1155,121 @@ const COUNTRY_AUDIO = {
       file: "LL-Q150 (fra)-LoquaxFR-comment ça va.wav",
       credit: "Lingua Libre / Wikimedia Commons",
     },
+    music: {
+      title: "Guitarras e ritmos do Sahel",
+      description: "No Níger há tradições haúsa, zarma-songhai, tuaregues e fulas com canto, tambores e guitarras do deserto.",
+    },
+  },
+  ago: {
+    greeting: {
+      phrase: "Bom dia",
+      language: "português",
+      translation: "Um jeito de desejar uma boa manhã.",
+      file: "Pt-br (Koehne)-bom dia.mp3",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Semba, kizomba e kuduro",
+      description: "Ritmos angolanos com dança, batidas urbanas e histórias de festa, família e cidade. O áudio ainda está em curadoria.",
+    },
+  },
+  mli: {
+    greeting: {
+      phrase: "Comment ça va?",
+      language: "francês",
+      translation: "Quer dizer como vai? No Mali também se falam bambara e muitas línguas locais.",
+      file: "LL-Q150 (fra)-LoquaxFR-comment ça va.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Kora, ngoni e griôs",
+      description: "A música do Mali usa cordas, balafon, tambores e vozes que guardam histórias de famílias e viajantes.",
+    },
+  },
+  zaf: {
+    greeting: {
+      phrase: "Sawubona",
+      language: "zulu",
+      translation: "Quer dizer olá.",
+    },
+    music: {
+      title: "Coros e ritmos sul-africanos",
+      description: "Coros, percussão, jazz, gospel, mbaqanga e kwaito mostram muitos jeitos sul-africanos de cantar e dançar.",
+    },
+  },
+  col: {
+    greeting: {
+      phrase: "Buenos días",
+      language: "espanhol",
+      translation: "Quer dizer bom dia.",
+      file: "LL-Q1321 (spa)-Rodrigo5260-buenos días.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Cumbia e vallenato",
+      description: "Cumbia e vallenato usam tambores, acordeão, flautas e canto para festas e histórias colombianas.",
+    },
+  },
+  eth: {
+    greeting: {
+      phrase: "ሰላም",
+      language: "amárico",
+      translation: "Quer dizer olá ou paz.",
+    },
+    music: {
+      title: "Krar e masenqo",
+      description: "A música etíope usa escalas especiais e instrumentos como krar, masenqo e tambores.",
+    },
+  },
+  bol: {
+    greeting: {
+      phrase: "Buenos días",
+      language: "espanhol",
+      translation: "Quer dizer bom dia.",
+      file: "LL-Q1321 (spa)-Rodrigo5260-buenos días.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Sons andinos",
+      description: "Flautas andinas, charango e tambores aparecem em danças como morenada, caporales e tinku.",
+    },
+  },
+  mrt: {
+    greeting: {
+      phrase: "صباح الخير",
+      language: "árabe",
+      translation: "Quer dizer bom dia.",
+      file: "Ṣabāḥ al-kháyr2.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Tidinit e ardine",
+      description: "A música mauritana usa canto poético, tidinit, ardine e ritmos do deserto.",
+    },
+  },
+  egy: {
+    greeting: {
+      phrase: "صباح الخير",
+      language: "árabe",
+      translation: "Quer dizer bom dia.",
+      file: "Ṣabāḥ al-kháyr2.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Oud e percussão egípcia",
+      description: "A música egípcia usa voz, percussão, flautas e oud em sons populares, clássicos e modernos.",
+    },
+  },
+  tza: {
+    greeting: {
+      phrase: "Habari",
+      language: "suaíli",
+      translation: "Um jeito de perguntar notícias ou dizer olá.",
+    },
+    music: {
+      title: "Taarab, ngoma e bongo flava",
+      description: "Taarab, tambores ngoma e bongo flava mostram sons das ilhas, aldeias e cidades da Tanzânia.",
+    },
   },
 };
 
@@ -1042,6 +1287,9 @@ const COUNTRY_EXPORTS = {
   arg: ["soja", "milho", "trigo", "carne", "vinho"],
   chl: ["cobre", "frutas", "peixes", "vinho", "celulose"],
   per: ["cobre", "ouro", "zinco", "uvas", "café"],
+  lby: ["petróleo", "gás natural", "produtos petroquímicos", "ferro", "tâmaras"],
+  irn: ["petróleo", "produtos petroquímicos", "pistache", "tapetes", "aço"],
+  mng: ["carvão", "cobre", "ouro", "caxemira", "carne"],
   gbr: ["carros", "remédios", "máquinas", "ouro", "bebidas"],
   deu: ["carros", "máquinas", "remédios", "produtos químicos", "peças de veículos"],
   ita: ["máquinas", "carros", "remédios", "moda", "vinhos"],
@@ -1050,8 +1298,11 @@ const COUNTRY_EXPORTS = {
   chn: ["eletrônicos", "máquinas", "brinquedos", "roupas", "móveis"],
   ind: ["remédios", "petróleo refinado", "diamantes", "arroz", "roupas"],
   zaf: ["ouro", "platina", "carros", "minério de ferro", "frutas"],
+  col: ["petróleo", "carvão", "café", "flores", "banana"],
+  eth: ["café", "flores", "gergelim", "ouro", "leguminosas"],
   mar: ["fertilizantes", "carros", "roupas", "peixes", "frutas"],
   ner: ["urânio", "ouro", "gado", "cebola", "feijão-fradinho"],
+  mli: ["ouro", "algodão", "gado", "gergelim", "manga"],
   tur: ["carros", "roupas", "máquinas", "aço", "alimentos"],
   kor: ["semicondutores", "carros", "navios", "eletrônicos", "máquinas"],
   idn: ["carvão", "óleo de palma", "gás natural", "níquel", "borracha"],
@@ -1094,6 +1345,8 @@ const COUNTRY_EXPORTS = {
   cod: ["cobalto", "cobre", "diamantes", "ouro", "café"],
   sdn: ["ouro", "gergelim", "gado", "goma arábica", "algodão"],
   tcd: ["petróleo", "algodão", "gado", "goma arábica", "gergelim"],
+  mrt: ["minério de ferro", "ouro", "peixes", "cobre", "gado"],
+  tza: ["ouro", "castanha de caju", "café", "tabaco", "algodão"],
   cze: ["carros", "máquinas", "eletrônicos", "peças de veículos", "cerveja"],
   cyp: ["remédios", "queijo halloumi", "frutas cítricas", "batatas", "serviços de turismo"],
   vat: ["selos", "moedas", "publicações", "lembranças religiosas", "ingressos de museus"],
