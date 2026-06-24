@@ -41,8 +41,8 @@ const COUNTRY_CONTENT = {
   },
   ken: {
     summary:
-      "O Quênia tem savanas, montanhas e cidades movimentadas. Muitas famílias falam mais de uma língua e vivem perto de paisagens muito diferentes.",
-    music: "No Quênia há músicas com coros, tambores, guitarras e ritmos para dançar.",
+      "O Quênia fica no leste da África. Tem savanas com muitos animais, o monte Quênia, Nairóbi, a costa de Mombaça, café, chá e famílias que falam várias línguas.",
+    music: "No Quênia há benga, taarab, coros, tambores, guitarras e ritmos para dançar em festas e celebrações.",
     landmarks: [
       { name: "Nairóbi - Museu Nacional", lat: -1.2731, lon: 36.8147 },
       { name: "Nairóbi - Giraffe Centre", lat: -1.3766, lon: 36.7423 },
@@ -51,8 +51,8 @@ const COUNTRY_CONTENT = {
   },
   fra: {
     summary:
-      "A França é lembrada por Paris, a Torre Eiffel, museus, castelos, pães, queijos e muitas obras de arte.",
-    music: "A chanson francesa conta histórias cantadas, muitas vezes com acordeão e voz suave.",
+      "A França fica na Europa Ocidental. É lembrada por Paris, Torre Eiffel, museus, castelos, pães, queijos, perfumes, vinhos, ciência, moda e muitas obras de arte.",
+    music: "A chanson francesa conta histórias cantadas, muitas vezes com acordeão, piano e uma voz que parece conversar.",
     landmarks: [
       { name: "Paris - Torre Eiffel", lat: 48.8584, lon: 2.2945 },
       { name: "Paris - Museu do Louvre", lat: 48.8606, lon: 2.3376 },
@@ -161,8 +161,8 @@ const COUNTRY_CONTENT = {
   },
   esp: {
     summary:
-      "A Espanha tem praias, montanhas, cidades antigas, futebol, praças animadas e festas com música e dança.",
-    music: "O flamenco usa palmas, violão, canto e dança forte.",
+      "A Espanha fica na Península Ibérica. Tem praias, montanhas, cidades antigas, futebol, praças animadas, oliveiras, castelos e festas com música e dança.",
+    music: "O flamenco usa palmas, violão, canto e dança forte; a Espanha também tem muitas músicas regionais diferentes.",
     landmarks: [
       { name: "Madri - Plaza Mayor", lat: 40.4154, lon: -3.7074 },
       { name: "Barcelona - Sagrada Família", lat: 41.4036, lon: 2.1744 },
@@ -211,8 +211,8 @@ const COUNTRY_CONTENT = {
   },
   mar: {
     summary:
-      "O Marrocos tem desertos, montanhas, mercados coloridos e cidades antigas com ruas estreitas.",
-    music: "A música marroquina mistura tambores, cordas, canto e palmas.",
+      "O Marrocos fica no noroeste da África, perto da Europa. Tem o deserto do Saara, montanhas, mercados coloridos, cidades antigas e o oceano Atlântico.",
+    music: "A música marroquina mistura gnawa, chaabi, música amazigh, tambores, cordas, canto e palmas.",
     landmarks: [
       { name: "Rabat - Torre Hassan", lat: 34.024, lon: -6.8224 },
       { name: "Marrakesh - Jemaa el-Fnaa", lat: 31.6258, lon: -7.9891 },
@@ -511,8 +511,8 @@ const COUNTRY_CONTENT = {
   },
   bwa: {
     summary:
-      "Botswana tem savanas, desertos e o delta do Okavango, onde a água cria caminhos para muitos animais.",
-    music: "Em Botswana há cantos, palmas, tambores e danças tradicionais.",
+      "Botswana fica no sul da África. Tem o deserto do Kalahari, savanas, diamantes e o delta do Okavango, onde a água cria caminhos para muitos animais.",
+    music: "Em Botswana há cantos, palmas, tambores, setinkane, danças tradicionais e músicas que acompanham encontros da comunidade.",
     landmarks: [
       { name: "Gaborone - Three Dikgosi Monument", lat: -24.6475, lon: 25.9099 },
       { name: "Delta do Okavango", lat: -19.3, lon: 22.9 },
@@ -581,8 +581,8 @@ const COUNTRY_CONTENT = {
   },
   cmr: {
     summary:
-      "Camarões tem praias, florestas, montanhas e savanas. Por isso às vezes é chamado de África em miniatura.",
-    music: "Makossa e bikutsi são ritmos camaroneses com guitarra, percussão e dança.",
+      "Camarões fica na África Central e Ocidental. Tem praias, florestas, montanhas, savanas e muitos idiomas; por isso às vezes é chamado de África em miniatura.",
+    music: "Makossa e bikutsi são ritmos camaroneses com guitarra, percussão, canto e dança.",
     landmarks: [
       { name: "Yaoundé - Monumento da Reunificação", lat: 3.848, lon: 11.5021 },
       { name: "Douala - La Nouvelle Liberté", lat: 4.0615, lon: 9.746 },
@@ -847,6 +847,96 @@ const COUNTRY_CONTENT = {
       { name: "Antananarivo - Rova", lat: -18.9237, lon: 47.5322 },
       { name: "Avenida dos Baobás", lat: -20.2508, lon: 44.4197 },
       { name: "Parque Nacional Isalo", lat: -22.55, lon: 45.4 },
+    ],
+  },
+  yem: {
+    summary:
+      "O Iêmen fica no sul da Península Arábica. Tem montanhas, desertos, casas antigas de pedra e barro, café histórico, a ilha de Socotra e cidades que parecem castelos de areia.",
+    music: "A música iemenita usa oud, qanbus, tambores, palmas e cantos que podem acompanhar festas, poesia e danças em grupo.",
+    landmarks: [
+      { name: "Sana'a - cidade antiga", lat: 15.3556, lon: 44.2081 },
+      { name: "Shibam - arranha-céus de barro", lat: 15.926, lon: 48.626 },
+      { name: "Socotra - planalto de Dixam", lat: 12.5108, lon: 53.9847 },
+    ],
+  },
+  tha: {
+    summary:
+      "A Tailândia fica no sudeste da Ásia. Tem Bangkok, templos dourados, arrozais, praias, mercados flutuantes, comida apimentada e festas com lanternas e água.",
+    music: "A música tailandesa usa ranat, khene, gongos, tambores e melodias que acompanham danças, teatros e celebrações.",
+    landmarks: [
+      { name: "Bangkok - Grande Palácio", lat: 13.7501, lon: 100.4913 },
+      { name: "Ayutthaya - parque histórico", lat: 14.3559, lon: 100.5684 },
+      { name: "Chiang Mai - Wat Phra That Doi Suthep", lat: 18.8049, lon: 98.9215 },
+    ],
+  },
+  tkm: {
+    summary:
+      "O Turcomenistão fica na Ásia Central. Tem muito deserto, cavalos famosos, tapetes, gás natural, cidades de mármore e antigas rotas por onde passavam caravanas.",
+    music: "A música turcomena usa dutar, canto de bardos, tambores e melodias que lembram histórias das estepes e do deserto.",
+    landmarks: [
+      { name: "Ashgabat - Monumento da Neutralidade", lat: 37.9418, lon: 58.3794 },
+      { name: "Cratera de Darvaza", lat: 40.2525, lon: 58.4396 },
+      { name: "Merv - cidade antiga", lat: 37.664, lon: 62.174 },
+    ],
+  },
+  png: {
+    summary:
+      "Papua-Nova Guiné fica em ilhas da Oceania. Tem montanhas, florestas tropicais, vulcões, recifes, muitas línguas e comunidades com pinturas e festas coloridas.",
+    music: "A música de Papua-Nova Guiné usa tambores kundu, flautas, cantos, danças e sons de cerimônias de muitas ilhas e montanhas.",
+    landmarks: [
+      { name: "Port Moresby - Parlamento", lat: -9.4438, lon: 147.1833 },
+      { name: "Trilha de Kokoda", lat: -9.017, lon: 147.737 },
+      { name: "Mount Hagen - mercado", lat: -5.8581, lon: 144.2274 },
+    ],
+  },
+  swe: {
+    summary:
+      "A Suécia fica no norte da Europa. Tem florestas, lagos, neve, ilhas, cidades organizadas, design, tecnologia e noites de verão em que o sol demora a ir embora.",
+    music: "A música sueca tradicional usa nyckelharpa, violino, danças polska e cantos; também há pop sueco conhecido no mundo todo.",
+    landmarks: [
+      { name: "Estocolmo - Gamla Stan", lat: 59.325, lon: 18.0711 },
+      { name: "Estocolmo - Museu Vasa", lat: 59.328, lon: 18.0914 },
+      { name: "Kiruna - centro da cidade", lat: 67.8558, lon: 20.2253 },
+    ],
+  },
+  uzb: {
+    summary:
+      "O Uzbequistão fica na Ásia Central. Tem cidades da antiga Rota da Seda, mesquitas azuis, desertos, algodão, frutas e praças que parecem feitas de mosaicos.",
+    music: "Shashmaqam, dutar, doira e canto tradicional aparecem em músicas uzbeques com melodias longas e ornamentadas.",
+    landmarks: [
+      { name: "Tashkent - Praça Amir Timur", lat: 41.3111, lon: 69.2797 },
+      { name: "Samarkand - Registan", lat: 39.6542, lon: 66.9758 },
+      { name: "Bukhara - Poi Kalyan", lat: 39.7757, lon: 64.415 },
+    ],
+  },
+  irq: {
+    summary:
+      "O Iraque fica no Oriente Médio, entre os rios Tigre e Eufrates. Ali surgiram cidades muito antigas, escrita, agricultura, mercados e histórias da Mesopotâmia.",
+    music: "A música iraquiana usa maqam, oud, santur, joza, percussão e canto cheio de voltas melódicas.",
+    landmarks: [
+      { name: "Bagdá - Rua Al-Mutanabbi", lat: 33.3406, lon: 44.3892 },
+      { name: "Erbil - Cidadela", lat: 36.1911, lon: 44.0092 },
+      { name: "Babilônia - ruínas antigas", lat: 32.5364, lon: 44.4208 },
+    ],
+  },
+  pry: {
+    summary:
+      "O Paraguai fica no coração da América do Sul. Tem rios grandes, fazendas, erva-mate, a língua guarani junto com o espanhol e uma hidrelétrica enorme chamada Itaipu.",
+    music: "A polca paraguaia e a guarania usam harpa paraguaia, violões e melodias doces que muita gente canta em família.",
+    landmarks: [
+      { name: "Assunção - Palácio de López", lat: -25.2819, lon: -57.6351 },
+      { name: "Encarnación - Ruínas Jesuíticas de Trinidad", lat: -27.1308, lon: -55.7012 },
+      { name: "Itaipu - barragem", lat: -25.4079, lon: -54.5882 },
+    ],
+  },
+  zwe: {
+    summary:
+      "O Zimbábue fica no sul da África. Tem planaltos, minas de ouro, as ruínas de Grande Zimbábue, animais selvagens e as Cataratas Vitória perto da fronteira.",
+    music: "A mbira, também chamada piano de dedo, é muito importante no Zimbábue, junto com tambores, canto e danças como jit.",
+    landmarks: [
+      { name: "Harare - National Gallery", lat: -17.8241, lon: 31.0496 },
+      { name: "Grande Zimbábue", lat: -20.267, lon: 30.933 },
+      { name: "Cataratas Vitória - lado do Zimbábue", lat: -17.9244, lon: 25.8567 },
     ],
   },
   cze: {
@@ -1559,6 +1649,161 @@ const COUNTRY_AUDIO = {
       description: "A valiha é um instrumento de bambu; o hiragasy mistura música, dança e histórias apresentadas em grupo.",
     },
   },
+  bwa: {
+    greeting: {
+      phrase: "Dumela",
+      language: "tswana",
+      translation: "Quer dizer olá.",
+    },
+    music: {
+      title: "Setinkane, palmas e dança",
+      description: "Em Botswana, canções em grupo, palmas e instrumentos como setinkane acompanham encontros e festas.",
+    },
+  },
+  ken: {
+    greeting: {
+      phrase: "Habari",
+      language: "suaíli",
+      translation: "Um jeito de dizer olá ou perguntar notícias.",
+    },
+    music: {
+      title: "Benga e taarab",
+      description: "Benga usa guitarras rápidas; taarab aparece mais na costa, com cordas, percussão e canto.",
+    },
+  },
+  yem: {
+    greeting: {
+      phrase: "صباح الخير",
+      language: "árabe",
+      translation: "Quer dizer bom dia.",
+      file: "Ṣabāḥ al-kháyr2.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Qanbus, oud e danças iemenitas",
+      description: "Cantos, palmas, tambores e cordas acompanham festas, poesia e danças do Iêmen.",
+    },
+  },
+  tha: {
+    greeting: {
+      phrase: "สวัสดีครับ / สวัสดีค่ะ",
+      language: "tailandês",
+      translation: "Formas educadas de dizer olá.",
+    },
+    music: {
+      title: "Ranat, khene e gongos",
+      description: "Instrumentos tailandeses de madeira, sopro e metal acompanham danças e teatros tradicionais.",
+    },
+  },
+  tkm: {
+    greeting: {
+      phrase: "Salam",
+      language: "turcomeno",
+      translation: "Quer dizer olá.",
+    },
+    music: {
+      title: "Dutar e canto de bardos",
+      description: "O dutar tem duas cordas e acompanha histórias cantadas das estepes e desertos.",
+    },
+  },
+  cmr: {
+    greeting: {
+      phrase: "Comment ça va?",
+      language: "francês",
+      translation: "Quer dizer como vai? Camarões também tem inglês e muitas línguas locais.",
+      file: "LL-Q150 (fra)-LoquaxFR-comment ça va.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Makossa e bikutsi",
+      description: "Ritmos camaroneses com guitarra, percussão, canto e dança.",
+    },
+  },
+  png: {
+    greeting: {
+      phrase: "Gut moning",
+      language: "tok pisin",
+      translation: "Quer dizer bom dia.",
+    },
+    music: {
+      title: "Tambores kundu",
+      description: "Tambores kundu, flautas, cantos e danças aparecem em cerimônias de muitas comunidades.",
+    },
+  },
+  swe: {
+    greeting: {
+      phrase: "God morgon",
+      language: "sueco",
+      translation: "Quer dizer bom dia.",
+    },
+    music: {
+      title: "Nyckelharpa e polska",
+      description: "A nyckelharpa e o violino aparecem em danças tradicionais suecas.",
+    },
+  },
+  uzb: {
+    greeting: {
+      phrase: "Assalomu alaykum",
+      language: "uzbeque",
+      translation: "Quer dizer que a paz esteja com você.",
+    },
+    music: {
+      title: "Shashmaqam e doira",
+      description: "Música tradicional uzbeque com canto, dutar, doira e melodias ornamentadas.",
+    },
+  },
+  mar: {
+    greeting: {
+      phrase: "صباح الخير",
+      language: "árabe",
+      translation: "Quer dizer bom dia. No Marrocos também há línguas amazigh.",
+      file: "Ṣabāḥ al-kháyr2.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Gnawa, chaabi e música amazigh",
+      description: "Cordas, tambores, palmas e cantos aparecem em várias tradições marroquinas.",
+    },
+  },
+  irq: {
+    greeting: {
+      phrase: "صباح الخير",
+      language: "árabe",
+      translation: "Quer dizer bom dia.",
+      file: "Ṣabāḥ al-kháyr2.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Maqam iraquiano",
+      description: "O maqam iraquiano usa canto, oud, santur, joza e percussão em melodias cheias de voltas.",
+    },
+  },
+  pry: {
+    greeting: {
+      phrase: "Buenos días",
+      language: "espanhol",
+      translation: "Quer dizer bom dia. No Paraguai também se fala guarani.",
+      file: "LL-Q1321 (spa)-Rodrigo5260-buenos días.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Harpa paraguaia e guarania",
+      description: "A harpa paraguaia e os violões fazem melodias doces em polcas e guaranias.",
+    },
+  },
+  zwe: {
+    greeting: {
+      phrase: "Good morning",
+      language: "inglês",
+      translation: "Quer dizer bom dia. No Zimbábue também se falam shona, ndebele e outras línguas.",
+      file: "En-uk-good morning.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Mbira e canto",
+      description: "A mbira tem lâminas de metal tocadas com os dedos e acompanha cantos e danças.",
+    },
+  },
 };
 
 const COUNTRY_EXPORTS = {
@@ -1604,6 +1849,15 @@ const COUNTRY_EXPORTS = {
   ssd: ["petróleo", "gado", "goma arábica", "madeira", "sementes oleaginosas"],
   ukr: ["grãos", "óleo de girassol", "minério de ferro", "aço", "máquinas"],
   mdg: ["baunilha", "níquel", "cobalto", "cravo", "roupas"],
+  yem: ["petróleo", "peixes", "café", "mel", "gás natural"],
+  tha: ["carros", "eletrônicos", "arroz", "borracha", "frutos do mar"],
+  tkm: ["gás natural", "petróleo", "algodão", "tecidos", "fertilizantes"],
+  png: ["ouro", "cobre", "gás natural liquefeito", "óleo de palma", "café"],
+  swe: ["carros", "máquinas", "remédios", "minério de ferro", "papel"],
+  uzb: ["ouro", "algodão", "gás natural", "cobre", "tecidos"],
+  irq: ["petróleo", "gás natural", "tâmaras", "fertilizantes", "produtos químicos"],
+  pry: ["soja", "carne bovina", "eletricidade", "milho", "trigo"],
+  zwe: ["ouro", "tabaco", "níquel", "ferrocromo", "algodão"],
   kor: ["semicondutores", "carros", "navios", "eletrônicos", "máquinas"],
   idn: ["carvão", "óleo de palma", "gás natural", "níquel", "borracha"],
   afg: ["carvão", "tapetes", "frutas secas", "uva-passa", "plantas medicinais"],
