@@ -1156,6 +1156,7 @@ function initGlobe() {
   const pointer = new THREE.Vector2();
   const controllerRaycaster = new THREE.Raycaster();
   const tempMatrix = new THREE.Matrix4();
+  let globePointerStart = null;
   let elapsed = 0;
 
   function fillRoundRect(context, x, y, width, height, radius) {
@@ -1541,6 +1542,39 @@ function initGlobe() {
     }
   }
 
+  function startGlobePointer(event) {
+    if (renderer.xr.isPresenting) {
+      return;
+    }
+
+    globePointerStart = {
+      id: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+    };
+  }
+
+  function finishGlobePointer(event) {
+    if (!globePointerStart || globePointerStart.id !== event.pointerId || renderer.xr.isPresenting) {
+      globePointerStart = null;
+      return;
+    }
+
+    const deltaX = event.clientX - globePointerStart.x;
+    const deltaY = event.clientY - globePointerStart.y;
+    globePointerStart = null;
+
+    if (Math.hypot(deltaX, deltaY) > 12) {
+      return;
+    }
+
+    pickCountry(event);
+  }
+
+  function cancelGlobePointer() {
+    globePointerStart = null;
+  }
+
   function setFlagsVisible(visible) {
     markerGroup.visible = visible;
   }
@@ -1590,7 +1624,10 @@ function initGlobe() {
     renderer.render(scene, camera);
   }
 
-  renderer.domElement.addEventListener("click", pickCountry);
+  renderer.domElement.addEventListener("pointerdown", startGlobePointer);
+  renderer.domElement.addEventListener("pointerup", finishGlobePointer);
+  renderer.domElement.addEventListener("pointercancel", cancelGlobePointer);
+  renderer.domElement.addEventListener("pointerleave", cancelGlobePointer);
   window.addEventListener("resize", resize);
   resize();
   focusCountry(selectedCountryId);
