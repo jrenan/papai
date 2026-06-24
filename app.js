@@ -754,8 +754,10 @@ function makeStreetViewUrlForNewTab(landmark) {
 
 function renderCountryAudio(country) {
   const { audio } = country;
-  const hasGreeting = Boolean(audio?.greeting?.file);
-  const hasMusic = Boolean(audio?.music?.file);
+  const hasGreeting = Boolean(audio?.greeting?.phrase || audio?.greeting?.file);
+  const hasGreetingFile = Boolean(audio?.greeting?.file);
+  const hasMusic = Boolean(audio?.music?.title || audio?.music?.description || audio?.music?.file);
+  const hasMusicFile = Boolean(audio?.music?.file);
   countryAudioSection.classList.toggle("is-hidden", !hasGreeting && !hasMusic);
 
   greetingAudioCard.classList.toggle("is-hidden", !hasGreeting);
@@ -763,9 +765,17 @@ function renderCountryAudio(country) {
     const greeting = audio.greeting;
     greetingPhrase.textContent = `${greeting.phrase} (${greeting.language})`;
     greetingTranslation.textContent = greeting.translation || "";
-    greetingAudio.src = commonsFileUrl(greeting.file);
-    greetingCredit.href = commonsPageUrl(greeting.file);
-    greetingCredit.textContent = greeting.credit || "Lingua Libre / Wikimedia Commons";
+    greetingAudio.classList.toggle("is-hidden", !hasGreetingFile);
+    greetingCredit.classList.toggle("is-hidden", !hasGreetingFile);
+    if (hasGreetingFile) {
+      greetingAudio.src = commonsFileUrl(greeting.file);
+      greetingCredit.href = commonsPageUrl(greeting.file);
+      greetingCredit.textContent = greeting.credit || "Lingua Libre / Wikimedia Commons";
+    } else {
+      greetingAudio.removeAttribute("src");
+      greetingCredit.removeAttribute("href");
+      greetingCredit.textContent = "";
+    }
   } else {
     greetingAudio.removeAttribute("src");
   }
@@ -773,21 +783,31 @@ function renderCountryAudio(country) {
   musicAudioCard.classList.toggle("is-hidden", !hasMusic);
   if (hasMusic) {
     const music = audio.music;
-    const mediaUrl = commonsFileUrl(music.file);
-    const useVideo = isVideoMedia(music.file);
     musicSampleTitle.textContent = music.title || "Áudio cultural";
     musicSampleDescription.textContent = music.description || "";
-    musicSampleAudio.classList.toggle("is-hidden", useVideo);
-    musicSampleVideo.classList.toggle("is-hidden", !useVideo);
-    if (useVideo) {
-      musicSampleVideo.src = mediaUrl;
-      musicSampleAudio.removeAttribute("src");
+    musicSampleCredit.classList.toggle("is-hidden", !hasMusicFile);
+    if (hasMusicFile) {
+      const mediaUrl = commonsFileUrl(music.file);
+      const useVideo = isVideoMedia(music.file);
+      musicSampleAudio.classList.toggle("is-hidden", useVideo);
+      musicSampleVideo.classList.toggle("is-hidden", !useVideo);
+      musicSampleCredit.href = commonsPageUrl(music.file);
+      musicSampleCredit.textContent = music.credit || "Wikimedia Commons";
+      if (useVideo) {
+        musicSampleVideo.src = mediaUrl;
+        musicSampleAudio.removeAttribute("src");
+      } else {
+        musicSampleAudio.src = mediaUrl;
+        musicSampleVideo.removeAttribute("src");
+      }
     } else {
-      musicSampleAudio.src = mediaUrl;
+      musicSampleAudio.classList.add("is-hidden");
+      musicSampleVideo.classList.add("is-hidden");
+      musicSampleAudio.removeAttribute("src");
       musicSampleVideo.removeAttribute("src");
+      musicSampleCredit.removeAttribute("href");
+      musicSampleCredit.textContent = "";
     }
-    musicSampleCredit.href = commonsPageUrl(music.file);
-    musicSampleCredit.textContent = music.credit || "Wikimedia Commons";
   } else {
     musicSampleAudio.removeAttribute("src");
     musicSampleVideo.removeAttribute("src");

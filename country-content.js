@@ -1,12 +1,22 @@
 const COUNTRY_CONTENT = {
   bra: {
     summary:
-      "O Brasil é um país enorme, cheio de florestas, praias, cidades grandes e muitos jeitos de falar, brincar, cozinhar e fazer música.",
-    music: "Samba, choro, forró e bossa nova são músicas brasileiras com ritmo, dança e instrumentos bem diferentes.",
+      "O Brasil é um país gigante da América do Sul. Tem floresta amazônica, cidades grandes, praias, cerrado, rios enormes e muitas pessoas vivendo de jeitos bem diferentes.",
+    music: "Samba, choro, forró e bossa nova são músicas brasileiras; elas usam ritmo, dança, cordas, sopros e percussão para contar alegria, saudade e festa.",
     landmarks: [
       { name: "Brasília - Praça dos Três Poderes", lat: -15.7996, lon: -47.8645 },
       { name: "Rio de Janeiro - Cristo Redentor", lat: -22.9519, lon: -43.2105 },
       { name: "Manaus - Teatro Amazonas", lat: -3.1303, lon: -60.0233 },
+    ],
+  },
+  rus: {
+    summary:
+      "A Rússia é o maior país do mundo. Ela atravessa muitos fusos horários, tem florestas muito frias, montanhas, cidades antigas, trens longos e lagos enormes.",
+    music: "A música russa tem canções populares, coros fortes, balalaika, acordeão e melodias que podem soar alegres ou bem dramáticas.",
+    landmarks: [
+      { name: "Moscou - Praça Vermelha", lat: 55.7539, lon: 37.6208 },
+      { name: "São Petersburgo - Museu Hermitage", lat: 59.9398, lon: 30.3146 },
+      { name: "Lago Baikal", lat: 53.5587, lon: 108.165 },
     ],
   },
   jpn: {
@@ -51,8 +61,8 @@ const COUNTRY_CONTENT = {
   },
   aus: {
     summary:
-      "A Austrália é uma ilha-continente. Ela tem desertos, praias, cidades grandes, animais famosos e culturas aborígenes muito antigas.",
-    music: "O didgeridoo é um instrumento aborígene com som grave e comprido.",
+      "A Austrália é uma ilha-continente cercada por oceanos. Ela tem desertos, praias, recifes, cidades grandes, animais famosos e culturas aborígenes muito antigas.",
+    music: "O didgeridoo é um instrumento aborígene de som grave e comprido; também há músicas de muitas comunidades imigrantes e pop australiano.",
     landmarks: [
       { name: "Camberra - Parlamento", lat: -35.3082, lon: 149.1245 },
       { name: "Sydney - Opera House", lat: -33.8568, lon: 151.2153 },
@@ -61,8 +71,8 @@ const COUNTRY_CONTENT = {
   },
   usa: {
     summary:
-      "Os Estados Unidos têm cidades enormes, filmes, tecnologia, universidades, parques nacionais e muitos povos que chegaram de vários lugares do mundo.",
-    music: "Jazz, blues, country, hip hop e rock são estilos muito importantes na música dos Estados Unidos.",
+      "Os Estados Unidos ficam na América do Norte. Têm cidades enormes, filmes, tecnologia, universidades, fazendas, desertos, montanhas e parques nacionais muito grandes.",
+    music: "Jazz, blues, country, hip hop, gospel e rock são estilos importantes; muitos nasceram do encontro de povos indígenas, africanos, europeus e imigrantes.",
     landmarks: [
       { name: "Washington - Capitólio", lat: 38.8899, lon: -77.0091 },
       { name: "Nova York - Estátua da Liberdade", lat: 40.6892, lon: -74.0445 },
@@ -71,8 +81,8 @@ const COUNTRY_CONTENT = {
   },
   can: {
     summary:
-      "O Canadá tem florestas, lagos, neve em muitas regiões, povos indígenas e cidades onde se fala inglês e francês.",
-    music: "No Canadá há músicas indígenas, folk, pop e canções em inglês e francês.",
+      "O Canadá é um país enorme e frio em muitas regiões. Tem florestas, lagos, neve, povos indígenas, cidades modernas e lugares onde se fala inglês e francês.",
+    music: "No Canadá há tambores e cantos de povos indígenas, folk, música celta, pop e canções em inglês e francês.",
     landmarks: [
       { name: "Ottawa - Parlamento", lat: 45.4248, lon: -75.6992 },
       { name: "Toronto - CN Tower", lat: 43.6426, lon: -79.3871 },
@@ -81,8 +91,8 @@ const COUNTRY_CONTENT = {
   },
   mex: {
     summary:
-      "O México tem pirâmides antigas, comidas coloridas, mariachi, son jarocho e cidades cheias de praças e mercados.",
-    music: "Mariachi é uma música mexicana com violinos, trompetes e vozes fortes.",
+      "O México liga a América do Norte à América Central. Tem pirâmides antigas, desertos, florestas, comidas coloridas, praças, mercados e muitas histórias maias e astecas.",
+    music: "Mariachi, son jarocho e ranchera são tradições mexicanas com violinos, trompetes, violões, harpas e vozes bem fortes.",
     landmarks: [
       { name: "Cidade do México - Zócalo", lat: 19.4326, lon: -99.1332 },
       { name: "Teotihuacan", lat: 19.6925, lon: -98.8438 },
@@ -91,8 +101,8 @@ const COUNTRY_CONTENT = {
   },
   arg: {
     summary:
-      "A Argentina tem pampas, montanhas, geleiras, futebol, tango e uma capital cheia de teatros e cafés.",
-    music: "O tango é uma música argentina marcada por dança, bandoneón e emoção.",
+      "A Argentina fica no sul da América do Sul. Tem pampas, montanhas dos Andes, geleiras, futebol, carne, vinho e uma capital cheia de teatros e cafés.",
+    music: "O tango é uma música argentina e rioplatense marcada por dança, bandoneón e emoção; também há folclore com violão e bombo.",
     landmarks: [
       { name: "Buenos Aires - Obelisco", lat: -34.6037, lon: -58.3816 },
       { name: "Iguazú - Cataratas", lat: -25.6953, lon: -54.4367 },
@@ -171,8 +181,8 @@ const COUNTRY_CONTENT = {
   },
   chn: {
     summary:
-      "A China é muito grande e tem desertos, montanhas, rios, cidades enormes, invenções antigas e algumas das maiores fábricas do mundo.",
-    music: "A música chinesa pode usar instrumentos como erhu, pipa e flautas.",
+      "A China é muito grande e muito populosa. Tem desertos, montanhas, rios, cidades enormes, invenções antigas e algumas das maiores fábricas e produções do mundo.",
+    music: "A música chinesa pode usar guqin, erhu, pipa, tambores e flautas; muitos sons parecem desenhar paisagens, histórias e movimentos.",
     landmarks: [
       { name: "Pequim - Cidade Proibida", lat: 39.9163, lon: 116.3972 },
       { name: "Grande Muralha - Mutianyu", lat: 40.4319, lon: 116.5704 },
@@ -181,8 +191,8 @@ const COUNTRY_CONTENT = {
   },
   ind: {
     summary:
-      "A Índia tem muitas línguas, comidas, religiões, festas coloridas, rios importantes e cidades muito movimentadas.",
-    music: "A música indiana pode usar tabla, sitar, canto e ritmos que parecem conversar.",
+      "A Índia é um país muito populoso do sul da Ásia. Tem muitas línguas, comidas, religiões, festas coloridas, rios importantes, filmes e cidades muito movimentadas.",
+    music: "A música indiana pode usar tabla, sitar, canto e ragas; os ritmos parecem conversar com a melodia.",
     landmarks: [
       { name: "Nova Délhi - India Gate", lat: 28.6129, lon: 77.2295 },
       { name: "Agra - Taj Mahal", lat: 27.1751, lon: 78.0421 },
@@ -241,8 +251,8 @@ const COUNTRY_CONTENT = {
   },
   idn: {
     summary:
-      "A Indonésia tem milhares de ilhas, vulcões, florestas, praias e muitas culturas diferentes.",
-    music: "O gamelão usa gongos e metalofones com sons brilhantes.",
+      "A Indonésia é feita de milhares de ilhas. Tem vulcões, florestas, praias, arrozais, cidades grandes e muitas culturas diferentes vivendo perto do mar.",
+    music: "O gamelão usa gongos, metalofones e tambores com sons brilhantes, muito comuns em Java e Bali.",
     landmarks: [
       { name: "Jacarta - Monas", lat: -6.1754, lon: 106.8272 },
       { name: "Borobudur", lat: -7.6079, lon: 110.2038 },
@@ -331,8 +341,8 @@ const COUNTRY_CONTENT = {
   },
   sau: {
     summary:
-      "A Arábia Saudita tem desertos, cidades grandes, oásis e lugares muito importantes para muitos muçulmanos.",
-    music: "A música saudita usa canto, palmas, tambores e danças em grupo.",
+      "A Arábia Saudita fica na Península Arábica. Tem desertos imensos, cidades grandes, oásis, petróleo e lugares muito importantes para muitos muçulmanos.",
+    music: "A música saudita usa canto, palmas, tambores e danças em grupo, como a ardah, feita em celebrações.",
     landmarks: [
       { name: "Riad - Kingdom Centre", lat: 24.7113, lon: 46.6744 },
       { name: "Diriyah - At-Turaif", lat: 24.734, lon: 46.5753 },
@@ -341,8 +351,8 @@ const COUNTRY_CONTENT = {
   },
   dza: {
     summary:
-      "A Argélia tem uma parte grande do deserto do Saara, cidades perto do mar e montanhas ao norte.",
-    music: "Na Argélia há raï, música chaabi e ritmos com tambores e cordas.",
+      "A Argélia é o maior país da África. Tem uma parte enorme do deserto do Saara, cidades perto do mar Mediterrâneo e montanhas ao norte.",
+    music: "Na Argélia há raï, música chaabi e bedoui, com canto, tambores, cordas e ritmos do norte da África.",
     landmarks: [
       { name: "Argel - Casbá", lat: 36.7847, lon: 3.0606 },
       { name: "Timgad", lat: 35.4846, lon: 6.4686 },
@@ -601,12 +611,32 @@ const COUNTRY_CONTENT = {
   },
   kaz: {
     summary:
-      "O Cazaquistão tem estepes enormes, montanhas, cidades modernas e muito espaço aberto.",
-    music: "O dombra é um instrumento de duas cordas muito importante na música cazaque.",
+      "O Cazaquistão fica no centro da Ásia. Tem estepes enormes, montanhas, cavalos, cidades modernas e tanto espaço aberto que o céu parece gigante.",
+    music: "O dombra é um instrumento de duas cordas muito importante; ele acompanha histórias cantadas, danças e melodias das estepes.",
     landmarks: [
       { name: "Astana - Bayterek", lat: 51.1282, lon: 71.4304 },
       { name: "Almaty - Kok Tobe", lat: 43.2333, lon: 76.9769 },
       { name: "Charyn Canyon", lat: 43.3508, lon: 79.0803 },
+    ],
+  },
+  cod: {
+    summary:
+      "A República Democrática do Congo fica no coração da África. Tem floresta tropical, o rio Congo, muitos minerais e cidades cheias de música e movimento.",
+    music: "A rumba congolesa e o soukous usam guitarras dançantes, vozes em grupo e ritmos que fazem muita gente querer mexer os pés.",
+    landmarks: [
+      { name: "Kinshasa - Boulevard du 30 Juin", lat: -4.3195, lon: 15.3124 },
+      { name: "Parque Nacional de Virunga", lat: -0.9167, lon: 29.1667 },
+      { name: "Lola ya Bonobo", lat: -4.4939, lon: 15.2663 },
+    ],
+  },
+  sdn: {
+    summary:
+      "O Sudão fica no nordeste da África. O rio Nilo passa por lá, há desertos, cidades antigas, pirâmides de Meroe e povos com muitas línguas e costumes.",
+    music: "A música sudanesa mistura canto, tambores, palmas, oud e ritmos do vale do Nilo e de várias comunidades do país.",
+    landmarks: [
+      { name: "Cartum - encontro dos Nilos", lat: 15.6475, lon: 32.5072 },
+      { name: "Pirâmides de Meroe", lat: 16.935, lon: 33.7489 },
+      { name: "Museu Nacional do Sudão", lat: 15.6067, lon: 32.5097 },
     ],
   },
   tcd: {
@@ -652,6 +682,21 @@ const COUNTRY_CONTENT = {
 };
 
 const COUNTRY_AUDIO = {
+  rus: {
+    greeting: {
+      phrase: "Здравствуйте",
+      language: "russo",
+      translation: "Uma forma educada de dizer olá.",
+      file: "CPIDL Russian - Zdravstvujte.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Canção dos barqueiros do Volga",
+      description: "Uma canção popular russa antiga, com voz profunda e clima de trabalho no rio.",
+      file: "Feodor Chaliapin - Song of the Volga Boatmen - Victor 14901A.ogg",
+      credit: "Wikimedia Commons",
+    },
+  },
   bra: {
     greeting: {
       phrase: "Bom dia",
@@ -847,6 +892,21 @@ const COUNTRY_AUDIO = {
       credit: "Wikimedia Commons",
     },
   },
+  ind: {
+    greeting: {
+      phrase: "नमस्ते",
+      language: "híndi",
+      translation: "Uma saudação respeitosa, como olá.",
+      file: "LL-Q1568 (hin)-QueerEcofeminist-नमस्ते.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Sitar e tabla",
+      description: "Uma amostra com sitar e tabla, dois sons muito lembrados na música clássica indiana.",
+      file: "Sitar and tabla rendition - Freedom Jam, 2015.oga",
+      credit: "Wikimedia Commons",
+    },
+  },
   jpn: {
     greeting: {
       phrase: "こんにちは",
@@ -877,6 +937,86 @@ const COUNTRY_AUDIO = {
       credit: "Wikimedia Commons",
     },
   },
+  kaz: {
+    greeting: {
+      phrase: "Сәлеметсіз бе",
+      language: "cazaque",
+      translation: "Uma forma educada de dizer olá.",
+    },
+    music: {
+      title: "Dombra",
+      description: "O dombra é um instrumento de duas cordas usado para contar histórias e tocar melodias das estepes.",
+    },
+  },
+  dza: {
+    greeting: {
+      phrase: "صباح الخير",
+      language: "árabe",
+      translation: "Quer dizer bom dia.",
+      file: "Ṣabāḥ al-kháyr2.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Bedoui / raï argelino",
+      description: "Uma gravação tradicional argelina ligada ao bedoui e ao raï.",
+      file: "Goul El Si Mohamed 2 (algerian bedoui rai music).ogg",
+      credit: "Wikimedia Commons",
+    },
+  },
+  cod: {
+    greeting: {
+      phrase: "Comment ça va?",
+      language: "francês",
+      translation: "Quer dizer como vai? A RD Congo também tem muitas línguas nacionais.",
+      file: "LL-Q150 (fra)-LoquaxFR-comment ça va.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Rumba congolesa",
+      description: "A rumba congolesa e o soukous são músicas de guitarras, vozes e dança. O áudio ainda está em curadoria.",
+    },
+  },
+  sau: {
+    greeting: {
+      phrase: "صباح الخير",
+      language: "árabe",
+      translation: "Quer dizer bom dia.",
+      file: "Ṣabāḥ al-kháyr2.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Ardah",
+      description: "A ardah é uma dança e música saudita com canto, palmas, tambores e pessoas em grupo. O áudio ainda está em curadoria.",
+    },
+  },
+  idn: {
+    greeting: {
+      phrase: "Selamat pagi",
+      language: "indonésio",
+      translation: "Quer dizer bom dia.",
+      file: "LL-Q9240 (ind)-Xbypass-selamat pagi.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Gamelan javanês",
+      description: "Gamelan com gongos e metalofones, tocado por músicos do palácio de Yogyakarta.",
+      file: "Gamelan angka 1 Kraton Ngayogyakarta.ogg",
+      credit: "Wikimedia Commons",
+    },
+  },
+  sdn: {
+    greeting: {
+      phrase: "صباح الخير",
+      language: "árabe",
+      translation: "Quer dizer bom dia.",
+      file: "Ṣabāḥ al-kháyr2.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Música sudanesa",
+      description: "Cantos, tambores, palmas e oud aparecem em muitas tradições do Sudão. O áudio ainda está em curadoria.",
+    },
+  },
   ner: {
     greeting: {
       phrase: "Comment ça va?",
@@ -889,6 +1029,7 @@ const COUNTRY_AUDIO = {
 };
 
 const COUNTRY_EXPORTS = {
+  rus: ["petróleo", "gás natural", "trigo", "metais", "fertilizantes"],
   bra: ["soja", "minério de ferro", "petróleo", "café", "carne"],
   jpn: ["carros", "máquinas", "eletrônicos", "peças de veículos", "robótica"],
   egy: ["gás natural", "petróleo", "fertilizantes", "têxteis", "frutas cítricas"],
@@ -950,6 +1091,8 @@ const COUNTRY_EXPORTS = {
   khm: ["roupas", "calçados", "arroz", "borracha", "bicicletas"],
   qat: ["gás natural", "petróleo", "fertilizantes", "plásticos", "alumínio"],
   kaz: ["petróleo", "urânio", "cobre", "trigo", "ferro"],
+  cod: ["cobalto", "cobre", "diamantes", "ouro", "café"],
+  sdn: ["ouro", "gergelim", "gado", "goma arábica", "algodão"],
   tcd: ["petróleo", "algodão", "gado", "goma arábica", "gergelim"],
   cze: ["carros", "máquinas", "eletrônicos", "peças de veículos", "cerveja"],
   cyp: ["remédios", "queijo halloumi", "frutas cítricas", "batatas", "serviços de turismo"],
