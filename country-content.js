@@ -21,8 +21,8 @@ const COUNTRY_CONTENT = {
   },
   jpn: {
     summary:
-      "O Japão é formado por ilhas. Ele é lembrado por trens muito rápidos, tecnologia, desenhos animados, templos antigos e jardins bem cuidados.",
-    music: "No Japão há tambores taiko, flautas de bambu e também músicas pop muito animadas.",
+      "O Japão é formado por ilhas no leste da Ásia. É lembrado por trens muito rápidos, tecnologia, desenhos animados, templos antigos, jardins, vulcões e cidades muito organizadas.",
+    music: "No Japão há koto, shamisen, flautas shakuhachi, tambores taiko e também músicas pop muito animadas.",
     landmarks: [
       { name: "Tóquio - Shibuya", lat: 35.6595, lon: 139.7005 },
       { name: "Quioto - Kiyomizu-dera", lat: 34.9949, lon: 135.785 },
@@ -141,8 +141,8 @@ const COUNTRY_CONTENT = {
   },
   deu: {
     summary:
-      "A Alemanha tem florestas, castelos, carros, trens, cidades antigas e muitos museus de ciência, arte e história.",
-    music: "A Alemanha é conhecida por música clássica, corais e também música moderna.",
+      "A Alemanha fica no centro da Europa. Tem florestas, castelos, carros, trens, cidades antigas, universidades, fábricas fortes e muitos museus de ciência, arte e história.",
+    music: "A Alemanha é conhecida por música clássica, corais, bandas, canções folclóricas e também música moderna.",
     landmarks: [
       { name: "Berlim - Portão de Brandemburgo", lat: 52.5163, lon: 13.3777 },
       { name: "Munique - Marienplatz", lat: 48.1374, lon: 11.5755 },
@@ -151,8 +151,8 @@ const COUNTRY_CONTENT = {
   },
   ita: {
     summary:
-      "A Itália parece uma bota no mapa. Ela é lembrada por massas, pizzas, ruínas antigas, praças, igrejas e muitas obras de arte.",
-    music: "A ópera italiana usa vozes grandes para contar histórias cantadas.",
+      "A Itália parece uma bota no mapa. Ela é lembrada por massas, pizzas, ruínas romanas, praças, igrejas, moda, carros, vulcões e muitas obras de arte.",
+    music: "A ópera italiana usa vozes grandes para contar histórias cantadas; tarantellas e canções populares também fazem parte das festas.",
     landmarks: [
       { name: "Roma - Coliseu", lat: 41.8902, lon: 12.4922 },
       { name: "Veneza - Praça São Marcos", lat: 45.4342, lon: 12.3388 },
@@ -541,8 +541,8 @@ const COUNTRY_CONTENT = {
   },
   bfa: {
     summary:
-      "Burkina Faso fica na África Ocidental. Tem savanas, mercados e muitas tradições de máscaras e dança.",
-    music: "A música de Burkina Faso usa balafon, tambores e coros animados.",
+      "Burkina Faso fica na África Ocidental. Tem savanas, mercados, algodão, ouro, cinema famoso em Ouagadougou e muitas tradições de máscaras e dança.",
+    music: "A música de Burkina Faso usa balafon, tambores, coros animados, flautas e ritmos de festa.",
     landmarks: [
       { name: "Ouagadougou - Place des Cinéastes", lat: 12.3714, lon: -1.5197 },
       { name: "Ruínas de Loropéni", lat: 10.2503, lon: -3.5833 },
@@ -937,6 +937,116 @@ const COUNTRY_CONTENT = {
       { name: "Harare - National Gallery", lat: -17.8241, lon: 31.0496 },
       { name: "Grande Zimbábue", lat: -20.267, lon: 30.933 },
       { name: "Cataratas Vitória - lado do Zimbábue", lat: -17.9244, lon: 25.8567 },
+    ],
+  },
+  phl: {
+    summary:
+      "As Filipinas são feitas de milhares de ilhas no sudeste da Ásia. Têm praias, vulcões, tufões, arrozais, jeepneys coloridos, muitas línguas e famílias que gostam de cantar.",
+    music: "Kundiman, kulintang e rondalla mostram canções românticas, gongos, cordas e sons de muitas ilhas filipinas.",
+    landmarks: [
+      { name: "Manila - Intramuros", lat: 14.5896, lon: 120.9747 },
+      { name: "Banaue - terraços de arroz", lat: 16.9192, lon: 121.0598 },
+      { name: "Chocolate Hills", lat: 9.8297, lon: 124.1397 },
+    ],
+  },
+  cog: {
+    summary:
+      "A República do Congo fica na África Central. Tem florestas tropicais, rios grandes, petróleo, Brazzaville e muitos animais vivendo perto da bacia do rio Congo.",
+    music: "A música congolesa tem rumba, soukous, guitarras brilhantes, vozes em grupo e ritmos de dança.",
+    landmarks: [
+      { name: "Brazzaville - Basílica Sainte-Anne", lat: -4.2707, lon: 15.2849 },
+      { name: "Brazzaville - Torre Nabemba", lat: -4.2667, lon: 15.2833 },
+      { name: "Parque Nacional Odzala-Kokoua", lat: 0.8, lon: 14.9 },
+    ],
+  },
+  fin: {
+    summary:
+      "A Finlândia fica no norte da Europa. Tem muitos lagos, florestas, neve, saunas, escolas famosas, tecnologia e, no norte, noites com aurora boreal.",
+    music: "A música finlandesa usa kantele, violinos, canto rúnico e melodias que lembram florestas, lagos e inverno.",
+    landmarks: [
+      { name: "Helsinque - Catedral", lat: 60.1704, lon: 24.9522 },
+      { name: "Suomenlinna", lat: 60.1459, lon: 24.9876 },
+      { name: "Rovaniemi - Círculo Polar Ártico", lat: 66.5438, lon: 25.8478 },
+    ],
+  },
+  vnm: {
+    summary:
+      "O Vietnã fica no sudeste da Ásia. Tem arrozais, motos nas cidades, montanhas, costa longa, mercados, café, fábricas e a baía de Ha Long cheia de rochas no mar.",
+    music: "A música vietnamita usa đàn bầu, đàn tranh, tambores e canto; algumas melodias parecem deslizar como água.",
+    landmarks: [
+      { name: "Hanói - Lago Hoàn Kiếm", lat: 21.0287, lon: 105.8524 },
+      { name: "Baía de Ha Long", lat: 20.9101, lon: 107.1839 },
+      { name: "Cidade Ho Chi Minh - Mercado Bến Thành", lat: 10.7725, lon: 106.6983 },
+    ],
+  },
+  mys: {
+    summary:
+      "A Malásia fica no sudeste da Ásia e tem duas partes separadas pelo mar. Tem Kuala Lumpur, florestas tropicais, ilhas, borracha, óleo de palma e muitas culturas juntas.",
+    music: "Dikir barat, gamelan malaio, kompang e canções populares misturam vozes, gongos, tambores e palmas.",
+    landmarks: [
+      { name: "Kuala Lumpur - Torres Petronas", lat: 3.1579, lon: 101.7116 },
+      { name: "George Town - centro histórico", lat: 5.4141, lon: 100.3288 },
+      { name: "Monte Kinabalu", lat: 6.075, lon: 116.558 },
+    ],
+  },
+  nor: {
+    summary:
+      "A Noruega fica no norte da Europa. Tem fiordes, montanhas, neve, petróleo no mar, barcos, vilas coloridas e noites em que dá para ver auroras.",
+    music: "A música norueguesa usa hardanger fiddle, canto, danças e melodias que lembram vales e montanhas.",
+    landmarks: [
+      { name: "Oslo - Ópera", lat: 59.9075, lon: 10.7532 },
+      { name: "Bergen - Bryggen", lat: 60.3971, lon: 5.3245 },
+      { name: "Geirangerfjord", lat: 62.1048, lon: 7.0754 },
+    ],
+  },
+  civ: {
+    summary:
+      "A Costa do Marfim fica na África Ocidental. Tem cacau, praias, florestas, mercados, Abidjan, danças com máscaras e muitas comunidades com línguas diferentes.",
+    music: "Zouglou, coupé-décalé, tambores, balafon e cantos de dança fazem parte dos sons marfinenses.",
+    landmarks: [
+      { name: "Yamoussoukro - Basílica de Nossa Senhora da Paz", lat: 6.8119, lon: -5.2964 },
+      { name: "Abidjan - Plateau", lat: 5.32, lon: -4.0167 },
+      { name: "Grand-Bassam - cidade histórica", lat: 5.2038, lon: -3.7388 },
+    ],
+  },
+  pol: {
+    summary:
+      "A Polônia fica na Europa Central. Tem cidades antigas reconstruídas, florestas, montanhas, planícies, minas de sal, pierogi e muita história de resistência.",
+    music: "A polonaise, a mazurka e músicas com violino e acordeão aparecem em danças e festas polonesas.",
+    landmarks: [
+      { name: "Varsóvia - Cidade Velha", lat: 52.2497, lon: 21.0122 },
+      { name: "Cracóvia - Praça do Mercado", lat: 50.0619, lon: 19.9368 },
+      { name: "Mina de Sal de Wieliczka", lat: 49.9833, lon: 20.0542 },
+    ],
+  },
+  omn: {
+    summary:
+      "Omã fica na Península Arábica, perto do mar. Tem desertos, montanhas, fortes, tâmaras, barcos dhow e cidades antigas que comerciavam pelo oceano Índico.",
+    music: "A música omanense usa tambores, palmas, canto em grupo e ritmos de mar, deserto e celebrações.",
+    landmarks: [
+      { name: "Mascate - Grande Mesquita do Sultão Qaboos", lat: 23.5837, lon: 58.3886 },
+      { name: "Forte de Nizwa", lat: 22.9333, lon: 57.5309 },
+      { name: "Wadi Shab", lat: 22.8393, lon: 59.2455 },
+    ],
+  },
+  ecu: {
+    summary:
+      "O Equador fica na linha do Equador, na América do Sul. Tem Andes, Amazônia, vulcões, praias, cacau, bananas e as ilhas Galápagos com animais muito especiais.",
+    music: "Sanjuanito, pasillo e marimba afro-equatoriana usam flautas, violões, percussão e melodias de montanha e costa.",
+    landmarks: [
+      { name: "Quito - Plaza Grande", lat: -0.22, lon: -78.5127 },
+      { name: "Mitad del Mundo", lat: -0.0022, lon: -78.4558 },
+      { name: "Galápagos - Puerto Ayora", lat: -0.7433, lon: -90.3139 },
+    ],
+  },
+  nzl: {
+    summary:
+      "A Nova Zelândia fica na Oceania, em duas ilhas principais. Tem montanhas, vulcões, fiordes, ovelhas, esportes, cultura maori e paisagens muito verdes.",
+    music: "A música maori usa canto, haka, poi, flautas taonga pūoro e ritmos que contam histórias de ancestrais e lugares.",
+    landmarks: [
+      { name: "Wellington - Parlamento Beehive", lat: -41.2784, lon: 174.7767 },
+      { name: "Auckland - Sky Tower", lat: -36.8485, lon: 174.7622 },
+      { name: "Milford Sound", lat: -44.6414, lon: 167.8974 },
     ],
   },
   cze: {
@@ -1804,6 +1914,159 @@ const COUNTRY_AUDIO = {
       description: "A mbira tem lâminas de metal tocadas com os dedos e acompanha cantos e danças.",
     },
   },
+  deu: {
+    greeting: {
+      phrase: "Guten Morgen",
+      language: "alemão",
+      translation: "Quer dizer bom dia.",
+    },
+    music: {
+      title: "Corais, clássica e danças alemãs",
+      description: "A música alemã inclui corais, compositores clássicos, acordeão, bandas e canções de festa.",
+    },
+  },
+  phl: {
+    greeting: {
+      phrase: "Magandang umaga",
+      language: "filipino",
+      translation: "Quer dizer bom dia.",
+    },
+    music: {
+      title: "Kundiman e kulintang",
+      description: "Kundiman traz canções românticas; kulintang usa gongos em músicas de algumas ilhas do sul.",
+    },
+  },
+  cog: {
+    greeting: {
+      phrase: "Comment ça va?",
+      language: "francês",
+      translation: "Quer dizer como vai? Também se falam lingala, kituba e outras línguas.",
+      file: "LL-Q150 (fra)-LoquaxFR-comment ça va.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Rumba e soukous congoleses",
+      description: "Guitarras, vozes e percussão fazem músicas de dança muito influentes na África.",
+    },
+  },
+  fin: {
+    greeting: {
+      phrase: "Hyvää huomenta",
+      language: "finlandês",
+      translation: "Quer dizer bom dia.",
+    },
+    music: {
+      title: "Kantele e canto rúnico",
+      description: "O kantele é um instrumento de cordas e o canto rúnico guarda histórias antigas.",
+    },
+  },
+  vnm: {
+    greeting: {
+      phrase: "Xin chào",
+      language: "vietnamita",
+      translation: "Quer dizer olá.",
+    },
+    music: {
+      title: "Đàn bầu e đàn tranh",
+      description: "Cordas vietnamitas fazem melodias que podem parecer deslizar suavemente.",
+    },
+  },
+  mys: {
+    greeting: {
+      phrase: "Selamat pagi",
+      language: "malaio",
+      translation: "Quer dizer bom dia.",
+    },
+    music: {
+      title: "Kompang, dikir barat e gamelan malaio",
+      description: "Tambores, gongos, palmas e vozes em grupo aparecem em celebrações malaias.",
+    },
+  },
+  nor: {
+    greeting: {
+      phrase: "God morgen",
+      language: "norueguês",
+      translation: "Quer dizer bom dia.",
+    },
+    music: {
+      title: "Hardanger fiddle",
+      description: "O violino hardanger tem cordas extras que vibram junto e dão um som brilhante.",
+    },
+  },
+  civ: {
+    greeting: {
+      phrase: "Comment ça va?",
+      language: "francês",
+      translation: "Quer dizer como vai? A Costa do Marfim também tem muitas línguas locais.",
+      file: "LL-Q150 (fra)-LoquaxFR-comment ça va.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Zouglou e coupé-décalé",
+      description: "Ritmos marfinenses com dança, tambores, balafon e muita energia urbana.",
+    },
+  },
+  pol: {
+    greeting: {
+      phrase: "Dzień dobry",
+      language: "polonês",
+      translation: "Quer dizer bom dia.",
+    },
+    music: {
+      title: "Mazurka e polonaise",
+      description: "Danças polonesas com violino, acordeão e passos marcados aparecem em festas e música clássica.",
+    },
+  },
+  omn: {
+    greeting: {
+      phrase: "صباح الخير",
+      language: "árabe",
+      translation: "Quer dizer bom dia.",
+      file: "Ṣabāḥ al-kháyr2.ogg",
+      credit: "Wikimedia Commons",
+    },
+    music: {
+      title: "Tambores e canto de Omã",
+      description: "Ritmos de mar, deserto e celebração usam tambores, palmas e vozes em grupo.",
+    },
+  },
+  ecu: {
+    greeting: {
+      phrase: "Buenos días",
+      language: "espanhol",
+      translation: "Quer dizer bom dia.",
+      file: "LL-Q1321 (spa)-Rodrigo5260-buenos días.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Sanjuanito, pasillo e marimba",
+      description: "Sons dos Andes e da costa usam flautas, violões, percussão e marimba.",
+    },
+  },
+  bfa: {
+    greeting: {
+      phrase: "Comment ça va?",
+      language: "francês",
+      translation: "Quer dizer como vai? Burkina Faso também tem mooré, diúla, fulfulde e outras línguas.",
+      file: "LL-Q150 (fra)-LoquaxFR-comment ça va.wav",
+      credit: "Lingua Libre / Wikimedia Commons",
+    },
+    music: {
+      title: "Balafon e tambores",
+      description: "Balafon, tambores, flautas e coros animam danças e festas comunitárias.",
+    },
+  },
+  nzl: {
+    greeting: {
+      phrase: "Kia ora",
+      language: "maori",
+      translation: "Quer dizer olá, obrigado ou desejo de vida e saúde.",
+    },
+    music: {
+      title: "Canto maori e taonga pūoro",
+      description: "Cantos, haka, poi e instrumentos tradicionais contam histórias de lugares e ancestrais.",
+    },
+  },
 };
 
 const COUNTRY_EXPORTS = {
@@ -1858,6 +2121,17 @@ const COUNTRY_EXPORTS = {
   irq: ["petróleo", "gás natural", "tâmaras", "fertilizantes", "produtos químicos"],
   pry: ["soja", "carne bovina", "eletricidade", "milho", "trigo"],
   zwe: ["ouro", "tabaco", "níquel", "ferrocromo", "algodão"],
+  phl: ["eletrônicos", "semicondutores", "máquinas", "banana", "óleo de coco"],
+  cog: ["petróleo", "madeira", "cobre", "potássio", "cacau"],
+  fin: ["papel e celulose", "máquinas", "eletrônicos", "madeira", "remédios"],
+  vnm: ["eletrônicos", "telefones", "roupas", "calçados", "café"],
+  mys: ["eletrônicos", "óleo de palma", "petróleo", "gás natural liquefeito", "borracha"],
+  nor: ["petróleo", "gás natural", "peixes", "alumínio", "navios"],
+  civ: ["cacau", "castanha de caju", "ouro", "borracha", "petróleo refinado"],
+  pol: ["carros", "máquinas", "móveis", "eletrônicos", "alimentos"],
+  omn: ["petróleo", "gás natural liquefeito", "plásticos", "peixes", "tâmaras"],
+  ecu: ["petróleo", "camarão", "banana", "flores", "cacau"],
+  nzl: ["laticínios", "carne", "madeira", "vinho", "lã"],
   kor: ["semicondutores", "carros", "navios", "eletrônicos", "máquinas"],
   idn: ["carvão", "óleo de palma", "gás natural", "níquel", "borracha"],
   afg: ["carvão", "tapetes", "frutas secas", "uva-passa", "plantas medicinais"],
