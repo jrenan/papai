@@ -657,8 +657,8 @@ const COUNTRY_AUDIO = {
       phrase: "Bom dia",
       language: "português",
       translation: "Um jeito carinhoso de dizer bom dia.",
-      file: "LL-Q5146 (por)-Nelson Ricardo 2500-Bom dia..wav",
-      credit: "Lingua Libre / Wikimedia Commons",
+      file: "Pt-br (Koehne)-bom dia.mp3",
+      credit: "Wikimedia Commons",
     },
     music: {
       title: "Samba de fato",
