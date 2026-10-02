@@ -1,7 +1,7 @@
 # Trio do Saber - Jogos Infantis
 
 Tela inicial de jogos infantis em HTML, CSS e JavaScript puro. O projeto reúne
-o jogo dos biomas e a primeira versão do jogo **Viagem pelo Mundo**.
+**Guardiões dos Biomas**, **Viagem pelo Mundo** e **Blocos de Somar**.
 
 ## Como abrir
 
@@ -46,6 +46,14 @@ Em navegadores sem esse suporte, o botão VR aparece desativado.
 - Tela inicial com a marca **Trio do Saber** e seletor de jogos.
 - Estrutura pronta para adicionar novas aventuras sem refazer a navegação.
 - Botões de retorno ao início em cada jogo.
+
+### Blocos de Somar
+
+- Acesso pela tela inicial ou por `numberblocks-1-100/blocos-de-somar.html`.
+- Jogo de adição com blocos coloridos e três níveis: até 20, até 50 e até 100.
+- Interação de arrastar e soltar com peças e áreas de encaixe maiores para crianças.
+- Layout adaptado a iPhone e iPad e orientação por voz em português.
+- Imagens locais em `numberblocks-1-100/`, sem necessidade de instalação.
 
 ### Viagem pelo Mundo
 

@@ -787,14 +787,46 @@ p {
   transform: rotate(5deg);
 }
 
-.coming-soon {
-  color: rgba(36, 65, 60, 0.7);
+.number-tile {
+  grid-template-columns: minmax(0, 1fr);
+  background: #fffaf0;
 }
 
-.dotted-path {
-  background:
-    repeating-linear-gradient(135deg, #fff 0 16px, #dff0f2 16px 30px),
-    #eaf5f3;
+.number-preview {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  min-height: 190px;
+  padding: 16px 24px;
+  background: #fff0be;
+}
+
+.number-preview img {
+  width: min(36%, 140px);
+  height: 160px;
+  object-fit: contain;
+}
+
+.number-preview span {
+  color: #735013;
+  font-size: 3rem;
+  font-weight: 900;
+}
+
+.number-game-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 64px;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+  touch-action: manipulation;
+}
+
+.number-game-link:focus-visible {
+  outline: 4px solid #0f4c89;
+  outline-offset: 5px;
 }
 
 .back-button,
