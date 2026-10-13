@@ -361,7 +361,7 @@ html,body{height:100%;height:100dvh}
 @media(max-width:620px){
  #top{gap:6px;padding-inline:max(10px,env(safe-area-inset-left)) max(10px,env(safe-area-inset-right))}
  .tools{gap:8px}.steps{gap:4px}.steps li{padding:3px}.steps li b{width:27px;height:27px}
- .stars{display:none}.ib.say span{display:none}.brand{display:none}
+ .stars{font-size:1.05rem;padding:0 2px;gap:3px}.stars svg{width:18px;height:18px}.ib.say span{display:none}.brand{display:none}
  .scene{row-gap:16px}.bubble{font-size:1rem;padding:10px 12px}
  .build[data-l="stack"] .target{gap:16px}.bignum{font-size:max(64px,calc(var(--s)*2.5))}
  .build[data-l="stack"] .a-bub{width:100%;min-width:0}
@@ -382,6 +382,27 @@ html,body{height:100%;height:100dvh}
  .home{grid-template-columns:1fr 1fr}
 }
 @media(pointer:coarse){.mat [data-drag]{touch-action:none}}
+@media(max-width:379px){ .stars{display:none} }
+
+/* ---------- melhorias de UX: algarismos do quadro, ajuda, confirmação ---------- */
+.mat.has-digits{grid-template-rows:auto auto auto}
+.mat.has-digits > :nth-child(3),.mat.has-digits > :nth-child(4){border-radius:0}
+.mf{display:grid; place-items:center; padding:3px 0 1px; border-top:2px solid var(--grid-strong); font:800 max(22px,calc(var(--s)*.9))/1.1 var(--f-display); color:var(--ink)}
+.mat > .mf:nth-last-child(2){border-bottom-left-radius:inherit; border-right:2px solid var(--grid-strong)}
+.mat > .mf:last-child{border-bottom-right-radius:inherit; border-right:0}
+.bub-row{display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:10px}
+.bub-row .bubble{flex:1 1 220px}
+.btn.mini{min-height:52px; font-size:1.1rem; padding:6px 18px 2px; border-radius:14px}
+.hand{position:absolute; left:0; top:0; width:52px; height:61px; opacity:0; transform-origin:19.5px 4.3px; filter:drop-shadow(0 6px 8px rgba(0,0,0,.35)); will-change:transform,opacity}
+.hand svg{display:block; width:100%; height:100%}
+.hand-copy{opacity:0; z-index:1900}
+.hand path{fill:#fff; stroke:var(--ink); stroke-width:2.5; stroke-linejoin:round}
+.confirm{position:fixed; inset:0; z-index:3000; display:grid; place-items:center; padding:20px; background:rgba(20,32,28,.62)}
+.confirm-card{width:min(420px,100%); box-sizing:border-box; background:var(--paper); color:var(--ink); border-radius:22px; padding:22px; box-shadow:0 8px 0 rgba(0,0,0,.25); text-align:center}
+.confirm-t{margin:0 0 6px; font:800 1.7rem/1.1 var(--f-display)}
+.confirm-s{margin:0 0 18px; font:700 1.05rem/1.35 var(--f-body); color:var(--ink-soft)}
+.confirm-b{display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+.confirm-b .btn.alt{background:#EEF3F6; color:var(--ink); box-shadow:0 5px 0 var(--grid-strong)}
 
 @media (prefers-reduced-motion: reduce){ *,*::before,*::after{animation:none!important; transition:none!important} }
 </style>
@@ -460,8 +481,12 @@ const S = {
   screen:'home', level:null, a:0, b:0, step:0, score:0, sound:true, pid:0, layout:'', bubbleH:0,
   Z:null, msg:null, tries:0, built:false, jk:null, busy:false, grouping:false,
   ready3:false, countShown:false, countTimer:0, fullPrompted:false, ans:{t:null,u:null}, wrongBtn:null,
-  opts:[], optBad:[], solved:false, lastSay:'', flash:null, lastKey:''
+  opts:[], optBad:[], solved:false, lastSay:'', flash:null, lastKey:'', moves:0, lastTo:null
 };
+/* estrelas ficam guardadas no aparelho entre uma visita e outra */
+const STAR_KEY = 'triodosaber.blocos.estrelas.v1';
+try { const v = Math.floor(+localStorage.getItem(STAR_KEY)); if (v > 0) S.score = v; } catch(e){}
+function saveStars(){ try { localStorage.setItem(STAR_KEY, String(S.score)); } catch(e){} }
 let uid = 0;
 const mk = (kind, colors) => ({ id:'p' + (++uid), kind, colors });
 const emptyZ = () => ({ tens:[], ones:[] });
@@ -581,9 +606,12 @@ function matHTML(k, o){
   }
   const rodslot = (o.colDrag && z.ones.length >= 10 && z.tens.length < nT)
     ? `<div class="rodslot" style="left:${x(z.tens.length)};bottom:${y}"></div>` : '';
-  return `<div class="mat ${o.cls || ''}" data-drop="${k}" style="grid-template-columns:${px(dW)} ${px(uW)}">
+  /* ao montar, os algarismos embaixo de cada casa mostram o número que se forma (2 | 3 = 23) */
+  const digits = o.digits
+    ? `<div class="mf" aria-hidden="true">${z.tens.length}</div><div class="mf" aria-hidden="true">${z.ones.length}</div>` : '';
+  return `<div class="mat ${o.digits ? 'has-digits' : ''} ${o.cls || ''}" data-drop="${k}" style="grid-template-columns:${px(dW)} ${px(uW)}">
     <div class="mh"><b>D</b><small>dezenas</small></div><div class="mh"><b>U</b><small>unidades</small></div>
-    <div class="col-d" data-drop="${k}-D" style="height:${px(H)}">${rodslot}${rods}</div><div class="col-u" style="height:${px(H)}">${slots}${cols}</div></div>`;
+    <div class="col-d" data-drop="${k}-D" style="height:${px(H)}">${rodslot}${rods}</div><div class="col-u" style="height:${px(H)}">${slots}${cols}</div>${digits}</div>`;
 }
 
 /* ---------- telas ---------- */
@@ -609,13 +637,13 @@ function homeHTML(){
         <li><b>1</b>Monte o primeiro número</li>
         <li><b>2</b>Monte o segundo número</li>
         <li><b>3</b>Passe as peças para um quadro só e conte</li>
-        <li><b>4</b>Arraste a resposta da conta</li>
+        <li><b>4</b>Escolha a resposta da conta</li>
       </ol>
     </section>
     <section class="levels">
       <h2>Escolha o nível</h2>
       <div class="lv-grid">${lv}</div>
-      <p class="note">Arraste com calma. Toque em <b>Ouvir</b> para repetir a instrução. Para corrigir, use <b>Desfazer</b>.</p>
+      <p class="note">Arraste ou toque com calma. Toque em <b>Ouvir</b> para repetir a instrução e ver uma mãozinha mostrando o que fazer. Para corrigir, use <b>Desfazer</b>.</p>
       <details class="voice-settings"><summary>Ajustar voz · para adultos</summary>
         <label for="voice-choice">Voz em português</label><select id="voice-choice"><option value="">Automática · melhor voz disponível</option></select>
         <label for="voice-speed">Velocidade da fala</label><select id="voice-speed"><option value="0.82">Mais devagar</option><option value="0.9">Calma</option><option value="1">Normal</option></select>
@@ -654,7 +682,7 @@ function buildHTML(){
       <div class="src" data-drag="src-ten" role="button" tabindex="0" aria-label="Adicionar uma barra de dez"><div class="rod static">${cubes(Array(10).fill(c))}</div><span class="src-l"><b>10</b>unidades</span></div>
       <div class="src" data-drag="src-one" role="button" tabindex="0" aria-label="Adicionar um cubinho"><i class="cube c-${c}"></i><span class="src-l"><b>1</b>unidade</span></div>
     </div>
-    <div class="a-mat">${matHTML('M', { nT:cap, nU:1, drag:!S.built })}</div>
+    <div class="a-mat">${matHTML('M', { nT:cap, nU:1, drag:!S.built, digits:true })}</div>
     <div class="build-actions a-btn">${S.built ? `<button class="btn go" data-act="next-step">Continuar</button>` : `<button class="btn alt undo" data-act="undo" ${cnt('M') ? '' : 'disabled'}>Desfazer</button><button class="btn" data-act="check">Pronto!</button>`}</div>
   </div>`;
 }
@@ -688,8 +716,10 @@ function joinHTML(){
     </div>`;
   }
   const mat = k => matHTML(k, { nT:nTJ(), nU:carry() ? 2 : 1, drag:!S.ready3, colDrag:true });
+  /* depois de passar duas peças, a criança já entendeu: o resto pode ir de uma vez */
+  const helper = S.moves >= 2 && !S.ready3 && cnt('A') && cnt('B');
   return `<div class="scene join" data-l="${S.layout}" data-layouts="row col colL side" data-sample="join">
-    ${bubble('Passe as peças de um quadro para o outro, até ficar tudo num quadro só.', 'a-bub')}
+    <div class="a-bub bub-row">${bubble('Passe as peças de um quadro para o outro, até ficar tudo num quadro só.')}<button class="btn alt mini ${helper ? '' : 'invis'}" data-act="join-rest" ${helper ? '' : 'tabindex="-1" aria-hidden="true"'}>Juntar o resto</button></div>
     <figure class="fig a-a"><figcaption class="fig-cap"><span class="chip chip-a">${S.a}</span></figcaption>${mat('A')}</figure>
     <div class="plus a-plus">+</div>
     <figure class="fig a-b"><figcaption class="fig-cap"><span class="pl">+</span><span class="chip chip-b">${S.b}</span></figcaption>${mat('B')}</figure>
@@ -708,7 +738,7 @@ function sumHTML(){
     <section class="eqcard a-eq">
       <div class="eq"><span class="chip chip-a">${S.a}</span><span class="op">+</span><span class="chip chip-b">${S.b}</span><span class="op">=</span><span class="ans ${S.solved ? 'ok' : ''}" data-drop="ans">${S.solved ? c : ''}</span></div>
       <div class="opts">${opts}</div>
-      ${bubble('Arraste o número certo até a caixa.')}
+      ${bubble('Toque no número certo ou arraste até a caixa.')}
       <div class="after ${S.solved ? '' : 'invis'}"><button class="btn go" data-act="new">Nova conta</button><button class="btn alt" data-act="home">Trocar nível</button></div>
     </section>
   </div>`;
@@ -756,6 +786,7 @@ function render(){
   const announcement = document.getElementById('announcement');
   const instruction = stage.querySelector('.bubble');
   if (instruction) announcement.textContent = instruction.textContent;
+  hideHand(); armIdle();
 }
 
 /* ---------- ajuste de tamanho: maior cubo possível sem rolar a tela ---------- */
@@ -1148,6 +1179,97 @@ function leaveScene(done){
     .onfinish = () => { if (S.pid !== problemId || S.step !== stepId) return; S.busy = false; done(); };
 }
 
+/* ---------- mãozinha de ajuda: depois de um tempo parado (ou ao tocar em Ouvir), mostra o gesto esperado ---------- */
+const HAND = '<svg viewBox="0 0 48 56" aria-hidden="true"><path d="M18 4c-2.8 0-5 2.2-5 5v22.5l-3.3-3.4c-2-2-5.2-2-7.1 0-1.8 1.8-1.9 4.6-.3 6.6l10.6 13.6C15.6 52.4 19.7 55 24.3 55H32c7.7 0 14-6.3 14-14V27c0-2.5-2-4.5-4.5-4.5-.9 0-1.8.3-2.5.8-.4-2.1-2.3-3.8-4.5-3.8-1.1 0-2.1.4-2.9 1-.6-1.9-2.4-3.3-4.6-3.3-.8 0-1.6.2-2.3.6V9c0-2.8-2.2-5-5-5z"/></svg>';
+const HX = 19.5, HY = 4.3;   /* ponta do dedo, em px, no desenho de 52px */
+let idleT = 0, handEl = null, handCopy = null;
+function armIdle(ms){ clearTimeout(idleT); if (S.screen === 'game') idleT = setTimeout(() => showHint(false), ms || 9000); }
+function hideHand(){ if (handEl){ handEl.remove(); handEl = null; } if (handCopy){ handCopy.remove(); handCopy = null; } }
+function hintTarget(){
+  const q = sel => stage.querySelector(sel);
+  if (S.step <= 2){
+    if (S.built) return { to:q('[data-act="next-step"]') };
+    const n = tgt(), z = S.Z.M, T = Math.floor(n / 10), U = n % 10, t = z.tens.length, u = z.ones.length;
+    if (t * 10 + u === n) return { to:q('[data-act="check"]') };
+    if (t > T || u > U) return { to:q('[data-act="undo"]') };
+    const ten = t < T;
+    return { from:q(ten ? '[data-drag="src-ten"] .rod' : '[data-drag="src-one"] .cube'), to:q('[data-drop="M"] .col-' + (ten ? 'd' : 'u')) };
+  }
+  if (S.step === 3){
+    if (S.countShown){
+      if (S.ans.t !== null && S.ans.u !== null) return { to:q('[data-act="to4"]') };
+      return { to:q(S.ans.t === null ? `[data-drop="${S.jk}-D"]` : `[data-drop="${S.jk}"] .col-u`) };
+    }
+    if (S.ready3) return null;
+    const full = q('.ucol.full');
+    if (full) return { from:full, to:q('.rodslot') || q(`[data-drop="${full.dataset.k}-D"]`) };
+    const from = S.lastTo ? other(S.lastTo) : (cnt('A') < cnt('B') ? 'A' : 'B');
+    const piece = q(`[data-drop="${from}"] [data-drag="piece"]`);
+    return piece ? { from:piece, to:q(`[data-drop="${other(from)}"]`) } : null;
+  }
+  /* na conta final a mãozinha não entrega a resposta */
+  return S.solved ? { to:q('[data-act="new"]') } : null;
+}
+function showHint(fromUser){
+  if (S.screen !== 'game' || S.busy || S.grouping || (D && D.on) || document.querySelector('.confirm')) return;
+  const h = hintTarget(); if (!h || !h.to) return;
+  hideHand();
+  const to = centerOf(h.to), from = h.from ? centerOf(h.from) : null;
+  const el = handEl = document.createElement('div'); el.className = 'hand'; el.innerHTML = HAND; fx.appendChild(el);
+  const at = (p, k) => `translate(${(p.x - HX).toFixed(1)}px,${(p.y - HY).toFixed(1)}px) scale(${k})`;
+  let kf;
+  if (reduced) kf = [{ transform:at(to, 1), opacity:0 }, { transform:at(to, 1), opacity:1, offset:.2 }, { transform:at(to, 1), opacity:1, offset:.8 }, { transform:at(to, 1), opacity:0 }];
+  else if (from) kf = [{ transform:at(from, 1.2), opacity:0 }, { transform:at(from, 1), opacity:1, offset:.14 }, { transform:at(from, .86), offset:.24 }, { transform:at(to, .86), offset:.7 }, { transform:at(to, 1), opacity:1, offset:.8 }, { transform:at(to, 1), opacity:0 }];
+  else kf = [{ transform:at(to, 1.2), opacity:0 }, { transform:at(to, 1), opacity:1, offset:.2 }, { transform:at(to, .84), offset:.34 }, { transform:at(to, 1), offset:.48 }, { transform:at(to, .84), offset:.62 }, { transform:at(to, 1), opacity:1, offset:.8 }, { transform:at(to, 1), opacity:0 }];
+  const opts = { duration:from && !reduced ? 1900 : 1500, iterations:2, easing:'ease-in-out', fill:'both' };
+  /* no gesto de arrastar, a mãozinha leva uma cópia clarinha da peça */
+  if (from && !reduced){
+    const r = h.from.getBoundingClientRect(), c = h.from.cloneNode(true);
+    [c, ...c.querySelectorAll('[data-pid],[data-drag]')].forEach(x => { x.removeAttribute('data-pid'); x.removeAttribute('data-drag'); x.removeAttribute('data-say'); });
+    c.classList.remove('full', 'lifted'); c.classList.add('ghost', 'hand-copy'); c.style.width = r.width + 'px'; c.style.height = r.height + 'px';
+    document.body.appendChild(c); handCopy = c;
+    const atC = p => `translate(${(p.x - r.width / 2).toFixed(1)}px,${(p.y - r.height / 2).toFixed(1)}px)`;
+    c.animate([{ transform:atC(from), opacity:0 }, { transform:atC(from), opacity:.7, offset:.14 }, { transform:atC(from), opacity:.7, offset:.24 }, { transform:atC(to), opacity:.7, offset:.7 }, { transform:atC(to), opacity:0, offset:.84 }, { transform:atC(to), opacity:0 }], opts);
+  }
+  const an = el.animate(kf, opts);
+  an.onfinish = () => { if (handEl === el) hideHand(); };
+  if (!fromUser) armIdle(16000);
+}
+addEventListener('keydown', () => { hideHand(); armIdle(); });
+
+/* ---------- sair no meio da conta: pergunta antes, para um toque sem querer não apagar tudo ---------- */
+const inProgress = () => !(S.step === 4 && S.solved) && (S.step > 1 || cnt('M') > 0);
+function askLeave(){
+  if (document.querySelector('.confirm')) return;
+  clearTimeout(idleT); hideHand();
+  const box = document.createElement('div');
+  box.className = 'confirm';
+  box.innerHTML = `<div class="confirm-card" role="alertdialog" aria-modal="true" aria-labelledby="confirm-t" aria-describedby="confirm-s">
+      <p id="confirm-t" class="confirm-t">Sair desta conta?</p>
+      <p id="confirm-s" class="confirm-s">As peças montadas vão sumir.</p>
+      <div class="confirm-b"><button class="btn" data-act="stay">Continuar jogando</button><button class="btn alt" data-act="leave">Sair</button></div>
+    </div>`;
+  box.addEventListener('click', e => { if (e.target === box) closeLeave(); });
+  document.body.appendChild(box);
+  document.getElementById('app').inert = true;
+  box.querySelector('[data-act="stay"]').focus();
+  if (!reduced) box.firstElementChild.animate([{ transform:'translateY(24px) scale(.94)', opacity:0 }, { transform:'none', opacity:1 }], { duration:320, easing:'cubic-bezier(.2,1.3,.4,1)' });
+}
+function closeLeave(){
+  const box = document.querySelector('.confirm'); if (!box) return;
+  box.remove(); document.getElementById('app').inert = false; armIdle();
+  topBar.querySelector('[data-act="home"]')?.focus();
+}
+addEventListener('keydown', e => {
+  const box = document.querySelector('.confirm'); if (!box) return;
+  if (e.key === 'Escape'){ e.preventDefault(); closeLeave(); return; }
+  if (e.key !== 'Tab') return;
+  const first = box.querySelector('[data-act="stay"]'), last = box.querySelector('[data-act="leave"]');
+  if (!box.contains(document.activeElement) || (e.shiftKey ? document.activeElement === first : document.activeElement === last)){
+    e.preventDefault(); (e.shiftKey ? last : first).focus();
+  }
+});
+
 /* FLIP com física: mede onde cada peça estava, muda o estado, e anima até o lugar novo */
 function flip(mut, hints){
   hints = hints || {};
@@ -1191,7 +1313,7 @@ function doEnter(n, silent){
   clearTimeout(S.countTimer);
   anims.clear();
   if (n <= 2) S.Z.M = emptyZ();
-  if (n === 3){ S.ready3 = false; S.countShown = false; S.fullPrompted = false; S.ans = { t:null, u:null }; S.wrongBtn = null; S.jk = null; }
+  if (n === 3){ S.ready3 = false; S.countShown = false; S.fullPrompted = false; S.ans = { t:null, u:null }; S.wrongBtn = null; S.jk = null; S.moves = 0; S.lastTo = null; }
   if (n === 4){ S.opts = makeOptions(S.a, S.b); S.optBad = []; S.solved = false; }
   render();
   enterFX(n === 3 ? 'join' : n === 4 ? 'sum' : 'build');
@@ -1199,11 +1321,12 @@ function doEnter(n, silent){
   if (n === 1) say(`Monte o número ${ext(S.a)}. Arraste as barras de dez e os cubinhos para o quadro.`);
   if (n === 2) say(`Agora monte o número ${ext(S.b)}.`);
   if (n === 3) say('Agora vamos juntar! Passe as peças de um quadro para o outro, até ficar tudo num quadro só.');
-  if (n === 4) say(`Quanto é ${ext(S.a)} mais ${ext(S.b)}? Arraste a resposta até a caixa.`);
+  if (n === 4) say(`Quanto é ${ext(S.a)} mais ${ext(S.b)}? Toque na resposta certa.`);
 }
 function goHome(){
   cancelDrag(); document.querySelectorAll('.ghost').forEach(el => el.remove()); S.pid++; S.busy = false; S.grouping = false;
   S.screen = 'home'; S.step = 0; S.msg = null; clearTimeout(S.countTimer); anims.clear();
+  clearTimeout(idleT); hideHand();
   window.BlockVoice?.stop();
   render();
   if (!reduced) stage.querySelectorAll('.lv').forEach((el, i) => el.animate([{ transform:'translateY(24px) scale(.95)', opacity:0 }, { transform:'none', opacity:1 }], { duration:500, delay:i * 70, easing:'cubic-bezier(.2,1.3,.4,1)', fill:'backwards' }));
@@ -1318,11 +1441,25 @@ function moveAcross(pid, origins){
   if (!p || S.ready3){ flip(() => {}, origins ? spring(origins) : {}); return; }
   const Z = S.Z[src], T = S.Z[other(src)];
   const fromDrag = origins && origins[pid];
+  S.moves++; S.lastTo = other(src);
   flip(() => {
     Z.tens = Z.tens.filter(q => q !== p); Z.ones = Z.ones.filter(q => q !== p);
     (p.kind === 'ten' ? T.tens : T.ones).push(p);
     update3(false);
   }, { [pid]:{ rect:fromDrag || null, type:'toss', apex:fromDrag ? .9 : 2.2 } });
+}
+function joinRest(){
+  if (S.step !== 3 || S.ready3 || S.busy) return;
+  const to = S.lastTo || (cnt('A') >= cnt('B') ? 'A' : 'B'), from = other(to);
+  const ids = S.Z[from].tens.concat(S.Z[from].ones).map(p => p.id);
+  if (!ids.length) return;
+  const problemId = S.pid;
+  S.busy = true;
+  ids.forEach((pid, i) => setTimeout(() => {
+    if (S.pid !== problemId || S.step !== 3) return;
+    if (i === ids.length - 1) S.busy = false;
+    moveAcross(pid, null);
+  }, i * 170));
 }
 const spring = rects => Object.fromEntries(Object.entries(rects).map(([k, r]) => [k, { rect:r, type:'spring' }]));
 function regroup(k, el, viaGhost){
@@ -1366,7 +1503,7 @@ function tryOpt(v, g, el){
   const c = S.a + S.b;
   const box = stage.querySelector('[data-drop="ans"]');
   if (v === c){
-    S.solved = true; S.score++;
+    S.solved = true; S.score++; saveStars();
     S.msg = { kind:'ok', text:`${S.a} + ${S.b} = ${c}. Muito bem!` };
     settleGhost(g, box, () => {
       if (S.pid !== problemId || S.step !== 4) return;
@@ -1401,7 +1538,7 @@ let D = null;
 const rectOf = el => el ? el.getBoundingClientRect() : null;
 function onDown(e){
   if (e.button > 0 || e.isPrimary === false || D || S.busy || S.grouping) return;
-  unlockAudio();
+  unlockAudio(); hideHand(); armIdle();
   let t = e.target.closest('[data-drag]') || e.target.closest('[data-say]');
   if (!t && e.pointerType !== 'mouse' && e.target.closest('.mat')){
     let near = 24;
@@ -1567,6 +1704,15 @@ function rejectGhost(g, box, el, done){
   ], { duration:1000, easing:'ease-in-out', fill:'forwards' });
   a.onfinish = () => { g.remove(); done(); };
 }
+/* tocar na resposta também vale: o número voa sozinho até a caixa (crianças pequenas ainda não arrastam bem) */
+function answerByTap(el){
+  if (S.busy || S.solved) return;
+  const g = el.cloneNode(true);
+  g.removeAttribute('data-drag'); g.removeAttribute('tabindex'); g.classList.add('ghost');
+  const r = el.getBoundingClientRect(); g.style.transform = `translate(${r.left}px,${r.top}px)`;
+  document.body.appendChild(g); el.classList.add('lifted'); sfx('lift');
+  tryOpt(+el.dataset.val, g, el);
+}
 function sayPiece(el){
   const v = el.dataset.say || (el.classList.contains('rod') ? '10' : '1');
   say(v === '10' ? 'dez' : 'um');
@@ -1579,14 +1725,7 @@ function tap(d){
     case 'src-one': addPiece('one', rectOf(d.el.querySelector('.cube')), false); break;
     case 'piece': if (S.step <= 2) sayPiece(d.el); else if (S.step === 3) moveAcross(d.pid, null); break;
     case 'col': regroup(d.k, d.el, false); break;
-    case 'opt': {
-      say('Arraste o número até a caixa.');
-      const box = stage.querySelector('[data-drop="ans"]');
-      if (box && !reduced){ const r = rectOf(d.el), b = rectOf(box); const dx = (b.left - r.left) * .2, dy = (b.top - r.top) * .2;
-        d.el.animate([{ transform:'none' }, { transform:`translate(${dx}px,${dy}px) rotate(-6deg)`, offset:.4 }, { transform:`translate(${dx * .6}px,${dy * .6}px) rotate(3deg)`, offset:.6 }, { transform:'none' }], { duration:620, easing:'ease-in-out' });
-        popEl(box, .12); }
-      break;
-    }
+    case 'opt': answerByTap(d.el); break;
   }
 }
 function drop(d, hit){
@@ -1628,23 +1767,24 @@ stage.addEventListener('keydown', e => {
   if (!['Enter',' '].includes(e.key) || S.busy || S.grouping) return;
   const el = e.target.closest('[data-drag]'); if (!el) return;
   e.preventDefault(); unlockAudio();
-  if (el.dataset.drag === 'opt'){
-    const g = el.cloneNode(true); g.classList.add('ghost'); document.body.appendChild(g);
-    const r = el.getBoundingClientRect(); g.style.transform = `translate(${r.left}px,${r.top}px)`;
-    tryOpt(+el.dataset.val, g, el);
-  } else tap({el,type:el.dataset.drag,pid:el.dataset.pid,k:el.dataset.k});
+  tap({el,type:el.dataset.drag,pid:el.dataset.pid,k:el.dataset.k});
 });
 
 /* ---------- botões ---------- */
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
   const act = b.dataset.act;
-  if ((S.busy || S.grouping) && act !== 'sound' && act !== 'repeat' && act !== 'home') return;
+  if ((S.busy || S.grouping) && !['sound','repeat','home','stay','leave'].includes(act)) return;
   unlockAudio();
   switch (act){
     case 'level': startLevel(b.dataset.lv); break;
-    case 'home': S.busy = false; goHome(); break;
-    case 'repeat': say(S.lastSay); popEl(b, .15); break;
+    case 'home':
+      if (S.screen === 'game' && inProgress()){ askLeave(); break; }
+      S.busy = false; goHome(); break;
+    case 'stay': closeLeave(); break;
+    case 'leave': closeLeave(); S.busy = false; goHome(); break;
+    case 'repeat': say(S.lastSay); popEl(b, .15); showHint(true); break;
+    case 'join-rest': joinRest(); break;
     case 'sound': S.sound = !S.sound; if (!S.sound) window.BlockVoice?.stop(); renderTop(); break;
     case 'voice-test': S.sound = true; renderTop(); say('Vamos brincar de somar? Arraste os blocos com calma. Você pode ouvir de novo quando quiser.'); break;
     case 'undo': {

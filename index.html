@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="assets/trio-do-saber.png" />
     <link rel="apple-touch-icon" href="assets/trio-do-saber.png" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="numberblocks-somar/numberblocks.css" />
   </head>
   <body>
     <main class="game-shell">
@@ -79,6 +80,27 @@
               </p>
               <a class="primary-button number-game-link" href="numberblocks-1-100/blocos-de-somar.html">
                 Brincar de somar
+              </a>
+            </div>
+          </article>
+
+          <article class="game-tile numberblocks-tile" aria-labelledby="numberblocks-game-title">
+            <div class="tile-visual numberblocks-preview" aria-hidden="true">
+              <span data-nb="2"></span>
+              <b>+</b>
+              <span data-nb="3"></span>
+              <b>=</b>
+              <span data-nb="5"></span>
+            </div>
+            <div class="tile-copy">
+              <p class="eyebrow">Para os pequenos</p>
+              <h2 id="numberblocks-game-title">Juntar e Somar</h2>
+              <p>
+                Monte os Numberblocks bloco por bloco, junte dois amigos, conte
+                os blocos e descubra quem apareceu.
+              </p>
+              <a class="primary-button number-game-link" href="numberblocks-somar/index.html">
+                Juntar os amigos
               </a>
             </div>
           </article>
@@ -168,7 +190,23 @@
           </div>
         </div>
 
-        <div class="choice-grid exploration-grid" id="choiceGrid" aria-label="Lugares para explorar"></div>
+        <div class="rescue-board">
+          <section class="rescue-places" aria-labelledby="placesTitle">
+            <p class="eyebrow" id="placesTitle">1. Investigue os lugares</p>
+            <div class="choice-grid exploration-grid" id="choiceGrid" aria-label="Lugares para investigar"></div>
+          </section>
+
+          <section class="rescue-map-panel" aria-labelledby="rescueMapTitle">
+            <p class="eyebrow" id="rescueMapTitle">2. Leve para casa no mapa</p>
+            <div class="rescue-dock" id="rescueDock">
+              <button class="rescue-token" id="rescueToken" type="button"></button>
+              <p id="rescueHint" role="status">Arraste até o lugar certo no mapa do Brasil.</p>
+            </div>
+            <div class="rescue-map">
+              <svg id="rescueMap" viewBox="10 62 400 396" role="group" aria-label="Mapa do Brasil com biomas"></svg>
+            </div>
+          </section>
+        </div>
 
         <section class="feedback is-hidden" id="feedback">
           <div class="feedback-badge" id="feedbackBadge"></div>
@@ -189,7 +227,7 @@
             Tentar outro
           </button>
           <button class="primary-button" id="nextButton" type="button">
-            Próximo lugar
+            Próxima missão
           </button>
         </div>
       </section>
@@ -201,6 +239,9 @@
           Você explorou lugares, comparou pistas e descobriu que os seres vivos
           ficam melhor quando o ambiente combina com o que eles precisam.
         </p>
+        <div class="rescue-map complete-map">
+          <svg id="completeMap" viewBox="10 62 400 396" role="img" aria-label="Mapa do Brasil com todos os seres vivos em casa"></svg>
+        </div>
         <button class="primary-button" id="restartButton" type="button">
           Jogar de novo
         </button>
@@ -361,6 +402,7 @@
     <script src="world-data.js"></script>
     <script src="country-content.js"></script>
     <script src="biome-geometry.js"></script>
+    <script src="numberblocks-somar/numberblocks.js"></script>
     <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
     <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="app.js"></script>

@@ -1,0 +1,960 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Juntar e Somar · Trio do Saber</title>
+<meta name="theme-color" content="#8fd8fb">
+<meta name="description" content="Monte os Numberblocks bloco por bloco, junte dois amigos e conte quem apareceu. Um jogo de somar do Trio do Saber.">
+<link rel="icon" type="image/png" href="../assets/trio-do-saber.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Grandstander:wght@700;800;900&display=swap">
+<link rel="stylesheet" href="numberblocks.css">
+<style>
+/* Numberland: céu, grama e cartões com contorno de tinta, no estilo do convite do Rafa.
+   O chão (#ground) define --u, o tamanho de cada bloco, para o personagem caber sem rolar a tela. */
+:root{
+  --tinta:#211c5b; --tinta-suave:#4e4987; --papel:#fffdf8; --creme:#fffaf0;
+  --ceu-a:#86d4fa; --ceu-b:#dff5ff; --grama:#5fc152; --grama-d:#3d9a35;
+  --sol:#ffd21a; --sol-d:#c99a00; --ok:#2fbf71; --ok-d:#1d8a4f; --no:#ef5b57;
+  --borda:3px solid var(--tinta); --sombra:4px 5px 0 var(--tinta);
+  --mola:cubic-bezier(.34,1.56,.64,1);
+  --f-display:'Grandstander','Baloo 2','Trebuchet MS',system-ui,sans-serif;
+  --f-body:'Andika','Trebuchet MS',system-ui,sans-serif;
+  --nb-fonte:var(--f-display);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%; height:100dvh; margin:0}
+body{font-family:var(--f-body); color:var(--tinta); background:linear-gradient(var(--ceu-a), var(--ceu-b) 75%); overflow:hidden; overscroll-behavior:none;
+  -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent; -webkit-text-size-adjust:100%; text-size-adjust:100%}
+button{font-family:inherit; color:inherit}
+:focus-visible{outline:4px solid var(--tinta); outline-offset:4px}
+#app{height:100%; display:flex; flex-direction:column}
+.sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0}
+
+/* ---------- barra de cima ---------- */
+#top{flex:none; display:flex; align-items:center; gap:10px; min-height:66px;
+  padding:max(8px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) 8px max(14px,env(safe-area-inset-left));
+  background:rgba(255,253,248,.86); border-bottom:var(--borda)}
+.brand{font:900 1.35rem/1 var(--f-display); white-space:nowrap; padding-top:2px}
+.steps{display:flex; gap:6px; list-style:none; margin:0 auto; padding:0}
+.steps li{display:flex; align-items:center; gap:7px; padding:4px 13px 4px 4px; border-radius:999px; border:2px solid rgba(33,28,91,.25); background:#fff; color:var(--tinta-suave); font:800 1rem/1 var(--f-display)}
+.steps li b{width:30px; height:30px; border-radius:50%; display:grid; place-items:center; background:#ece9ff; padding-top:2px}
+.steps li.now{border-color:var(--tinta); color:var(--tinta); box-shadow:0 3px 0 var(--tinta)}
+.steps li.now b{background:var(--sol)}
+.steps li.done b{background:var(--ok); color:#fff}
+.tools{display:flex; gap:8px; align-items:center; margin-left:auto}
+.ib{flex:none; min-width:52px; height:52px; border-radius:15px; border:var(--borda); background:#fff; color:var(--tinta); display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  padding:0 12px; font:800 1.05rem/1 var(--f-display); box-shadow:0 3px 0 var(--tinta); cursor:pointer; text-decoration:none; touch-action:manipulation}
+.ib:active{transform:translateY(3px); box-shadow:none}
+.ib svg{width:24px; height:24px; fill:currentColor; flex:none}
+.ib.say{background:var(--sol)}
+.ib span{padding-top:2px}
+.stars{display:inline-flex; align-items:center; gap:5px; font:900 1.3rem/1 var(--f-display); padding:0 4px}
+.stars svg{width:26px; height:26px; fill:var(--sol); stroke:var(--tinta); stroke-width:1.6}
+.stars b{padding-top:3px}
+@media (max-width:860px){ .steps li span{display:none} .steps li{padding:4px} }
+@media (max-width:620px){ .brand,.ib.say span,.ib.site span{display:none} #top{gap:6px; padding-left:max(10px,env(safe-area-inset-left)); padding-right:max(10px,env(safe-area-inset-right))} .steps{gap:4px} .steps li b{width:27px; height:27px} .stars{font-size:1.05rem; padding:0 2px; gap:3px} .stars svg{width:20px; height:20px} }
+@media (max-width:420px){ .ib{min-width:46px; height:46px; padding:0 8px} .steps li{padding:2px} .steps li b{width:26px; height:26px} .tools{gap:6px} }
+@media (max-width:359px){ .stars{display:none} }
+
+/* ---------- palco ---------- */
+#stage{flex:1; min-height:0; display:flex; overflow:hidden; touch-action:manipulation}
+#stage.scroll{overflow:auto}
+.scene{flex:1; min-width:0; min-height:0; display:grid; gap:16px; padding:16px max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));
+  grid-template-columns:minmax(290px,370px) minmax(0,1fr); grid-template-rows:minmax(0,1fr) auto; grid-template-areas:"hud ground" "dock ground"}
+@media (max-width:820px), (max-aspect-ratio:1/1){
+  .scene{grid-template-columns:minmax(0,1fr); grid-template-rows:auto minmax(0,1fr) auto; grid-template-areas:"hud" "ground" "dock"; gap:12px; padding-top:12px}
+}
+.hud{grid-area:hud; display:flex; flex-direction:column; justify-content:center; gap:14px; min-width:0}
+.dock{grid-area:dock; display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:14px; min-height:100px}
+
+/* cartão do número e balão de fala */
+.goal{display:flex; align-items:center; gap:16px; background:var(--papel); border:var(--borda); border-radius:24px; padding:12px 16px; box-shadow:var(--sombra)}
+.goal .eyebrow{display:block; font:700 .85rem/1 var(--f-body); letter-spacing:.12em; text-transform:uppercase; color:var(--tinta-suave)}
+.goal .word{display:block; font:900 clamp(1.6rem,4vw,2.2rem)/1.05 var(--f-display); margin-top:4px}
+.chip{display:inline-grid; place-items:center; min-width:1.35em; padding:.12em .28em 0; border-radius:.32em; border:var(--borda); font:900 1em/1 var(--f-display);
+  background:var(--k,#fff); color:var(--k-ink,#1c1a24); box-shadow:inset 0 0 0 var(--k-ring,0) var(--k-line,transparent), 0 4px 0 var(--tinta)}
+.goal .chip{font-size:clamp(3rem,8vw,4.4rem)}
+.eq{display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:10px; font:900 clamp(2.2rem,6vw,3rem)/1 var(--f-display); background:var(--papel); border:var(--borda); border-radius:24px; padding:14px 16px; box-shadow:var(--sombra)}
+.eq .op{padding-top:4px}
+.ans{min-width:1.6em; height:1.45em; display:grid; place-items:center; padding-top:.1em; border:4px dashed var(--tinta-suave); border-radius:.3em; background:#fff; transition:background .15s, border-color .15s}
+.ans.quer{border-color:var(--tinta); background:#fff3b8}
+.ans.ok{border:var(--borda); background:var(--ok); color:#fff; box-shadow:0 4px 0 var(--tinta)}
+.bubble{margin:0; background:#fff; border:var(--borda); border-radius:22px; padding:13px 16px; font:700 clamp(1.05rem,2.4vw,1.25rem)/1.35 var(--f-body); box-shadow:var(--sombra); min-height:3.6em; display:flex; align-items:center}
+.bubble.ok{background:#e4f8ec} .bubble.no{background:#ffe7e3} .bubble.info{background:#fff6d0}
+
+/* chão: céu, sol e grama onde os personagens ficam de pé */
+.ground{grid-area:ground; position:relative; min-height:0; overflow:hidden; border:var(--borda); border-radius:30px; box-shadow:var(--sombra); --chao:48px;
+  background:radial-gradient(circle at 86% 14%, #fff7b0 0 34px, rgba(255,247,176,.0) 70px), radial-gradient(ellipse 30% 12% at 22% 22%, rgba(255,255,255,.9), transparent 70%), linear-gradient(#a7e2ff, #e6f8ff)}
+.ground::after{content:""; position:absolute; left:0; right:0; bottom:0; height:var(--chao); background:linear-gradient(var(--grama), var(--grama-d)); border-top:3px solid rgba(33,28,91,.35)}
+.ground.quer{box-shadow:0 0 0 6px var(--sol), var(--sombra)}
+.figs{position:absolute; z-index:1; left:0; right:0; bottom:calc(var(--chao) - var(--u)*.22); display:flex; align-items:flex-end; justify-content:center; gap:calc(var(--u)*.8)}
+.fig{position:relative; display:inline-flex; touch-action:none; cursor:default; border-radius:12px}
+.fig[data-drag]{cursor:grab}
+.fig.lifted{opacity:.22}
+.fig::after{content:""; position:absolute; z-index:-1; left:6%; right:6%; bottom:calc(var(--u)*-.08); height:calc(var(--u)*.26); border-radius:50%; background:rgba(33,28,91,.16)}
+.fig.quer .nb-corpo{filter:drop-shadow(0 0 calc(var(--u)*.2) #fff3a0) drop-shadow(0 0 4px var(--sol))}
+.mais{font:900 calc(var(--u)*1.25)/1 var(--f-display); align-self:center; margin-bottom:calc(var(--u)*.6)}
+[data-fig="M"] .nb-b{cursor:pointer}
+.nb-conta{position:absolute; inset:0; display:grid; place-items:center; pointer-events:none}
+.nb-conta b{display:grid; place-items:center; width:68%; aspect-ratio:1; border-radius:50%; background:rgba(255,255,255,.92); border:calc(var(--u)*.04) solid var(--tinta);
+  font:900 calc(var(--u)*.4)/1 var(--f-display); color:var(--tinta); padding-top:.1em}
+.nb-b.ultimo .nb-conta b{background:var(--sol)}
+
+/* bandeja: o bloco que a criança toca ou arrasta */
+.src{display:flex; align-items:center; gap:14px; padding:10px 20px 10px 12px; min-height:92px; border:3px dashed var(--tinta-suave); border-radius:24px; background:rgba(255,255,255,.75);
+  cursor:grab; touch-action:none; font:900 1.25rem/1.1 var(--f-display); text-align:left}
+.src .nb-b{--u:66px; width:66px; height:66px; flex:none}
+.src small{display:block; font:700 .95rem/1.2 var(--f-body); color:var(--tinta-suave)}
+.src:active{background:#fff}
+.hint-txt{margin:0; font:700 1.15rem/1.35 var(--f-body); text-align:center; color:var(--tinta-suave); max-width:28ch}
+
+/* botões */
+.btn{border:var(--borda); border-radius:18px; min-height:62px; padding:8px 28px 4px; font:900 1.45rem/1 var(--f-display); background:var(--sol); color:var(--tinta); box-shadow:var(--sombra); cursor:pointer; touch-action:manipulation}
+.btn:active{transform:translate(3px,4px); box-shadow:1px 1px 0 var(--tinta)}
+.btn.alt{background:#fff}
+.btn:disabled{opacity:.5; cursor:default}
+.opt{width:88px; height:88px; display:grid; place-items:center; padding-top:8px; border:var(--borda); border-radius:22px; background:#fff; font:900 2.7rem/1 var(--f-display); box-shadow:var(--sombra); cursor:grab; touch-action:none}
+.opt.bad{opacity:.3; filter:grayscale(1); text-decoration:line-through; cursor:default; box-shadow:none}
+.opt.gone{visibility:hidden}
+.opt.lifted{opacity:.25}
+
+/* fantasmas de arrasto, voo dos blocos e efeitos */
+.ghost{position:fixed; left:0; top:0; z-index:1500; pointer-events:none; filter:drop-shadow(0 16px 14px rgba(33,28,91,.35)); will-change:transform}
+#fx{position:fixed; inset:0; z-index:2000; pointer-events:none; overflow:hidden}
+.voa{position:absolute; left:0; top:0; will-change:transform}
+.plim{position:absolute; width:20px; height:20px; margin:-10px 0 0 -10px; border-radius:50%; background:radial-gradient(circle, #fff 0 30%, #fff3a0 45%, rgba(255,210,26,0) 70%)}
+.brilho{position:absolute; font:900 22px/1 var(--f-display); color:var(--sol); text-shadow:0 0 2px var(--tinta), 0 2px 0 var(--tinta)}
+.flt{position:absolute; font:900 1.6rem/1 var(--f-display); color:var(--tinta); background:#fff; border:var(--borda); border-radius:999px; padding:6px 12px 2px; white-space:nowrap}
+.confete{position:fixed; inset:0; z-index:2100; pointer-events:none; overflow:hidden}
+.confete i{position:absolute; top:-30px; border-radius:4px; border:2px solid var(--tinta); animation:cair linear forwards}
+@keyframes cair{to{transform:translate(var(--desvio),110vh) rotate(var(--giro))}}
+.hand{position:absolute; left:0; top:0; width:56px; height:66px; opacity:0; transform-origin:21px 4.6px; filter:drop-shadow(0 6px 8px rgba(33,28,91,.35))}
+.hand svg{display:block; width:100%; height:100%}
+.hand path{fill:#fff; stroke:var(--tinta); stroke-width:2.6; stroke-linejoin:round}
+.hand-copy{opacity:0; z-index:1900}
+
+/* confirmação ao sair */
+.confirm{position:fixed; inset:0; z-index:3000; display:grid; place-items:center; padding:20px; background:rgba(33,28,91,.55)}
+.confirm-card{width:min(420px,100%); background:var(--papel); border:var(--borda); border-radius:24px; padding:22px; box-shadow:var(--sombra); text-align:center}
+.confirm-t{margin:0 0 6px; font:900 1.8rem/1.1 var(--f-display)}
+.confirm-s{margin:0 0 18px; font:700 1.05rem/1.35 var(--f-body); color:var(--tinta-suave)}
+.confirm-b{display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+
+/* ---------- tela inicial ---------- */
+.home{margin:auto; width:100%; max-width:1100px; display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr); gap:40px; align-items:center;
+  padding:20px max(18px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left))}
+.parade{--u:34px; display:flex; align-items:flex-end; gap:calc(var(--u)*.75); min-height:calc(var(--u)*7.6); padding:0 0 10px 8px; border-bottom:6px solid var(--grama-d)}
+.parade .nb{animation-delay:calc(var(--k)*.35s)}
+.home h1{font:900 clamp(2.8rem,7vw,4.8rem)/.95 var(--f-display); margin:22px 0 6px; letter-spacing:-.01em}
+.kicker{margin:0 0 14px; font:800 clamp(1.25rem,3vw,1.6rem)/1.1 var(--f-display); color:var(--tinta-suave)}
+.lead{margin:0; font:400 1.2rem/1.45 var(--f-body); max-width:36ch}
+.how{list-style:none; padding:0; margin:20px 0 0; display:grid; gap:8px}
+.how li{display:flex; gap:12px; align-items:center; font:700 1.08rem/1.2 var(--f-body)}
+.how li b{width:34px; height:34px; border-radius:50%; border:var(--borda); background:#fff; display:grid; place-items:center; font:900 1.05rem/1 var(--f-display); flex:none; padding-top:2px}
+.levels h2{font:700 .95rem/1 var(--f-body); letter-spacing:.14em; text-transform:uppercase; color:var(--tinta-suave); margin:0 0 14px}
+.lv-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+.lv{background:var(--papel); border:var(--borda); border-radius:24px; padding:14px 16px 14px; text-align:left; cursor:pointer; display:flex; flex-direction:column; gap:4px; box-shadow:var(--sombra); touch-action:manipulation}
+.lv:active{transform:translate(3px,4px); box-shadow:1px 1px 0 var(--tinta)}
+.lv-ex{--u:16px; display:flex; align-items:flex-end; gap:8px; min-height:calc(var(--u)*7); font:900 1.6rem/1 var(--f-display)}
+.lv-ex .q{font-size:2.2rem; color:var(--tinta-suave)}
+.lv-n{font:900 1.5rem/1.1 var(--f-display); margin-top:6px}
+.lv-s{font:700 1rem/1.2 var(--f-body); color:var(--tinta-suave)}
+.note{font:400 1rem/1.5 var(--f-body); color:var(--tinta-suave); margin:16px 0 0}
+.voice-settings{margin-top:18px; font-size:1rem}
+.voice-settings summary{min-height:52px; display:flex; align-items:center; cursor:pointer; text-decoration:underline; text-underline-offset:5px}
+.voice-settings label{display:block; margin:12px 0 6px}
+.voice-settings select{display:block; width:100%; min-height:52px; font:inherit; border:var(--borda); border-radius:14px; background:#fff; color:var(--tinta); padding:10px}
+.voice-settings .btn{margin-top:16px; font-size:1.1rem; min-height:52px}
+@media (max-width:820px){ .home{grid-template-columns:1fr; gap:24px} }
+@media (max-width:560px){
+  .parade{--u:22px} .home h1{margin-top:14px} .how{display:none} .lead{font-size:1.08rem}
+  .lv-grid{gap:12px} .lv{padding:12px} .lv-ex{--u:12px} .lv-n{font-size:1.25rem} .lv-s{font-size:.92rem}
+  .opt{width:76px; height:76px; font-size:2.3rem} .btn{font-size:1.25rem; padding-inline:20px}
+  .src{min-height:84px} .src .nb-b{--u:58px; width:58px; height:58px}
+}
+@media (max-height:560px) and (min-width:561px){ .how{display:none} .parade{--u:16px} .home h1{font-size:2.6rem; margin-top:10px} }
+/* celular deitado: tudo mais compacto para caber sem rolar */
+@media (max-height:560px) and (min-aspect-ratio:1/1){
+  #top{min-height:54px; padding-top:max(5px,env(safe-area-inset-top)); padding-bottom:5px} .ib{height:44px; min-width:44px}
+  .brand{display:none}
+  .scene{gap:10px; padding-top:10px; padding-bottom:max(10px,env(safe-area-inset-bottom)); grid-template-columns:minmax(250px,320px) minmax(0,1fr); grid-template-rows:minmax(0,1fr) auto; grid-template-areas:"hud ground" "dock ground"}
+  .hud{gap:8px} .goal{padding:8px 12px; gap:12px} .goal .chip{font-size:2.6rem} .goal .word{font-size:1.5rem}
+  .eq{font-size:2rem; padding:8px 12px} .bubble{min-height:0; padding:8px 12px; font-size:1rem}
+  .dock{min-height:0; gap:10px} .src{min-height:70px; padding:6px 14px 6px 8px} .src .nb-b{--u:52px; width:52px; height:52px}
+  .btn{min-height:50px; font-size:1.2rem} .opt{width:66px; height:66px; font-size:2rem}
+}
+@media (max-width:560px){ .bubble{min-height:0; font-size:1.02rem; padding:10px 13px} .goal .chip{font-size:3rem} .eq{font-size:2.2rem; padding:10px 12px} }
+
+@media (prefers-reduced-motion: reduce){ *,*::before,*::after{animation:none!important; transition:none!important} }
+</style>
+</head>
+<body>
+<div id="app">
+  <header id="top"></header>
+  <main id="stage" aria-label="Jogo de juntar e somar"></main>
+  <div id="announcement" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+</div>
+<div id="fx" aria-hidden="true"></div>
+
+<script src="../numberblocks-1-100/game-voice.js"></script>
+<script src="numberblocks.js"></script>
+<script>
+(() => {
+'use strict';
+const NBK = window.Numberblocks;
+const stage = document.getElementById('stage');
+const topBar = document.getElementById('top');
+const fx = document.getElementById('fx');
+const announcement = document.getElementById('announcement');
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const $ = (sel, root = stage) => root.querySelector(sel);
+/* a lógica segue mesmo se a animação não terminar (aba em segundo plano, economia de energia) */
+function whenDone(anim, ms, fn){ let done = false; const go = () => { if (done) return; done = true; fn(); }; anim.onfinish = go; setTimeout(go, ms + 120); }
+const $$ = (sel, root = stage) => [...root.querySelectorAll(sel)];
+
+/* ---------- números ---------- */
+const UN = ['zero','um','dois','três','quatro','cinco','seis','sete','oito','nove','dez','onze','doze','treze','catorze','quinze','dezesseis','dezessete','dezoito','dezenove','vinte'];
+const ext = n => UN[n] || String(n);
+const nome = n => NBK.name(n);
+const blocos = n => n === 1 ? '1 bloco' : n + ' blocos';
+/* cor do cartão de cada número, igual à do personagem */
+function chipVars(n){
+  if (n === 7) return '--k:linear-gradient(180deg,#b68cf0,#45d0ef 38%,#3fbf2a 52%,#f3e12a 68%,#ff8f1c 82%,#e8262b)';
+  if (n >= 10) return `--k:#fff;--k-ring:5px;--k-line:${n >= 20 ? '#f08f1f' : '#e53935'}`;
+  return `--k:${NBK.NB[n].cor};--k-ink:${n === 6 ? '#fff' : '#1c1a24'}`;
+}
+const chip = n => `<span class="chip" style="${chipVars(n)}">${n}</span>`;
+
+/* ---------- níveis ---------- */
+const LEVELS = {
+  l1: { name:'Até 5',    sub:'primeiros amigos', ex:[1, 2] },
+  l2: { name:'Até 10',   sub:'juntar e contar',  ex:[3, 4] },
+  l3: { name:'Até 20',   sub:'chega o Dez',      ex:[8, 5] },
+  l4: { name:'Surpresa', sub:'um pouco de tudo', ex:null }
+};
+function gen(lv){
+  if (lv === 'l4') lv = ['l1','l2','l3'][rnd(0, 2)];
+  let a, b;
+  if (lv === 'l1'){ a = rnd(1, 4); b = rnd(1, 5 - a); }
+  else if (lv === 'l2'){ do { a = rnd(1, 9); b = rnd(1, 10 - a); } while (a + b < 4); }
+  else { a = rnd(5, 10); b = rnd(Math.max(2, 11 - a), Math.min(10, 20 - a)); }
+  return [a, b];
+}
+function makeOptions(c){
+  const k = c > 10 ? 4 : 3, out = [c];
+  for (const v of [c + 1, c - 1, c + 2, c - 2, c + 3, c - 3]){ if (out.length >= k) break; if (v >= 1 && v <= 20 && !out.includes(v)) out.push(v); }
+  for (let i = out.length - 1; i > 0; i--){ const j = rnd(0, i); [out[i], out[j]] = [out[j], out[i]]; }
+  return out;
+}
+
+/* ---------- estado ---------- */
+const S = {
+  screen:'home', level:null, a:0, b:0, c:0, step:0, pid:0, sound:true, score:0, busy:false, lastKey:'', lastSay:'',
+  placed:0, built:false, joined:false, cores:null, counted:[], countDone:false, opts:[], bad:[], solved:false, msg:null
+};
+const STAR_KEY = 'triodosaber.numberblocks.estrelas.v1';
+try { const v = Math.floor(+localStorage.getItem(STAR_KEY)); if (v > 0) S.score = v; } catch(e){}
+function saveStars(){ try { localStorage.setItem(STAR_KEY, String(S.score)); } catch(e){} }
+const tgt = () => S.step === 1 ? S.a : S.b;
+
+/* ---------- som: blocos de madeira e um "plim" mágico ---------- */
+let AC = null, OUT = null, NB = null;
+function unlockAudio(){
+  try {
+    if (!AC){
+      AC = new (window.AudioContext || window.webkitAudioContext)();
+      const comp = AC.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 6;
+      OUT = AC.createGain(); OUT.gain.value = .9; OUT.connect(comp); comp.connect(AC.destination);
+      const len = Math.floor(AC.sampleRate * .6); NB = AC.createBuffer(1, len, AC.sampleRate);
+      const d = NB.getChannelData(0); for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+    }
+    if (AC.state === 'suspended') AC.resume();
+  } catch(e){}
+}
+function env(g, t, a, peak, dec){ g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(.0002, peak), t + a); g.gain.exponentialRampToValueAtTime(.0001, t + a + dec); }
+function osc(type, f, t, dur, peak, f2){
+  const o = AC.createOscillator(), g = AC.createGain();
+  o.type = type; o.frequency.setValueAtTime(f, t); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + dur * .6);
+  env(g, t, .004, peak, dur); o.connect(g); g.connect(OUT); o.start(t); o.stop(t + dur + .06);
+}
+function noise(t, dur, peak, type, f, q){
+  const s = AC.createBufferSource(); s.buffer = NB;
+  const bf = AC.createBiquadFilter(); bf.type = type; bf.frequency.value = f; bf.Q.value = q || 1;
+  const g = AC.createGain(); env(g, t, .006, peak, dur);
+  s.connect(bf); bf.connect(g); g.connect(OUT); s.start(t, Math.random() * .3); s.stop(t + dur + .06);
+}
+const PENTA = [523.25,587.33,659.25,783.99,880,1046.5,1174.66,1318.51,1567.98,1760,2093,2349.3,2637,3136,3520,4186,4698.6,5274,6272,7040];
+function sfx(k, v){
+  if (!S.sound || !AC) return;
+  const t = AC.currentTime + .004;
+  try {
+    switch (k){
+      case 'clack': { const f = PENTA[clamp(v | 0, 0, 9)]; osc('sine', f * 1.5, t, .13, .2, f); osc('triangle', f * 3.01, t, .04, .05); noise(t, .022, .12, 'bandpass', 3200, 2.5); break; }
+      case 'note': { const f = PENTA[clamp(v | 0, 0, 19)] / (v > 9 ? 2 : 1); osc('triangle', f, t, .3, .12); osc('sine', f * 2, t, .18, .04); break; }
+      case 'press': osc('sine', 310, t, .05, .07, 380); break;
+      case 'lift': osc('sine', 420, t, .07, .09, 660); break;
+      case 'pop': osc('sine', 620, t, .09, .17, 980); break;
+      case 'no': osc('triangle', 262, t, .14, .17, 210); osc('triangle', 196, t + .12, .22, .15, 150); break;
+      case 'plim': [1046.5,1318.51,1567.98,2093].forEach((f, i) => { osc('sine', f, t + i * .05, .5, .1); osc('triangle', f * 2, t + i * .05, .2, .03); }); noise(t, .4, .03, 'highpass', 7000, .5); break;
+      case 'win': [523.25,659.25,783.99,1046.5,1318.51,1567.98].forEach((f, i) => { osc('triangle', f, t + i * .075, .45, .13); osc('sine', f / 2, t + i * .075, .3, .05); }); break;
+    }
+  } catch(e){}
+}
+function say(text){
+  if (!text) return;
+  S.lastSay = text;
+  if (S.sound) window.BlockVoice?.speak(text);
+}
+function populateVoiceSettings(){
+  const select = document.getElementById('voice-choice');
+  if (!select || !window.BlockVoice) return;
+  const settings = BlockVoice.getSettings();
+  select.replaceChildren(new Option('Automática · melhor voz disponível', ''));
+  for (const v of BlockVoice.voices()) select.add(new Option(v.name, v.voiceURI));
+  select.value = settings.voiceURI || '';
+  document.getElementById('voice-speed').value = String(settings.rate);
+}
+addEventListener('blockvoiceschanged', populateVoiceSettings);
+stage.addEventListener('change', e => {
+  if (e.target.id === 'voice-choice') BlockVoice.configure({ voiceURI:e.target.value });
+  if (e.target.id === 'voice-speed') BlockVoice.configure({ rate:Number(e.target.value) });
+});
+
+/* ---------- ícones ---------- */
+const IC = {
+  home:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 3.5l9 7.7V20a1 1 0 0 1-1 1h-5.2v-6.3H9.2V21H4a1 1 0 0 1-1-1z"/></svg>',
+  speak:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.2h3.8L12 5v14l-5.2-4.2H3z"/><path d="M15.3 8.6a4.8 4.8 0 0 1 0 6.8M17.9 6a8.4 8.4 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
+  note:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 17.5V6.2l10-2.2v11.3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="6.6" cy="17.6" r="2.6"/><circle cx="16.6" cy="15.4" r="2.6"/></svg>',
+  noteOff:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 17.5V6.2l10-2.2v11.3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" opacity=".5"/><circle cx="6.6" cy="17.6" r="2.6" opacity=".5"/><circle cx="16.6" cy="15.4" r="2.6" opacity=".5"/><path d="M3.5 3.5l17 17" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>',
+  star:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.8 2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9z"/></svg>'
+};
+
+/* ---------- telas ---------- */
+function homeHTML(){
+  const lv = Object.entries(LEVELS).map(([id, L]) => `
+    <button class="lv" data-act="level" data-lv="${id}">
+      <span class="lv-ex" ${L.ex ? `data-ex="${L.ex.join(',')}"` : ''}>${L.ex ? '' : '<span class="q">? + ?</span>'}</span>
+      <span class="lv-n">${L.name}</span><span class="lv-s">${L.sub}</span>
+    </button>`).join('');
+  return `<div class="home">
+    <section>
+      <div class="parade" aria-hidden="true"></div>
+      <h1>Juntar e Somar</h1>
+      <p class="kicker">com os Numberblocks</p>
+      <p class="lead">Monte os personagens bloco por bloco, junte dois amigos e conte quantos blocos eles viram!</p>
+      <ol class="how">
+        <li><b>1</b>Monte o primeiro amigo</li>
+        <li><b>2</b>Monte o segundo amigo</li>
+        <li><b>3</b>Junte os dois e conte os blocos</li>
+        <li><b>4</b>Descubra quem apareceu</li>
+      </ol>
+    </section>
+    <section class="levels">
+      <h2>Escolha o nível</h2>
+      <div class="lv-grid">${lv}</div>
+      <p class="note">Toque ou arraste os blocos. <b>Ouvir</b> repete a instrução e mostra uma mãozinha com o que fazer.</p>
+      <details class="voice-settings"><summary>Ajustar voz · para adultos</summary>
+        <label for="voice-choice">Voz em português</label><select id="voice-choice"><option value="">Automática · melhor voz disponível</option></select>
+        <label for="voice-speed">Velocidade da fala</label><select id="voice-speed"><option value="0.82">Mais devagar</option><option value="0.9">Calma</option><option value="1">Normal</option></select>
+        <button class="btn alt" data-act="voice-test">Ouvir a voz</button>
+      </details>
+    </section>
+  </div>`;
+}
+function hydrateHome(){
+  const parade = $('.parade');
+  [1, 2, 3, 4, 5].forEach((n, i) => { const el = NBK.create(n); el.style.setProperty('--k', i); if (!reduced) el.classList.add('saltita'); parade.appendChild(el); });
+  $$('[data-ex]').forEach(box => {
+    const [x, y] = box.dataset.ex.split(',').map(Number);
+    const mais = document.createElement('span'); mais.textContent = '+';
+    box.append(NBK.create(x, { pernas:false, bracos:false }), mais, NBK.create(y, { pernas:false, bracos:false }));
+  });
+}
+
+function hudHTML(){
+  if (S.step <= 2){
+    const n = tgt();
+    return `<div class="goal">${chip(n)}<div><span class="eyebrow">${S.step === 1 ? 'Monte o' : 'Agora monte o'}</span><span class="word">${nome(n)}</span></div></div>${bubbleHTML()}`;
+  }
+  const ans = S.step === 4 ? `<span class="op">=</span><span class="ans ${S.solved ? 'ok' : ''}" data-drop="ans" aria-label="Resposta">${S.solved ? S.c : '?'}</span>` : '';
+  return `<div class="eq" aria-label="Conta">${chip(S.a)}<span class="op">+</span>${chip(S.b)}${ans}</div>${bubbleHTML()}`;
+}
+function defaultMsg(){
+  if (S.step <= 2) return S.built ? { text:`Isso! Este é o ${nome(tgt())}: ${blocos(tgt())}.`, kind:'ok' } : { text:`Toque no bloco ou arraste até a sombra para montar o ${nome(tgt())}.` };
+  if (S.step === 3 && !S.joined) return { text:S.a === S.b ? `Arraste um ${nome(S.a)} até o outro para eles se juntarem!` : `Arraste o ${nome(S.b)} até o ${nome(S.a)} para eles se juntarem!` };
+  if (S.step === 3) return { text:'Juntos! Toque em cada bloco para contar.' , kind:'info' };
+  return S.solved ? { text:`${S.a} + ${S.b} = ${S.c}. Apareceu o ${nome(S.c)}!`, kind:'ok' } : { text:`Quantos blocos? Toque no número certo ou arraste até a caixa.` };
+}
+function bubbleHTML(){ const m = S.msg || defaultMsg(); return `<p class="bubble ${m.kind || ''}" id="bubble">${m.text}</p>`; }
+function setMsg(text, kind){
+  S.msg = text ? { text, kind } : null;
+  const b = document.getElementById('bubble'); if (!b) return;
+  const m = S.msg || defaultMsg();
+  b.className = 'bubble ' + (m.kind || ''); b.textContent = m.text; announcement.textContent = m.text;
+  if (!reduced) b.animate([{ transform:'scale(1)' }, { transform:'scale(1.04)' }, { transform:'scale(1)' }], { duration:300 });
+}
+
+function dockHTML(){
+  if (S.step <= 2){
+    if (S.built) return `<button class="btn" data-act="next">Continuar</button>`;
+    const [c, cd] = NBK.colors(tgt())[S.placed] || NBK.colors(tgt())[0];
+    return `<button class="src" data-drag="block" aria-label="Colocar um bloco no ${nome(tgt())}"><i class="nb-b" style="--c:${c};--cd:${cd}"></i><span>1 bloco<small>toque ou arraste</small></span></button>`;
+  }
+  if (S.step === 3){
+    if (!S.joined) return `<p class="hint-txt">Segure um amigo e solte em cima do outro. Ou toque nele!</p>`;
+    return `<button class="btn alt" data-act="count" ${S.countDone ? 'disabled' : ''}>Contar comigo</button>`;
+  }
+  if (S.solved) return `<button class="btn" data-act="new">Nova conta</button><button class="btn alt" data-act="home">Trocar nível</button>`;
+  return S.opts.map(v => {
+    const bad = S.bad.includes(v);
+    return `<button class="opt ${bad ? 'bad' : ''}" ${bad ? 'disabled' : 'data-drag="opt"'} data-val="${v}" aria-label="Resposta ${v}">${v}</button>`;
+  }).join('');
+}
+
+/* ---------- chão e personagens ---------- */
+function figHTML(key, label){ return `<div class="fig" data-fig="${key}" ${label ? `role="button" tabindex="0" aria-label="${label}"` : ''}></div>`; }
+function buildGround(){
+  const figs = $('.figs'); if (!figs) return;
+  if (S.step <= 2){
+    const n = tgt();
+    figs.innerHTML = figHTML('T');
+    const el = NBK.create(n, { vazios:n - S.placed, semRosto:!S.built });
+    if (S.built) el.classList.add('acena');
+    $('[data-fig="T"]').appendChild(el);
+  } else if (S.step === 3 && !S.joined){
+    figs.innerHTML = figHTML('A', `${nome(S.a)}: arraste até o ${nome(S.b)}`) + '<span class="mais" aria-hidden="true">+</span>' + figHTML('B', `${nome(S.b)}: arraste até o ${nome(S.a)}`);
+    $('[data-fig="A"]').appendChild(NBK.create(S.a)); $('[data-fig="B"]').appendChild(NBK.create(S.b));
+    $$('.fig[data-fig="A"], .fig[data-fig="B"]').forEach(f => f.dataset.drag = 'fig');
+  } else {
+    figs.innerHTML = figHTML('M');
+    const el = S.solved ? NBK.create(S.c) : NBK.create(S.c, { cores:S.cores, semRosto:true, numero:'?' });
+    if (S.solved) el.classList.add('acena');
+    $('[data-fig="M"]').appendChild(el);
+    if (!S.solved) S.counted.forEach((i, k) => badge(i, k + 1));
+  }
+}
+function dims(){
+  const L = n => NBK.layout(n);
+  if (S.step <= 2){ const l = L(tgt()); return { cols:l.cols, rows:l.rows }; }
+  const s = L(S.c);
+  if (S.step === 3){ const la = L(S.a), lb = L(S.b); return { cols:Math.max(la.cols + lb.cols + 2.6, s.cols), rows:Math.max(la.rows, lb.rows, s.rows) }; }
+  return { cols:s.cols, rows:s.rows };
+}
+/* maior bloco possível sem cortar o número de cima nem as pernas */
+function sizeGround(){
+  const g = document.getElementById('ground'); if (!g) return;
+  const { cols, rows } = dims(), H = g.clientHeight, W = g.clientWidth;
+  const chao = clamp(Math.round(H * .11), 26, 60);
+  const u = Math.floor(clamp(Math.min((H - chao) / (rows + 2.4), (W - 24) / (cols + 1.6)), 16, 80));
+  g.style.setProperty('--u', u + 'px'); g.style.setProperty('--chao', chao + 'px');
+}
+const unit = () => parseFloat(getComputedStyle(document.getElementById('ground')).getPropertyValue('--u')) || 40;
+const cellEl = (fig, i) => $(`[data-fig="${fig}"] .nb-b[data-i="${i}"]`);
+
+/* ---------- barra de cima e render ---------- */
+function renderTop(){
+  const game = S.screen === 'game';
+  const labels = ['Monte','Monte','Junte','Quantos?'];
+  const steps = game ? `<ol class="steps" aria-label="Etapas">${labels.map((l, i) => {
+    const n = i + 1, st = (n < S.step || (n === 4 && S.solved)) ? 'done' : n === S.step ? 'now' : '';
+    return `<li class="${st}" ${st === 'now' ? 'aria-current="step"' : ''}><b>${n}</b><span>${l}</span></li>`; }).join('')}</ol>` : '';
+  topBar.innerHTML = `
+    ${game ? `<button class="ib" data-act="home" aria-label="Escolher nível">${IC.home}</button>` : `<a class="ib site" href="../index.html">${IC.home}<span>Trio do Saber</span></a>`}
+    <div class="brand">Juntar e Somar</div>
+    ${steps}
+    <div class="tools">
+      <span class="stars" title="Contas certas" aria-label="${S.score} estrelas">${IC.star}<b>${S.score}</b></span>
+      ${game ? `<button class="ib say" data-act="repeat" aria-label="Ouvir de novo">${IC.speak}<span>Ouvir</span></button>` : ''}
+      <button class="ib" data-act="sound" aria-pressed="${S.sound}" aria-label="${S.sound ? 'Desligar som e voz' : 'Ligar som e voz'}">${S.sound ? IC.note : IC.noteOff}</button>
+    </div>`;
+}
+function render(){
+  groundRO?.disconnect();
+  renderTop();
+  hideHand();
+  if (S.screen === 'home'){
+    stage.classList.add('scroll'); stage.innerHTML = homeHTML(); hydrateHome(); populateVoiceSettings(); return;
+  }
+  stage.classList.remove('scroll');
+  stage.innerHTML = `<div class="scene" data-step="${S.step}">
+      <section class="hud">${hudHTML()}</section>
+      <section class="ground" id="ground" aria-label="Chão dos personagens"><div class="figs"></div></section>
+      <section class="dock">${dockHTML()}</section>
+    </div>`;
+  sizeGround(); buildGround();
+  groundRO?.observe(document.getElementById('ground'));
+  announcement.textContent = (S.msg || defaultMsg()).text;
+  armIdle();
+}
+/* o chão muda de tamanho quando a fonte carrega ou a tela gira: os blocos acompanham */
+const groundRO = 'ResizeObserver' in window ? new ResizeObserver(() => sizeGround()) : null;
+const renderDock = () => { const d = $('.dock'); if (d) d.innerHTML = dockHTML(); };
+const renderHud = () => { const h = $('.hud'); if (h) h.innerHTML = hudHTML(); };
+let rq = 0;
+addEventListener('resize', () => { cancelAnimationFrame(rq); rq = requestAnimationFrame(() => { cancelDrag(); sizeGround(); }); });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => sizeGround());
+
+/* ---------- efeitos ---------- */
+function centerOf(el){ const r = el.getBoundingClientRect(); return { x:r.left + r.width / 2, y:r.top + r.height / 2, r }; }
+function pop(el, k){ if (reduced || !el?.animate) return; const s = 1 + (k || .2); el.animate([{ transform:'scale(1)' }, { transform:`scale(${s})`, offset:.35 }, { transform:`scale(${2 - s * .98})`, offset:.65 }, { transform:'scale(1)' }], { duration:420, easing:'ease-out' }); }
+function shake(el){ if (reduced || !el?.animate) return; el.animate([0, -8, 8, -6, 5, 0].map(x => ({ transform:`translateX(${x}px)` })), { duration:380 }); }
+function jump(nb){ if (reduced || !nb) return; nb.classList.remove('pula'); void nb.offsetWidth; nb.classList.add('pula'); nb.addEventListener('animationend', () => nb.classList.remove('pula'), { once:true }); }
+function plim(x, y, big){
+  if (reduced) return;
+  const p = document.createElement('div'); p.className = 'plim'; p.style.left = x + 'px'; p.style.top = y + 'px'; fx.appendChild(p);
+  p.animate([{ transform:'scale(.2)', opacity:1 }, { transform:`scale(${big ? 16 : 9})`, opacity:0 }], { duration:big ? 900 : 650, easing:'ease-out' }).onfinish = () => p.remove();
+  const n = big ? 12 : 7;
+  for (let i = 0; i < n; i++){
+    const s = document.createElement('span'); s.className = 'brilho'; s.textContent = '✦'; s.style.left = x + 'px'; s.style.top = y + 'px'; fx.appendChild(s);
+    const a = i / n * Math.PI * 2, d = (big ? 120 : 70) * (.7 + Math.random() * .5);
+    s.animate([{ transform:'translate(-50%,-50%) scale(.4)', opacity:1 }, { transform:`translate(calc(-50% + ${Math.cos(a) * d}px), calc(-50% + ${Math.sin(a) * d}px)) scale(1.2) rotate(90deg)`, opacity:0 }],
+      { duration:800 + Math.random() * 300, easing:'cubic-bezier(.2,.7,.3,1)' }).onfinish = () => s.remove();
+  }
+}
+function floatLabel(x, y, text){
+  if (reduced) return;
+  const d = document.createElement('div'); d.className = 'flt'; d.textContent = text; d.style.left = x + 'px'; d.style.top = y + 'px'; fx.appendChild(d);
+  d.animate([{ transform:'translate(-50%,-20%) scale(.3)', opacity:0 }, { transform:'translate(-50%,-110%) scale(1.1)', opacity:1, offset:.3 }, { transform:'translate(-50%,-130%)', opacity:1, offset:.7 }, { transform:'translate(-50%,-190%)', opacity:0 }],
+    { duration:1300, easing:'cubic-bezier(.2,.7,.3,1)' }).onfinish = () => d.remove();
+}
+function confetti(amount){
+  if (reduced) return;
+  const layer = document.createElement('div'); layer.className = 'confete';
+  const colors = ['#e8262b','#f7931e','#f6d42a','#46c33b','#3fd6f3','#5b33c6','#ec2ea0','#ffffff'];
+  for (let i = 0; i < amount; i++){
+    const p = document.createElement('i'), size = 10 + Math.random() * 14;
+    p.style.cssText = `left:${Math.random() * 100}%;width:${size}px;height:${size}px;background:${colors[i % colors.length]};--desvio:${((Math.random() * 2 - 1) * 140).toFixed(0)}px;--giro:${((Math.random() * 2 - 1) * 720).toFixed(0)}deg;animation-duration:${(2.2 + Math.random() * 1.6).toFixed(2)}s;animation-delay:${(Math.random() * .5).toFixed(2)}s`;
+    layer.appendChild(p);
+  }
+  document.body.appendChild(layer); setTimeout(() => layer.remove(), 4800);
+}
+/* um bloco voa num arco do ponto de partida até o seu lugar */
+function flyBlock(fromRect, toEl, colors, done){
+  const to = toEl.getBoundingClientRect();
+  if (reduced || !fromRect){ done(); return; }
+  const b = document.createElement('i'); b.className = 'nb-b voa';
+  b.style.cssText = `--u:${to.width}px;width:${to.width}px;height:${to.height}px;--c:${colors[0]};--cd:${colors[1]}`;
+  fx.appendChild(b);
+  const k = clamp(fromRect.width / to.width, .3, 2.5);
+  const x0 = fromRect.left + fromRect.width / 2 - to.width / 2, y0 = fromRect.top + fromRect.height / 2 - to.height / 2;
+  const peak = Math.min(y0, to.top) - to.height * 2.2;
+  const anim = b.animate([
+    { transform:`translate(${x0}px,${y0}px) scale(${k}) rotate(0deg)` },
+    { transform:`translate(${(x0 + to.left) / 2}px,${peak}px) scale(${(k + 1) / 2}) rotate(${to.left < x0 ? -160 : 160}deg)`, offset:.5 },
+    { transform:`translate(${to.left}px,${to.top}px) scale(1) rotate(${to.left < x0 ? -360 : 360}deg)` }
+  ], { duration:480, easing:'cubic-bezier(.35,.1,.45,1)' });
+  whenDone(anim, 480, () => { b.remove(); done(); });
+}
+function squash(el){ if (reduced || !el?.animate) return; el.animate([{ transform:'scale(1.18,.78)' }, { transform:'scale(.94,1.06)', offset:.55 }, { transform:'none' }], { duration:260, easing:'ease-out' }); }
+function badge(i, k){
+  const cell = cellEl('M', i); if (!cell) return null;
+  cell.classList.add('contado'); $$('.nb-b.ultimo').forEach(e => e.classList.remove('ultimo')); cell.classList.add('ultimo');
+  let b = cell.querySelector('.nb-conta');
+  if (!b){ b = document.createElement('span'); b.className = 'nb-conta'; cell.appendChild(b); }
+  b.innerHTML = `<b>${k}</b>`;
+  return cell;
+}
+
+/* ---------- fluxo do jogo ---------- */
+function startLevel(lv){ S.level = lv; S.screen = 'game'; newProblem(); }
+function newProblem(){
+  let a, b, k, i = 0;
+  do { [a, b] = gen(S.level); k = a + '+' + b; } while (k === S.lastKey && ++i < 20);
+  S.lastKey = k; S.a = a; S.b = b; S.c = a + b; S.solved = false; S.pid++;
+  enterStep(1);
+}
+function enterStep(n){
+  const sc = $('.scene');
+  if (sc && !reduced && S.screen === 'game'){
+    const pid = S.pid; S.busy = true;
+    whenDone(sc.animate([{ opacity:1, transform:'none' }, { opacity:0, transform:'translateX(-30px) scale(.98)' }], { duration:220, easing:'ease-in', fill:'forwards' }),
+      220, () => { if (S.pid !== pid) return; S.busy = false; doEnter(n); });
+  } else doEnter(n);
+}
+function doEnter(n){
+  S.step = n; S.msg = null; S.busy = false;
+  if (n <= 2){ S.placed = 0; S.built = false; }
+  if (n === 3){ S.joined = false; S.cores = null; S.counted = []; S.countDone = false; }
+  if (n === 4){ S.opts = makeOptions(S.c); S.bad = []; S.solved = false; }
+  render(); enterFX();
+  if (n === 1) say(`Vamos montar o ${nome(S.a)}! Toque no bloco ou arraste até a sombra.`);
+  if (n === 2) say(`Agora monte o ${nome(S.b)}.`);
+  if (n === 3) say(defaultMsg().text);
+  if (n === 4) say(`${ext(S.a)} mais ${ext(S.b)}. Quantos blocos? Toque no número certo.`);
+}
+function enterFX(){
+  if (reduced) return;
+  const sc = $('.scene'); if (!sc) return;
+  const SPR = 'cubic-bezier(.2,1.3,.4,1)';
+  sc.querySelectorAll('.goal, .eq, .bubble, .ground, .dock > *').forEach((el, i) =>
+    el.animate([{ transform:'translateY(26px) scale(.95)', opacity:0 }, { transform:'none', opacity:1 }], { duration:520, delay:40 + i * 70, easing:SPR, fill:'backwards' }));
+  sc.querySelectorAll('.fig').forEach((el, i) =>
+    el.animate([{ transform:'translateY(-120%)', opacity:0 }, { transform:'none', opacity:1, offset:.6 }, { transform:'scaleY(.9)', offset:.8 }, { transform:'none' }], { duration:700, delay:200 + i * 140, easing:'ease-in', fill:'backwards' }));
+}
+function goHome(){
+  cancelDrag(); closeLeave(true); $$('.ghost', document).forEach(el => el.remove());
+  S.pid++; S.busy = false; S.screen = 'home'; S.step = 0; S.msg = null; clearTimeout(idleT);
+  window.BlockVoice?.stop();
+  render();
+  if (!reduced) $$('.lv').forEach((el, i) => el.animate([{ transform:'translateY(24px) scale(.95)', opacity:0 }, { transform:'none', opacity:1 }], { duration:500, delay:i * 70, easing:'cubic-bezier(.2,1.3,.4,1)', fill:'backwards' }));
+}
+
+/* etapas 1 e 2: montar o personagem bloco por bloco, contando em voz alta */
+function addBlock(fromRect){
+  if (S.screen !== 'game' || S.step > 2 || S.built) return;
+  const n = tgt(); if (S.placed >= n) return;
+  const i = S.placed++, pid = S.pid, step = S.step;
+  const cell = cellEl('T', i); if (!cell) return;
+  const colors = NBK.colors(n)[i], next = NBK.colors(n)[S.placed], cube = $('.src .nb-b');
+  if (cube && next){ cube.style.setProperty('--c', next[0]); cube.style.setProperty('--cd', next[1]); }
+  flyBlock(fromRect, cell, colors, () => {
+    if (S.pid !== pid || S.step !== step) return;
+    cell.classList.remove('vazio'); squash(cell); sfx('clack', i);
+    say(ext(i + 1));
+    const c = centerOf(cell); floatLabel(c.x, c.r.top, String(i + 1));
+    if (i + 1 === n) completeBuild();
+  });
+}
+async function completeBuild(){
+  const pid = S.pid, n = tgt();
+  S.built = true; S.busy = true;
+  await sleep(reduced ? 0 : 380); if (S.pid !== pid) return;
+  const nb = $('[data-fig="T"] .nb');
+  nb.classList.remove('sem-rosto'); nb.classList.add('vivo', 'acena'); jump(nb);
+  const r = nb.querySelector('.nb-corpo').getBoundingClientRect();
+  plim(r.left + r.width / 2, r.top + r.width / 2, true); sfx('plim'); setTimeout(() => sfx('win'), 250);
+  say(`Eu sou o ${nome(n)}!`);
+  setMsg(`Isso! Este é o ${nome(n)}: ${blocos(n)}.`, 'ok');
+  const hadFocus = !!document.activeElement?.closest?.('.src');
+  renderDock(); S.busy = false;
+  const btn = $('[data-act="next"]'); if (hadFocus) btn?.focus({ preventScroll:true }); if (btn && !reduced) btn.animate([{ transform:'scale(.6)', opacity:0 }, { transform:'none', opacity:1 }], { duration:420, easing:'cubic-bezier(.2,1.3,.4,1)' });
+  armIdle(6000);
+}
+
+/* etapa 3: um amigo pula no outro; os blocos se juntam e viram uma figura nova, ainda sem nome */
+function startMerge(mover, ghost){
+  if (S.joined || S.busy || S.step !== 3) return;
+  S.busy = true; S.joined = true;
+  const stay = mover === 'A' ? 'B' : 'A';
+  const nStay = stay === 'A' ? S.a : S.b, nMove = mover === 'A' ? S.a : S.b;
+  const rectsOf = scope => [...scope.querySelectorAll('.nb-b')].sort((p, q) => p.dataset.i - q.dataset.i).map(e => e.getBoundingClientRect());
+  const before = rectsOf($(`[data-fig="${stay}"]`)).concat(rectsOf(ghost || $(`[data-fig="${mover}"]`)));
+  ghost?.remove();
+  // Quem ficou parado vira a base; quem pulou fica por cima.
+  S.cores = NBK.colors(nStay).concat(NBK.colors(nMove));
+  S.msg = null;
+  buildGround(); renderDock(); setMsg('');
+  const pid = S.pid;
+  let last = 0;
+  if (!reduced){
+    $$('[data-fig="M"] .nb-b').forEach(cell => {
+      const i = +cell.dataset.i, b = before[i]; if (!b) return;
+      const f = cell.getBoundingClientRect();
+      const dx = (b.left + b.width / 2) - (f.left + f.width / 2), dy = (b.top + b.height / 2) - (f.top + f.height / 2);
+      const jumping = i >= nStay, delay = jumping ? 120 + (i - nStay) * 45 : i * 18;
+      const mid = jumping ? `translate(${(dx * .45).toFixed(1)}px,${(Math.min(dy, 0) - f.height * 2.4).toFixed(1)}px) rotate(${dx > 0 ? -25 : 25}deg)` : `translate(${(dx * .3).toFixed(1)}px,${(dy * .3).toFixed(1)}px)`;
+      cell.animate([{ transform:`translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px)` }, { transform:mid, offset:.55 }, { transform:'none' }],
+        { duration:jumping ? 620 : 480, delay, easing:'cubic-bezier(.3,.7,.4,1)', fill:'backwards' });
+      last = Math.max(last, delay + (jumping ? 620 : 480));
+    });
+  }
+  setTimeout(() => {
+    if (S.pid !== pid) return;
+    const nb = $('[data-fig="M"] .nb'); if (!nb) return;
+    $$('[data-fig="M"] .nb-b').forEach(squash);
+    const r = nb.querySelector('.nb-corpo').getBoundingClientRect();
+    plim(r.left + r.width / 2, r.top + r.height / 2, true); sfx('plim');
+    S.busy = false;
+    setMsg('Juntos! Toque em cada bloco para contar.', 'info');
+    say('Juntos! Agora toque em cada bloco para contar.');
+    armIdle(7000);
+  }, last + 40);
+}
+function countBlock(i){
+  if (S.step !== 3 || !S.joined || S.countDone || S.counted.includes(i)) return false;
+  S.counted.push(i);
+  const k = S.counted.length, cell = badge(i, k);
+  if (cell){ squash(cell); const c = centerOf(cell); if (!reduced) cell.querySelector('.nb-conta b').animate([{ transform:'scale(.2)' }, { transform:'scale(1.25)', offset:.6 }, { transform:'none' }], { duration:320, easing:'ease-out' }); }
+  sfx('note', k - 1); say(ext(k));
+  if (k === S.c) finishCount();
+  return true;
+}
+async function finishCount(){
+  const pid = S.pid;
+  S.countDone = true; S.busy = true; renderDock();
+  setMsg(`Contamos todos os blocos!`, 'ok');
+  await sleep(reduced ? 300 : 700); if (S.pid !== pid) return;
+  jump($('[data-fig="M"] .nb'));
+  await sleep(reduced ? 300 : 1100); if (S.pid !== pid) return;
+  S.busy = false; enterStep(4);
+}
+async function countWithMe(){
+  if (S.busy || S.countDone || !S.joined) return;
+  const pid = S.pid; S.busy = true; renderDock();
+  for (let i = 0; i < S.c; i++){
+    if (S.pid !== pid || S.countDone) return;
+    if (S.counted.includes(i)) continue;
+    S.busy = false; countBlock(i); if (!S.countDone) S.busy = true;
+    await sleep(620);
+  }
+}
+
+/* etapa 4: quantos blocos? acertou, a figura ganha cores e rosto e diz quem é */
+function tryAnswer(v, ghost, el){
+  if (S.solved || S.busy || S.bad.includes(v)){ ghost?.remove(); return; }
+  if (!ghost){ ghost = el.cloneNode(true); ghost.removeAttribute('data-drag'); ghost.classList.add('ghost'); const r = el.getBoundingClientRect(); ghost.style.transform = `translate(${r.left}px,${r.top}px)`; document.body.appendChild(ghost); }
+  el.classList.add('lifted');
+  const box = $('[data-drop="ans"]'), b = box.getBoundingClientRect(), g = ghost.getBoundingClientRect();
+  const x = b.left + (b.width - g.width) / 2, y = b.top + (b.height - g.height) / 2;
+  const pid = S.pid; S.busy = true;
+  if (v === S.c){
+    S.solved = true; S.score++; saveStars();
+    const fin = () => { ghost.remove(); if (S.pid !== pid) return; S.busy = false; reveal(); };
+    if (reduced){ fin(); return; }
+    whenDone(ghost.animate([{ transform:ghost.style.transform }, { transform:`translate(${x}px,${y - 14}px) scale(1.12)`, offset:.6 }, { transform:`translate(${x}px,${y}px) scale(.9)` }], { duration:320, easing:'ease-out', fill:'forwards' }), 320, fin);
+    return;
+  }
+  S.bad.push(v); sfx('no');
+  setMsg(`${v} não é. Olhe o último número que contamos!`, 'no');
+  say(`${ext(v)} não é. Olhe o último número que contamos.`);
+  const fin = () => { ghost.remove(); if (S.pid !== pid) return; S.busy = false; renderDock(); recountGlow(); armIdle(6000); };
+  if (reduced){ fin(); return; }
+  const r = el.getBoundingClientRect();
+  const back = ghost.animate([
+    { transform:ghost.style.transform }, { transform:`translate(${x}px,${y}px)`, offset:.25 },
+    { transform:`translate(${x - 12}px,${y}px) rotate(-8deg)`, offset:.36 }, { transform:`translate(${x + 12}px,${y}px) rotate(8deg)`, offset:.47 },
+    { transform:`translate(${x}px,${y}px)`, offset:.6 }, { transform:`translate(${r.left}px,${r.top}px)` }
+  ], { duration:900, easing:'ease-in-out', fill:'forwards' });
+  whenDone(back, 900, fin);
+}
+/* os números dos blocos acendem em ordem, terminando no último contado */
+function recountGlow(){
+  if (reduced) return;
+  S.counted.forEach((i, k) => setTimeout(() => {
+    const b = cellEl('M', i)?.querySelector('.nb-conta b'); if (!b) return;
+    b.animate([{ transform:'scale(1)' }, { transform:`scale(${k === S.counted.length - 1 ? 1.5 : 1.25})` }, { transform:'scale(1)' }], { duration:300 });
+  }, k * 120));
+}
+async function reveal(){
+  const pid = S.pid, c = S.c;
+  renderHud();
+  const box = $('[data-drop="ans"]'); pop(box, .4);
+  const nb = $('[data-fig="M"] .nb'); if (!nb) return;
+  // As cores das duas partes viram as cores do personagem novo, de baixo para cima.
+  $$('.nb-conta', nb).forEach(b => b.animate ? b.animate([{ opacity:1 }, { opacity:0 }], { duration:250, fill:'forwards' }) : b.remove());
+  const natural = NBK.colors(c);
+  $$('.nb-b', nb).forEach(cell => { const i = +cell.dataset.i, [cc, cd] = natural[i]; cell.style.setProperty('--troca', (i * .045).toFixed(3) + 's'); cell.style.setProperty('--c', cc); cell.style.setProperty('--cd', cd); });
+  sfx('plim');
+  await sleep(reduced ? 0 : 420 + c * 45); if (S.pid !== pid) return;
+  $$('.nb-conta', nb).forEach(b => b.remove());
+  $$('.nb-b', nb).forEach(cell => cell.classList.remove('contado', 'ultimo'));
+  if (c === 6) $$('.nb-b', nb).forEach(cell => cell.classList.add('ponto'));
+  nb.querySelector('.nb-num').textContent = c;
+  nb.classList.remove('sem-rosto'); nb.classList.add('vivo', 'acena'); jump(nb);
+  const r = nb.querySelector('.nb-corpo').getBoundingClientRect();
+  plim(r.left + r.width / 2, r.top + r.height / 3, true); sfx('win'); confetti(60);
+  say(`Isso! ${ext(S.a)} mais ${ext(S.b)} é igual a ${ext(c)}. Eu sou o ${nome(c)}!`);
+  setMsg(`${S.a} + ${S.b} = ${c}. Apareceu o ${nome(c)}!`, 'ok');
+  renderTop(); pop(topBar.querySelector('.stars'), .4);
+  renderDock();
+  armIdle(9000);
+}
+
+/* ---------- arrastar e tocar ---------- */
+let D = null;
+function onDown(e){
+  if (e.button > 0 || e.isPrimary === false || D || S.busy || S.screen !== 'game') return;
+  unlockAudio(); hideHand(); armIdle();
+  const t = e.target.closest('[data-drag]');
+  if (t && stage.contains(t)){
+    e.preventDefault();
+    D = { el:t, type:t.dataset.drag, id:e.pointerId, x0:e.clientX, y0:e.clientY, x:e.clientX, y:e.clientY, on:false, ghost:null, pointerType:e.pointerType };
+    sfx('press');
+    addEventListener('pointermove', onMove, { passive:false }); addEventListener('pointerup', onUp); addEventListener('pointercancel', onCancel);
+    return;
+  }
+  const cell = S.step === 3 && S.joined && e.target.closest('[data-fig="M"] .nb-b');
+  if (cell){ e.preventDefault(); if (!countBlock(+cell.dataset.i)) shake(cell); }
+}
+function stopListening(){ removeEventListener('pointermove', onMove); removeEventListener('pointerup', onUp); removeEventListener('pointercancel', onCancel); }
+function lift(){
+  let g;
+  const u = unit();
+  if (D.type === 'block'){
+    const cube = D.el.querySelector('.nb-b');
+    g = document.createElement('div'); g.className = 'ghost';
+    g.innerHTML = `<i class="nb-b" style="--u:${u}px;width:${u}px;height:${u}px;${cube.getAttribute('style')}"></i>`;
+    D.fx = .5; D.fy = .5;
+  } else {
+    const src = D.el, r = src.getBoundingClientRect();
+    g = src.cloneNode(true); g.removeAttribute('data-drag'); g.removeAttribute('tabindex'); g.removeAttribute('role');
+    g.classList.remove('quer', 'lifted'); g.classList.add('ghost'); g.style.setProperty('--u', u + 'px');
+    D.fx = (D.x0 - r.left) / r.width; D.fy = (D.y0 - r.top) / r.height;
+    src.classList.add('lifted');
+  }
+  document.body.appendChild(g);
+  const gr = g.getBoundingClientRect(); D.gw = gr.width; D.gh = gr.height;
+  D.ghost = g; D.on = true; sfx('lift'); place();
+}
+function place(){ D.ghost.style.transform = `translate(${(D.x - D.fx * D.gw).toFixed(1)}px,${(D.y - D.fy * D.gh).toFixed(1)}px) scale(1.06)`; }
+/* alvo de cada arrasto, com margem generosa para dedos pequenos */
+function targetFor(d){
+  const near = (el, m) => { if (!el) return null; const r = el.getBoundingClientRect(); return d.x > r.left - m && d.x < r.right + m && d.y > r.top - m && d.y < r.bottom + m ? el : null; };
+  if (d.type === 'block') return near(document.getElementById('ground'), 0);
+  if (d.type === 'fig'){ const other = $(`[data-fig="${d.el.dataset.fig === 'A' ? 'B' : 'A'}"]`); return near(other, unit() * 1.2); }
+  if (d.type === 'opt') return near($('[data-drop="ans"]'), 36);
+  return null;
+}
+function onMove(e){
+  if (!D || e.pointerId !== D.id) return;
+  e.preventDefault();
+  D.x = e.clientX; D.y = e.clientY;
+  if (!D.on){ if (Math.hypot(D.x - D.x0, D.y - D.y0) < (D.pointerType === 'mouse' ? 8 : 12)) return; lift(); }
+  place();
+  $$('.quer').forEach(el => el.classList.remove('quer'));
+  targetFor(D)?.classList.add('quer');
+}
+function cancelDrag(){ if (!D) return; stopListening(); D.ghost?.remove(); D.el.classList.remove('lifted'); D = null; $$('.quer').forEach(el => el.classList.remove('quer')); }
+function onCancel(e){ if (D && e.pointerId === D.id) cancelDrag(); }
+function flyBack(d){
+  const g = d.ghost, r = d.el.getBoundingClientRect();
+  const done = () => { g.remove(); d.el.classList.remove('lifted'); };
+  if (reduced || !g.animate){ done(); return; }
+  const x = r.left + r.width / 2 - d.gw / 2, y = r.top + r.height / 2 - d.gh / 2;
+  whenDone(g.animate([{ transform:g.style.transform }, { transform:`translate(${x}px,${y}px) scale(.9)` }], { duration:300, easing:'ease-in-out', fill:'forwards' }), 300, done);
+}
+function onUp(e){
+  if (!D || e.pointerId !== D.id) return;
+  stopListening(); const d = D; D = null;
+  const hit = d.on ? targetFor(d) : null;
+  $$('.quer').forEach(el => el.classList.remove('quer'));
+  if (!d.on){ tap(d.el); return; }
+  if (!hit){ flyBack(d); if (d.type === 'fig') setMsg('Solte em cima do outro amigo!', 'info'); return; }
+  if (d.type === 'block'){ const r = d.ghost.getBoundingClientRect(); d.ghost.remove(); addBlock(r); }
+  else if (d.type === 'fig'){ d.el.classList.remove('lifted'); startMerge(d.el.dataset.fig, d.ghost); }
+  else if (d.type === 'opt') tryAnswer(+d.el.dataset.val, d.ghost, d.el);
+}
+function tap(el){
+  const type = el.dataset.drag;
+  if (type === 'block'){ addBlock(el.querySelector('.nb-b').getBoundingClientRect()); }
+  else if (type === 'fig'){ startMerge(el.dataset.fig, null); }
+  else if (type === 'opt'){ tryAnswer(+el.dataset.val, null, el); }
+}
+stage.addEventListener('pointerdown', onDown);
+stage.addEventListener('keydown', e => {
+  if (!['Enter',' '].includes(e.key) || S.busy) return;
+  const el = e.target.closest('[data-drag]'); if (!el) return;
+  e.preventDefault(); unlockAudio(); tap(el);
+});
+addEventListener('blur', cancelDrag);
+document.addEventListener('visibilitychange', () => { if (document.hidden){ window.BlockVoice?.stop(); cancelDrag(); } });
+
+/* ---------- mãozinha de ajuda ---------- */
+const HAND = '<svg viewBox="0 0 48 56" aria-hidden="true"><path d="M18 4c-2.8 0-5 2.2-5 5v22.5l-3.3-3.4c-2-2-5.2-2-7.1 0-1.8 1.8-1.9 4.6-.3 6.6l10.6 13.6C15.6 52.4 19.7 55 24.3 55H32c7.7 0 14-6.3 14-14V27c0-2.5-2-4.5-4.5-4.5-.9 0-1.8.3-2.5.8-.4-2.1-2.3-3.8-4.5-3.8-1.1 0-2.1.4-2.9 1-.6-1.9-2.4-3.3-4.6-3.3-.8 0-1.6.2-2.3.6V9c0-2.8-2.2-5-5-5z"/></svg>';
+const HX = 21, HY = 4.6;
+let idleT = 0, handEl = null, handCopy = null;
+function armIdle(ms){ clearTimeout(idleT); if (S.screen === 'game') idleT = setTimeout(() => showHint(false), ms || 8000); }
+function hideHand(){ if (handEl){ handEl.remove(); handEl = null; } if (handCopy){ handCopy.remove(); handCopy = null; } }
+function hintTarget(){
+  if (S.step <= 2){
+    if (S.built) return { to:$('[data-act="next"]') };
+    return { from:$('.src .nb-b'), to:$('[data-fig="T"] .nb-b.vazio') };
+  }
+  if (S.step === 3){
+    if (!S.joined) return { from:$('[data-fig="B"] .nb-corpo'), to:$('[data-fig="A"] .nb-corpo'), copy:$('[data-fig="B"]') };
+    if (S.countDone) return null;
+    const next = $$('[data-fig="M"] .nb-b').find(c => !S.counted.includes(+c.dataset.i));
+    return next ? { to:next } : null;
+  }
+  if (S.solved) return { to:$('[data-act="new"]') };
+  return S.counted.length ? { to:cellEl('M', S.counted[S.counted.length - 1]) } : null;
+}
+function showHint(fromUser){
+  if (S.screen !== 'game' || S.busy || D || document.querySelector('.confirm')) return;
+  const h = hintTarget(); if (!h || !h.to) return;
+  hideHand();
+  const to = centerOf(h.to), from = h.from ? centerOf(h.from) : null;
+  const el = handEl = document.createElement('div'); el.className = 'hand'; el.innerHTML = HAND; fx.appendChild(el);
+  const at = (p, k) => `translate(${(p.x - HX).toFixed(1)}px,${(p.y - HY).toFixed(1)}px) scale(${k})`;
+  let kf;
+  if (reduced) kf = [{ transform:at(to, 1), opacity:0 }, { transform:at(to, 1), opacity:1, offset:.2 }, { transform:at(to, 1), opacity:1, offset:.8 }, { transform:at(to, 1), opacity:0 }];
+  else if (from) kf = [{ transform:at(from, 1.2), opacity:0 }, { transform:at(from, 1), opacity:1, offset:.14 }, { transform:at(from, .86), offset:.24 }, { transform:at(to, .86), offset:.7 }, { transform:at(to, 1), opacity:1, offset:.8 }, { transform:at(to, 1), opacity:0 }];
+  else kf = [{ transform:at(to, 1.2), opacity:0 }, { transform:at(to, 1), opacity:1, offset:.2 }, { transform:at(to, .84), offset:.34 }, { transform:at(to, 1), offset:.48 }, { transform:at(to, .84), offset:.62 }, { transform:at(to, 1), opacity:1, offset:.8 }, { transform:at(to, 1), opacity:0 }];
+  const opts = { duration:from && !reduced ? 1900 : 1500, iterations:2, easing:'ease-in-out', fill:'both' };
+  if (from && !reduced){
+    const srcEl = h.copy || h.from, r = srcEl.getBoundingClientRect(), c = srcEl.cloneNode(true);
+    c.removeAttribute('data-drag'); c.removeAttribute('tabindex'); c.removeAttribute('role');
+    c.classList.add('ghost', 'hand-copy'); c.style.setProperty('--u', unit() + 'px'); c.style.width = r.width + 'px'; c.style.height = r.height + 'px';
+    document.body.appendChild(c); handCopy = c;
+    const dx = r.left + r.width / 2 - from.x, dy = r.top + r.height / 2 - from.y;
+    const atC = p => `translate(${(p.x + dx - r.width / 2).toFixed(1)}px,${(p.y + dy - r.height / 2).toFixed(1)}px)`;
+    c.animate([{ transform:atC(from), opacity:0 }, { transform:atC(from), opacity:.65, offset:.14 }, { transform:atC(from), opacity:.65, offset:.24 }, { transform:atC(to), opacity:.65, offset:.7 }, { transform:atC(to), opacity:0, offset:.84 }, { transform:atC(to), opacity:0 }], opts);
+  }
+  el.animate(kf, opts).onfinish = () => { if (handEl === el) hideHand(); };
+  if (!fromUser) armIdle(15000);
+}
+addEventListener('keydown', () => { hideHand(); armIdle(); });
+
+/* ---------- sair no meio da conta ---------- */
+const inProgress = () => !S.solved && (S.step > 1 || S.placed > 0);
+function askLeave(){
+  if (document.querySelector('.confirm')) return;
+  clearTimeout(idleT); hideHand(); cancelDrag();
+  const box = document.createElement('div'); box.className = 'confirm';
+  box.innerHTML = `<div class="confirm-card" role="alertdialog" aria-modal="true" aria-labelledby="confirm-t" aria-describedby="confirm-s">
+      <p id="confirm-t" class="confirm-t">Sair desta conta?</p>
+      <p id="confirm-s" class="confirm-s">Os blocos montados vão sumir.</p>
+      <div class="confirm-b"><button class="btn" data-act="stay">Continuar jogando</button><button class="btn alt" data-act="leave">Sair</button></div>
+    </div>`;
+  box.addEventListener('click', e => { if (e.target === box) closeLeave(); });
+  box.addEventListener('keydown', e => {
+    if (e.key !== 'Tab') return;
+    const buttons = [...box.querySelectorAll('button')], first = buttons[0], last = buttons[buttons.length - 1];
+    if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  });
+  document.getElementById('app').inert = true;
+  document.body.appendChild(box);
+  box.querySelector('[data-act="stay"]').focus();
+  if (!reduced) box.firstElementChild.animate([{ transform:'translateY(24px) scale(.94)', opacity:0 }, { transform:'none', opacity:1 }], { duration:320, easing:'cubic-bezier(.2,1.3,.4,1)' });
+}
+function closeLeave(silent){
+  const box = document.querySelector('.confirm'); if (!box) return;
+  document.getElementById('app').inert = false;
+  box.remove(); if (silent) return;
+  armIdle(); topBar.querySelector('[data-act="home"]')?.focus();
+}
+addEventListener('keydown', e => { if (e.key === 'Escape' && document.querySelector('.confirm')) closeLeave(); });
+
+/* ---------- botões ---------- */
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
+  const act = b.dataset.act;
+  if (S.busy && !['sound','repeat','home','stay','leave'].includes(act)) return;
+  unlockAudio();
+  switch (act){
+    case 'level': startLevel(b.dataset.lv); break;
+    case 'home': if (S.screen === 'game' && inProgress()){ askLeave(); break; } goHome(); break;
+    case 'stay': closeLeave(); break;
+    case 'leave': goHome(); break;
+    case 'repeat': say(S.lastSay); pop(b, .15); showHint(true); break;
+    case 'sound': S.sound = !S.sound; if (!S.sound) window.BlockVoice?.stop(); renderTop(); break;
+    case 'voice-test': S.sound = true; renderTop(); say('Vamos juntar os amigos e contar os blocos? Você pode ouvir de novo quando quiser.'); break;
+    case 'next': if (S.step === 1) enterStep(2); else if (S.step === 2) enterStep(3); break;
+    case 'count': countWithMe(); break;
+    case 'new': newProblem(); break;
+  }
+});
+
+goHome();
+})();
+</script>
+</body>
+</html>

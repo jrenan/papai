@@ -54,6 +54,11 @@ const adaptationQuestion = document.querySelector("#adaptationQuestion");
 const adaptationOptions = document.querySelector("#adaptationOptions");
 const tryAgainButton = document.querySelector("#tryAgainButton");
 const nextButton = document.querySelector("#nextButton");
+const rescueToken = document.querySelector("#rescueToken");
+const rescueHint = document.querySelector("#rescueHint");
+const rescueMap = document.querySelector("#rescueMap");
+const completeMap = document.querySelector("#completeMap");
+const BRAZIL_PATH = document.querySelector("#biomeMap .brazil-map-shape").getAttribute("d");
 const countryStrip = document.querySelector("#countryStrip");
 const countryFlag = document.querySelector("#countryFlag");
 const countryRegion = document.querySelector("#countryRegion");
@@ -104,6 +109,14 @@ let selectedBiomeId = "amazonia";
 let selectedHabitat = null;
 let exploredHabitats = new Set();
 let adaptationSolved = false;
+// Arrastar para o mapa: lugares já tentados nesta missão e seres vivos que já estão em casa.
+let triedHabitats = new Set();
+let missionPlaced = false;
+let rescued = [];
+let rescueDrag = null;
+let rescueCarrying = false;
+let rescueGeneration = 0;
+let suppressRescueClick = false;
 let selectedCountryId = "brazil";
 let selectedLandmarkIndex = 0;
 let globeApi = null;
@@ -129,6 +142,7 @@ function setActionVisibility({ tryAgain = false, next = false }) {
 }
 
 function openHub() {
+  resetRescueInteraction();
   show(gameHub);
   hide(worldGame);
   biomeScreens.forEach(hide);
@@ -139,6 +153,7 @@ function openHub() {
 }
 
 function openBiomes() {
+  resetRescueInteraction();
   hide(gameHub);
   hide(worldGame);
   hide(mission);
@@ -148,6 +163,7 @@ function openBiomes() {
 }
 
 function openWorld() {
+  resetRescueInteraction();
   hide(gameHub);
   biomeScreens.forEach(hide);
   show(worldGame);
@@ -207,8 +223,27 @@ function getCompatibilityLevel(speciesId, habitatId) {
   return "low";
 }
 
+const traitList =
+  typeof Intl !== "undefined" && Intl.ListFormat
+    ? new Intl.ListFormat("pt-BR", { style: "long", type: "conjunction" })
+    : null;
+
 function formatTraitNames(traitIds) {
-  return traitIds.map((traitId) => getTrait(traitId)[1]).join(", ");
+  const names = traitIds.map((traitId) => getTrait(traitId)[1]);
+  return traitList ? traitList.format(names) : names.join(", ");
+}
+
+function withArticle(living) {
+  return `${living.article || "o"} ${living.name}`;
+}
+
+function capitalize(text) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function habitatWhere(habitatId) {
+  const { map } = habitats[habitatId];
+  return map.where || `em ${map.label}`;
 }
 
 function renderBiomeMap() {
@@ -268,20 +303,22 @@ function selectBiome(habitatId) {
   renderBiomeMap();
 }
 
+// The explanation of the body clue is kept for after the adaptation question.
 function buildFeedbackText(speciesId, habitatId, level) {
-  const animal = species[speciesId];
+  const living = species[speciesId];
+  const where = habitatWhere(habitatId);
   const matchingTraitIds = getMatchingTraitIds(speciesId, habitatId);
   const missingTraitIds = getMissingTraitIds(speciesId, habitatId);
 
   if (level === "good") {
-    return `Aqui tem ${formatTraitNames(matchingTraitIds)}. ${animal.adaptation.explanation}`;
+    return `${capitalize(where)} tem ${formatTraitNames(matchingTraitIds)}. ${capitalize(withArticle(living))} encontrou sua casa!`;
   }
 
   if (level === "ok") {
-    return `Aqui tem ${formatTraitNames(matchingTraitIds)}, mas ainda falta ${formatTraitNames(missingTraitIds)}.`;
+    return `${capitalize(where)} tem ${formatTraitNames(matchingTraitIds)}, mas falta ${formatTraitNames(missingTraitIds)}. Procure outro lugar no mapa.`;
   }
 
-  return `Falta ${formatTraitNames(missingTraitIds)}. Vamos procurar outro lugar?`;
+  return `${capitalize(where)} falta ${formatTraitNames(missingTraitIds)}. Procure outro lugar no mapa.`;
 }
 
 function createMission(missionData) {
@@ -291,20 +328,8 @@ function createMission(missionData) {
     adaptationQuestion: species[missionData.species].adaptation.question,
     adaptationAnswer: species[missionData.species].adaptation.answer,
     adaptationOptions: species[missionData.species].adaptation.options,
-    options: missionData.habitats.map((habitatId) => {
-      const level = getCompatibilityLevel(missionData.species, habitatId);
-
-      return {
-        habitat: habitatId,
-        level,
-        why: buildFeedbackText(missionData.species, habitatId, level),
-      };
-    }),
+    habitats: missionData.habitats,
   };
-}
-
-function findOption(habitatId) {
-  return currentMission().options.find((option) => option.habitat === habitatId);
 }
 
 function renderTraitChips(traitIds) {
@@ -332,27 +357,31 @@ function renderMission() {
   const animal = currentSpecies();
   selectedHabitat = null;
   exploredHabitats = new Set();
+  triedHabitats = new Set();
+  missionPlaced = false;
   adaptationSolved = false;
+  resetRescueInteraction();
 
-  roundLabel.textContent = `Animal perdido ${missionIndex + 1} de ${missions.length}`;
-  missionTitle.textContent = `Ajude o ${animal.name}`;
+  roundLabel.textContent = `Missão ${missionIndex + 1} de ${missions.length}`;
+  missionTitle.textContent = `Ajude ${withArticle(animal)}`;
   narration.textContent = missionData.story;
   environmentArt.className = "animal-card";
   environmentArt.setAttribute("aria-label", animal.name);
   environmentArt.innerHTML = `
     <img src="${animal.image}" alt="${animal.name}" />
     <div class="animal-card-copy">
-      <p class="eyebrow">Ele procura</p>
+      <p class="eyebrow">Precisa de</p>
       <div class="clues">${renderTraitChips(animal.needs)}</div>
     </div>
   `;
   clues.innerHTML = `
-    <span class="guide-chip">1. Explore os lugares</span>
-    <span class="guide-chip">2. Veja as pistas</span>
-    <span class="guide-chip">3. Leve para o melhor lar</span>
+    <span class="guide-chip">1. Toque nas fotos e veja as pistas</span>
+    <span class="guide-chip">2. Arraste ${withArticle(animal)} para o mapa</span>
   `;
 
   renderHabitatChoices();
+  renderRescueToken();
+  renderRescueMap();
   hide(feedback);
   hide(adaptationCard);
   setActionVisibility({});
@@ -360,24 +389,20 @@ function renderMission() {
 
 function renderHabitatChoices() {
   const missionData = currentMission();
-  choiceGrid.innerHTML = missionData.options
-    .map(({ habitat }) => {
+  choiceGrid.innerHTML = missionData.habitats
+    .map((habitat) => {
       const place = habitats[habitat];
       const explored = exploredHabitats.has(habitat);
-      const pressed = selectedHabitat === habitat;
 
       return `
-        <article class="habitat-card ${explored ? "is-explored" : ""}" data-habitat="${habitat}" aria-label="${place.name}">
-          <button class="habitat-image-button" type="button" data-action="explore" data-habitat="${habitat}" aria-pressed="${pressed}">
-            <img src="${place.image}" alt="${place.name}" />
+        <article class="habitat-card ${explored ? "is-explored" : ""} ${triedHabitats.has(habitat) ? "is-tried" : ""}" data-habitat="${habitat}" style="--place-color: ${place.map.color};">
+          <button class="habitat-image-button" type="button" data-action="explore" data-habitat="${habitat}" aria-pressed="${explored}" aria-label="Investigar ${place.name}">
+            <img src="${place.image}" alt="" />
             <span class="scan-badge">${explored ? "🔎 investigado" : "✨ investigar"}</span>
           </button>
           <div class="habitat-copy">
-            <h3>${place.name}</h3>
+            <h3><span class="place-dot" aria-hidden="true"></span>${place.name}</h3>
             <div class="clues habitat-clues">${renderHiddenClues(habitat)}</div>
-            <button class="primary-button choose-home-button" type="button" data-action="choose" data-habitat="${habitat}">
-              Levar para cá
-            </button>
           </div>
         </article>
       `;
@@ -386,43 +411,461 @@ function renderHabitatChoices() {
 }
 
 function exploreHabitat(habitatId) {
+  const hadFocus = choiceGrid.contains(document.activeElement);
   selectedHabitat = habitatId;
   exploredHabitats.add(habitatId);
-  hide(feedback);
-  hide(adaptationCard);
-  setActionVisibility({});
   renderHabitatChoices();
+  if (hadFocus) {
+    choiceGrid.querySelector(`[data-action="explore"][data-habitat="${habitatId}"]`)?.focus({ preventScroll: true });
+  }
+  // Liga a foto ao lugar no mapa: o bioma investigado pisca.
+  const region = rescueMap.querySelector(`[data-rescue-biome="${habitatId}"]`);
+  if (region) {
+    region.classList.remove("is-hinted");
+    void region.getBoundingClientRect();
+    region.classList.add("is-hinted");
+    setTimeout(() => region.classList.remove("is-hinted"), 1800);
+  }
 }
 
-function chooseHabitat(habitatId) {
-  if (!exploredHabitats.has(habitatId)) {
-    exploreHabitat(habitatId);
+/* ---------- Mapa do resgate ---------- */
+function buildMapMarkup(prefix) {
+  const mapHabitats = getMapHabitats();
+  const regions = mapHabitats
+    .map(
+      ([habitatId, habitat]) => `
+        <path
+          class="biome-region rescue-region"
+          data-rescue-biome="${habitatId}"
+          role="button"
+          tabindex="-1"
+          aria-label="Soltar ${habitat.map.where || habitat.map.label}"
+          style="--region-color: ${habitat.map.color};"
+          d="${BIOME_GEOMETRY[habitatId].path}"
+        />`,
+    )
+    .join("");
+  const labels = mapHabitats
+    .map(([habitatId, habitat]) => {
+      const { x, y } = BIOME_GEOMETRY[habitatId].labelPosition;
+      return `<text class="biome-label" x="${x}" y="${y}">${habitat.map.label}</text>`;
+    })
+    .join("");
+
+  return `
+    <defs>
+      <clipPath id="${prefix}Clip"><path d="${BRAZIL_PATH}" /></clipPath>
+      <clipPath id="${prefix}MarkerClip" clipPathUnits="objectBoundingBox"><circle cx="0.5" cy="0.5" r="0.5" /></clipPath>
+    </defs>
+    <path class="brazil-map-shape" d="${BRAZIL_PATH}" />
+    <g clip-path="url(#${prefix}Clip)">${regions}</g>
+    <g class="biome-map-labels">${labels}</g>
+    <path class="brazil-map-outline" d="${BRAZIL_PATH}" />
+    <g class="rescued-markers" data-markers></g>
+  `;
+}
+
+function markerMarkup(entry, prefix, isNew) {
+  const living = species[entry.speciesId];
+  return `
+    <g class="rescued-marker ${isNew ? "is-new" : ""}" transform="translate(${entry.x.toFixed(1)} ${entry.y.toFixed(1)})">
+      <g class="rescued-marker-body">
+        <path class="rescued-marker-ring" d="M0 0 L-9.6 -22 A24 24 0 1 1 9.6 -22 Z" />
+        <image href="${living.image}" x="-20" y="-64" width="40" height="40" preserveAspectRatio="xMidYMid slice" clip-path="url(#${prefix}MarkerClip)" />
+        <title>${living.name} ${habitatWhere(entry.habitatId)}</title>
+      </g>
+    </g>
+  `;
+}
+
+function renderMarkers(svg, prefix, newSpeciesId) {
+  svg.querySelector("[data-markers]").innerHTML = rescued
+    .map((entry) => markerMarkup(entry, prefix, entry.speciesId === newSpeciesId))
+    .join("");
+}
+
+function renderRescueMap(newSpeciesId) {
+  if (!rescueMap.querySelector("[data-markers]")) {
+    rescueMap.innerHTML = buildMapMarkup("rescue");
+  }
+  rescueMap.querySelectorAll("[data-rescue-biome]").forEach((region) => {
+    const habitatId = region.dataset.rescueBiome;
+    region.classList.toggle("is-tried", triedHabitats.has(habitatId));
+    region.classList.toggle("is-home", missionPlaced && rescued.at(-1)?.habitatId === habitatId);
+    region.classList.remove("is-drop-target");
+    region.setAttribute("tabindex", rescueCarrying ? "0" : "-1");
+  });
+  renderMarkers(rescueMap, "rescue", newSpeciesId);
+}
+
+function renderRescueToken() {
+  const animal = currentSpecies();
+  rescueToken.innerHTML = `<img src="${animal.image}" alt="" draggable="false" />`;
+  rescueToken.setAttribute("aria-label", `Levar ${withArticle(animal)} para o mapa`);
+  rescueToken.setAttribute("aria-describedby", "rescueHint");
+  rescueToken.setAttribute("aria-pressed", "false");
+  rescueToken.classList.remove("is-lifted", "is-home", "is-carrying");
+  rescueToken.disabled = false;
+  setRescueHint(`Arraste ${withArticle(animal)} até o mapa ou toque na foto e depois em um bioma.`);
+}
+
+function setRescueHint(text, tone = "") {
+  rescueHint.textContent = text;
+  rescueHint.className = tone ? `is-${tone}` : "";
+}
+
+function svgPointFromClient(svg, clientX, clientY) {
+  const matrix = svg.getScreenCTM();
+  if (!matrix) {
+    return null;
+  }
+  return new DOMPoint(clientX, clientY).matrixTransform(matrix.inverse());
+}
+
+function clientPointFromSvg(svg, x, y) {
+  const matrix = svg.getScreenCTM();
+  if (!matrix) {
+    return null;
+  }
+  return new DOMPoint(x, y).matrixTransform(matrix);
+}
+
+function biomeFromElement(element) {
+  const region = element?.closest?.("[data-rescue-biome]");
+  return region && rescueMap.contains(region) ? region.dataset.rescueBiome : null;
+}
+
+// Pantanal e Pampa são pequenos: perto da borda, o bioma mais próximo também vale.
+function biomeAtPoint(clientX, clientY) {
+  const direct = biomeFromElement(document.elementFromPoint(clientX, clientY));
+  if (direct) {
+    return { habitatId: direct, direct: true };
+  }
+
+  const votes = new Map();
+  for (const radius of [10, 20, 30]) {
+    for (let step = 0; step < 8; step += 1) {
+      const angle = (step * Math.PI) / 4;
+      const habitatId = biomeFromElement(
+        document.elementFromPoint(clientX + radius * Math.cos(angle), clientY + radius * Math.sin(angle)),
+      );
+      if (habitatId) {
+        votes.set(habitatId, (votes.get(habitatId) || 0) + 1 / radius);
+      }
+    }
+  }
+
+  let best = null;
+  votes.forEach((score, habitatId) => {
+    if (!best || score > best.score) {
+      best = { habitatId, score };
+    }
+  });
+  return best ? { habitatId: best.habitatId, direct: false } : null;
+}
+
+function highlightDropTarget(habitatId) {
+  rescueMap.querySelectorAll("[data-rescue-biome]").forEach((region) => {
+    region.classList.toggle("is-drop-target", region.dataset.rescueBiome === habitatId);
+  });
+}
+
+function placeGhost(ghost, clientX, clientY) {
+  // A ponta do alfinete fica no dedo; a foto aparece acima, sem ficar escondida.
+  ghost.style.transform = `translate(${clientX - 44}px, ${clientY - 104}px)`;
+}
+
+function startRescueDrag(event) {
+  if (missionPlaced || rescueDrag || (event.pointerType === "mouse" && event.button !== 0)) {
+    return;
+  }
+  suppressRescueClick = false;
+  rescueDrag = {
+    pointerId: event.pointerId,
+    startX: event.clientX,
+    startY: event.clientY,
+    x: event.clientX,
+    y: event.clientY,
+    ghost: null,
+    target: null,
+    frame: 0,
+  };
+  window.addEventListener("pointermove", moveRescueDrag, { passive: false });
+  window.addEventListener("pointerup", endRescueDrag);
+  window.addEventListener("pointercancel", cancelRescueDrag);
+}
+
+function liftRescueToken() {
+  const animal = currentSpecies();
+  const ghost = document.createElement("div");
+  ghost.className = "rescue-ghost";
+  ghost.setAttribute("aria-hidden", "true");
+  ghost.innerHTML = `
+    <span class="rescue-ghost-photo"><img src="${animal.image}" alt="" /></span>
+    <span class="rescue-ghost-label">Solte no mapa</span>
+  `;
+  document.body.append(ghost);
+  rescueDrag.ghost = ghost;
+  rescueToken.classList.add("is-lifted");
+  document.body.classList.add("is-rescue-dragging");
+  placeGhost(ghost, rescueDrag.x, rescueDrag.y);
+  rescueDrag.frame = requestAnimationFrame(autoScrollRescueDrag);
+}
+
+function updateRescueTarget() {
+  const hit = biomeAtPoint(rescueDrag.x, rescueDrag.y);
+  rescueDrag.target = hit;
+  highlightDropTarget(hit?.habitatId || null);
+  const label = rescueDrag.ghost.querySelector(".rescue-ghost-label");
+  label.textContent = hit ? habitats[hit.habitatId].map.label : "Solte no mapa";
+  label.style.setProperty("--label-color", hit ? habitats[hit.habitatId].map.color : "");
+  rescueDrag.ghost.classList.toggle("has-target", Boolean(hit));
+}
+
+function moveRescueDrag(event) {
+  if (!rescueDrag || event.pointerId !== rescueDrag.pointerId) {
+    return;
+  }
+  event.preventDefault();
+  rescueDrag.x = event.clientX;
+  rescueDrag.y = event.clientY;
+  if (!rescueDrag.ghost) {
+    const distance = Math.hypot(event.clientX - rescueDrag.startX, event.clientY - rescueDrag.startY);
+    if (distance < (event.pointerType === "mouse" ? 6 : 10)) {
+      return;
+    }
+    liftRescueToken();
+  }
+  placeGhost(rescueDrag.ghost, rescueDrag.x, rescueDrag.y);
+  updateRescueTarget();
+}
+
+// O mapa pode estar abaixo da dobra: perto da borda da tela, a página rola sozinha.
+function autoScrollRescueDrag() {
+  if (!rescueDrag?.ghost) {
+    return;
+  }
+  const edge = 72;
+  const speed =
+    rescueDrag.y < edge ? -14 : rescueDrag.y > window.innerHeight - edge ? 14 : 0;
+  if (speed) {
+    window.scrollBy(0, speed);
+    updateRescueTarget();
+  }
+  rescueDrag.frame = requestAnimationFrame(autoScrollRescueDrag);
+}
+
+function stopRescueListeners() {
+  window.removeEventListener("pointermove", moveRescueDrag);
+  window.removeEventListener("pointerup", endRescueDrag);
+  window.removeEventListener("pointercancel", cancelRescueDrag);
+  if (rescueDrag?.frame) {
+    cancelAnimationFrame(rescueDrag.frame);
+  }
+  document.body.classList.remove("is-rescue-dragging");
+}
+
+function cancelRescueDrag(event) {
+  if (event?.pointerId !== undefined && event.pointerId !== rescueDrag?.pointerId) {
+    return;
+  }
+  if (!rescueDrag) {
+    return;
+  }
+  stopRescueListeners();
+  rescueDrag.ghost?.remove();
+  rescueDrag = null;
+  rescueToken.classList.remove("is-lifted");
+  highlightDropTarget(null);
+}
+
+function resetRescueInteraction() {
+  rescueGeneration += 1;
+  cancelRescueDrag();
+  document.querySelectorAll(".rescue-ghost").forEach((ghost) => {
+    ghost.getAnimations?.().forEach((animation) => animation.cancel());
+    ghost.remove();
+  });
+  rescueCarrying = false;
+  rescueToken.classList.remove("is-lifted", "is-carrying");
+  rescueToken.setAttribute("aria-pressed", "false");
+}
+
+function endRescueDrag(event) {
+  if (!rescueDrag || event.pointerId !== rescueDrag.pointerId) {
+    return;
+  }
+  stopRescueListeners();
+  const drag = rescueDrag;
+  rescueDrag = null;
+  highlightDropTarget(null);
+
+  if (!drag.ghost) {
     return;
   }
 
-  selectedHabitat = habitatId;
-  const option = findOption(habitatId);
-  const feedbackContent = feedbackByLevel[option.level];
-  const animal = currentSpecies();
+  // O clique emitido após um arraste não deve começar outro transporte.
+  suppressRescueClick = true;
 
-  document.querySelectorAll(".habitat-image-button").forEach((button) => {
-    button.setAttribute("aria-pressed", String(button.dataset.habitat === habitatId));
+  const hit = biomeAtPoint(drag.x, drag.y);
+  if (!hit) {
+    flyGhostHome(drag.ghost);
+    setRescueHint("Solte dentro do mapa do Brasil, em cima de um bioma colorido.", "warn");
+    return;
+  }
+  dropOnBiome(hit.habitatId, { ghost: drag.ghost, clientX: drag.x, clientY: drag.y, direct: hit.direct });
+}
+
+function animateGhostTo(ghost, clientX, clientY, { scale = 1, duration = 420, keyframes } = {}) {
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!ghost.animate || reduced) {
+    return Promise.resolve();
+  }
+  const to = `translate(${clientX - 44}px, ${clientY - 104}px) scale(${scale})`;
+  const animation = ghost.animate(keyframes ? [...keyframes, { transform: to }] : [{ transform: ghost.style.transform }, { transform: to }], {
+    duration,
+    easing: "cubic-bezier(.3,.8,.3,1)",
+    fill: "forwards",
   });
+  return animation.finished.catch(() => {});
+}
 
-  feedback.className = `feedback ${option.level}`;
+async function flyGhostHome(ghost) {
+  const generation = rescueGeneration;
+  const rect = rescueToken.getBoundingClientRect();
+  ghost.classList.remove("has-target");
+  // Com a ponta como origem, o centro da foto fica 60px acima dela (36px na escala 0,6).
+  await animateGhostTo(ghost, rect.left + rect.width / 2, rect.top + rect.height / 2 + 36, { scale: 0.6, duration: 380 });
+  ghost.remove();
+  if (generation === rescueGeneration && !rescueDrag?.ghost) {
+    rescueToken.classList.remove("is-lifted");
+  }
+}
+
+function dropOnBiome(habitatId, drop = {}) {
+  if (missionPlaced) {
+    return;
+  }
+  const generation = rescueGeneration;
+  const missionData = currentMission();
+  const living = currentSpecies();
+  const level = getCompatibilityLevel(missionData.species, habitatId);
+  const feedbackContent = feedbackByLevel[level];
+  selectedHabitat = habitatId;
+
+  feedback.className = `feedback ${level}`;
   feedbackBadge.textContent = feedbackContent.badge;
   feedbackTitle.textContent = feedbackContent.title;
-  feedbackText.textContent =
-    option.level === "good"
-      ? `${feedbackContent.text} ${animal.name} fica bem aqui. ${option.why}`
-      : `${feedbackContent.text} ${option.why}`;
-
+  feedbackText.textContent = buildFeedbackText(missionData.species, habitatId, level);
   show(feedback);
-  hide(adaptationCard);
-  setActionVisibility({ tryAgain: option.level !== "good", next: false });
+  setActionVisibility({});
 
-  if (option.level === "good") {
+  if (level === "good") {
     renderAdaptation();
+    setRescueHint(`${capitalize(withArticle(living))} está em casa ${habitatWhere(habitatId)}!`, "good");
+    // Rola só depois do pouso, para a foto não pousar fora do lugar.
+    placeLivingHome(habitatId, drop).then(() => {
+      if (generation !== rescueGeneration) {
+        return;
+      }
+      adaptationCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      if (drop.keyboard) {
+        adaptationOptions.querySelector("button")?.focus({ preventScroll: true });
+      }
+    });
+  } else {
+    triedHabitats.add(habitatId);
+    renderHabitatChoices();
+    renderRescueMap();
+    rejectDrop(habitatId, drop);
+    setRescueHint(`${capitalize(habitatWhere(habitatId))} não é a casa ideal. Tente outro bioma!`, "warn");
+    feedback.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+}
+
+async function placeLivingHome(habitatId, drop) {
+  const generation = rescueGeneration;
+  const speciesId = currentMission().species;
+  missionPlaced = true;
+  rescueCarrying = false;
+  rescueToken.classList.remove("is-carrying");
+  rescueToken.setAttribute("aria-pressed", "false");
+
+  let point = drop.direct ? svgPointFromClient(rescueMap, drop.clientX, drop.clientY) : null;
+  if (!point) {
+    const { x, y } = BIOME_GEOMETRY[habitatId].labelPosition;
+    point = { x, y: y - 14 };
+  }
+  rescued.push({ speciesId, habitatId, x: point.x, y: point.y });
+
+  if (drop.ghost) {
+    const target = clientPointFromSvg(rescueMap, point.x, point.y);
+    drop.ghost.classList.add("is-landing");
+    if (target) {
+      await animateGhostTo(drop.ghost, target.x, target.y, { scale: 0.45, duration: 360 });
+    }
+    drop.ghost.remove();
+  }
+  if (generation !== rescueGeneration) {
+    return;
+  }
+  rescueToken.classList.remove("is-lifted");
+  rescueToken.classList.add("is-home");
+  rescueToken.disabled = true;
+  renderRescueMap(speciesId);
+}
+
+async function rejectDrop(habitatId, drop) {
+  const generation = rescueGeneration;
+  const region = rescueMap.querySelector(`[data-rescue-biome="${habitatId}"]`);
+  region?.animate?.([{ opacity: 1 }, { opacity: 0.45 }, { opacity: 1 }, { opacity: 0.45 }, { opacity: 1 }], { duration: 700 });
+  if (!drop.ghost) {
+    return;
+  }
+  const { ghost, clientX, clientY } = drop;
+  // Balança "não" em cima do bioma e volta para o começo.
+  await animateGhostTo(ghost, clientX, clientY, {
+    duration: 520,
+    keyframes: [
+      { transform: ghost.style.transform },
+      { transform: `translate(${clientX - 54}px, ${clientY - 104}px) rotate(-10deg)` },
+      { transform: `translate(${clientX - 34}px, ${clientY - 104}px) rotate(10deg)` },
+      { transform: `translate(${clientX - 50}px, ${clientY - 104}px) rotate(-6deg)` },
+    ],
+  });
+  if (generation !== rescueGeneration) {
+    ghost.remove();
+    return;
+  }
+  await flyGhostHome(ghost);
+}
+
+function startRescueCarry() {
+  if (missionPlaced) {
+    return;
+  }
+  rescueCarrying = !rescueCarrying;
+  rescueToken.classList.toggle("is-carrying", rescueCarrying);
+  rescueToken.setAttribute("aria-pressed", String(rescueCarrying));
+  renderRescueMap();
+  if (rescueCarrying) {
+    setRescueHint("Toque em um bioma no mapa ou use Tab e Enter para soltar.");
+    rescueMap.querySelector("[data-rescue-biome]")?.focus();
+  } else {
+    renderRescueToken();
+  }
+}
+
+function dropCarriedOnBiome(habitatId, keyboard = false) {
+  rescueCarrying = false;
+  rescueToken.classList.remove("is-carrying");
+  rescueToken.setAttribute("aria-pressed", "false");
+  dropOnBiome(habitatId, { keyboard });
+  if (!missionPlaced) {
+    renderRescueMap();
+    if (keyboard) {
+      rescueToken.focus();
+    }
   }
 }
 
@@ -444,6 +887,7 @@ function renderAdaptation() {
 
 function chooseAdaptation(option) {
   const missionData = currentMission();
+  const living = currentSpecies();
   const isRight = option === missionData.adaptationAnswer;
   adaptationSolved = isRight;
 
@@ -455,25 +899,32 @@ function chooseAdaptation(option) {
   feedbackBadge.textContent = isRight ? "🎉" : "🔎";
   feedbackTitle.textContent = isRight ? "Descoberta guardada!" : "Investigue mais um pouquinho.";
   feedbackText.textContent = isRight
-    ? `Isso! ${option} combina com as pistas deste lugar.`
-    : "Olhe para o corpo do ser vivo e para o lugar que combinou melhor.";
+    ? `Isso! ${living.adaptation.explanation}`
+    : `Olhe para o corpo ${living.article === "a" ? "da" : "do"} ${living.name} e para as pistas do lugar.`;
   show(feedback);
   setActionVisibility({ tryAgain: !isRight, next: isRight });
+  nextButton.textContent = missionIndex < missions.length - 1 ? "Próxima missão" : "Ver o mapa completo";
 }
 
 function nextMission() {
   if (missionIndex < missions.length - 1) {
     missionIndex += 1;
     renderMission();
+    document.querySelector("#mission").scrollIntoView({ behavior: "smooth", block: "start" });
     return;
   }
 
   hide(mission);
+  completeMap.innerHTML = buildMapMarkup("complete");
+  renderMarkers(completeMap, "complete");
   show(completeCard);
+  window.scrollTo(0, 0);
 }
 
 function restartGame() {
   missionIndex = 0;
+  rescued = [];
+  rescueCarrying = false;
   hide(gameHub);
   hide(worldGame);
   hide(completeCard);
@@ -489,9 +940,14 @@ function speakCurrentPrompt() {
   }
 
   const animal = currentSpecies();
-  const utterance = new SpeechSynthesisUtterance(
-    `Ajude o ${animal.name}. ${currentMission().story} Explore os lugares e veja as pistas.`,
-  );
+  let text = `Ajude ${withArticle(animal)}. ${currentMission().story} Toque nas fotos para ver as pistas e arraste ${withArticle(animal)} até o lugar certo no mapa do Brasil.`;
+  if (!feedback.classList.contains("is-hidden")) {
+    text = `${feedbackTitle.textContent} ${feedbackText.textContent}`;
+    if (!adaptationCard.classList.contains("is-hidden") && !adaptationSolved) {
+      text += ` ${adaptationQuestion.textContent}`;
+    }
+  }
+  const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "pt-BR";
   utterance.rate = 0.9;
   window.speechSynthesis.cancel();
@@ -1824,21 +2280,12 @@ biomeMap.addEventListener("keydown", (event) => {
   event.preventDefault();
   selectBiome(region.dataset.biome);
 });
+// Só aparece depois de errar a pista do corpo: o ser vivo já está em casa no mapa.
 tryAgainButton.addEventListener("click", () => {
   hide(feedback);
   setActionVisibility({});
-
-  if (selectedHabitat && findOption(selectedHabitat)?.level === "good") {
-    adaptationSolved = false;
-    document.querySelectorAll(".adaptation-option").forEach((button) => {
-      button.setAttribute("aria-pressed", "false");
-    });
-    return;
-  }
-
-  selectedHabitat = null;
-  hide(adaptationCard);
-  document.querySelectorAll(".habitat-image-button").forEach((button) => {
+  adaptationSolved = false;
+  document.querySelectorAll(".adaptation-option").forEach((button) => {
     button.setAttribute("aria-pressed", "false");
   });
 });
@@ -1916,9 +2363,34 @@ choiceGrid.addEventListener("click", (event) => {
   if (action === "explore") {
     exploreHabitat(habitat);
   }
+});
 
-  if (action === "choose") {
-    chooseHabitat(habitat);
+rescueToken.addEventListener("pointerdown", startRescueDrag);
+rescueToken.addEventListener("click", (event) => {
+  if (!event.detail || !suppressRescueClick) {
+    startRescueCarry();
+  }
+});
+rescueToken.addEventListener("dragstart", (event) => event.preventDefault());
+rescueMap.addEventListener("click", (event) => {
+  const region = event.target.closest("[data-rescue-biome]");
+  if (region && rescueCarrying) {
+    dropCarriedOnBiome(region.dataset.rescueBiome);
+  }
+});
+rescueMap.addEventListener("keydown", (event) => {
+  const region = event.target.closest("[data-rescue-biome]");
+  if (!region || !rescueCarrying) {
+    return;
+  }
+  if (event.key === "Escape") {
+    startRescueCarry();
+    rescueToken.focus();
+    return;
+  }
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+    dropCarriedOnBiome(region.dataset.rescueBiome, true);
   }
 });
 
@@ -1931,3 +2403,8 @@ adaptationOptions.addEventListener("click", (event) => {
 });
 
 selectBiome(selectedBiomeId);
+
+// Personagens do card "Juntar e Somar" na tela inicial, desenhados pelo mesmo modelo do jogo.
+document.querySelectorAll(".numberblocks-preview [data-nb]").forEach((slot) => {
+  slot.appendChild(window.Numberblocks?.create(Number(slot.dataset.nb)) ?? document.createTextNode(slot.dataset.nb));
+});

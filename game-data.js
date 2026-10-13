@@ -106,6 +106,7 @@ const GAME_DATA = {
     },
     ema: {
       name: "Ema",
+      article: "a",
       image: "assets/especie-ema.png",
       needs: ["gramíneas", "campo_aberto", "correr"],
       preferredHabitats: ["pampa"],
@@ -126,6 +127,7 @@ const GAME_DATA = {
       image: "assets/bioma-pantanal.png",
       map: {
         label: "Pantanal",
+        where: "no Pantanal",
         color: "#55b8d4",
         position: { left: "47%", top: "61%" },
         short: "Uma grande planície que enche de água e vira um berçário de vida.",
@@ -141,6 +143,7 @@ const GAME_DATA = {
       image: "assets/bioma-caatinga.png",
       map: {
         label: "Caatinga",
+        where: "na Caatinga",
         color: "#e59a48",
         position: { left: "69%", top: "44%" },
         short: "Um lugar quente e seco, cheio de plantas resistentes e surpresas na chuva.",
@@ -156,6 +159,7 @@ const GAME_DATA = {
       image: "assets/bioma-mata-atlantica.png",
       map: {
         label: "Mata Atlântica",
+        where: "na Mata Atlântica",
         color: "#2e9f62",
         position: { left: "68%", top: "66%" },
         short: "Uma floresta úmida perto do litoral, com muitas árvores, frutos e abrigos.",
@@ -171,6 +175,7 @@ const GAME_DATA = {
       image: "assets/bioma-cerrado.png",
       map: {
         label: "Cerrado",
+        where: "no Cerrado",
         color: "#d6a13c",
         position: { left: "56%", top: "50%" },
         short: "Campos, arbustos e árvores tortas sobre uma terra vermelha cheia de vida.",
@@ -186,6 +191,7 @@ const GAME_DATA = {
       image: "assets/bioma-amazonia.png",
       map: {
         label: "Amazônia",
+        where: "na Amazônia",
         color: "#238b57",
         position: { left: "38%", top: "29%" },
         short: "Uma floresta imensa, úmida e cheia de rios grandes.",
@@ -201,6 +207,7 @@ const GAME_DATA = {
       image: "assets/bioma-pampa.png",
       map: {
         label: "Pampa",
+        where: "no Pampa",
         color: "#86b84c",
         position: { left: "57%", top: "83%" },
         short: "Campos abertos do sul, com gramíneas, vento e espaço para correr.",

@@ -1,0 +1,111 @@
+/* =========================================================
+   Numberblocks: blocos com rosto, braços, pernas e número na cabeça.
+   Portado do convite do Rafa (rafa-4-anos/public/invitation.css).
+   Tamanho de cada bloco: --u, definido por quem usa.
+   ========================================================= */
+@property --c { syntax: '<color>'; inherits: false; initial-value: #ffffff; }
+@property --cd { syntax: '<color>'; inherits: false; initial-value: #e3e3e3; }
+
+.nb{--pernas:.46;--mola:cubic-bezier(.34,1.56,.64,1);position:relative;display:inline-block;vertical-align:bottom;isolation:isolate;padding-bottom:calc(var(--u)*var(--pernas));transform-origin:50% 100%;-webkit-tap-highlight-color:transparent}
+.nb.sem-pernas{--pernas:0}
+.nb-corpo{position:relative;display:grid;grid-template-columns:repeat(var(--cols),var(--u));grid-template-rows:repeat(var(--rows),var(--u))}
+.nb-b{position:relative;display:block;box-sizing:border-box;border:calc(var(--u)*.035) solid var(--cd);border-radius:calc(var(--u)*.1);transform-origin:50% 100%;
+  background:linear-gradient(160deg,color-mix(in srgb,var(--c) 72%,#fff) 0%,var(--c) 30%,var(--c) 72%,color-mix(in srgb,var(--c) 88%,#000) 100%);
+  box-shadow:inset 0 calc(var(--u)*.05) 0 rgba(255,255,255,.3),inset 0 calc(var(--u)*-.05) 0 rgba(0,0,0,.07);
+  transition:--c .5s ease,--cd .5s ease;transition-delay:var(--troca,0s)}
+.nb-b.ponto::after{content:"";position:absolute;inset:31%;border-radius:50%;background:var(--ponto);box-shadow:inset 0 calc(var(--u)*.03) 0 rgba(255,255,255,.35)}
+/* Bloco que ainda falta: só o contorno tracejado da silhueta */
+.nb-b.vazio{background:rgba(255,255,255,.38);border:calc(var(--u)*.05) dashed rgba(33,28,91,.42);box-shadow:none}
+.nb-b.vazio::after{display:none}
+/* Sem rosto: só os blocos (silhueta em construção ou soma ainda sem nome) */
+.nb.sem-rosto{--pernas:0}
+.nb.sem-rosto .nb-regiao{visibility:hidden}
+
+/* Região do personagem: rosto em cima, braços dos lados, pernas embaixo */
+.nb-regiao{position:absolute;left:0;top:calc(var(--ft,0)*var(--u));width:calc(var(--fw,1)*var(--u));height:calc(var(--fr,1)*var(--u));pointer-events:none;transform-origin:50% 100%}
+.nb-contorno{position:absolute;z-index:1;inset:calc(var(--u)*-.03);border:calc(var(--u)*.075) solid var(--contorno);border-radius:calc(var(--u)*.11)}
+.nb-rosto{position:absolute;z-index:2;left:0;right:0;top:0;height:calc(var(--u)*var(--fh,1));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(var(--u)*.05*var(--fe,1))}
+.nb-olhos{position:relative;display:flex;align-items:center;gap:calc(var(--u)*.05*var(--fe,1))}
+.nb-olho{position:relative;display:grid;place-items:center;box-sizing:border-box;width:calc(var(--u)*.34*var(--fe,1));height:calc(var(--u)*.37*var(--fe,1));padding:calc(var(--u)*.045*var(--fe,1));
+  border-radius:50%;background:var(--aro);animation:nb-piscar 5.5s infinite;animation-delay:var(--pisca,0s)}
+.nb-olho b{position:relative;display:block;width:100%;height:100%;border-radius:inherit;background:#fff}
+.nb-olho b::after{content:"";position:absolute;left:50%;top:54%;width:52%;height:50%;border-radius:50%;background:radial-gradient(circle at 34% 30%,#fff 0 15%,#15121c 19%);transform:translate(-50%,-50%)}
+/* Um: um olho só, grandão, com aro vermelho-escuro */
+.nb[data-olhos="um"] .nb-olho{width:calc(var(--u)*.52);height:calc(var(--u)*.52);padding:calc(var(--u)*.075);box-shadow:0 0 0 calc(var(--u)*.03) color-mix(in srgb,var(--aro) 70%,#000)}
+/* Dois e Sete: óculos com ponte */
+.nb[data-olhos="oculos"] .nb-olho{padding:calc(var(--u)*.06*var(--fe,1))}
+.nb[data-olhos="oculos"] .nb-olhos::before{content:"";position:absolute;left:50%;top:40%;width:calc(var(--u)*.12*var(--fe,1));height:calc(var(--u)*.05*var(--fe,1));background:var(--aro);translate:-50% 0}
+.nb[data-n="7"] .nb-olho{border-radius:30%;width:calc(var(--u)*.38);height:calc(var(--u)*.32)}
+/* Quatro e Nove: olhos quadradinhos e sobrancelhas de bloco */
+.nb[data-olhos="quadrado"] .nb-olho{border-radius:30%;width:calc(var(--u)*.36*var(--fe,1));height:calc(var(--u)*.36*var(--fe,1));padding:calc(var(--u)*.06*var(--fe,1))}
+.nb-sobrancelhas{display:flex;gap:calc(var(--u)*.1*var(--fe,1));margin-bottom:calc(var(--u)*-.02)}
+.nb-sobrancelhas i{width:calc(var(--u)*.36*var(--fe,1));height:calc(var(--u)*.13*var(--fe,1));border-radius:calc(var(--u)*.04);background:var(--aro);box-shadow:inset 0 calc(var(--u)*.025) 0 rgba(255,255,255,.18)}
+.nb-sobrancelhas i:first-child{rotate:-4deg}
+.nb-sobrancelhas i:last-child{rotate:4deg}
+/* Cinco e Dez: olhos de estrela */
+.nb-olho.estrela{width:calc(var(--u)*.46*var(--fe,1));height:calc(var(--u)*.46*var(--fe,1));padding:0;border-radius:0;background:none}
+.nb-olho.estrela::before{content:"";position:absolute;inset:0;background:var(--aro);clip-path:polygon(50% 0,62% 33%,98% 36%,70% 58%,80% 95%,50% 74%,20% 95%,30% 58%,2% 36%,38% 33%)}
+.nb-olho.estrela b{width:50%;height:50%;margin-top:6%;border-radius:50%}
+/* Seis: olhos vermelhos com cílios, saindo pelas laterais */
+.nb[data-olhos="seis"] .nb-olhos{width:calc(100% + var(--u)*.36);justify-content:space-between}
+.nb[data-olhos="seis"] .nb-olho{padding:calc(var(--u)*.06*var(--fe,1))}
+.nb[data-olhos="seis"] .nb-olho::before{content:"";position:absolute;left:12%;right:12%;bottom:84%;height:42%;background:var(--aro);
+  clip-path:polygon(0 100%,8% 10%,26% 70%,50% 0,74% 70%,92% 10%,100% 100%)}
+/* Oito: máscara espetada em volta dos olhos */
+.nb[data-olhos="mascara"] .nb-olhos::before{content:"";position:absolute;z-index:-1;inset:-34% -20%;background:var(--aro);
+  clip-path:polygon(0 50%,8% 22%,4% 4%,22% 12%,34% 0,46% 14%,54% 14%,66% 0,78% 12%,96% 4%,92% 22%,100% 50%,92% 78%,96% 96%,78% 88%,66% 100%,54% 86%,46% 86%,34% 100%,22% 88%,4% 96%,8% 78%)}
+
+.nb-boca{position:relative;display:block;box-sizing:border-box;overflow:hidden;width:calc(var(--u)*.36*var(--fe,1));height:calc(var(--u)*.16*var(--fe,1));border-radius:0 0 999px 999px;
+  background:#5e1424;border:calc(var(--u)*.035) solid var(--labio);border-top-width:calc(var(--u)*.02)}
+.nb-boca::before{content:"";position:absolute;left:10%;right:10%;top:0;height:34%;border-radius:0 0 calc(var(--u)*.03) calc(var(--u)*.03);background:#fff}
+.nb-boca.oba{width:calc(var(--u)*.4*var(--fe,1));height:calc(var(--u)*.23*var(--fe,1))}
+.nb-boca.oba::after{content:"";position:absolute;left:22%;right:22%;bottom:-18%;height:55%;border-radius:50%;background:#ff7f93}
+.nb-boca.traco{overflow:visible;height:calc(var(--u)*.09);background:none;border:0;border-bottom:calc(var(--u)*.055) solid var(--labio);border-radius:0 0 999px 999px}
+.nb-boca.traco::before{display:none}
+
+/* Número preto flutuando acima da cabeça (e de chapéus ou cabelos) */
+.nb-num{position:absolute;left:50%;bottom:100%;translate:-50% 0;margin-bottom:calc(var(--u)*(.06 + var(--extra,0)));font:800 calc(var(--u)*.62)/1 var(--nb-fonte,"Grandstander","Baloo 2","Trebuchet MS",system-ui,sans-serif);
+  color:#1c1a24;white-space:nowrap;pointer-events:none}
+.nb.sem-rosto .nb-num{margin-bottom:calc(var(--u)*.06)}
+.nb-extra{position:absolute;left:50%;bottom:calc(100% - var(--u)*.06);translate:-50% 0;width:calc(var(--u)*.92)}
+.nb-extra svg{display:block;width:100%;height:auto}
+.nb-botoes{position:absolute;z-index:2;left:50%;top:calc(var(--u)*1.14);translate:-50% 0;display:flex;flex-direction:column;gap:calc(var(--u)*.09)}
+.nb-botoes i{width:calc(var(--u)*.16);height:calc(var(--u)*.16);border-radius:50%;background:#e2262d;box-shadow:inset 0 calc(var(--u)*.03) 0 rgba(255,255,255,.4)}
+
+/* Braços e pernas em forma de tubo, na cor escura de cada personagem */
+.nb-braco{position:absolute;top:calc(var(--u)*var(--by,.3));width:calc(var(--u)*.2);height:calc(var(--u)*.74);border-radius:999px;background:var(--membro);
+  box-shadow:inset calc(var(--u)*.04) 0 0 rgba(255,255,255,.16);transform-origin:50% calc(var(--u)*.1)}
+.nb-braco::after{content:"";position:absolute;left:50%;bottom:calc(var(--u)*-.07);box-sizing:border-box;width:calc(var(--u)*.27);height:calc(var(--u)*.27);border-radius:50%;translate:-50% 0;
+  background:var(--mao,var(--membro));border:var(--mao-borda,0) solid var(--membro)}
+.nb-braco.e{left:calc(var(--u)*-.17);rotate:var(--g,14deg)}
+.nb-braco.d{right:calc(var(--u)*-.17);rotate:calc(var(--g,14deg)*-1)}
+.nb.acena .nb-braco.d.topo{animation:nb-acenar 1.8s ease-in-out infinite}
+/* Oito: tentáculos curvos dos dois lados */
+.nb[data-n="8"] .nb-braco{box-sizing:border-box;width:calc(var(--u)*.46);height:calc(var(--u)*.64);background:none;box-shadow:none;border:calc(var(--u)*.15) solid transparent;border-radius:50%;rotate:0deg}
+.nb[data-n="8"] .nb-braco::after{display:none}
+.nb[data-n="8"] .nb-braco.e{left:calc(var(--u)*-.36);border-left-color:var(--membro)}
+.nb[data-n="8"] .nb-braco.d{right:calc(var(--u)*-.36);border-right-color:var(--membro)}
+.nb-perna{position:absolute;top:calc(100% - var(--u)*.04);width:calc(var(--u)*.2);height:calc(var(--u)*.44);border-radius:0 0 999px 999px;background:var(--perna,var(--membro))}
+.nb-perna::after{content:"";position:absolute;bottom:calc(var(--u)*-.04);width:calc(var(--u)*.3);height:calc(var(--u)*.15);border-radius:999px;background:var(--pe,var(--perna,var(--membro)))}
+.nb-perna.e{left:calc(30% - var(--u)*.1)}
+.nb-perna.e::after{right:calc(var(--u)*-.02)}
+.nb-perna.d{right:calc(30% - var(--u)*.1)}
+.nb-perna.d::after{left:calc(var(--u)*-.02)}
+
+@keyframes nb-piscar{0%,93%,100%{scale:1 1}96%{scale:1 .08}}
+@keyframes nb-acenar{0%,100%{rotate:-135deg}50%{rotate:-172deg}}
+@keyframes nb-surgir{from{opacity:0;scale:.2}to{opacity:1;scale:1}}
+@keyframes nb-pular{0%{translate:0 0;rotate:0deg}35%{translate:0 calc(var(--u)*-.9);rotate:-7deg}70%{translate:0 0;rotate:3deg;scale:1.08 .9}100%{translate:0 0;rotate:0deg;scale:1}}
+@keyframes nb-boing{0%{scale:.55}55%{scale:1.12 .92}75%{scale:.95 1.05}100%{scale:1}}
+@keyframes nb-saltitar{0%,58%,100%{translate:0 0}68%{translate:0 calc(var(--u)*-.38)}78%{translate:0 0}86%{translate:0 calc(var(--u)*-.14)}93%{translate:0 0}}
+
+/* Ganhou rosto: rosto, braços e número aparecem com mola, e o personagem pula */
+.nb.vivo .nb-regiao{animation:nb-surgir .45s var(--mola) both}
+.nb.vivo .nb-num{animation:nb-boing .55s var(--mola) both}
+.nb.pula{animation:nb-pular .7s var(--mola)}
+.nb.saltita{animation:nb-saltitar 3.2s ease-in-out infinite}
+
+@media (prefers-reduced-motion: reduce){
+  .nb *,.nb{animation:none!important}
+  .nb-b{transition:none}
+}
