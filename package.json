@@ -2,7 +2,7 @@
   "name": "trio-do-saber",
   "private": true,
   "scripts": {
-    "test": "node tests/assets-check.cjs && node tests/site-smoke.cjs && node tests/biomes-regression.cjs && node tests/blocks-regression.cjs && node tests/join-regression.cjs",
+    "test": "node tests/assets-check.cjs && node tests/site-smoke.cjs && node tests/biomes-regression.cjs && node tests/blocks-regression.cjs && node tests/join-regression.cjs && node tests/fono-regression.cjs",
     "test:assets": "node tests/assets-check.cjs"
   },
   "devDependencies": {
