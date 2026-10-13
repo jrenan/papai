@@ -41,9 +41,9 @@ function home() {
   show((root) => homeScreen(root, { startRoutine, startOne, album, parent }));
 }
 
-function withCalibration(next) {
+function withCalibration(next, mic = false) {
   if (!needsCalibration()) return next();
-  show((root) => calibrateScreen(root, next, home));
+  show((root) => calibrateScreen(root, next, home, { mic }));
 }
 
 function startRoutine() {
@@ -53,7 +53,7 @@ function startRoutine() {
   let i = ids.findIndex((id) => !today[id]?.done);
   if (i < 0) i = 0;
   const go = () => runAt(ids, i);
-  if (ids.some((id) => EX[id].camera)) withCalibration(go);
+  if (ids.some((id) => EX[id].camera)) withCalibration(go, EX[ids[i]].mic);
   else go();
 }
 
@@ -79,7 +79,7 @@ function startOne(id) {
     onHome: home,
     onRepeat: () => startOne(id),
   }));
-  if (ex.camera) withCalibration(go);
+  if (ex.camera) withCalibration(go, ex.mic);
   else go();
 }
 

@@ -1,5 +1,6 @@
 import { norm, percentile } from '../util.js';
 import { audioCtx } from './sfx.js';
+import { MIC_CONSTRAINTS } from './source.js';
 
 /*
  * Microphone analysis.
@@ -50,6 +51,7 @@ export class AudioEngine {
 
   get ctx() { return audioCtx(); }
   stream = null;
+  ownsStream = true;
   nodes = [];
   analyser = null;
   blockRate = 375;
@@ -82,47 +84,60 @@ export class AudioEngine {
 
   mute(ms) { this.muteUntil = Math.max(this.muteUntil, performance.now() + ms); }
 
-  async start() {
+  async start(borrowedStream = null) {
     if (this.stream) return;
     if (!navigator.mediaDevices?.getUserMedia) throw new Error('Sem acesso ao microfone neste navegador.');
-    const stream = await navigator.mediaDevices.getUserMedia({
-      audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false },
+    const stream = borrowedStream ?? await navigator.mediaDevices.getUserMedia({
+      audio: MIC_CONSTRAINTS,
       video: false,
     });
-    const ctx = this.ctx;
-    if (ctx.state === 'suspended') await ctx.resume().catch(() => undefined);
-    if (!workletReady) {
-      const url = URL.createObjectURL(new Blob([WORKLET], { type: 'application/javascript' }));
-      workletReady = ctx.audioWorklet.addModule(url);
-      workletReady.catch(() => { workletReady = null; });
+    this.ownsStream = !borrowedStream;
+    stream.getAudioTracks().forEach((t) => { t.enabled = true; });
+    try {
+      const ctx = this.ctx;
+      if (ctx.state === 'suspended') await ctx.resume().catch(() => undefined);
+      if (!workletReady) {
+        const url = URL.createObjectURL(new Blob([WORKLET], { type: 'application/javascript' }));
+        workletReady = ctx.audioWorklet.addModule(url);
+        workletReady.catch(() => { workletReady = null; });
+      }
+      await workletReady;
+      const src = ctx.createMediaStreamSource(stream);
+      const analyser = ctx.createAnalyser();
+      analyser.fftSize = 2048;
+      analyser.smoothingTimeConstant = 0;
+      const node = new AudioWorkletNode(ctx, 'env-proc');
+      node.port.onmessage = (e) => this.onBlocks(e.data);
+      const sink = ctx.createGain();
+      sink.gain.value = 0;
+      src.connect(analyser);
+      src.connect(node);
+      node.connect(sink);
+      sink.connect(ctx.destination);
+      this.nodes = [src, analyser, node, sink];
+      this.analyser = analyser;
+      this.stream = stream;
+      this.blockRate = ctx.sampleRate / 128;
+      this.hist = [];
+      this.noiseDb = -60;
+      this.seg = null;
+      this.utt = null;
+    } catch (error) {
+      stream.getAudioTracks().forEach((t) => {
+        if (this.ownsStream) t.stop();
+        else t.enabled = false;
+      });
+      throw error;
     }
-    await workletReady;
-    const src = ctx.createMediaStreamSource(stream);
-    const analyser = ctx.createAnalyser();
-    analyser.fftSize = 2048;
-    analyser.smoothingTimeConstant = 0;
-    const node = new AudioWorkletNode(ctx, 'env-proc');
-    node.port.onmessage = (e) => this.onBlocks(e.data);
-    const sink = ctx.createGain();
-    sink.gain.value = 0;
-    src.connect(analyser);
-    src.connect(node);
-    node.connect(sink);
-    sink.connect(ctx.destination);
-    this.nodes = [src, analyser, node, sink];
-    this.analyser = analyser;
-    this.stream = stream;
-    this.blockRate = ctx.sampleRate / 128;
-    this.hist = [];
-    this.noiseDb = -60;
-    this.seg = null;
-    this.utt = null;
   }
 
   stop() {
     for (const n of this.nodes) { try { n.disconnect(); } catch { /* ignore */ } }
     this.nodes = [];
-    this.stream?.getTracks().forEach((t) => t.stop());
+    this.stream?.getAudioTracks().forEach((t) => {
+      if (this.ownsStream) t.stop();
+      else t.enabled = false;
+    });
     this.stream = null;
     this.analyser = null;
     this.active = this.blowing = this.voiced = this.trilling = false;

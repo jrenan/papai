@@ -55,8 +55,10 @@ npm test
 Os testes verificam arquivos locais, as seis missões dos Biomas, a navegação
 pelos países e os fluxos de soma, incluindo respostas erradas, novas contas,
 teclado e confirmação de saída. No Fono do Leo, a câmera e o microfone falsos do
-Chromium confirmam que o modelo carrega e roda, que um exercício termina pelo
-botão +1 e que progresso e ajustes ficam salvos. Para outro endereço, defina `BASE_URL`.
+Chromium confirmam que o modelo carrega e roda, que a imagem continua viva entre
+calibração e exercícios, mesmo com interrupções de captura e narração simuladas,
+que um exercício termina pelo botão +1 e que progresso e ajustes ficam salvos.
+Para outro endereço, defina `BASE_URL`.
 Para conferir apenas sintaxe e arquivos, use `npm run test:assets`.
 
 ## O que está implementado

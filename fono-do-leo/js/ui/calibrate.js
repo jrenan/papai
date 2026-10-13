@@ -12,7 +12,7 @@ import { Mirror } from './mirror.js';
  * closed. Gives the detector his neutral lip width, lip thickness, cheek
  * width and what the tongue detector sees at rest.
  */
-export function calibrateScreen(root, onDone, onBack) {
+export function calibrateScreen(root, onDone, onBack, { mic = false } = {}) {
   let alive = true;
   const cal = new Calibrator();
   const mirror = new Mirror();
@@ -71,7 +71,7 @@ export function calibrateScreen(root, onDone, onBack) {
 
   (async () => {
     try {
-      await engine.startCamera();
+      await engine.startCamera({ mic });
       engine.tracker?.tongue.beginRest();
       if (alive) {
         say('Olha pro espelho com a boca fechadinha 🤐');

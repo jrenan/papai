@@ -155,6 +155,7 @@ export function exerciseScreen(root, ex, o) {
     started = true;
     startBtn.hidden = true;
     tts.stop();
+    if (ex.camera) engine.startCamera({ mic: ex.mic }).catch(() => undefined);
     scene.mirror = ex.kind.type !== 'simon';
     scene.dino.idle = !ex.camera || !engine.cameraOn;
     if (ex.kind.type === 'simon') scene.dino.set({});
@@ -166,7 +167,7 @@ export function exerciseScreen(root, ex, o) {
     if (ex.camera) {
       loading.hidden = engine.cameraOn;
       try {
-        await engine.startCamera();
+        await engine.startCamera({ mic: ex.mic });
       } catch (e) {
         showDeviceError(`Não consegui abrir a câmera (${(e).message || e}). O adulto pode usar o botão +1.`);
       }

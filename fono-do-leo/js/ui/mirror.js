@@ -4,9 +4,8 @@ import { clamp, h, lerp } from '../util.js';
 
 /**
  * The "magic mirror": Leo's camera image, mirrored and gently zoomed onto his
- * face. The real <video> element is shown (moved here from a hidden holder)
- * and positioned with a CSS matrix; a canvas on top can draw what the
- * detector sees (lips outline and tongue pixels).
+ * face. Draw from the persistent capture element without moving it between
+ * screens; Safari may pause a live video when it is detached/reparented.
  */
 export class Mirror {
   el;
@@ -17,10 +16,9 @@ export class Mirror {
   z = 1;
   cx = -1;
   cy = -1;
-  mounted = null;
 
   constructor() {
-    this.canvas = h('canvas', { class: 'mirror-overlay' });
+    this.canvas = h('canvas', { class: 'mirror-overlay mirror-media' });
     this.ctx = this.canvas.getContext('2d');
     this.el = h('div', { class: 'mirror' }, this.canvas);
     const loop = () => {
@@ -34,12 +32,7 @@ export class Mirror {
     const src = engine.src;
     if (!src || !src.width) return;
     const media = src.el;
-    if (this.mounted !== media) {
-      this.el.prepend(media);
-      media.classList.add('mirror-media');
-      if (media instanceof HTMLVideoElement) media.play().catch(() => undefined);
-      this.mounted = media;
-    }
+    if (src.isVideo && media.readyState < 2) return;
     const bw = this.el.clientWidth, bh = this.el.clientHeight;
     if (!bw || !bh) return;
     const vw = src.width, vh = src.height;
@@ -63,10 +56,6 @@ export class Mirror {
     const cx = halfW * 2 >= vw ? vw / 2 : clamp(this.cx, halfW, vw - halfW);
     const cy = halfH * 2 >= vh ? vh / 2 : clamp(this.cy, halfH, vh - halfH);
     const e = bw / 2 + cx * s, fy = bh / 2 - cy * s;
-    media.style.width = `${vw}px`;
-    media.style.height = `${vh}px`;
-    media.style.transform = `matrix(${-s}, 0, 0, ${s}, ${e}, ${fy})`;
-
     const dpr = Math.min(2, window.devicePixelRatio || 1);
     if (this.canvas.width !== Math.round(bw * dpr) || this.canvas.height !== Math.round(bh * dpr)) {
       this.canvas.width = Math.round(bw * dpr);
@@ -75,8 +64,9 @@ export class Mirror {
     const ctx = this.ctx;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    ctx.setTransform(-s * dpr, 0, 0, s * dpr, e * dpr, fy * dpr);
+    ctx.drawImage(media, 0, 0, vw, vh);
     if (this.overlay && f?.present && f.m) {
-      ctx.setTransform(-s * dpr, 0, 0, s * dpr, e * dpr, fy * dpr);
       this.drawDebug(f, s);
     }
   }
@@ -114,10 +104,6 @@ export class Mirror {
 
   destroy() {
     cancelAnimationFrame(this.raf);
-    if (this.mounted && this.mounted.parentElement === this.el) {
-      document.getElementById('video-holder')?.append(this.mounted);
-      if (this.mounted instanceof HTMLVideoElement) this.mounted.play().catch(() => undefined);
-    }
     this.el.remove();
   }
 }

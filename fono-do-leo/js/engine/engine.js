@@ -22,6 +22,8 @@ class Engine {
   starting = null;
   stopTimer = 0;
   speaking = false;
+  captureMic = false;
+  micGeneration = 0;
 
   constructor() {
     this.knn.load();
@@ -29,7 +31,12 @@ class Engine {
     speechHooks.onSpeaking = (on) => {
       this.speaking = on;
       if (on) this.audio.muteUntil = Infinity;
-      else this.audio.muteUntil = performance.now() + 300;
+      else {
+        this.audio.muteUntil = performance.now() + 300;
+        // Safari can pause the preview (or mute capture tracks) when the
+        // speech synthesizer takes the audio session. Restore it afterwards.
+        if (this.tracker && !this.stopTimer) this.startCamera({ mic: this.captureMic }).catch(() => undefined);
+      }
     };
   }
 
@@ -48,16 +55,34 @@ class Engine {
   }
 
   /** Loads the model (first time) and opens the camera. Safe to call repeatedly. */
-  startCamera() {
+  startCamera({ mic = false } = {}) {
     clearTimeout(this.stopTimer);
-    if (this.tracker) return Promise.resolve();
+    this.stopTimer = 0;
+    if (this.tracker) {
+      const video = this.src?.stream?.getVideoTracks()[0];
+      const audio = this.src?.stream?.getAudioTracks()[0];
+      const lost = video && (video.readyState === 'ended' || video.muted);
+      const needsMic = mic && this.src?.stream && !this.src.micError && (!audio || audio.readyState === 'ended' || audio.muted);
+      if (!lost && !needsMic) return this.src?.resume?.().catch(() => undefined) ?? Promise.resolve();
+      const listening = this.audio.running;
+      const generation = this.micGeneration;
+      this.audio.stop();
+      this.stopCamera({ stopMic: false });
+      return this.startCamera({ mic }).then(() => {
+        if (listening && generation === this.micGeneration && !this.stopTimer) return this.startMic();
+      });
+    }
     if (!this.starting) {
       this.starting = (async () => {
         // ?src=/caminho/foto.jpg replaces the camera while developing
         const asked = DEV ? new URLSearchParams(location.search).get('src') : null;
         const test = asked && new URL(asked, location.href).origin === location.origin ? asked : null;
-        const [lm, src] = await Promise.all([loadLandmarker(), test ? openTestSource(test) : openCamera()]);
+        // A single capture request avoids one device acquisition interrupting
+        // the other on mobile Safari.
+        if (this.audio.running && !test) this.audio.stop();
+        const [lm, src] = await Promise.all([loadLandmarker(), test ? openTestSource(test) : openCamera({ mic })]);
         this.src = src;
+        this.captureMic = mic;
         this.tracker = new FaceTracker(lm, src);
         const rest = store.baseline ? store.loadRest() : null;
         if (rest && rest.L.length === this.tracker.tongue.L.length) this.tracker.tongue.rest = rest;
@@ -72,10 +97,15 @@ class Engine {
   /** Release the camera a little after leaving the exercises (avoids re-prompting between screens). */
   releaseCameraSoon(ms = 45000) {
     clearTimeout(this.stopTimer);
-    this.stopTimer = window.setTimeout(() => this.stopCamera(), ms);
+    this.stopTimer = window.setTimeout(() => {
+      this.stopTimer = 0;
+      this.stopCamera();
+    }, ms);
   }
 
-  stopCamera() {
+  stopCamera({ stopMic = true } = {}) {
+    const sharedTracks = this.src?.stream?.getAudioTracks() ?? [];
+    if (stopMic && this.audio.stream?.getAudioTracks().some((t) => sharedTracks.includes(t))) this.stopMic();
     this.tracker?.stop();
     this.tracker = null;
     this.src?.stop();
@@ -85,11 +115,19 @@ class Engine {
   }
 
   async startMic() {
+    const generation = ++this.micGeneration;
     this.applySettings();
-    await this.audio.start();
+    if (this.src?.stream) {
+      await this.startCamera({ mic: true });
+      if (generation !== this.micGeneration || this.stopTimer) return;
+      if (this.src.micError) throw this.src.micError;
+    }
+    const tracks = this.src?.stream?.getAudioTracks().filter((t) => t.readyState === 'live') ?? [];
+    await this.audio.start(tracks.length ? new MediaStream(tracks) : null);
+    if (generation !== this.micGeneration || this.stopTimer) this.audio.stop();
   }
 
-  stopMic() { this.audio.stop(); }
+  stopMic() { this.micGeneration++; this.audio.stop(); }
 
   handle(f) {
     this.last = f;
