@@ -1,8 +1,21 @@
 # Trio do Saber - Jogos Infantis
 
 Tela inicial de jogos infantis em HTML, CSS e JavaScript puro. O projeto reúne
-**Guardiões dos Biomas**, **Viagem pelo Mundo**, **Blocos de Somar**,
-**Juntar e Somar** e o **Fono do Leo**.
+**Guardiões dos Biomas**, **Viagem pelo Mundo**, **Blocos de Somar**
+e **Juntar e Somar**.
+
+## DinoFala — aplicativo nativo para iOS
+
+A implementação para iPhone e iPad foi movida para o projeto independente
+[DinoFala](../DinoFala/README.md), em `/Users/jrenan/Documents/DinoFala`.
+Abra `DinoFala.xcodeproj` nessa pasta. O app é dedicado ao Dino, com espelho
+e exercícios do Fono do Leo em SwiftUI, ARKit e Vision como alternativa,
+sem zoom de página por pinça. Os demais jogos continuam neste projeto web.
+O reconhecimento facial precisa ser conferido em aparelho físico; exercícios
+sem detector disponível continuam com confirmação do adulto.
+
+O módulo web foi retirado do Trio do Saber. O endereço antigo
+`fono-do-leo/` volta à tela inicial e desativa o cache offline do módulo.
 
 ## Como abrir
 
@@ -54,10 +67,7 @@ npm test
 
 Os testes verificam arquivos locais, as seis missões dos Biomas, a navegação
 pelos países e os fluxos de soma, incluindo respostas erradas, novas contas,
-teclado e confirmação de saída. No Fono do Leo, a câmera e o microfone falsos do
-Chromium confirmam que o modelo carrega e roda, que a imagem continua viva entre
-calibração e exercícios, mesmo com interrupções de captura e narração simuladas,
-que um exercício termina pelo botão +1 e que progresso e ajustes ficam salvos.
+teclado e confirmação de saída.
 Para outro endereço, defina `BASE_URL`.
 Para conferir apenas sintaxe e arquivos, use `npm run test:assets`.
 
@@ -99,47 +109,6 @@ Para conferir apenas sintaxe e arquivos, use `npm run test:assets`.
   modelo desenha o card na tela inicial.
 - Usa a mesma voz (`numberblocks-1-100/game-voice.js`) e os mesmos ajustes de voz
   do Blocos de Somar.
-
-### Fono do Leo
-
-- Acesso pela tela inicial ou por `fono-do-leo/index.html`. No celular, abra pelo
-  site publicado (HTTPS), porque câmera e microfone exigem conexão segura.
-- Os exercícios do caderno de fonoaudiologia do Leo, na ordem do caderno:
-  respiração (cheirar a flor e soprar a vela), língua (fora/dentro, lados,
-  cima/baixo, estalar, vibrar, lamber o sorvete), lábios (bico e sorriso, beijo
-  do vovô, vibrar os lábios, bochechas), véu palatino (R do rato, "O rato roeu a
-  roupa do rei de Roma", gargarejo), fazendinha (vaca, gato, pinto e galinha com
-  as listas de palavras) e o bocejo no fim. Também tem o jogo "Caretas com o Dino".
-- O Dino, desenhado em SVG por `js/ui/dino.js`, imita a boca, a língua, as
-  bochechas e as piscadas do Leo em tempo real. Cada exercício tem um cenário:
-  mosquinhas, chocolate no canto da boca, velas, cavalinho, moto, ratinho.
-- A conferência por câmera e microfone roda no aparelho:
-  - rosto e lábios: MediaPipe Face Landmarker (478 pontos e 52 blendshapes),
-    comparado ao rosto neutro gravado no "espelho mágico";
-  - língua: análise dos pixels ao redor da boca, comparando com a cor da pele e
-    com o rosto em repouso, por zona (cima, baixo, cantos);
-  - sopro, estalo, vibração e voz: microfone, com um AudioWorklet;
-  - palavras com M e P: a câmera confere se os lábios fecharam antes da voz.
-- O reconhecimento de voz beta é opcional e vem desligado. Se ativado na área
-  dos pais, usa o serviço de voz do navegador/celular, que pode enviar áudio
-  para processamento.
-- Área dos pais (segurar ⚙︎ por 2 segundos): rotina e repetições, sensibilidade,
-  histórico, tela "Testar o detector" e "Ensinar a língua do Leo", que grava as
-  posições da língua dele e passa a usar um classificador k-NN personalizado.
-- O botão **+1 ajudinha** conta a repetição quando o adulto vê que ele fez certo.
-- Figurinhas a cada exercício, carimbo "FEITO" no caderno e um ovo que choca a
-  cada 5 treinos completos. Progresso e ajustes ficam no aparelho.
-- Usa a mesma voz e velocidade escolhidas no Blocos de Somar
-  (`numberblocks-1-100/game-voice.js`).
-- Módulos ES sem etapa de build, em `fono-do-leo/js/`: `engine/` (câmera, rosto,
-  língua, poses, microfone, voz), `ui/` (telas, cenários, Dino) e
-  `data/exercises.js` (exercícios e palavras transcritos do caderno). Os limiares
-  de detecção ficam em `TUNING`, em `js/engine/poses.js`.
-- O MediaPipe e o modelo ficam em `fono-do-leo/vendor/` e `fono-do-leo/models/`
-  (cerca de 25 MB, baixados uma vez e guardados offline pelo `sw.js`).
-- Em `localhost`, ou com `?dev` no endereço, há atalhos de teste:
-  `?src=foto.jpg` troca a câmera por uma imagem, `?screen=detector|train|parent|album`
-  abre uma tela e `?ex=<id>` abre um exercício.
 
 ### Viagem pelo Mundo
 

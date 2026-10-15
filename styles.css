@@ -837,36 +837,6 @@ p {
   font-size: calc(var(--u) * 1.2);
 }
 
-.fono-tile {
-  grid-column: 1 / -1;
-  background: #fbfcff;
-}
-
-.fono-preview {
-  min-height: 250px;
-  background:
-    linear-gradient(90deg, transparent 34px, #f2a9b3 34px 36px, transparent 36px),
-    repeating-linear-gradient(180deg, transparent 0 27px, #c9daf4 27px 28px),
-    #fbfcff;
-}
-
-.fono-preview img {
-  width: min(56%, 170px);
-  height: auto;
-  filter: drop-shadow(0 12px 18px rgba(31, 78, 121, 0.25));
-}
-
-.fono-sticker {
-  position: absolute;
-  font-size: clamp(2.2rem, 4vw, 3rem);
-  filter: drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff)
-    drop-shadow(0 -2px 0 #fff) drop-shadow(0 4px 4px rgba(0, 0, 0, 0.2));
-}
-
-.fono-sticker:nth-of-type(1) { top: 14%; left: 14%; rotate: -12deg; }
-.fono-sticker:nth-of-type(2) { top: 12%; right: 14%; rotate: 10deg; }
-.fono-sticker:nth-of-type(3) { bottom: 12%; right: 20%; rotate: -6deg; }
-
 .number-game-link {
   display: inline-flex;
   align-items: center;
