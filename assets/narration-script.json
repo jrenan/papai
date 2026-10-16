@@ -1,0 +1,5784 @@
+{
+  "schemaVersion": 1,
+  "version": 1,
+  "locale": "pt-BR",
+  "provider": "ElevenLabs",
+  "modelID": "eleven_v4",
+  "voice": {
+    "id": "cgSgspJ2msm6clMCkdW9",
+    "name": "Jessica"
+  },
+  "voiceID": "cgSgspJ2msm6clMCkdW9",
+  "voiceName": "Jessica",
+  "normalization": "NFC + whitespace collapse + trim; composition also lowercases pt-BR and ignores .!?,:; separators",
+  "excludes": [
+    "DinoFala",
+    "fono-do-leo"
+  ],
+  "clips": [
+    {
+      "id": "n-000b6413829745ca00d69eb4",
+      "text": "Ilhas Malvinas.",
+      "file": "n-000b6413829745ca00d69eb4.mp3",
+      "sources": [
+        "world:flk:name"
+      ]
+    },
+    {
+      "id": "n-0115c9a4fadebf885846ec58",
+      "text": "vinte e oito",
+      "file": "n-0115c9a4fadebf885846ec58.mp3",
+      "sources": [
+        "blocks:number:28"
+      ]
+    },
+    {
+      "id": "n-016d3c7478500bd8225072c7",
+      "text": "No Cerrado tem frutos, mas falta árvores e abrigo. Procure outro lugar no mapa.",
+      "file": "n-016d3c7478500bd8225072c7.mp3",
+      "sources": [
+        "biomes:mico:cerrado:feedback"
+      ]
+    },
+    {
+      "id": "n-017c04d1f92e3a7fab2d0fc3",
+      "text": "Terras Austrais e Antárticas Francesas.",
+      "file": "n-017c04d1f92e3a7fab2d0fc3.mp3",
+      "sources": [
+        "world:atf:name"
+      ]
+    },
+    {
+      "id": "n-01866300b20628a67a1d9899",
+      "text": "Vamos juntar os amigos e contar os blocos? Você pode ouvir de novo quando quiser.",
+      "file": "n-01866300b20628a67a1d9899.mp3",
+      "sources": [
+        "arithmetic:static"
+      ]
+    },
+    {
+      "id": "n-01a9cac031d50e06a8d66fd2",
+      "text": "A música sueca tradicional usa nyckelharpa, violino, danças polska e cantos; também há pop sueco conhecido no mundo todo.",
+      "file": "n-01a9cac031d50e06a8d66fd2.mp3",
+      "sources": [
+        "world:swe:music"
+      ]
+    },
+    {
+      "id": "n-02a6d1ee5666539942245d9f",
+      "text": "Guiné.",
+      "file": "n-02a6d1ee5666539942245d9f.mp3",
+      "sources": [
+        "world:gin:name"
+      ]
+    },
+    {
+      "id": "n-02cdf2d723e12c68da33f990",
+      "text": "Wallis e Futuna.",
+      "file": "n-02cdf2d723e12c68da33f990.mp3",
+      "sources": [
+        "world:wlf:name"
+      ]
+    },
+    {
+      "id": "n-042a7d90fc625e0b9354c0f2",
+      "text": "Argentina.",
+      "file": "n-042a7d90fc625e0b9354c0f2.mp3",
+      "sources": [
+        "world:arg:name"
+      ]
+    },
+    {
+      "id": "n-044a08835b219e4cb2cd4b96",
+      "text": "três unidades",
+      "file": "n-044a08835b219e4cb2cd4b96.mp3",
+      "sources": [
+        "blocks:units:3"
+      ]
+    },
+    {
+      "id": "n-04583d6706a99b45b77a27bd",
+      "text": "As pernas longas ajudam o lobo-guará a andar bastante pelo campo.",
+      "file": "n-04583d6706a99b45b77a27bd.mp3",
+      "sources": [
+        "biomes:loboGuara:adaptation:success"
+      ]
+    },
+    {
+      "id": "n-04dfe3e8800997083d0500af",
+      "text": "Neste país, muitas pessoas falam German.",
+      "file": "n-04dfe3e8800997083d0500af.mp3",
+      "sources": [
+        "world:lie:music-language"
+      ]
+    },
+    {
+      "id": "n-04f17efdf9137d672d9b78f0",
+      "text": "Malawi.",
+      "file": "n-04f17efdf9137d672d9b78f0.mp3",
+      "sources": [
+        "world:mwi:name"
+      ]
+    },
+    {
+      "id": "n-05870fd598e61f35b8a44e4c",
+      "text": "Emirados Árabes Unidos.",
+      "file": "n-05870fd598e61f35b8a44e4c.mp3",
+      "sources": [
+        "world:are:name"
+      ]
+    },
+    {
+      "id": "n-05bba9264ae484252b1ec809",
+      "text": "Você montou",
+      "file": "n-05bba9264ae484252b1ec809.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-061b38e441371bac176d2a07",
+      "text": "seis",
+      "file": "n-061b38e441371bac176d2a07.mp3",
+      "sources": [
+        "blocks:number-feminine:6",
+        "blocks:number:6"
+      ]
+    },
+    {
+      "id": "n-06a64271dc03358f3616acec",
+      "text": "No Pantanal tem muita água e peixes, mas falta rio grande. Procure outro lugar no mapa.",
+      "file": "n-06a64271dc03358f3616acec.mp3",
+      "sources": [
+        "biomes:boto:pantanal:feedback"
+      ]
+    },
+    {
+      "id": "n-06e21f44c608b4e2955114eb",
+      "text": "O gamelão usa gongos, metalofones e tambores com sons brilhantes, muito comuns em Java e Bali.",
+      "file": "n-06e21f44c608b4e2955114eb.mp3",
+      "sources": [
+        "world:idn:music"
+      ]
+    },
+    {
+      "id": "n-070a8c5f6790e8081bb7bd91",
+      "text": "Ajude a Ema. A ema procura campos abertos, gramíneas e espaço para correr com suas pernas fortes. Toque nas fotos para ver as pistas e arraste a Ema até o lugar certo no mapa do Brasil.",
+      "file": "n-070a8c5f6790e8081bb7bd91.mp3",
+      "sources": [
+        "biomes:ema:prompt"
+      ]
+    },
+    {
+      "id": "n-07103961af4806ff75893f20",
+      "text": "Bélgica.",
+      "file": "n-07103961af4806ff75893f20.mp3",
+      "sources": [
+        "world:bel:name"
+      ]
+    },
+    {
+      "id": "n-073a279a1707239301129cb4",
+      "text": "Mauritânia.",
+      "file": "n-073a279a1707239301129cb4.mp3",
+      "sources": [
+        "world:mrt:name"
+      ]
+    },
+    {
+      "id": "n-0748ca572587e66f80ad690f",
+      "text": "Gabão.",
+      "file": "n-0748ca572587e66f80ad690f.mp3",
+      "sources": [
+        "world:gab:name"
+      ]
+    },
+    {
+      "id": "n-07b6d771ce518a491f9c4162",
+      "text": "Shashmaqam, dutar, doira e canto tradicional aparecem em músicas uzbeques com melodias longas e ornamentadas.",
+      "file": "n-07b6d771ce518a491f9c4162.mp3",
+      "sources": [
+        "world:uzb:music"
+      ]
+    },
+    {
+      "id": "n-07d09b13b1d9205250f6de2b",
+      "text": "Burundi.",
+      "file": "n-07d09b13b1d9205250f6de2b.mp3",
+      "sources": [
+        "world:bdi:name"
+      ]
+    },
+    {
+      "id": "n-07ddc0944cd8c6232ff91f5d",
+      "text": "Ajude o Mico-leão-dourado. O mico-leão-dourado procura árvores, frutos, insetos e lugares seguros para se abrigar. Toque nas fotos para ver as pistas e arraste o Mico-leão-dourado até o lugar certo no mapa do Brasil.",
+      "file": "n-07ddc0944cd8c6232ff91f5d.mp3",
+      "sources": [
+        "biomes:mico:prompt"
+      ]
+    },
+    {
+      "id": "n-0883673eaa4630d8b8072922",
+      "text": "Marrocos.",
+      "file": "n-0883673eaa4630d8b8072922.mp3",
+      "sources": [
+        "world:mar:name"
+      ]
+    },
+    {
+      "id": "n-0889aed2e82e2ba9c3495dc9",
+      "text": "Na Mata Atlântica falta água rasa, peixes e espaço aberto. Procure outro lugar no mapa.",
+      "file": "n-0889aed2e82e2ba9c3495dc9.mp3",
+      "sources": [
+        "biomes:tuiuiu:mata:feedback"
+      ]
+    },
+    {
+      "id": "n-09a77f8470fd9cfcc3b25e70",
+      "text": "Venezuela.",
+      "file": "n-09a77f8470fd9cfcc3b25e70.mp3",
+      "sources": [
+        "world:ven:name"
+      ]
+    },
+    {
+      "id": "n-0a0be798d1ab5bc4a7b8b7a4",
+      "text": "Junkanoo é uma festa musical das Bahamas com tambores, sinos e fantasias coloridas.",
+      "file": "n-0a0be798d1ab5bc4a7b8b7a4.mp3",
+      "sources": [
+        "world:bhs:music"
+      ]
+    },
+    {
+      "id": "n-0aa1253545c7f023cdd3f965",
+      "text": "Hungria.",
+      "file": "n-0aa1253545c7f023cdd3f965.mp3",
+      "sources": [
+        "world:hun:name"
+      ]
+    },
+    {
+      "id": "n-0b2ecadb943d7926c0920ac9",
+      "text": "oitenta e nove",
+      "file": "n-0b2ecadb943d7926c0920ac9.mp3",
+      "sources": [
+        "blocks:number:89"
+      ]
+    },
+    {
+      "id": "n-0b3079e5d567131f494c6072",
+      "text": "Neste país, muitas pessoas falam Arabic e French.",
+      "file": "n-0b3079e5d567131f494c6072.mp3",
+      "sources": [
+        "world:com:music-language",
+        "world:dji:music-language",
+        "world:lbn:music-language"
+      ]
+    },
+    {
+      "id": "n-0b6d79592dee64b261964928",
+      "text": "Sérvia.",
+      "file": "n-0b6d79592dee64b261964928.mp3",
+      "sources": [
+        "world:srb:name"
+      ]
+    },
+    {
+      "id": "n-0c6d6f87833d4f56ce4e8942",
+      "text": "No Níger há músicas haúsa, zarma-songhai, tuaregues e fulas, com tambores, cordas, palmas, canto e guitarras do deserto.",
+      "file": "n-0c6d6f87833d4f56ce4e8942.mp3",
+      "sources": [
+        "world:ner:music"
+      ]
+    },
+    {
+      "id": "n-0c7944b625a5286bf1537a56",
+      "text": "vinte e nove",
+      "file": "n-0c7944b625a5286bf1537a56.mp3",
+      "sources": [
+        "blocks:number:29"
+      ]
+    },
+    {
+      "id": "n-0cec9e8dacc20a0d40769aac",
+      "text": "Muito bem! Dez unidades viraram uma dezena! Agora conte. Quantas dezenas? E quantas unidades?",
+      "file": "n-0cec9e8dacc20a0d40769aac.mp3",
+      "sources": [
+        "arithmetic:static"
+      ]
+    },
+    {
+      "id": "n-0cf50b313aa3839da9eb101b",
+      "text": "As mãos ajudam o mico a segurar nos galhos e se mover pela floresta.",
+      "file": "n-0cf50b313aa3839da9eb101b.mp3",
+      "sources": [
+        "biomes:mico:adaptation:success"
+      ]
+    },
+    {
+      "id": "n-0d0eb04494511e0b46faf0ec",
+      "text": "três dezenas",
+      "file": "n-0d0eb04494511e0b46faf0ec.mp3",
+      "sources": [
+        "blocks:tens:3"
+      ]
+    },
+    {
+      "id": "n-0d5d0d48e19e590964c6bc78",
+      "text": "Argélia.",
+      "file": "n-0d5d0d48e19e590964c6bc78.mp3",
+      "sources": [
+        "world:dza:name"
+      ]
+    },
+    {
+      "id": "n-0dbb55e33a243b7efb682c11",
+      "text": "Neste país, muitas pessoas falam Arabic e English.",
+      "file": "n-0dbb55e33a243b7efb682c11.mp3",
+      "sources": [
+        "world:eri:music-language"
+      ]
+    },
+    {
+      "id": "n-0e6f08b5bcf60361d3d98358",
+      "text": "A bandura, os coros e as canções folclóricas ucranianas são conhecidos por melodias fortes, às vezes alegres e às vezes bem emocionadas.",
+      "file": "n-0e6f08b5bcf60361d3d98358.mp3",
+      "sources": [
+        "world:ukr:music"
+      ]
+    },
+    {
+      "id": "n-0f4e1648369ac2f065b9d6e3",
+      "text": "seis unidades",
+      "file": "n-0f4e1648369ac2f065b9d6e3.mp3",
+      "sources": [
+        "blocks:units:6"
+      ]
+    },
+    {
+      "id": "n-0f6b7ad3b1c0a3452983da38",
+      "text": "quarenta e nove",
+      "file": "n-0f6b7ad3b1c0a3452983da38.mp3",
+      "sources": [
+        "blocks:number:49"
+      ]
+    },
+    {
+      "id": "n-0fa7557470f137ca528c6fd8",
+      "text": "Na Namíbia há cantos em grupo, tambores, danças de comunidades locais e músicas modernas como oviritje e kwaito namibiano.",
+      "file": "n-0fa7557470f137ca528c6fd8.mp3",
+      "sources": [
+        "world:nam:music"
+      ]
+    },
+    {
+      "id": "n-0ff35e3ab6dfeaba6aaa2a5f",
+      "text": "Hong Kong.",
+      "file": "n-0ff35e3ab6dfeaba6aaa2a5f.mp3",
+      "sources": [
+        "world:hkg:name"
+      ]
+    },
+    {
+      "id": "n-109913ab53e0aa6b01a58b7b",
+      "text": "sessenta e quatro",
+      "file": "n-109913ab53e0aa6b01a58b7b.mp3",
+      "sources": [
+        "blocks:number:64"
+      ]
+    },
+    {
+      "id": "n-113c916925cc6900e22dd0b5",
+      "text": "duas",
+      "file": "n-113c916925cc6900e22dd0b5.mp3",
+      "sources": [
+        "blocks:number-feminine:2"
+      ]
+    },
+    {
+      "id": "n-1217af82763dd558155d3819",
+      "text": "Brunei.",
+      "file": "n-1217af82763dd558155d3819.mp3",
+      "sources": [
+        "world:brn:name"
+      ]
+    },
+    {
+      "id": "n-121ca816873810714827d4d8",
+      "text": "A música sudanesa mistura canto, tambores, palmas, oud e ritmos do vale do Nilo e de várias comunidades do país.",
+      "file": "n-121ca816873810714827d4d8.mp3",
+      "sources": [
+        "world:sdn:music"
+      ]
+    },
+    {
+      "id": "n-125de6007b1eb39039aa0322",
+      "text": "Ilhas Virgens.",
+      "file": "n-125de6007b1eb39039aa0322.mp3",
+      "sources": [
+        "world:vgb:name"
+      ]
+    },
+    {
+      "id": "n-129db2b5fd3191df655703f9",
+      "text": "Lesoto.",
+      "file": "n-129db2b5fd3191df655703f9.mp3",
+      "sources": [
+        "world:lso:name"
+      ]
+    },
+    {
+      "id": "n-131e69bc3510c9133a2fe467",
+      "text": "Mayotte.",
+      "file": "n-131e69bc3510c9133a2fe467.mp3",
+      "sources": [
+        "world:myt:name"
+      ]
+    },
+    {
+      "id": "n-1334b2a9138e0706c1144306",
+      "text": "A música persa usa instrumentos como tar, setar, santur, ney e tombak; muitas melodias parecem conversa entre poesia e som.",
+      "file": "n-1334b2a9138e0706c1144306.mp3",
+      "sources": [
+        "world:irn:music"
+      ]
+    },
+    {
+      "id": "n-1336ec7b020c19136f3d1afd",
+      "text": "Burkina Faso.",
+      "file": "n-1336ec7b020c19136f3d1afd.mp3",
+      "sources": [
+        "world:bfa:name"
+      ]
+    },
+    {
+      "id": "n-13ee7f024c570de6dc50d147",
+      "text": "Ilhas Marshall.",
+      "file": "n-13ee7f024c570de6dc50d147.mp3",
+      "sources": [
+        "world:mhl:name"
+      ]
+    },
+    {
+      "id": "n-1434763eeca80539fe7aa62f",
+      "text": "Neste país, muitas pessoas falam Berber e Hassaniya.",
+      "file": "n-1434763eeca80539fe7aa62f.mp3",
+      "sources": [
+        "world:esh:music-language"
+      ]
+    },
+    {
+      "id": "n-1450aecd9c2e04fb3c26dea3",
+      "text": "até o",
+      "file": "n-1450aecd9c2e04fb3c26dea3.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-14abf0f67f64eb4d941f3e9d",
+      "text": "Tudo junto! Agora conte. Quantas dezenas? E quantas unidades?",
+      "file": "n-14abf0f67f64eb4d941f3e9d.mp3",
+      "sources": [
+        "arithmetic:static"
+      ]
+    },
+    {
+      "id": "n-14fa4f929d8da1f898ad0bb3",
+      "text": "A música mauritana usa canto poético, tidinit, ardine e ritmos do deserto, muitas vezes guardados por famílias de músicos.",
+      "file": "n-14fa4f929d8da1f898ad0bb3.mp3",
+      "sources": [
+        "world:mrt:music"
+      ]
+    },
+    {
+      "id": "n-15cb9addf84e55c6fa5fce4c",
+      "text": "Países Baixos Caribenhos.",
+      "file": "n-15cb9addf84e55c6fa5fce4c.mp3",
+      "sources": [
+        "world:bes:name"
+      ]
+    },
+    {
+      "id": "n-15d3f9cf2cb24fc82b482486",
+      "text": "catorze",
+      "file": "n-15d3f9cf2cb24fc82b482486.mp3",
+      "sources": [
+        "blocks:number-feminine:14",
+        "blocks:number:14"
+      ]
+    },
+    {
+      "id": "n-16399dc3eb91f185ee9e329b",
+      "text": "A casa das unidades encheu! Dez unidades formam uma dezena. Arraste a coluna cheia para a casa das dezenas.",
+      "file": "n-16399dc3eb91f185ee9e329b.mp3",
+      "sources": [
+        "arithmetic:static"
+      ]
+    },
+    {
+      "id": "n-163af112a4ca20cfcb7efb8b",
+      "text": "Serra Leoa.",
+      "file": "n-163af112a4ca20cfcb7efb8b.mp3",
+      "sources": [
+        "world:sle:name"
+      ]
+    },
+    {
+      "id": "n-16a1a40ae408f6ca5fd8513b",
+      "text": "No Vaticano há canto coral e música sacra tocada em igrejas.",
+      "file": "n-16a1a40ae408f6ca5fd8513b.mp3",
+      "sources": [
+        "world:vat:music"
+      ]
+    },
+    {
+      "id": "n-173c74a81bb42aec6cef9ea3",
+      "text": "cinquenta e dois",
+      "file": "n-173c74a81bb42aec6cef9ea3.mp3",
+      "sources": [
+        "blocks:number:52"
+      ]
+    },
+    {
+      "id": "n-176c27d5ffb34dd9db11c232",
+      "text": "trinta",
+      "file": "n-176c27d5ffb34dd9db11c232.mp3",
+      "sources": [
+        "blocks:number:30"
+      ]
+    },
+    {
+      "id": "n-17c556ca4e5529647fabb91d",
+      "text": "A ópera italiana usa vozes grandes para contar histórias cantadas; tarantellas e canções populares também fazem parte das festas.",
+      "file": "n-17c556ca4e5529647fabb91d.mp3",
+      "sources": [
+        "world:ita:music"
+      ]
+    },
+    {
+      "id": "n-17dbad6ee531590aeead4cae",
+      "text": "Juntos! Agora toque em cada bloco para contar.",
+      "file": "n-17dbad6ee531590aeead4cae.mp3",
+      "sources": [
+        "arithmetic:static"
+      ]
+    },
+    {
+      "id": "n-17dbc718dc0974db443a6f6d",
+      "text": "Finlândia.",
+      "file": "n-17dbc718dc0974db443a6f6d.mp3",
+      "sources": [
+        "world:fin:name"
+      ]
+    },
+    {
+      "id": "n-17ff92a83c48c3548cc7d102",
+      "text": "Muito bem! Dez unidades viraram uma dezena!",
+      "file": "n-17ff92a83c48c3548cc7d102.mp3",
+      "sources": [
+        "arithmetic:static"
+      ]
+    },
+    {
+      "id": "n-18522e9d36f71d08fbeab15e",
+      "text": "A música de Brunei tem gongos, tambores e canções de celebração.",
+      "file": "n-18522e9d36f71d08fbeab15e.mp3",
+      "sources": [
+        "world:brn:music"
+      ]
+    },
+    {
+      "id": "n-18ee0292c4a283d11ccfef14",
+      "text": "Neste país, muitas pessoas falam French.",
+      "file": "n-18ee0292c4a283d11ccfef14.mp3",
+      "sources": [
+        "world:atf:music-language",
+        "world:blm:music-language",
+        "world:glp:music-language",
+        "world:guf:music-language",
+        "world:maf:music-language",
+        "world:mco:music-language",
+        "world:mtq:music-language",
+        "world:myt:music-language",
+        "world:ncl:music-language",
+        "world:pyf:music-language",
+        "world:reu:music-language",
+        "world:spm:music-language",
+        "world:tgo:music-language",
+        "world:wlf:music-language"
+      ]
+    },
+    {
+      "id": "n-18f75d8d0a1410e824f03464",
+      "text": "A música indiana pode usar tabla, sitar, canto e ragas; os ritmos parecem conversar com a melodia.",
+      "file": "n-18f75d8d0a1410e824f03464.mp3",
+      "sources": [
+        "world:ind:music"
+      ]
+    },
+    {
+      "id": "n-19169064345c3510f188c45c",
+      "text": "quarenta",
+      "file": "n-19169064345c3510f188c45c.mp3",
+      "sources": [
+        "blocks:number:40"
+      ]
+    },
+    {
+      "id": "n-19300c2fc1bb91df9ca8bc23",
+      "text": "Iraque.",
+      "file": "n-19300c2fc1bb91df9ca8bc23.mp3",
+      "sources": [
+        "world:irq:name"
+      ]
+    },
+    {
+      "id": "n-19a65e2dbefd32b2d4f24364",
+      "text": "noventa e cinco",
+      "file": "n-19a65e2dbefd32b2d4f24364.mp3",
+      "sources": [
+        "blocks:number:95"
+      ]
+    },
+    {
+      "id": "n-1a9db2ea30e2530a50240377",
+      "text": "O mugham é uma música tradicional do Azerbaijão com canto e instrumentos de corda.",
+      "file": "n-1a9db2ea30e2530a50240377.mp3",
+      "sources": [
+        "world:aze:music"
+      ]
+    },
+    {
+      "id": "n-1b043f7005471dd6be1f93f4",
+      "text": "sessenta e sete",
+      "file": "n-1b043f7005471dd6be1f93f4.mp3",
+      "sources": [
+        "blocks:number:67"
+      ]
+    },
+    {
+      "id": "n-1b51d6ebb470aa1a0db52493",
+      "text": "onze unidades",
+      "file": "n-1b51d6ebb470aa1a0db52493.mp3",
+      "sources": [
+        "blocks:units:11"
+      ]
+    },
+    {
+      "id": "n-1ba9a7b91bf633c42ff70645",
+      "text": "Dez unidades formam uma dezena!",
+      "file": "n-1ba9a7b91bf633c42ff70645.mp3",
+      "sources": [
+        "arithmetic:static"
+      ]
+    },
+    {
+      "id": "n-1bc64dde595d2b3422942c76",
+      "text": "Chéquia.",
+      "file": "n-1bc64dde595d2b3422942c76.mp3",
+      "sources": [
+        "world:cze:name"
+      ]
+    },
+    {
+      "id": "n-1c7582dcdd7cc4696103a70c",
+      "text": "Barbados.",
+      "file": "n-1c7582dcdd7cc4696103a70c.mp3",
+      "sources": [
+        "world:brb:name"
+      ]
+    },
+    {
+      "id": "n-1cd695384a5e161a569cb6fe",
+      "text": "Toque no bloco ou arraste até a sombra.",
+      "file": "n-1cd695384a5e161a569cb6fe.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-1cf6165568ce2f573d3ec80d",
+      "text": "No Pampa tem espaço aberto, mas falta água rasa e peixes. Procure outro lugar no mapa.",
+      "file": "n-1cf6165568ce2f573d3ec80d.mp3",
+      "sources": [
+        "biomes:tuiuiu:pampa:feedback"
+      ]
+    },
+    {
+      "id": "n-1db8c2da06ea3f48371333f1",
+      "text": "Canadá.",
+      "file": "n-1db8c2da06ea3f48371333f1.mp3",
+      "sources": [
+        "world:can:name"
+      ]
+    },
+    {
+      "id": "n-1e0955ef689cecdeb694ed5d",
+      "text": "quatro unidades",
+      "file": "n-1e0955ef689cecdeb694ed5d.mp3",
+      "sources": [
+        "blocks:units:4"
+      ]
+    },
+    {
+      "id": "n-1e3d45b2e52bb339e1eb6fb0",
+      "text": "A Alemanha é conhecida por música clássica, corais, bandas, canções folclóricas e também música moderna.",
+      "file": "n-1e3d45b2e52bb339e1eb6fb0.mp3",
+      "sources": [
+        "world:deu:music"
+      ]
+    },
+    {
+      "id": "n-1ebaad564d0539750fe3c86d",
+      "text": "quarenta e cinco",
+      "file": "n-1ebaad564d0539750fe3c86d.mp3",
+      "sources": [
+        "blocks:number:45"
+      ]
+    },
+    {
+      "id": "n-1efae725d8761d4e0f7f308b",
+      "text": "Itália.",
+      "file": "n-1efae725d8761d4e0f7f308b.mp3",
+      "sources": [
+        "world:ita:name"
+      ]
+    },
+    {
+      "id": "n-1f2c51955971e0aff3eccf33",
+      "text": "Nicarágua.",
+      "file": "n-1f2c51955971e0aff3eccf33.mp3",
+      "sources": [
+        "world:nic:name"
+      ]
+    },
+    {
+      "id": "n-1f4037708f37bce49faf7f08",
+      "text": "A música vietnamita usa đàn bầu, đàn tranh, tambores e canto; algumas melodias parecem deslizar como água.",
+      "file": "n-1f4037708f37bce49faf7f08.mp3",
+      "sources": [
+        "world:vnm:music"
+      ]
+    },
+    {
+      "id": "n-1f7be6908b217b4af27cdf05",
+      "text": "tem",
+      "file": "n-1f7be6908b217b4af27cdf05.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-1fc82e0dd18fa75e6a2be2a7",
+      "text": "A música romena usa violino, acordeão, flautas, cimbalom e danças rápidas em festas.",
+      "file": "n-1fc82e0dd18fa75e6a2be2a7.mp3",
+      "sources": [
+        "world:rou:music"
+      ]
+    },
+    {
+      "id": "n-2031ffb728dbe47a08ec763f",
+      "text": "Neste país, muitas pessoas falam English e Tuvaluan.",
+      "file": "n-2031ffb728dbe47a08ec763f.mp3",
+      "sources": [
+        "world:tuv:music-language"
+      ]
+    },
+    {
+      "id": "n-204d76e71377998963010a9d",
+      "text": "oito unidades",
+      "file": "n-204d76e71377998963010a9d.mp3",
+      "sources": [
+        "blocks:units:8"
+      ]
+    },
+    {
+      "id": "n-20cb53ab7d23ad27722ab6b9",
+      "text": "Gâmbia.",
+      "file": "n-20cb53ab7d23ad27722ab6b9.mp3",
+      "sources": [
+        "world:gmb:name"
+      ]
+    },
+    {
+      "id": "n-20dfd4e73600aa142000614a",
+      "text": "Faltam cubinhos.",
+      "file": "n-20dfd4e73600aa142000614a.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-216e1e3f8fed804bf3c16a8f",
+      "text": "cinco",
+      "file": "n-216e1e3f8fed804bf3c16a8f.mp3",
+      "sources": [
+        "blocks:number-feminine:5",
+        "blocks:number:5"
+      ]
+    },
+    {
+      "id": "n-21ce5accbe927559073227db",
+      "text": "Olhe para o corpo da Ema e para as pistas do lugar.",
+      "file": "n-21ce5accbe927559073227db.mp3",
+      "sources": [
+        "biomes:ema:adaptation:retry"
+      ]
+    },
+    {
+      "id": "n-21d8eca20945663458e1c2aa",
+      "text": "A música bielorrussa tem cantos populares, acordeão, címbalo e danças de roda.",
+      "file": "n-21d8eca20945663458e1c2aa.mp3",
+      "sources": [
+        "world:blr:music"
+      ]
+    },
+    {
+      "id": "n-222a436d1531355ba9879000",
+      "text": "Irão.",
+      "file": "n-222a436d1531355ba9879000.mp3",
+      "sources": [
+        "world:irn:name"
+      ]
+    },
+    {
+      "id": "n-232a7550c1b19f3a54315384",
+      "text": "Mariachi, son jarocho e ranchera são tradições mexicanas com violinos, trompetes, violões, harpas e vozes bem fortes.",
+      "file": "n-232a7550c1b19f3a54315384.mp3",
+      "sources": [
+        "world:mex:music"
+      ]
+    },
+    {
+      "id": "n-234cf4e2a48dde8a97fe6f26",
+      "text": "Tajiquistão.",
+      "file": "n-234cf4e2a48dde8a97fe6f26.mp3",
+      "sources": [
+        "world:tjk:name"
+      ]
+    },
+    {
+      "id": "n-238e815a72d20466fd7a43d7",
+      "text": "Calipso, soca e steelpan aparecem em festas e desfiles das ilhas.",
+      "file": "n-238e815a72d20466fd7a43d7.mp3",
+      "sources": [
+        "world:atg:music"
+      ]
+    },
+    {
+      "id": "n-239ba3e342666318b23daf4e",
+      "text": "Granada.",
+      "file": "n-239ba3e342666318b23daf4e.mp3",
+      "sources": [
+        "world:grd:name"
+      ]
+    },
+    {
+      "id": "n-239f0d9808ebf89a8b2999ff",
+      "text": "cinquenta e três",
+      "file": "n-239f0d9808ebf89a8b2999ff.mp3",
+      "sources": [
+        "blocks:number:53"
+      ]
+    },
+    {
+      "id": "n-2422eba797f30ee5abd5af2d",
+      "text": "trinta e dois",
+      "file": "n-2422eba797f30ee5abd5af2d.mp3",
+      "sources": [
+        "blocks:number:32"
+      ]
+    },
+    {
+      "id": "n-25a535ef1177c25550b7ac08",
+      "text": "A música do Benin tem tambores, vozes em coro e ritmos para dançar.",
+      "file": "n-25a535ef1177c25550b7ac08.mp3",
+      "sources": [
+        "world:ben:music"
+      ]
+    },
+    {
+      "id": "n-260528bde81a990d86b054cc",
+      "text": "Líbano.",
+      "file": "n-260528bde81a990d86b054cc.mp3",
+      "sources": [
+        "world:lbn:name"
+      ]
+    },
+    {
+      "id": "n-2726ee67988e82170b6385f7",
+      "text": "Tonga.",
+      "file": "n-2726ee67988e82170b6385f7.mp3",
+      "sources": [
+        "world:ton:name"
+      ]
+    },
+    {
+      "id": "n-272cc9e717bac6b30563f65c",
+      "text": "As nadadeiras ajudam o boto a nadar no rio.",
+      "file": "n-272cc9e717bac6b30563f65c.mp3",
+      "sources": [
+        "biomes:boto:adaptation:success"
+      ]
+    },
+    {
+      "id": "n-27574fc5e3d86d26a52c63ec",
+      "text": "Singapura.",
+      "file": "n-27574fc5e3d86d26a52c63ec.mp3",
+      "sources": [
+        "world:sgp:name"
+      ]
+    },
+    {
+      "id": "n-278cfff815d9f96cb351889c",
+      "text": "Afeganistão.",
+      "file": "n-278cfff815d9f96cb351889c.mp3",
+      "sources": [
+        "world:afg:name"
+      ]
+    },
+    {
+      "id": "n-27f3d347517936bcaa542b51",
+      "text": "Letónia.",
+      "file": "n-27f3d347517936bcaa542b51.mp3",
+      "sources": [
+        "world:lva:name"
+      ]
+    },
+    {
+      "id": "n-284695061aa11d0ff1a6a0b5",
+      "text": "sessenta e oito",
+      "file": "n-284695061aa11d0ff1a6a0b5.mp3",
+      "sources": [
+        "blocks:number:68"
+      ]
+    },
+    {
+      "id": "n-286db72b29704d66b8451a11",
+      "text": "Jordânia.",
+      "file": "n-286db72b29704d66b8451a11.mp3",
+      "sources": [
+        "world:jor:name"
+      ]
+    },
+    {
+      "id": "n-288842b62cfe82a32b8049a3",
+      "text": "Israel.",
+      "file": "n-288842b62cfe82a32b8049a3.mp3",
+      "sources": [
+        "world:isr:name"
+      ]
+    },
+    {
+      "id": "n-289c90decf40c8ec15f72f60",
+      "text": "um",
+      "file": "n-289c90decf40c8ec15f72f60.mp3",
+      "sources": [
+        "blocks:number:1"
+      ]
+    },
+    {
+      "id": "n-2997fd9d8ce72a89553e4305",
+      "text": "Neste país, muitas pessoas falam Portuguese.",
+      "file": "n-2997fd9d8ce72a89553e4305.mp3",
+      "sources": [
+        "world:stp:music-language"
+      ]
+    },
+    {
+      "id": "n-29e7bc2ec2e744646dd3f488",
+      "text": "Myanmar.",
+      "file": "n-29e7bc2ec2e744646dd3f488.mp3",
+      "sources": [
+        "world:mmr:name"
+      ]
+    },
+    {
+      "id": "n-2a12d94a5ebc6c3d85e70208",
+      "text": "No Cerrado falta água rasa, peixes e espaço aberto. Procure outro lugar no mapa.",
+      "file": "n-2a12d94a5ebc6c3d85e70208.mp3",
+      "sources": [
+        "biomes:tuiuiu:cerrado:feedback"
+      ]
+    },
+    {
+      "id": "n-2a990384723921a0bc9ed372",
+      "text": "Bandas de rock, corais, música celta, gaitas de fole e canções tradicionais fazem parte da cultura do Reino Unido.",
+      "file": "n-2a990384723921a0bc9ed372.mp3",
+      "sources": [
+        "world:gbr:music"
+      ]
+    },
+    {
+      "id": "n-2abab4f6d92694840358c712",
+      "text": "Neste país, muitas pessoas falam Arabic.",
+      "file": "n-2abab4f6d92694840358c712.mp3",
+      "sources": [
+        "world:are:music-language",
+        "world:jor:music-language",
+        "world:kwt:music-language",
+        "world:pse:music-language",
+        "world:tun:music-language"
+      ]
+    },
+    {
+      "id": "n-2ac62ae3b7258021ecefa47c",
+      "text": "No Pampa falta rio grande, muita água e peixes. Procure outro lugar no mapa.",
+      "file": "n-2ac62ae3b7258021ecefa47c.mp3",
+      "sources": [
+        "biomes:boto:pampa:feedback"
+      ]
+    },
+    {
+      "id": "n-2ad184e51c93bddfbdec3405",
+      "text": "O fidjeri é uma música ligada aos antigos mergulhadores de pérolas.",
+      "file": "n-2ad184e51c93bddfbdec3405.mp3",
+      "sources": [
+        "world:bhr:music"
+      ]
+    },
+    {
+      "id": "n-2ad2eebb37252daba3d7afbd",
+      "text": "quinze",
+      "file": "n-2ad2eebb37252daba3d7afbd.mp3",
+      "sources": [
+        "blocks:number-feminine:15",
+        "blocks:number:15"
+      ]
+    },
+    {
+      "id": "n-2ad4b22405dd8db35840c16f",
+      "text": "Cidade do Vaticano.",
+      "file": "n-2ad4b22405dd8db35840c16f.mp3",
+      "sources": [
+        "world:vat:name"
+      ]
+    },
+    {
+      "id": "n-2ada87d713259556c5b6bfac",
+      "text": "seis dezenas",
+      "file": "n-2ada87d713259556c5b6bfac.mp3",
+      "sources": [
+        "blocks:tens:6"
+      ]
+    },
+    {
+      "id": "n-2b7eb2ebdff7c6a14d645304",
+      "text": "Alândia.",
+      "file": "n-2b7eb2ebdff7c6a14d645304.mp3",
+      "sources": [
+        "world:ala:name"
+      ]
+    },
+    {
+      "id": "n-2bcb820e07f6d06db13fcee1",
+      "text": "Honduras.",
+      "file": "n-2bcb820e07f6d06db13fcee1.mp3",
+      "sources": [
+        "world:hnd:name"
+      ]
+    },
+    {
+      "id": "n-2c5eebe00391188ffce6588e",
+      "text": "No Cerrado tem campo aberto, frutos e andar bastante. O Lobo-guará encontrou sua casa!",
+      "file": "n-2c5eebe00391188ffce6588e.mp3",
+      "sources": [
+        "biomes:loboGuara:cerrado:feedback"
+      ]
+    },
+    {
+      "id": "n-2cc69ba623fb3c67d3066812",
+      "text": "Lituânia.",
+      "file": "n-2cc69ba623fb3c67d3066812.mp3",
+      "sources": [
+        "world:ltu:name"
+      ]
+    },
+    {
+      "id": "n-2cd722809ff042b81c344f47",
+      "text": "Tanzânia.",
+      "file": "n-2cd722809ff042b81c344f47.mp3",
+      "sources": [
+        "world:tza:name"
+      ]
+    },
+    {
+      "id": "n-2cdb6d816f754a8e53e1b5b1",
+      "text": "Neste país, muitas pessoas falam Nepali.",
+      "file": "n-2cdb6d816f754a8e53e1b5b1.mp3",
+      "sources": [
+        "world:npl:music-language"
+      ]
+    },
+    {
+      "id": "n-2d3a6422dfdb6962a4251fd6",
+      "text": "O fado é uma música portuguesa cantada com emoção e guitarra portuguesa.",
+      "file": "n-2d3a6422dfdb6962a4251fd6.mp3",
+      "sources": [
+        "world:prt:music"
+      ]
+    },
+    {
+      "id": "n-2db4feabddb1cf7d01c247cc",
+      "text": "Alemanha.",
+      "file": "n-2db4feabddb1cf7d01c247cc.mp3",
+      "sources": [
+        "world:deu:name"
+      ]
+    },
+    {
+      "id": "n-2dbbd63a0c8471fb8e7fc614",
+      "text": "São Martinho.",
+      "file": "n-2dbbd63a0c8471fb8e7fc614.mp3",
+      "sources": [
+        "world:maf:name",
+        "world:sxm:name"
+      ]
+    },
+    {
+      "id": "n-2e32baef599404d90f089cae",
+      "text": "Neste país, muitas pessoas falam Chamorro e English.",
+      "file": "n-2e32baef599404d90f089cae.mp3",
+      "sources": [
+        "world:gum:music-language"
+      ]
+    },
+    {
+      "id": "n-2e5b7e5a8f6c11cafdab4a63",
+      "text": "No Quênia há benga, taarab, coros, tambores, guitarras e ritmos para dançar em festas e celebrações.",
+      "file": "n-2e5b7e5a8f6c11cafdab4a63.mp3",
+      "sources": [
+        "world:ken:music"
+      ]
+    },
+    {
+      "id": "n-2e90ac418e17e29324089ad4",
+      "text": "Na Amazônia tem peixes, mas falta água rasa e espaço aberto. Procure outro lugar no mapa.",
+      "file": "n-2e90ac418e17e29324089ad4.mp3",
+      "sources": [
+        "biomes:tuiuiu:amazonia:feedback"
+      ]
+    },
+    {
+      "id": "n-2ea9912ca090b26fbd8703b7",
+      "text": "oito dezenas",
+      "file": "n-2ea9912ca090b26fbd8703b7.mp3",
+      "sources": [
+        "blocks:tens:8"
+      ]
+    },
+    {
+      "id": "n-2edd66d0b10a203d9a26053b",
+      "text": "Porto Rico.",
+      "file": "n-2edd66d0b10a203d9a26053b.mp3",
+      "sources": [
+        "world:pri:name"
+      ]
+    },
+    {
+      "id": "n-2edda36293f82c651b3604da",
+      "text": "Quénia.",
+      "file": "n-2edda36293f82c651b3604da.mp3",
+      "sources": [
+        "world:ken:name"
+      ]
+    },
+    {
+      "id": "n-2f8518739069fd10c37f1c64",
+      "text": "cento e oito",
+      "file": "n-2f8518739069fd10c37f1c64.mp3",
+      "sources": [
+        "blocks:number:108"
+      ]
+    },
+    {
+      "id": "n-2fb58fc1d5af65eae99ac527",
+      "text": "Quantos blocos? Toque no número certo.",
+      "file": "n-2fb58fc1d5af65eae99ac527.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-30220887190fd393aabb5d78",
+      "text": "Neste país, muitas pessoas falam Montenegrin.",
+      "file": "n-30220887190fd393aabb5d78.mp3",
+      "sources": [
+        "world:mne:music-language"
+      ]
+    },
+    {
+      "id": "n-3070b9b6875b9d06d6e089f3",
+      "text": "Neste país, muitas pessoas falam Georgian.",
+      "file": "n-3070b9b6875b9d06d6e089f3.mp3",
+      "sources": [
+        "world:geo:music-language"
+      ]
+    },
+    {
+      "id": "n-3099cf57a683516ef3a08e53",
+      "text": "Ilhas Cocos (Keeling).",
+      "file": "n-3099cf57a683516ef3a08e53.mp3",
+      "sources": [
+        "world:cck:name"
+      ]
+    },
+    {
+      "id": "n-30a7b3ab9e05a9802d189655",
+      "text": "Uruguai.",
+      "file": "n-30a7b3ab9e05a9802d189655.mp3",
+      "sources": [
+        "world:ury:name"
+      ]
+    },
+    {
+      "id": "n-30d021f79e3ca1ff7017d52e",
+      "text": "catorze unidades",
+      "file": "n-30d021f79e3ca1ff7017d52e.mp3",
+      "sources": [
+        "blocks:units:14"
+      ]
+    },
+    {
+      "id": "n-31bdce390e86f8907a291f68",
+      "text": "Uzbequistão.",
+      "file": "n-31bdce390e86f8907a291f68.mp3",
+      "sources": [
+        "world:uzb:name"
+      ]
+    },
+    {
+      "id": "n-31e1a188dae77d2dd025cb5a",
+      "text": "A música russa tem canções populares, coros fortes, balalaika, acordeão e melodias que podem soar alegres ou bem dramáticas.",
+      "file": "n-31e1a188dae77d2dd025cb5a.mp3",
+      "sources": [
+        "world:rus:music"
+      ]
+    },
+    {
+      "id": "n-31ec46405a2dceffc13d2c94",
+      "text": "Iémen.",
+      "file": "n-31ec46405a2dceffc13d2c94.mp3",
+      "sources": [
+        "world:yem:name"
+      ]
+    },
+    {
+      "id": "n-3218b5464e8aa7d1c7128cac",
+      "text": "noventa e seis",
+      "file": "n-3218b5464e8aa7d1c7128cac.mp3",
+      "sources": [
+        "blocks:number:96"
+      ]
+    },
+    {
+      "id": "n-3242337e17e8da85f23da5b6",
+      "text": "Neste país, muitas pessoas falam Hungarian.",
+      "file": "n-3242337e17e8da85f23da5b6.mp3",
+      "sources": [
+        "world:hun:music-language"
+      ]
+    },
+    {
+      "id": "n-329803cdd8dd35bfdc60953e",
+      "text": "oitenta e um",
+      "file": "n-329803cdd8dd35bfdc60953e.mp3",
+      "sources": [
+        "blocks:number:81"
+      ]
+    },
+    {
+      "id": "n-32a2f025ca71330ad83e8396",
+      "text": "Neste país, muitas pessoas falam Croatian.",
+      "file": "n-32a2f025ca71330ad83e8396.mp3",
+      "sources": [
+        "world:hrv:music-language"
+      ]
+    },
+    {
+      "id": "n-32bac94959d3663485ba067f",
+      "text": "dez dezenas",
+      "file": "n-32bac94959d3663485ba067f.mp3",
+      "sources": [
+        "blocks:tens:10"
+      ]
+    },
+    {
+      "id": "n-3330ac3364390f8ae58b7b4c",
+      "text": "Congo.",
+      "file": "n-3330ac3364390f8ae58b7b4c.mp3",
+      "sources": [
+        "world:cog:name"
+      ]
+    },
+    {
+      "id": "n-3332741d535907681488738a",
+      "text": "Neste país, muitas pessoas falam Sinhala e Tamil.",
+      "file": "n-3332741d535907681488738a.mp3",
+      "sources": [
+        "world:lka:music-language"
+      ]
+    },
+    {
+      "id": "n-33423b4d56201ddef371de4c",
+      "text": "Neste país, muitas pessoas falam Russian e Tajik.",
+      "file": "n-33423b4d56201ddef371de4c.mp3",
+      "sources": [
+        "world:tjk:music-language"
+      ]
+    },
+    {
+      "id": "n-33b3c86afb41070a545a6419",
+      "text": "Aqui está difícil.",
+      "file": "n-33b3c86afb41070a545a6419.mp3",
+      "sources": [
+        "biomes:boto:caatinga:feedback-title",
+        "biomes:boto:cerrado:feedback-title",
+        "biomes:boto:mata:feedback-title",
+        "biomes:boto:pampa:feedback-title",
+        "biomes:ema:amazonia:feedback-title",
+        "biomes:ema:caatinga:feedback-title",
+        "biomes:ema:mata:feedback-title",
+        "biomes:ema:pantanal:feedback-title",
+        "biomes:loboGuara:amazonia:feedback-title",
+        "biomes:loboGuara:caatinga:feedback-title",
+        "biomes:loboGuara:pantanal:feedback-title",
+        "biomes:mandacaru:amazonia:feedback-title",
+        "biomes:mandacaru:mata:feedback-title",
+        "biomes:mandacaru:pampa:feedback-title",
+        "biomes:mandacaru:pantanal:feedback-title",
+        "biomes:mico:caatinga:feedback-title",
+        "biomes:mico:pampa:feedback-title",
+        "biomes:mico:pantanal:feedback-title",
+        "biomes:tuiuiu:caatinga:feedback-title",
+        "biomes:tuiuiu:cerrado:feedback-title",
+        "biomes:tuiuiu:mata:feedback-title"
+      ]
+    },
+    {
+      "id": "n-33c8120871c7b28cb246bb42",
+      "text": "Ilhas Faroé.",
+      "file": "n-33c8120871c7b28cb246bb42.mp3",
+      "sources": [
+        "world:fro:name"
+      ]
+    },
+    {
+      "id": "n-34807eb650ee8b7379f52aeb",
+      "text": "Uganda.",
+      "file": "n-34807eb650ee8b7379f52aeb.mp3",
+      "sources": [
+        "world:uga:name"
+      ]
+    },
+    {
+      "id": "n-34b1f19ca596c626daba609d",
+      "text": "A música do Catar usa tambores, palmas e canções ligadas ao mar e aos barcos.",
+      "file": "n-34b1f19ca596c626daba609d.mp3",
+      "sources": [
+        "world:qat:music"
+      ]
+    },
+    {
+      "id": "n-34c588aca8652c11a97e0989",
+      "text": "Dominica.",
+      "file": "n-34c588aca8652c11a97e0989.mp3",
+      "sources": [
+        "world:dma:name"
+      ]
+    },
+    {
+      "id": "n-34fb456d4871e9a26f63c210",
+      "text": "Maurício.",
+      "file": "n-34fb456d4871e9a26f63c210.mp3",
+      "sources": [
+        "world:mus:name"
+      ]
+    },
+    {
+      "id": "n-367467c328d0ab66fa846c61",
+      "text": "Reino Unido.",
+      "file": "n-367467c328d0ab66fa846c61.mp3",
+      "sources": [
+        "world:gbr:name"
+      ]
+    },
+    {
+      "id": "n-36ab325578f6905782fb524b",
+      "text": "cento e sete",
+      "file": "n-36ab325578f6905782fb524b.mp3",
+      "sources": [
+        "blocks:number:107"
+      ]
+    },
+    {
+      "id": "n-36eb0945ec0c4e98bfedc5a6",
+      "text": "Kaseko, kawina e músicas de várias comunidades usam tambores, sopros, canto e ritmos de festa.",
+      "file": "n-36eb0945ec0c4e98bfedc5a6.mp3",
+      "sources": [
+        "world:sur:music"
+      ]
+    },
+    {
+      "id": "n-376bd78fa8fa797e27854041",
+      "text": "vinte e sete",
+      "file": "n-376bd78fa8fa797e27854041.mp3",
+      "sources": [
+        "blocks:number:27"
+      ]
+    },
+    {
+      "id": "n-37bcb62df1918b0bbffbab1b",
+      "text": "No Pantanal tem água rasa, peixes e espaço aberto. O Tuiuiú encontrou sua casa!",
+      "file": "n-37bcb62df1918b0bbffbab1b.mp3",
+      "sources": [
+        "biomes:tuiuiu:pantanal:feedback"
+      ]
+    },
+    {
+      "id": "n-386662b7a334eaae688e317e",
+      "text": "Níger.",
+      "file": "n-386662b7a334eaae688e317e.mp3",
+      "sources": [
+        "world:ner:name"
+      ]
+    },
+    {
+      "id": "n-38706a1c321f59898c510ee7",
+      "text": "Djibouti.",
+      "file": "n-38706a1c321f59898c510ee7.mp3",
+      "sources": [
+        "world:dji:name"
+      ]
+    },
+    {
+      "id": "n-38eb83e4d9c3f285819a154d",
+      "text": "Chile.",
+      "file": "n-38eb83e4d9c3f285819a154d.mp3",
+      "sources": [
+        "world:chl:name"
+      ]
+    },
+    {
+      "id": "n-3973fc38f098c4b5e66eef1d",
+      "text": "São Bartolomeu.",
+      "file": "n-3973fc38f098c4b5e66eef1d.mp3",
+      "sources": [
+        "world:blm:name"
+      ]
+    },
+    {
+      "id": "n-3a58e45218414635b8ee1fd5",
+      "text": "vinte",
+      "file": "n-3a58e45218414635b8ee1fd5.mp3",
+      "sources": [
+        "blocks:number:20"
+      ]
+    },
+    {
+      "id": "n-3aa3316ac7a0703c2d86a8b0",
+      "text": "nove dezenas",
+      "file": "n-3aa3316ac7a0703c2d86a8b0.mp3",
+      "sources": [
+        "blocks:tens:9"
+      ]
+    },
+    {
+      "id": "n-3abc118744cf5a660b18daad",
+      "text": "Estados Unidos.",
+      "file": "n-3abc118744cf5a660b18daad.mp3",
+      "sources": [
+        "world:usa:name"
+      ]
+    },
+    {
+      "id": "n-3b27e8b8c48e9f68eec5c86a",
+      "text": "Neste país, muitas pessoas falam English e Samoan.",
+      "file": "n-3b27e8b8c48e9f68eec5c86a.mp3",
+      "sources": [
+        "world:asm:music-language",
+        "world:tkl:music-language",
+        "world:wsm:music-language"
+      ]
+    },
+    {
+      "id": "n-3b4af933e15cadcba0d7c421",
+      "text": "cento e nove",
+      "file": "n-3b4af933e15cadcba0d7c421.mp3",
+      "sources": [
+        "blocks:number:109"
+      ]
+    },
+    {
+      "id": "n-3ba4e67b020fc10e777139ef",
+      "text": "Filipinas.",
+      "file": "n-3ba4e67b020fc10e777139ef.mp3",
+      "sources": [
+        "world:phl:name"
+      ]
+    },
+    {
+      "id": "n-3bcf9e5d46e8a4e9e31a9ea3",
+      "text": "trinta e três",
+      "file": "n-3bcf9e5d46e8a4e9e31a9ea3.mp3",
+      "sources": [
+        "blocks:number:33"
+      ]
+    },
+    {
+      "id": "n-3c48e359a29a4f17a6b02726",
+      "text": "O duduk é um instrumento armênio de som doce e melancólico.",
+      "file": "n-3c48e359a29a4f17a6b02726.mp3",
+      "sources": [
+        "world:arm:music"
+      ]
+    },
+    {
+      "id": "n-3c5967f74930d26cc6193d24",
+      "text": "Neste país, muitas pessoas falam English e Niuean.",
+      "file": "n-3c5967f74930d26cc6193d24.mp3",
+      "sources": [
+        "world:niu:music-language"
+      ]
+    },
+    {
+      "id": "n-3ce270565817a2d5e616d3f0",
+      "text": "Macau.",
+      "file": "n-3ce270565817a2d5e616d3f0.mp3",
+      "sources": [
+        "world:mac:name"
+      ]
+    },
+    {
+      "id": "n-3cf82db6a90ca094204da9f3",
+      "text": "quarenta e sete",
+      "file": "n-3cf82db6a90ca094204da9f3.mp3",
+      "sources": [
+        "blocks:number:47"
+      ]
+    },
+    {
+      "id": "n-3e613e26e7dc85a39270fde2",
+      "text": "dezenove unidades",
+      "file": "n-3e613e26e7dc85a39270fde2.mp3",
+      "sources": [
+        "blocks:units:19"
+      ]
+    },
+    {
+      "id": "n-3ea6ac5fccf4c654bf55d531",
+      "text": "Dikir barat, gamelan malaio, kompang e canções populares misturam vozes, gongos, tambores e palmas.",
+      "file": "n-3ea6ac5fccf4c654bf55d531.mp3",
+      "sources": [
+        "world:mys:music"
+      ]
+    },
+    {
+      "id": "n-3eaf1c6d4f7d7847ae26a6ee",
+      "text": "Malásia.",
+      "file": "n-3eaf1c6d4f7d7847ae26a6ee.mp3",
+      "sources": [
+        "world:mys:name"
+      ]
+    },
+    {
+      "id": "n-3ed3fac7fa2f8dc951d31e88",
+      "text": "Combina um pouco.",
+      "file": "n-3ed3fac7fa2f8dc951d31e88.mp3",
+      "sources": [
+        "biomes:boto:pantanal:feedback-title",
+        "biomes:ema:cerrado:feedback-title",
+        "biomes:loboGuara:mata:feedback-title",
+        "biomes:loboGuara:pampa:feedback-title",
+        "biomes:mandacaru:cerrado:feedback-title",
+        "biomes:mico:amazonia:feedback-title",
+        "biomes:mico:cerrado:feedback-title",
+        "biomes:tuiuiu:amazonia:feedback-title",
+        "biomes:tuiuiu:pampa:feedback-title"
+      ]
+    },
+    {
+      "id": "n-3ee66d16152debe2633f34f0",
+      "text": "Arraste o",
+      "file": "n-3ee66d16152debe2633f34f0.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-3f79bb7b435b05321651daef",
+      "text": "e",
+      "file": "n-3f79bb7b435b05321651daef.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-3fc147823f5bc86da97041a9",
+      "text": "Dinamarca.",
+      "file": "n-3fc147823f5bc86da97041a9.mp3",
+      "sources": [
+        "world:dnk:name"
+      ]
+    },
+    {
+      "id": "n-403e01fe8c391f1aef7faed9",
+      "text": "Neste país, muitas pessoas falam Serbian.",
+      "file": "n-403e01fe8c391f1aef7faed9.mp3",
+      "sources": [
+        "world:srb:music-language"
+      ]
+    },
+    {
+      "id": "n-4042e47beee1e16e331129db",
+      "text": "onze",
+      "file": "n-4042e47beee1e16e331129db.mp3",
+      "sources": [
+        "blocks:number-feminine:11",
+        "blocks:number:11"
+      ]
+    },
+    {
+      "id": "n-40822252341c5c86f4cf1eea",
+      "text": "Em Belize há punta, reggae e músicas garífunas com tambores.",
+      "file": "n-40822252341c5c86f4cf1eea.mp3",
+      "sources": [
+        "world:blz:music"
+      ]
+    },
+    {
+      "id": "n-413a526977583ba02efe3e6d",
+      "text": "Neste país, muitas pessoas falam Macedonian.",
+      "file": "n-413a526977583ba02efe3e6d.mp3",
+      "sources": [
+        "world:mkd:music-language"
+      ]
+    },
+    {
+      "id": "n-4159b01f746f932c99461382",
+      "text": "Nauru.",
+      "file": "n-4159b01f746f932c99461382.mp3",
+      "sources": [
+        "world:nru:name"
+      ]
+    },
+    {
+      "id": "n-41b3620bb5f08b8524e0c2f2",
+      "text": "Arraste a coluna cheia para a casa das dezenas.",
+      "file": "n-41b3620bb5f08b8524e0c2f2.mp3",
+      "sources": [
+        "arithmetic:static"
+      ]
+    },
+    {
+      "id": "n-42018f1d25f6cf2e92b057cb",
+      "text": "A rumba congolesa e o soukous usam guitarras dançantes, vozes em grupo e ritmos que fazem muita gente querer mexer os pés.",
+      "file": "n-42018f1d25f6cf2e92b057cb.mp3",
+      "sources": [
+        "world:cod:music"
+      ]
+    },
+    {
+      "id": "n-4265f387b106a33d1706d88d",
+      "text": "oitenta e oito",
+      "file": "n-4265f387b106a33d1706d88d.mp3",
+      "sources": [
+        "blocks:number:88"
+      ]
+    },
+    {
+      "id": "n-4291ec93efe9f73622bccf54",
+      "text": "dezenove",
+      "file": "n-4291ec93efe9f73622bccf54.mp3",
+      "sources": [
+        "blocks:number-feminine:19",
+        "blocks:number:19"
+      ]
+    },
+    {
+      "id": "n-43ebe4a78934b4e113ea6698",
+      "text": "Estónia.",
+      "file": "n-43ebe4a78934b4e113ea6698.mp3",
+      "sources": [
+        "world:est:name"
+      ]
+    },
+    {
+      "id": "n-449220e0ddb125a5e862f276",
+      "text": "República Centro-Africana.",
+      "file": "n-449220e0ddb125a5e862f276.mp3",
+      "sources": [
+        "world:caf:name"
+      ]
+    },
+    {
+      "id": "n-44d0bae14175a1c6ec035db1",
+      "text": "Essuatíni.",
+      "file": "n-44d0bae14175a1c6ec035db1.mp3",
+      "sources": [
+        "world:swz:name"
+      ]
+    },
+    {
+      "id": "n-458ac182f7066c27ffa392e2",
+      "text": "A música checa tem polcas, corais e compositores clássicos famosos.",
+      "file": "n-458ac182f7066c27ffa392e2.mp3",
+      "sources": [
+        "world:cze:music"
+      ]
+    },
+    {
+      "id": "n-4591b821619d4f5480e9a55a",
+      "text": "Ainda não. Olhe o quadro:",
+      "file": "n-4591b821619d4f5480e9a55a.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-4683ef1c0d4e15d081a8e954",
+      "text": "No Pantanal falta campo aberto, frutos e andar bastante. Procure outro lugar no mapa.",
+      "file": "n-4683ef1c0d4e15d081a8e954.mp3",
+      "sources": [
+        "biomes:loboGuara:pantanal:feedback"
+      ]
+    },
+    {
+      "id": "n-4709e7500891c0cda8be9a24",
+      "text": "As pernas fortes ajudam a ema a correr no campo aberto.",
+      "file": "n-4709e7500891c0cda8be9a24.mp3",
+      "sources": [
+        "biomes:ema:adaptation:success"
+      ]
+    },
+    {
+      "id": "n-470d112d718f516f7c473085",
+      "text": "sessenta e dois",
+      "file": "n-470d112d718f516f7c473085.mp3",
+      "sources": [
+        "blocks:number:62"
+      ]
+    },
+    {
+      "id": "n-474536b8f5a80ee4b36b3ab1",
+      "text": "Palestina.",
+      "file": "n-474536b8f5a80ee4b36b3ab1.mp3",
+      "sources": [
+        "world:pse:name"
+      ]
+    },
+    {
+      "id": "n-48388c24484cae08c091fbc2",
+      "text": "Antígua e Barbuda.",
+      "file": "n-48388c24484cae08c091fbc2.mp3",
+      "sources": [
+        "world:atg:name"
+      ]
+    },
+    {
+      "id": "n-493fcd38fca3fa259f86e662",
+      "text": "Albânia.",
+      "file": "n-493fcd38fca3fa259f86e662.mp3",
+      "sources": [
+        "world:alb:name"
+      ]
+    },
+    {
+      "id": "n-496bc8f020a72d393d120583",
+      "text": "Neste país, muitas pessoas falam Lithuanian.",
+      "file": "n-496bc8f020a72d393d120583.mp3",
+      "sources": [
+        "world:ltu:music-language"
+      ]
+    },
+    {
+      "id": "n-497a9b3f65ceffc2c87ffb23",
+      "text": "duas dezenas",
+      "file": "n-497a9b3f65ceffc2c87ffb23.mp3",
+      "sources": [
+        "blocks:tens:2"
+      ]
+    },
+    {
+      "id": "n-498ca670d1f05e1021fb84ea",
+      "text": "A música finlandesa usa kantele, violinos, canto rúnico e melodias que lembram florestas, lagos e inverno.",
+      "file": "n-498ca670d1f05e1021fb84ea.mp3",
+      "sources": [
+        "world:fin:music"
+      ]
+    },
+    {
+      "id": "n-4a99557e4033c3539de2eb65",
+      "text": "é",
+      "file": "n-4a99557e4033c3539de2eb65.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-4aa3074a072a46204a885d88",
+      "text": "Zâmbia.",
+      "file": "n-4aa3074a072a46204a885d88.mp3",
+      "sources": [
+        "world:zmb:name"
+      ]
+    },
+    {
+      "id": "n-4be184f1b26f9788dbb9ea61",
+      "text": "China.",
+      "file": "n-4be184f1b26f9788dbb9ea61.mp3",
+      "sources": [
+        "world:chn:name"
+      ]
+    },
+    {
+      "id": "n-4c3498e4662449560ddecc01",
+      "text": "A música chadiana usa tambores, flautas, cordas e cantos de diferentes povos, com ritmos do Sahel e da bacia do lago Chade.",
+      "file": "n-4c3498e4662449560ddecc01.mp3",
+      "sources": [
+        "world:tcd:music"
+      ]
+    },
+    {
+      "id": "n-4cab67c061a445fd512445d6",
+      "text": "Neste país, muitas pessoas falam Albanian e Serbian.",
+      "file": "n-4cab67c061a445fd512445d6.mp3",
+      "sources": [
+        "world:unk:music-language"
+      ]
+    },
+    {
+      "id": "n-4cbb8d1dcf8434a85bf4b6f6",
+      "text": "Gana.",
+      "file": "n-4cbb8d1dcf8434a85bf4b6f6.mp3",
+      "sources": [
+        "world:gha:name"
+      ]
+    },
+    {
+      "id": "n-4cfc8eb7e04e66518ba0d492",
+      "text": "Mongólia.",
+      "file": "n-4cfc8eb7e04e66518ba0d492.mp3",
+      "sources": [
+        "world:mng:name"
+      ]
+    },
+    {
+      "id": "n-4d0e22a5f62670fac83a3e97",
+      "text": "Suriname.",
+      "file": "n-4d0e22a5f62670fac83a3e97.mp3",
+      "sources": [
+        "world:sur:name"
+      ]
+    },
+    {
+      "id": "n-4db91025e863839a24173189",
+      "text": "Neste país, muitas pessoas falam English e Marshallese.",
+      "file": "n-4db91025e863839a24173189.mp3",
+      "sources": [
+        "world:mhl:music-language"
+      ]
+    },
+    {
+      "id": "n-4e0a33f8e577705bec743892",
+      "text": "A música turcomena usa dutar, canto de bardos, tambores e melodias que lembram histórias das estepes e do deserto.",
+      "file": "n-4e0a33f8e577705bec743892.mp3",
+      "sources": [
+        "world:tkm:music"
+      ]
+    },
+    {
+      "id": "n-4eefd1b5e1767bf8bcc682b3",
+      "text": "Sudão do Sul.",
+      "file": "n-4eefd1b5e1767bf8bcc682b3.mp3",
+      "sources": [
+        "world:ssd:name"
+      ]
+    },
+    {
+      "id": "n-4f6a53d1f9449071402886f7",
+      "text": "A música do Laos usa khene, canto lam, tambores e melodias que acompanham danças e festas.",
+      "file": "n-4f6a53d1f9449071402886f7.mp3",
+      "sources": [
+        "world:lao:music"
+      ]
+    },
+    {
+      "id": "n-4fe423a0ed74deb138726e51",
+      "text": "Sanjuanito, pasillo e marimba afro-equatoriana usam flautas, violões, percussão e melodias de montanha e costa.",
+      "file": "n-4fe423a0ed74deb138726e51.mp3",
+      "sources": [
+        "world:ecu:music"
+      ]
+    },
+    {
+      "id": "n-502026b1fc701b8d26391d48",
+      "text": "vinte e dois",
+      "file": "n-502026b1fc701b8d26391d48.mp3",
+      "sources": [
+        "blocks:number:22"
+      ]
+    },
+    {
+      "id": "n-5048b4bc87514d093e447055",
+      "text": "Espanha.",
+      "file": "n-5048b4bc87514d093e447055.mp3",
+      "sources": [
+        "world:esp:name"
+      ]
+    },
+    {
+      "id": "n-51158e386be2e605a7fca6b6",
+      "text": "oitenta e quatro",
+      "file": "n-51158e386be2e605a7fca6b6.mp3",
+      "sources": [
+        "blocks:number:84"
+      ]
+    },
+    {
+      "id": "n-5166d0b45ab4d3660710afa5",
+      "text": "Olhe para o corpo do Mandacaru e para as pistas do lugar.",
+      "file": "n-5166d0b45ab4d3660710afa5.mp3",
+      "sources": [
+        "biomes:mandacaru:adaptation:retry"
+      ]
+    },
+    {
+      "id": "n-5189942478bd94fa6247b48f",
+      "text": "Música árabe egípcia: voz expressiva, oud, percussão e melodias ornamentadas.",
+      "file": "n-5189942478bd94fa6247b48f.mp3",
+      "sources": [
+        "world-fallback:egypt:music"
+      ]
+    },
+    {
+      "id": "n-51a2ebe1a8d420ab18dff2a7",
+      "text": "dois",
+      "file": "n-51a2ebe1a8d420ab18dff2a7.mp3",
+      "sources": [
+        "blocks:number:2"
+      ]
+    },
+    {
+      "id": "n-52d9d6974e300a925d0d6940",
+      "text": "Em Anguilla há calipso, reggae e músicas de ilha com tambores e guitarras.",
+      "file": "n-52d9d6974e300a925d0d6940.mp3",
+      "sources": [
+        "world:aia:music"
+      ]
+    },
+    {
+      "id": "n-53895c896bf66f56067ff19a",
+      "text": "quarenta e quatro",
+      "file": "n-53895c896bf66f56067ff19a.mp3",
+      "sources": [
+        "blocks:number:44"
+      ]
+    },
+    {
+      "id": "n-5394569d35d10dd17379ff33",
+      "text": "Cazaquistão.",
+      "file": "n-5394569d35d10dd17379ff33.mp3",
+      "sources": [
+        "world:kaz:name"
+      ]
+    },
+    {
+      "id": "n-539e5c8e1af92335477e0f96",
+      "text": "Na Amazônia tem árvores, mas falta frutos e abrigo. Procure outro lugar no mapa.",
+      "file": "n-539e5c8e1af92335477e0f96.mp3",
+      "sources": [
+        "biomes:mico:amazonia:feedback"
+      ]
+    },
+    {
+      "id": "n-53b514b2651455564da86e3a",
+      "text": "Muito bem!",
+      "file": "n-53b514b2651455564da86e3a.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-550bfcc34d75e262073552f5",
+      "text": "Samoa Americana.",
+      "file": "n-550bfcc34d75e262073552f5.mp3",
+      "sources": [
+        "world:asm:name"
+      ]
+    },
+    {
+      "id": "n-550ffaf10bf90c75c9e12237",
+      "text": "Neste país, muitas pessoas falam English e Palauan.",
+      "file": "n-550ffaf10bf90c75c9e12237.mp3",
+      "sources": [
+        "world:plw:music-language"
+      ]
+    },
+    {
+      "id": "n-5556f1dfbf890159f83f9d69",
+      "text": "noventa e quatro",
+      "file": "n-5556f1dfbf890159f83f9d69.mp3",
+      "sources": [
+        "blocks:number:94"
+      ]
+    },
+    {
+      "id": "n-559815ad5c05f011d602f032",
+      "text": "Gronelândia.",
+      "file": "n-559815ad5c05f011d602f032.mp3",
+      "sources": [
+        "world:grl:name"
+      ]
+    },
+    {
+      "id": "n-55a2eb886ccbe204e7b5b819",
+      "text": "Nepal.",
+      "file": "n-55a2eb886ccbe204e7b5b819.mp3",
+      "sources": [
+        "world:npl:name"
+      ]
+    },
+    {
+      "id": "n-55b9aa9f3c76bb3426be1296",
+      "text": "Na Amazônia tem rio grande, muita água e peixes. O Boto-cor-de-rosa encontrou sua casa!",
+      "file": "n-55b9aa9f3c76bb3426be1296.mp3",
+      "sources": [
+        "biomes:boto:amazonia:feedback"
+      ]
+    },
+    {
+      "id": "n-55c05e4d1fd566f27e1db7d6",
+      "text": "A música saudita usa canto, palmas, tambores e danças em grupo, como a ardah, feita em celebrações.",
+      "file": "n-55c05e4d1fd566f27e1db7d6.mp3",
+      "sources": [
+        "world:sau:music"
+      ]
+    },
+    {
+      "id": "n-55e4e8a82ccab2743a84b6cc",
+      "text": "noventa e um",
+      "file": "n-55e4e8a82ccab2743a84b6cc.mp3",
+      "sources": [
+        "blocks:number:91"
+      ]
+    },
+    {
+      "id": "n-56aeffe1ccee4a6fc77bc9e0",
+      "text": "Samba, choro, forró e bossa nova são músicas brasileiras; elas usam ritmo, dança, cordas, sopros e percussão para contar alegria, saudade e festa.",
+      "file": "n-56aeffe1ccee4a6fc77bc9e0.mp3",
+      "sources": [
+        "world:bra:music"
+      ]
+    },
+    {
+      "id": "n-57018e4aac72e7ab13845b2e",
+      "text": "cinquenta e quatro",
+      "file": "n-57018e4aac72e7ab13845b2e.mp3",
+      "sources": [
+        "blocks:number:54"
+      ]
+    },
+    {
+      "id": "n-5798bb08692b083c93607d26",
+      "text": "Calipso, chutney, soca e músicas indígenas misturam tambores, cordas, canto e ritmos do Caribe e da América do Sul.",
+      "file": "n-5798bb08692b083c93607d26.mp3",
+      "sources": [
+        "world:guy:music"
+      ]
+    },
+    {
+      "id": "n-5802009d57fc8ec9c657003f",
+      "text": "Neste país, muitas pessoas falam Bislama e English.",
+      "file": "n-5802009d57fc8ec9c657003f.mp3",
+      "sources": [
+        "world:vut:music-language"
+      ]
+    },
+    {
+      "id": "n-583994746510ab1f6a2f6247",
+      "text": "oitenta",
+      "file": "n-583994746510ab1f6a2f6247.mp3",
+      "sources": [
+        "blocks:number:80"
+      ]
+    },
+    {
+      "id": "n-583a12744867e2852ad93db1",
+      "text": "Suécia.",
+      "file": "n-583a12744867e2852ad93db1.mp3",
+      "sources": [
+        "world:swe:name"
+      ]
+    },
+    {
+      "id": "n-58714395b259162d613111b4",
+      "text": "Não cabe mais nenhuma barra.",
+      "file": "n-58714395b259162d613111b4.mp3",
+      "sources": [
+        "arithmetic:static"
+      ]
+    },
+    {
+      "id": "n-59469f4a60a66738e57d489b",
+      "text": "Na Nigéria há afrobeats, juju, highlife, fuji, tambores falantes e muitos ritmos que fazem as cidades dançarem.",
+      "file": "n-59469f4a60a66738e57d489b.mp3",
+      "sources": [
+        "world:nga:music"
+      ]
+    },
+    {
+      "id": "n-5a9bfda981a4bb15c5590910",
+      "text": "uma dezena",
+      "file": "n-5a9bfda981a4bb15c5590910.mp3",
+      "sources": [
+        "blocks:tens:1"
+      ]
+    },
+    {
+      "id": "n-5b02a2f2171c131d780f6dc6",
+      "text": "Roménia.",
+      "file": "n-5b02a2f2171c131d780f6dc6.mp3",
+      "sources": [
+        "world:rou:name"
+      ]
+    },
+    {
+      "id": "n-5b04cadd190507ac03914960",
+      "text": "cinquenta e oito",
+      "file": "n-5b04cadd190507ac03914960.mp3",
+      "sources": [
+        "blocks:number:58"
+      ]
+    },
+    {
+      "id": "n-5b155ee614fd911ae89319bb",
+      "text": "São Vincente e Granadinas.",
+      "file": "n-5b155ee614fd911ae89319bb.mp3",
+      "sources": [
+        "world:vct:name"
+      ]
+    },
+    {
+      "id": "n-5b2f00b62bcfb4c5048ecb38",
+      "text": "sessenta e três",
+      "file": "n-5b2f00b62bcfb4c5048ecb38.mp3",
+      "sources": [
+        "blocks:number:63"
+      ]
+    },
+    {
+      "id": "n-5b6b1d73ec9e6b2d6660b8c0",
+      "text": "Marianas Setentrionais.",
+      "file": "n-5b6b1d73ec9e6b2d6660b8c0.mp3",
+      "sources": [
+        "world:mnp:name"
+      ]
+    },
+    {
+      "id": "n-5be824ec6cfca1046839dd3c",
+      "text": "noventa e sete",
+      "file": "n-5be824ec6cfca1046839dd3c.mp3",
+      "sources": [
+        "blocks:number:97"
+      ]
+    },
+    {
+      "id": "n-5bf23e0bdb94e05b6a9c65b1",
+      "text": "Ilha Heard e Ilhas McDonald.",
+      "file": "n-5bf23e0bdb94e05b6a9c65b1.mp3",
+      "sources": [
+        "world:hmd:name"
+      ]
+    },
+    {
+      "id": "n-5c195455916c6e2411866545",
+      "text": "Neste país, muitas pessoas falam Danish.",
+      "file": "n-5c195455916c6e2411866545.mp3",
+      "sources": [
+        "world:dnk:music-language"
+      ]
+    },
+    {
+      "id": "n-5c51df84fd603df5e833dde0",
+      "text": "Ilhas Svalbard e Jan Mayen.",
+      "file": "n-5c51df84fd603df5e833dde0.mp3",
+      "sources": [
+        "world:sjm:name"
+      ]
+    },
+    {
+      "id": "n-5d4f10c76c5f3eb000d94883",
+      "text": "Neste país, muitas pessoas falam English.",
+      "file": "n-5d4f10c76c5f3eb000d94883.mp3",
+      "sources": [
+        "world:cck:music-language",
+        "world:cxr:music-language",
+        "world:cym:music-language",
+        "world:dma:music-language",
+        "world:flk:music-language",
+        "world:fsm:music-language",
+        "world:gib:music-language",
+        "world:gmb:music-language",
+        "world:grd:music-language",
+        "world:hmd:music-language",
+        "world:iot:music-language",
+        "world:kna:music-language",
+        "world:lbr:music-language",
+        "world:lca:music-language",
+        "world:msr:music-language",
+        "world:pcn:music-language",
+        "world:sgs:music-language",
+        "world:shn:music-language",
+        "world:slb:music-language",
+        "world:sle:music-language",
+        "world:tca:music-language",
+        "world:tto:music-language",
+        "world:umi:music-language",
+        "world:vct:music-language",
+        "world:vgb:music-language",
+        "world:vir:music-language"
+      ]
+    },
+    {
+      "id": "n-5d87d74ad44f31a550bc8cc1",
+      "text": "Agora vamos fazer a conta!",
+      "file": "n-5d87d74ad44f31a550bc8cc1.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-5da8f3feaea1f8c23771082a",
+      "text": "quarenta e três",
+      "file": "n-5da8f3feaea1f8c23771082a.mp3",
+      "sources": [
+        "blocks:number:43"
+      ]
+    },
+    {
+      "id": "n-5e47321816ada9c2a7a3132a",
+      "text": "cinquenta e cinco",
+      "file": "n-5e47321816ada9c2a7a3132a.mp3",
+      "sources": [
+        "blocks:number:55"
+      ]
+    },
+    {
+      "id": "n-5e6f33d38f00d0b1fcc2d353",
+      "text": "Neste país, muitas pessoas falam Icelandic.",
+      "file": "n-5e6f33d38f00d0b1fcc2d353.mp3",
+      "sources": [
+        "world:isl:music-language"
+      ]
+    },
+    {
+      "id": "n-5ee1386d4b3647e70b69a19a",
+      "text": "Neste país, muitas pessoas falam German e French.",
+      "file": "n-5ee1386d4b3647e70b69a19a.mp3",
+      "sources": [
+        "world:lux:music-language"
+      ]
+    },
+    {
+      "id": "n-5f64cd5c1c118bbc5ff1b5d2",
+      "text": "Montserrat.",
+      "file": "n-5f64cd5c1c118bbc5ff1b5d2.mp3",
+      "sources": [
+        "world:msr:name"
+      ]
+    },
+    {
+      "id": "n-5f8aa750eb6ef98d2e262150",
+      "text": "Noruega.",
+      "file": "n-5f8aa750eb6ef98d2e262150.mp3",
+      "sources": [
+        "world:nor:name"
+      ]
+    },
+    {
+      "id": "n-6087598c6401413818832235",
+      "text": "cinquenta e um",
+      "file": "n-6087598c6401413818832235.mp3",
+      "sources": [
+        "blocks:number:51"
+      ]
+    },
+    {
+      "id": "n-609e4948f75bc1a2c5d0d920",
+      "text": "Faltam barras.",
+      "file": "n-609e4948f75bc1a2c5d0d920.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-60b769bcbd51b2f0d212fc0b",
+      "text": "Seicheles.",
+      "file": "n-60b769bcbd51b2f0d212fc0b.mp3",
+      "sources": [
+        "world:syc:name"
+      ]
+    },
+    {
+      "id": "n-610eacf29a3c4e25747480f0",
+      "text": "trinta e cinco",
+      "file": "n-610eacf29a3c4e25747480f0.mp3",
+      "sources": [
+        "blocks:number:35"
+      ]
+    },
+    {
+      "id": "n-611e63b40d8dd22858f69142",
+      "text": "trinta e oito",
+      "file": "n-611e63b40d8dd22858f69142.mp3",
+      "sources": [
+        "blocks:number:38"
+      ]
+    },
+    {
+      "id": "n-616798b1b79b91a19760770d",
+      "text": "Território Britânico do Oceano Índico.",
+      "file": "n-616798b1b79b91a19760770d.mp3",
+      "sources": [
+        "world:iot:name"
+      ]
+    },
+    {
+      "id": "n-61a6aa30bae59ec66c5f6841",
+      "text": "Índia.",
+      "file": "n-61a6aa30bae59ec66c5f6841.mp3",
+      "sources": [
+        "world:ind:name"
+      ]
+    },
+    {
+      "id": "n-61bd800634f3c2bd0fd8ddc0",
+      "text": "Neste país, muitas pessoas falam English e Jamaican Patois.",
+      "file": "n-61bd800634f3c2bd0fd8ddc0.mp3",
+      "sources": [
+        "world:jam:music-language"
+      ]
+    },
+    {
+      "id": "n-61bfd10faddb80b4041d17a9",
+      "text": "Neste país, muitas pessoas falam English e Cook Islands Māori.",
+      "file": "n-61bfd10faddb80b4041d17a9.mp3",
+      "sources": [
+        "world:cok:music-language"
+      ]
+    },
+    {
+      "id": "n-633cd42f781d181c7228423c",
+      "text": "O que ajuda o mico a viver nas árvores?",
+      "file": "n-633cd42f781d181c7228423c.mp3",
+      "sources": [
+        "biomes:mico:adaptation:question"
+      ]
+    },
+    {
+      "id": "n-63541a6bb2b9d33387c96364",
+      "text": "dez unidades",
+      "file": "n-63541a6bb2b9d33387c96364.mp3",
+      "sources": [
+        "blocks:units:10"
+      ]
+    },
+    {
+      "id": "n-636f6140fc86ed026c1b7de0",
+      "text": "Camarões.",
+      "file": "n-636f6140fc86ed026c1b7de0.mp3",
+      "sources": [
+        "world:cmr:name"
+      ]
+    },
+    {
+      "id": "n-638deeef8765447825a41523",
+      "text": "cento e um",
+      "file": "n-638deeef8765447825a41523.mp3",
+      "sources": [
+        "blocks:number:101"
+      ]
+    },
+    {
+      "id": "n-63b0b0257ea00cd6072a4c3c",
+      "text": "oitenta e dois",
+      "file": "n-63b0b0257ea00cd6072a4c3c.mp3",
+      "sources": [
+        "blocks:number:82"
+      ]
+    },
+    {
+      "id": "n-63d8d3a20d6bb072da0f24f9",
+      "text": "Jamaica.",
+      "file": "n-63d8d3a20d6bb072da0f24f9.mp3",
+      "sources": [
+        "world:jam:name"
+      ]
+    },
+    {
+      "id": "n-649b96f5c00651c45606a832",
+      "text": "Makossa e bikutsi são ritmos camaroneses com guitarra, percussão, canto e dança.",
+      "file": "n-649b96f5c00651c45606a832.mp3",
+      "sources": [
+        "world:cmr:music"
+      ]
+    },
+    {
+      "id": "n-64ee44845afae667bf216ba7",
+      "text": "setenta e dois",
+      "file": "n-64ee44845afae667bf216ba7.mp3",
+      "sources": [
+        "blocks:number:72"
+      ]
+    },
+    {
+      "id": "n-64f25a356389e0ba6429a6e5",
+      "text": "Ilhas Geórgia do Sul e Sandwich do Sul.",
+      "file": "n-64f25a356389e0ba6429a6e5.mp3",
+      "sources": [
+        "world:sgs:name"
+      ]
+    },
+    {
+      "id": "n-657e16757bc8716ff87836b6",
+      "text": "E quantas unidades?",
+      "file": "n-657e16757bc8716ff87836b6.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-65849deedeae36ad6d2bb7fb",
+      "text": "Guam.",
+      "file": "n-65849deedeae36ad6d2bb7fb.mp3",
+      "sources": [
+        "world:gum:name"
+      ]
+    },
+    {
+      "id": "n-65a00d953d66f6044afb08c6",
+      "text": "Na Caatinga falta rio grande, muita água e peixes. Procure outro lugar no mapa.",
+      "file": "n-65a00d953d66f6044afb08c6.mp3",
+      "sources": [
+        "biomes:boto:caatinga:feedback"
+      ]
+    },
+    {
+      "id": "n-65dc8ea9e41248f23428ceff",
+      "text": "Nas Bermudas há gombey, com tambores, dança e roupas coloridas.",
+      "file": "n-65dc8ea9e41248f23428ceff.mp3",
+      "sources": [
+        "world:bmu:music"
+      ]
+    },
+    {
+      "id": "n-65ebc73fcd234f7a8f873305",
+      "text": "Olhe para o corpo do Tuiuiú e para as pistas do lugar.",
+      "file": "n-65ebc73fcd234f7a8f873305.mp3",
+      "sources": [
+        "biomes:tuiuiu:adaptation:retry"
+      ]
+    },
+    {
+      "id": "n-664349eb40b5052e9fc0f34c",
+      "text": "Palau.",
+      "file": "n-664349eb40b5052e9fc0f34c.mp3",
+      "sources": [
+        "world:plw:name"
+      ]
+    },
+    {
+      "id": "n-667521bb8777c95d92d3247b",
+      "text": "A música líbia mistura canto árabe, palmas, tambores, poesia e sons do deserto e das cidades costeiras.",
+      "file": "n-667521bb8777c95d92d3247b.mp3",
+      "sources": [
+        "world:lby:music"
+      ]
+    },
+    {
+      "id": "n-668ff417ad4da036f88c9628",
+      "text": "Neste país, muitas pessoas falam Portuguese e Chinese.",
+      "file": "n-668ff417ad4da036f88c9628.mp3",
+      "sources": [
+        "world:mac:music-language"
+      ]
+    },
+    {
+      "id": "n-66c30c0cb55e870146641713",
+      "text": "Laos.",
+      "file": "n-66c30c0cb55e870146641713.mp3",
+      "sources": [
+        "world:lao:name"
+      ]
+    },
+    {
+      "id": "n-6723ba1a3a65326aa8faa600",
+      "text": "A música chinesa pode usar guqin, erhu, pipa, tambores e flautas; muitos sons parecem desenhar paisagens, histórias e movimentos.",
+      "file": "n-6723ba1a3a65326aa8faa600.mp3",
+      "sources": [
+        "world:chn:music"
+      ]
+    },
+    {
+      "id": "n-674194626dd6248b4b0db6a0",
+      "text": "Nova Zelândia.",
+      "file": "n-674194626dd6248b4b0db6a0.mp3",
+      "sources": [
+        "world:nzl:name"
+      ]
+    },
+    {
+      "id": "n-67f04343e7fc539fe711a405",
+      "text": "Saint-Pierre e Miquelon.",
+      "file": "n-67f04343e7fc539fe711a405.mp3",
+      "sources": [
+        "world:spm:name"
+      ]
+    },
+    {
+      "id": "n-69462abf71d9dccaf1e9acee",
+      "text": "Neste país, muitas pessoas falam French e Swiss German.",
+      "file": "n-69462abf71d9dccaf1e9acee.mp3",
+      "sources": [
+        "world:che:music-language"
+      ]
+    },
+    {
+      "id": "n-6a293da5ac1252983d25093f",
+      "text": "Antártida.",
+      "file": "n-6a293da5ac1252983d25093f.mp3",
+      "sources": [
+        "world:ata:name"
+      ]
+    },
+    {
+      "id": "n-6a5610518709447539c2f386",
+      "text": "Montenegro.",
+      "file": "n-6a5610518709447539c2f386.mp3",
+      "sources": [
+        "world:mne:name"
+      ]
+    },
+    {
+      "id": "n-6a96c44dbc697e36cfa9cf42",
+      "text": "Nas ilhas da Alândia há músicas nórdicas com acordeão, violino e canções de festa.",
+      "file": "n-6a96c44dbc697e36cfa9cf42.mp3",
+      "sources": [
+        "world:ala:music"
+      ]
+    },
+    {
+      "id": "n-6ba6c98924a0d8ed7bc40580",
+      "text": "O que ajuda o mandacaru na seca?",
+      "file": "n-6ba6c98924a0d8ed7bc40580.mp3",
+      "sources": [
+        "biomes:mandacaru:adaptation:question"
+      ]
+    },
+    {
+      "id": "n-6c3c3c43330b3b7bc91f2d73",
+      "text": "Timor-Leste.",
+      "file": "n-6c3c3c43330b3b7bc91f2d73.mp3",
+      "sources": [
+        "world:tls:name"
+      ]
+    },
+    {
+      "id": "n-6c8b9004eeaf1345212265fa",
+      "text": "Neste país, muitas pessoas falam Greek.",
+      "file": "n-6c8b9004eeaf1345212265fa.mp3",
+      "sources": [
+        "world:grc:music-language"
+      ]
+    },
+    {
+      "id": "n-6c90941e7001b4a2d110ba01",
+      "text": "Holanda.",
+      "file": "n-6c90941e7001b4a2d110ba01.mp3",
+      "sources": [
+        "world:nld:name"
+      ]
+    },
+    {
+      "id": "n-6ca13db5f1133bed9951aca8",
+      "text": "cinquenta",
+      "file": "n-6ca13db5f1133bed9951aca8.mp3",
+      "sources": [
+        "blocks:number:50"
+      ]
+    },
+    {
+      "id": "n-6ceb03df63e7b05bb1ea59eb",
+      "text": "trinta e nove",
+      "file": "n-6ceb03df63e7b05bb1ea59eb.mp3",
+      "sources": [
+        "blocks:number:39"
+      ]
+    },
+    {
+      "id": "n-6e73e48f8d6aa7efaaa84a39",
+      "text": "Neste país, muitas pessoas falam English e French.",
+      "file": "n-6e73e48f8d6aa7efaaa84a39.mp3",
+      "sources": [
+        "world:ggy:music-language",
+        "world:jey:music-language",
+        "world:mus:music-language",
+        "world:rwa:music-language",
+        "world:sxm:music-language"
+      ]
+    },
+    {
+      "id": "n-6f16a0c4d8a06a130fdc5fbb",
+      "text": "sete unidades",
+      "file": "n-6f16a0c4d8a06a130fdc5fbb.mp3",
+      "sources": [
+        "blocks:units:7"
+      ]
+    },
+    {
+      "id": "n-6f6f270937ae79c7ea9d2490",
+      "text": "Neste país, muitas pessoas falam English e Chewa.",
+      "file": "n-6f6f270937ae79c7ea9d2490.mp3",
+      "sources": [
+        "world:mwi:music-language"
+      ]
+    },
+    {
+      "id": "n-6f8f0e705426e5f8a7887979",
+      "text": "vinte e seis",
+      "file": "n-6f8f0e705426e5f8a7887979.mp3",
+      "sources": [
+        "blocks:number:26"
+      ]
+    },
+    {
+      "id": "n-700afeaa436eb9c14d8b9ee1",
+      "text": "No Pampa falta árvores, frutos e abrigo. Procure outro lugar no mapa.",
+      "file": "n-700afeaa436eb9c14d8b9ee1.mp3",
+      "sources": [
+        "biomes:mico:pampa:feedback"
+      ]
+    },
+    {
+      "id": "n-7039d48414ed22bab6efba58",
+      "text": "Highlife, hiplife, tambores, sinos e cantos em grupo fazem parte dos sons de Gana.",
+      "file": "n-7039d48414ed22bab6efba58.mp3",
+      "sources": [
+        "world:gha:music"
+      ]
+    },
+    {
+      "id": "n-705f05951bba13238bc2dff2",
+      "text": "Benga e cantos tradicionais: guitarras vivas, ritmo dançante e coros.",
+      "file": "n-705f05951bba13238bc2dff2.mp3",
+      "sources": [
+        "world-fallback:kenya:music"
+      ]
+    },
+    {
+      "id": "n-70698fee5343687c46a636dd",
+      "text": "O tango é uma música argentina e rioplatense marcada por dança, bandoneón e emoção; também há folclore com violão e bombo.",
+      "file": "n-70698fee5343687c46a636dd.mp3",
+      "sources": [
+        "world:arg:music"
+      ]
+    },
+    {
+      "id": "n-706ab6f38394c0d05d66c85b",
+      "text": "No Cerrado falta rio grande, muita água e peixes. Procure outro lugar no mapa.",
+      "file": "n-706ab6f38394c0d05d66c85b.mp3",
+      "sources": [
+        "biomes:boto:cerrado:feedback"
+      ]
+    },
+    {
+      "id": "n-70de9395236c4fe9285fb43e",
+      "text": "A música de Papua-Nova Guiné usa tambores kundu, flautas, cantos, danças e sons de cerimônias de muitas ilhas e montanhas.",
+      "file": "n-70de9395236c4fe9285fb43e.mp3",
+      "sources": [
+        "world:png:music"
+      ]
+    },
+    {
+      "id": "n-713188fe221a39102f54122e",
+      "text": "Neste país, muitas pessoas falam Slovene.",
+      "file": "n-713188fe221a39102f54122e.mp3",
+      "sources": [
+        "world:svn:music-language"
+      ]
+    },
+    {
+      "id": "n-719475771ebd9ee7a9b73ee4",
+      "text": "Bósnia e Herzegovina.",
+      "file": "n-719475771ebd9ee7a9b73ee4.mp3",
+      "sources": [
+        "world:bih:name"
+      ]
+    },
+    {
+      "id": "n-72f0cee030098b72690cfed1",
+      "text": "zero unidades",
+      "file": "n-72f0cee030098b72690cfed1.mp3",
+      "sources": [
+        "blocks:units:0"
+      ]
+    },
+    {
+      "id": "n-732a3fc08825251d2862940e",
+      "text": "Omã.",
+      "file": "n-732a3fc08825251d2862940e.mp3",
+      "sources": [
+        "world:omn:name"
+      ]
+    },
+    {
+      "id": "n-73b79f58ba4e7102a278bc33",
+      "text": "Guiana.",
+      "file": "n-73b79f58ba4e7102a278bc33.mp3",
+      "sources": [
+        "world:guy:name"
+      ]
+    },
+    {
+      "id": "n-73bd7060be55b6fc256adb0e",
+      "text": "Angola.",
+      "file": "n-73bd7060be55b6fc256adb0e.mp3",
+      "sources": [
+        "world:ago:name"
+      ]
+    },
+    {
+      "id": "n-73fbb6103ff3ac4d61012120",
+      "text": "Neste país, muitas pessoas falam English e Malay.",
+      "file": "n-73fbb6103ff3ac4d61012120.mp3",
+      "sources": [
+        "world:sgp:music-language"
+      ]
+    },
+    {
+      "id": "n-740b7d290a77ba8c201efe24",
+      "text": "Olhe para o corpo do Boto-cor-de-rosa e para as pistas do lugar.",
+      "file": "n-740b7d290a77ba8c201efe24.mp3",
+      "sources": [
+        "biomes:boto:adaptation:retry"
+      ]
+    },
+    {
+      "id": "n-74a4ecb54587860ca545858b",
+      "text": "Os tambores reais do Burundi são fortes, rápidos e tocados em grupo.",
+      "file": "n-74a4ecb54587860ca545858b.mp3",
+      "sources": [
+        "world:bdi:music"
+      ]
+    },
+    {
+      "id": "n-7517ab02ef59c3324d51084e",
+      "text": "Vamos brincar de somar? Arraste os blocos com calma. Você pode ouvir de novo quando quiser.",
+      "file": "n-7517ab02ef59c3324d51084e.mp3",
+      "sources": [
+        "arithmetic:static"
+      ]
+    },
+    {
+      "id": "n-75c04c9245104b57328f00f4",
+      "text": "Ilhas Virgens dos Estados Unidos.",
+      "file": "n-75c04c9245104b57328f00f4.mp3",
+      "sources": [
+        "world:vir:name"
+      ]
+    },
+    {
+      "id": "n-75c06729dd3494cf22ac4cad",
+      "text": "A música butanesa usa cantos, tambores e danças com roupas tradicionais.",
+      "file": "n-75c06729dd3494cf22ac4cad.mp3",
+      "sources": [
+        "world:btn:music"
+      ]
+    },
+    {
+      "id": "n-760e1517e8cbc82146393b8d",
+      "text": "São Cristóvão e Nevis.",
+      "file": "n-760e1517e8cbc82146393b8d.mp3",
+      "sources": [
+        "world:kna:name"
+      ]
+    },
+    {
+      "id": "n-765a86773b6f12fa9d15feb6",
+      "text": "Bermudas.",
+      "file": "n-765a86773b6f12fa9d15feb6.mp3",
+      "sources": [
+        "world:bmu:name"
+      ]
+    },
+    {
+      "id": "n-7693856cd282a00f16a91939",
+      "text": "cinquenta e seis",
+      "file": "n-7693856cd282a00f16a91939.mp3",
+      "sources": [
+        "blocks:number:56"
+      ]
+    },
+    {
+      "id": "n-76d42e7aeb33e9af6c463c83",
+      "text": "Na Antártida não existe música tradicional de moradores, mas dá para imaginar o som do vento e do gelo.",
+      "file": "n-76d42e7aeb33e9af6c463c83.mp3",
+      "sources": [
+        "world:ata:music"
+      ]
+    },
+    {
+      "id": "n-77165365241ef46abe02ac96",
+      "text": "A valiha, uma espécie de cítara de bambu, aparece em músicas malgaxes junto com canto, palmas e ritmos de dança.",
+      "file": "n-77165365241ef46abe02ac96.mp3",
+      "sources": [
+        "world:mdg:music"
+      ]
+    },
+    {
+      "id": "n-778eb4fa277f3db478aa840c",
+      "text": "Semba, kizomba e kuduro são ritmos de Angola com dança, batidas animadas e histórias de cidade e de família.",
+      "file": "n-778eb4fa277f3db478aa840c.mp3",
+      "sources": [
+        "world:ago:music"
+      ]
+    },
+    {
+      "id": "n-779fab411c4913c1638bb483",
+      "text": "noventa e três",
+      "file": "n-779fab411c4913c1638bb483.mp3",
+      "sources": [
+        "blocks:number:93"
+      ]
+    },
+    {
+      "id": "n-77a0b4221db96077ebd7c783",
+      "text": "Taiko e shakuhachi: tambores fortes e flautas de bambu em melodias antigas.",
+      "file": "n-77a0b4221db96077ebd7c783.mp3",
+      "sources": [
+        "world-fallback:japan:music"
+      ]
+    },
+    {
+      "id": "n-77c723acc5421b78941436e2",
+      "text": "Quirguistão.",
+      "file": "n-77c723acc5421b78941436e2.mp3",
+      "sources": [
+        "world:kgz:name"
+      ]
+    },
+    {
+      "id": "n-78ff9b4a712be893f911cddb",
+      "text": "Guatemala.",
+      "file": "n-78ff9b4a712be893f911cddb.mp3",
+      "sources": [
+        "world:gtm:name"
+      ]
+    },
+    {
+      "id": "n-793a50b1f86ce90a7236af85",
+      "text": "Neste país, muitas pessoas falam English e Gilbertese.",
+      "file": "n-793a50b1f86ce90a7236af85.mp3",
+      "sources": [
+        "world:kir:music-language"
+      ]
+    },
+    {
+      "id": "n-795c1bf71b206db9a38063bb",
+      "text": "A música síria usa oud, qanun, ney, darbuka e canto árabe com melodias cheias de curvas.",
+      "file": "n-795c1bf71b206db9a38063bb.mp3",
+      "sources": [
+        "world:syr:music"
+      ]
+    },
+    {
+      "id": "n-79b5bd179d25fc16c74d445b",
+      "text": "treze unidades",
+      "file": "n-79b5bd179d25fc16c74d445b.mp3",
+      "sources": [
+        "blocks:units:13"
+      ]
+    },
+    {
+      "id": "n-7ad5a69afd26877b20007712",
+      "text": "Costa Rica.",
+      "file": "n-7ad5a69afd26877b20007712.mp3",
+      "sources": [
+        "world:cri:name"
+      ]
+    },
+    {
+      "id": "n-7b2e9809339d75c4c5234153",
+      "text": "Neste país, muitas pessoas falam English e Maltese.",
+      "file": "n-7b2e9809339d75c4c5234153.mp3",
+      "sources": [
+        "world:mlt:music-language"
+      ]
+    },
+    {
+      "id": "n-7ba2d26b960a20f402a648d5",
+      "text": "Arábia Saudita.",
+      "file": "n-7ba2d26b960a20f402a648d5.mp3",
+      "sources": [
+        "world:sau:name"
+      ]
+    },
+    {
+      "id": "n-7c727a4296c99ee1d121a8da",
+      "text": "Vamos montar o",
+      "file": "n-7c727a4296c99ee1d121a8da.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-7c894c813bc92ddeedd46bfa",
+      "text": "Ilha Bouvet.",
+      "file": "n-7c894c813bc92ddeedd46bfa.mp3",
+      "sources": [
+        "world:bvt:name"
+      ]
+    },
+    {
+      "id": "n-7c9655c3664250245f999fd5",
+      "text": "O joropo é uma música venezuelana ligada aos llanos, com harpa, cuatro, maracas e dança rápida.",
+      "file": "n-7c9655c3664250245f999fd5.mp3",
+      "sources": [
+        "world:ven:music"
+      ]
+    },
+    {
+      "id": "n-7dd651b08ef52213bc6b06e4",
+      "text": "Bulgária.",
+      "file": "n-7dd651b08ef52213bc6b06e4.mp3",
+      "sources": [
+        "world:bgr:name"
+      ]
+    },
+    {
+      "id": "n-7e1328de76f2699499de48c0",
+      "text": "A chanson francesa conta histórias cantadas, muitas vezes com acordeão, piano e uma voz que parece conversar.",
+      "file": "n-7e1328de76f2699499de48c0.mp3",
+      "sources": [
+        "world:fra:music"
+      ]
+    },
+    {
+      "id": "n-7e42f2592ec696df93d5eb57",
+      "text": "A música sul-africana tem coros fortes, percussão, danças, jazz, gospel e estilos populares como mbaqanga e kwaito.",
+      "file": "n-7e42f2592ec696df93d5eb57.mp3",
+      "sources": [
+        "world:zaf:music"
+      ]
+    },
+    {
+      "id": "n-7e974de45fbf708931ce4505",
+      "text": "sete",
+      "file": "n-7e974de45fbf708931ce4505.mp3",
+      "sources": [
+        "blocks:number-feminine:7",
+        "blocks:number:7"
+      ]
+    },
+    {
+      "id": "n-7f2d12602bd7b4e7d76e081f",
+      "text": "Santa Helena, Ascensão e Tristão da Cunha.",
+      "file": "n-7f2d12602bd7b4e7d76e081f.mp3",
+      "sources": [
+        "world:shn:name"
+      ]
+    },
+    {
+      "id": "n-803f4ba2a8838346cfa7a7b9",
+      "text": "Neste país, muitas pessoas falam Arabic e Hebrew.",
+      "file": "n-803f4ba2a8838346cfa7a7b9.mp3",
+      "sources": [
+        "world:isr:music-language"
+      ]
+    },
+    {
+      "id": "n-816d024da4291db2f2716067",
+      "text": "O que ajuda o lobo-guará a andar pelo Cerrado?",
+      "file": "n-816d024da4291db2f2716067.mp3",
+      "sources": [
+        "biomes:loboGuara:adaptation:question"
+      ]
+    },
+    {
+      "id": "n-81781912d16e0bbafc2ff9bf",
+      "text": "Jersey.",
+      "file": "n-81781912d16e0bbafc2ff9bf.mp3",
+      "sources": [
+        "world:jey:name"
+      ]
+    },
+    {
+      "id": "n-81c24529bc57a03f903ff190",
+      "text": "Combina muito!",
+      "file": "n-81c24529bc57a03f903ff190.mp3",
+      "sources": [
+        "biomes:boto:amazonia:feedback-title",
+        "biomes:ema:pampa:feedback-title",
+        "biomes:loboGuara:cerrado:feedback-title",
+        "biomes:mandacaru:caatinga:feedback-title",
+        "biomes:mico:mata:feedback-title",
+        "biomes:tuiuiu:pantanal:feedback-title"
+      ]
+    },
+    {
+      "id": "n-81ddae673032d912a5f9f49b",
+      "text": "Neste país, muitas pessoas falam Moldavian.",
+      "file": "n-81ddae673032d912a5f9f49b.mp3",
+      "sources": [
+        "world:mda:music-language"
+      ]
+    },
+    {
+      "id": "n-81f6725568d0f9451c8837f4",
+      "text": "Nova Caledónia.",
+      "file": "n-81f6725568d0f9451c8837f4.mp3",
+      "sources": [
+        "world:ncl:name"
+      ]
+    },
+    {
+      "id": "n-826456bea19c5386e945b9b7",
+      "text": "Niue.",
+      "file": "n-826456bea19c5386e945b9b7.mp3",
+      "sources": [
+        "world:niu:name"
+      ]
+    },
+    {
+      "id": "n-8277b92c86c28a212ceb1125",
+      "text": "Neste país, muitas pessoas falam English e Sotho.",
+      "file": "n-8277b92c86c28a212ceb1125.mp3",
+      "sources": [
+        "world:lso:music-language"
+      ]
+    },
+    {
+      "id": "n-82fbdea9e871fd5a682f5081",
+      "text": "A música albanesa tem cantos fortes, danças em roda e sons de clarinete e tambor.",
+      "file": "n-82fbdea9e871fd5a682f5081.mp3",
+      "sources": [
+        "world:alb:music"
+      ]
+    },
+    {
+      "id": "n-83777c4446720149e61665a1",
+      "text": "setenta e três",
+      "file": "n-83777c4446720149e61665a1.mp3",
+      "sources": [
+        "blocks:number:73"
+      ]
+    },
+    {
+      "id": "n-84163a327a62920a42ffc3f4",
+      "text": "oitenta e três",
+      "file": "n-84163a327a62920a42ffc3f4.mp3",
+      "sources": [
+        "blocks:number:83"
+      ]
+    },
+    {
+      "id": "n-84334bd3ebb51cc22853ee39",
+      "text": "Ucrânia.",
+      "file": "n-84334bd3ebb51cc22853ee39.mp3",
+      "sources": [
+        "world:ukr:name"
+      ]
+    },
+    {
+      "id": "n-84a1550187c2b5ec741a836c",
+      "text": "não é. Olhe o último número que contamos.",
+      "file": "n-84a1550187c2b5ec741a836c.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-854624fb88fc1c4348bc621f",
+      "text": "Arraste um",
+      "file": "n-854624fb88fc1c4348bc621f.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-854f51f972f87dffd1b2cd66",
+      "text": "Catar.",
+      "file": "n-854f51f972f87dffd1b2cd66.mp3",
+      "sources": [
+        "world:qat:name"
+      ]
+    },
+    {
+      "id": "n-85b009ba0deeb0659367c85b",
+      "text": "cinco dezenas",
+      "file": "n-85b009ba0deeb0659367c85b.mp3",
+      "sources": [
+        "blocks:tens:5"
+      ]
+    },
+    {
+      "id": "n-85ec03363fc5773f213fb30a",
+      "text": "A música birmanesa usa a harpa saung, gongos, tambores e conjuntos hsaing waing com sons rápidos e brilhantes.",
+      "file": "n-85ec03363fc5773f213fb30a.mp3",
+      "sources": [
+        "world:mmr:music"
+      ]
+    },
+    {
+      "id": "n-861267bd43c21d9bd9dd00d7",
+      "text": "Chipre.",
+      "file": "n-861267bd43c21d9bd9dd00d7.mp3",
+      "sources": [
+        "world:cyp:name"
+      ]
+    },
+    {
+      "id": "n-86309751ba5a5e12edfe82fa",
+      "text": "A música maori usa canto, haka, poi, flautas taonga pūoro e ritmos que contam histórias de ancestrais e lugares.",
+      "file": "n-86309751ba5a5e12edfe82fa.mp3",
+      "sources": [
+        "world:nzl:music"
+      ]
+    },
+    {
+      "id": "n-8637d1bd383bc6575dba5ef2",
+      "text": "Haiti.",
+      "file": "n-8637d1bd383bc6575dba5ef2.mp3",
+      "sources": [
+        "world:hti:name"
+      ]
+    },
+    {
+      "id": "n-873960393aa940f2113055a4",
+      "text": "Neste país, muitas pessoas falam French e Haitian Creole.",
+      "file": "n-873960393aa940f2113055a4.mp3",
+      "sources": [
+        "world:hti:music-language"
+      ]
+    },
+    {
+      "id": "n-877f5149966824f66b5f6008",
+      "text": "Samba e choro: ritmos cheios de percussão, cordas e rodas de música.",
+      "file": "n-877f5149966824f66b5f6008.mp3",
+      "sources": [
+        "world-fallback:brazil:music"
+      ]
+    },
+    {
+      "id": "n-87dc13bc7415ba5284d5b7d1",
+      "text": "Cuba.",
+      "file": "n-87dc13bc7415ba5284d5b7d1.mp3",
+      "sources": [
+        "world:cub:name"
+      ]
+    },
+    {
+      "id": "n-8848d592156a1a5dcf08c2c6",
+      "text": "A música egípcia usa voz, percussão, flautas e instrumentos de corda como o oud; há sons antigos, populares e modernos.",
+      "file": "n-8848d592156a1a5dcf08c2c6.mp3",
+      "sources": [
+        "world:egy:music"
+      ]
+    },
+    {
+      "id": "n-884f658a40c34fa2f99bf358",
+      "text": "trinta e quatro",
+      "file": "n-884f658a40c34fa2f99bf358.mp3",
+      "sources": [
+        "blocks:number:34"
+      ]
+    },
+    {
+      "id": "n-888961231c497876c7fe0d2a",
+      "text": "Cabo Verde.",
+      "file": "n-888961231c497876c7fe0d2a.mp3",
+      "sources": [
+        "world:cpv:name"
+      ]
+    },
+    {
+      "id": "n-88c6135d730d0dfd15c6770c",
+      "text": "Líbia.",
+      "file": "n-88c6135d730d0dfd15c6770c.mp3",
+      "sources": [
+        "world:lby:name"
+      ]
+    },
+    {
+      "id": "n-88e6ecc3962c334e6d600b22",
+      "text": "A música turca usa saz, darbuka, ney, canto e ritmos de dança que aparecem em festas, histórias e cerimônias.",
+      "file": "n-88e6ecc3962c334e6d600b22.mp3",
+      "sources": [
+        "world:tur:music"
+      ]
+    },
+    {
+      "id": "n-8964274ec4d7500a7a022fc8",
+      "text": "sessenta",
+      "file": "n-8964274ec4d7500a7a022fc8.mp3",
+      "sources": [
+        "blocks:number:60"
+      ]
+    },
+    {
+      "id": "n-8a0c74497de5f4ed7612d902",
+      "text": "A música iemenita usa oud, qanbus, tambores, palmas e cantos que podem acompanhar festas, poesia e danças em grupo.",
+      "file": "n-8a0c74497de5f4ed7612d902.mp3",
+      "sources": [
+        "world:yem:music"
+      ]
+    },
+    {
+      "id": "n-8a36d5f621136d7edd764378",
+      "text": "No Pampa falta muito sol, pouca água e guardar água. Procure outro lugar no mapa.",
+      "file": "n-8a36d5f621136d7edd764378.mp3",
+      "sources": [
+        "biomes:mandacaru:pampa:feedback"
+      ]
+    },
+    {
+      "id": "n-8ad9c1e72cface6cb89c1b75",
+      "text": "San Marino.",
+      "file": "n-8ad9c1e72cface6cb89c1b75.mp3",
+      "sources": [
+        "world:smr:name"
+      ]
+    },
+    {
+      "id": "n-8c0c2a5348f2905664129f54",
+      "text": "Neste país, muitas pessoas falam English e Fijian.",
+      "file": "n-8c0c2a5348f2905664129f54.mp3",
+      "sources": [
+        "world:fji:music-language"
+      ]
+    },
+    {
+      "id": "n-8c17fc111d5d58ba50fb624e",
+      "text": "El Salvador.",
+      "file": "n-8c17fc111d5d58ba50fb624e.mp3",
+      "sources": [
+        "world:slv:name"
+      ]
+    },
+    {
+      "id": "n-8c3ba2342fb16ca00a8454b6",
+      "text": "Cumbia, vallenato e bambuco são sons colombianos com tambores, acordeão, flautas e histórias cantadas.",
+      "file": "n-8c3ba2342fb16ca00a8454b6.mp3",
+      "sources": [
+        "world:col:music"
+      ]
+    },
+    {
+      "id": "n-8d6ce9de99dc9ca064a2cf3d",
+      "text": "Na Mata Atlântica falta muito sol, pouca água e guardar água. Procure outro lugar no mapa.",
+      "file": "n-8d6ce9de99dc9ca064a2cf3d.mp3",
+      "sources": [
+        "biomes:mandacaru:mata:feedback"
+      ]
+    },
+    {
+      "id": "n-8da2b76cd44a85f970e77e8d",
+      "text": "Eslováquia.",
+      "file": "n-8da2b76cd44a85f970e77e8d.mp3",
+      "sources": [
+        "world:svk:name"
+      ]
+    },
+    {
+      "id": "n-8dadfde1b0e1eb1d9fe2e202",
+      "text": "Síria.",
+      "file": "n-8dadfde1b0e1eb1d9fe2e202.mp3",
+      "sources": [
+        "world:syr:name"
+      ]
+    },
+    {
+      "id": "n-8e3a732625ca05c6edaeaa28",
+      "text": "Sudão.",
+      "file": "n-8e3a732625ca05c6edaeaa28.mp3",
+      "sources": [
+        "world:sdn:name"
+      ]
+    },
+    {
+      "id": "n-8f262345f5ed5ee9800e86e1",
+      "text": "Ilhas Cook.",
+      "file": "n-8f262345f5ed5ee9800e86e1.mp3",
+      "sources": [
+        "world:cok:name"
+      ]
+    },
+    {
+      "id": "n-8f49c4ae54477aafc51b75ce",
+      "text": "Ilhas Turks e Caicos.",
+      "file": "n-8f49c4ae54477aafc51b75ce.mp3",
+      "sources": [
+        "world:tca:name"
+      ]
+    },
+    {
+      "id": "n-8f72c70f5ae5fe662def397f",
+      "text": "Neste país, muitas pessoas falam English e Irish.",
+      "file": "n-8f72c70f5ae5fe662def397f.mp3",
+      "sources": [
+        "world:irl:music-language"
+      ]
+    },
+    {
+      "id": "n-907ecc141caf0e584b91e189",
+      "text": "Neste país, muitas pessoas falam Danish e Faroese.",
+      "file": "n-907ecc141caf0e584b91e189.mp3",
+      "sources": [
+        "world:fro:music-language"
+      ]
+    },
+    {
+      "id": "n-90e327c7e956483c65fde283",
+      "text": "Polinésia Francesa.",
+      "file": "n-90e327c7e956483c65fde283.mp3",
+      "sources": [
+        "world:pyf:name"
+      ]
+    },
+    {
+      "id": "n-90f5b416d4a2e8047f742ff6",
+      "text": "oitenta e sete",
+      "file": "n-90f5b416d4a2e8047f742ff6.mp3",
+      "sources": [
+        "blocks:number:87"
+      ]
+    },
+    {
+      "id": "n-91374093dd0784f7319afe2e",
+      "text": "A música iraquiana usa maqam, oud, santur, joza, percussão e canto cheio de voltas melódicas.",
+      "file": "n-91374093dd0784f7319afe2e.mp3",
+      "sources": [
+        "world:irq:music"
+      ]
+    },
+    {
+      "id": "n-9139562f7de3f74927dd963a",
+      "text": "Neste país, muitas pessoas falam English e Chinese.",
+      "file": "n-9139562f7de3f74927dd963a.mp3",
+      "sources": [
+        "world:hkg:music-language"
+      ]
+    },
+    {
+      "id": "n-9203f79b943121c42fa02bf9",
+      "text": "Guernsey.",
+      "file": "n-9203f79b943121c42fa02bf9.mp3",
+      "sources": [
+        "world:ggy:name"
+      ]
+    },
+    {
+      "id": "n-922c3fb5f6c14d239dde1da1",
+      "text": "Na Tanzânia há taarab em Zanzibar, ngoma com tambores e danças, além de bongo flava nas cidades.",
+      "file": "n-922c3fb5f6c14d239dde1da1.mp3",
+      "sources": [
+        "world:tza:music"
+      ]
+    },
+    {
+      "id": "n-922e09c9bbf6452947b774c6",
+      "text": "Na Caatinga falta água rasa, peixes e espaço aberto. Procure outro lugar no mapa.",
+      "file": "n-922e09c9bbf6452947b774c6.mp3",
+      "sources": [
+        "biomes:tuiuiu:caatinga:feedback"
+      ]
+    },
+    {
+      "id": "n-9285ffb018cf8974f366c3f8",
+      "text": "setenta",
+      "file": "n-9285ffb018cf8974f366c3f8.mp3",
+      "sources": [
+        "blocks:number:70"
+      ]
+    },
+    {
+      "id": "n-92bbd15d9f8e49ff96fff6a2",
+      "text": "O número é",
+      "file": "n-92bbd15d9f8e49ff96fff6a2.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-92bdd84bc692c61c11df27fb",
+      "text": "Papua Nova Guiné.",
+      "file": "n-92bdd84bc692c61c11df27fb.mp3",
+      "sources": [
+        "world:png:name"
+      ]
+    },
+    {
+      "id": "n-92c1b2b01ab3ed5f2d4573da",
+      "text": "No Canadá há tambores e cantos de povos indígenas, folk, música celta, pop e canções em inglês e francês.",
+      "file": "n-92c1b2b01ab3ed5f2d4573da.mp3",
+      "sources": [
+        "world:can:music"
+      ]
+    },
+    {
+      "id": "n-937c44d3f956a53aaf992225",
+      "text": "O que ajuda o boto a nadar no rio?",
+      "file": "n-937c44d3f956a53aaf992225.mp3",
+      "sources": [
+        "biomes:boto:adaptation:question"
+      ]
+    },
+    {
+      "id": "n-9459f1eabb53b3ec3c36e01f",
+      "text": "A música tailandesa usa ranat, khene, gongos, tambores e melodias que acompanham danças, teatros e celebrações.",
+      "file": "n-9459f1eabb53b3ec3c36e01f.mp3",
+      "sources": [
+        "world:tha:music"
+      ]
+    },
+    {
+      "id": "n-947bc18927868cfebd66c999",
+      "text": "Guiana Francesa.",
+      "file": "n-947bc18927868cfebd66c999.mp3",
+      "sources": [
+        "world:guf:name"
+      ]
+    },
+    {
+      "id": "n-94de5b6976efd5a23b723ef6",
+      "text": "Suíça.",
+      "file": "n-94de5b6976efd5a23b723ef6.mp3",
+      "sources": [
+        "world:che:name"
+      ]
+    },
+    {
+      "id": "n-94e913dfe539b4e5d06fce67",
+      "text": "Malta.",
+      "file": "n-94e913dfe539b4e5d06fce67.mp3",
+      "sources": [
+        "world:mlt:name"
+      ]
+    },
+    {
+      "id": "n-9519d7772f3cc0646ef53241",
+      "text": "Etiópia.",
+      "file": "n-9519d7772f3cc0646ef53241.mp3",
+      "sources": [
+        "world:eth:name"
+      ]
+    },
+    {
+      "id": "n-95537c0b28d98d6a99f74932",
+      "text": "Arraste as barras de dez e os cubinhos para o quadro.",
+      "file": "n-95537c0b28d98d6a99f74932.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-964efdd77b2f94aeff68d86e",
+      "text": "vinte e três",
+      "file": "n-964efdd77b2f94aeff68d86e.mp3",
+      "sources": [
+        "blocks:number:23"
+      ]
+    },
+    {
+      "id": "n-966a891c2e84ac0f90efa915",
+      "text": "Andorra.",
+      "file": "n-966a891c2e84ac0f90efa915.mp3",
+      "sources": [
+        "world:and:name"
+      ]
+    },
+    {
+      "id": "n-968077907652d0913653979b",
+      "text": "O didgeridoo é um instrumento aborígene de som grave e comprido; também há músicas de muitas comunidades imigrantes e pop australiano.",
+      "file": "n-968077907652d0913653979b.mp3",
+      "sources": [
+        "world:aus:music"
+      ]
+    },
+    {
+      "id": "n-97170e84d7d71d02b201fe8c",
+      "text": "A música omanense usa tambores, palmas, canto em grupo e ritmos de mar, deserto e celebrações.",
+      "file": "n-97170e84d7d71d02b201fe8c.mp3",
+      "sources": [
+        "world:omn:music"
+      ]
+    },
+    {
+      "id": "n-985321b27cc0a8de559e832f",
+      "text": "dezoito unidades",
+      "file": "n-985321b27cc0a8de559e832f.mp3",
+      "sources": [
+        "blocks:units:18"
+      ]
+    },
+    {
+      "id": "n-987f2516a5113e021cfe1801",
+      "text": "Geórgia.",
+      "file": "n-987f2516a5113e021cfe1801.mp3",
+      "sources": [
+        "world:geo:name"
+      ]
+    },
+    {
+      "id": "n-98eda56c317049930a9e5265",
+      "text": "Na Amazônia falta muito sol, pouca água e guardar água. Procure outro lugar no mapa.",
+      "file": "n-98eda56c317049930a9e5265.mp3",
+      "sources": [
+        "biomes:mandacaru:amazonia:feedback"
+      ]
+    },
+    {
+      "id": "n-98f5eecd4203d983168db57f",
+      "text": "Neste país, muitas pessoas falam Portuguese e Tetum.",
+      "file": "n-98f5eecd4203d983168db57f.mp3",
+      "sources": [
+        "world:tls:music-language"
+      ]
+    },
+    {
+      "id": "n-98fc0fb046fafe2d78f578b5",
+      "text": "Vamos procurar músicas cantadas nesses idiomas.",
+      "file": "n-98fc0fb046fafe2d78f578b5.mp3",
+      "sources": [
+        "world:music-language:continuation"
+      ]
+    },
+    {
+      "id": "n-995a13ba15544cc954bf6cb2",
+      "text": "A música quirguiz usa komuz, canto épico, harpas de boca e melodias que lembram cavalos e montanhas.",
+      "file": "n-995a13ba15544cc954bf6cb2.mp3",
+      "sources": [
+        "world:kgz:music"
+      ]
+    },
+    {
+      "id": "n-99c2d118bc9dc791fb8db70b",
+      "text": "São Tomé e Príncipe.",
+      "file": "n-99c2d118bc9dc791fb8db70b.mp3",
+      "sources": [
+        "world:stp:name"
+      ]
+    },
+    {
+      "id": "n-9a2da0ef7efcdd2136f394e2",
+      "text": "Austrália.",
+      "file": "n-9a2da0ef7efcdd2136f394e2.mp3",
+      "sources": [
+        "world-fallback:australia:name",
+        "world:aus:name"
+      ]
+    },
+    {
+      "id": "n-9a6a817a3d0b72b61dc951df",
+      "text": "Ruanda.",
+      "file": "n-9a6a817a3d0b72b61dc951df.mp3",
+      "sources": [
+        "world:rwa:name"
+      ]
+    },
+    {
+      "id": "n-9a6cf3d7477ed4b1d57e4433",
+      "text": "oito",
+      "file": "n-9a6cf3d7477ed4b1d57e4433.mp3",
+      "sources": [
+        "blocks:number-feminine:8",
+        "blocks:number:8"
+      ]
+    },
+    {
+      "id": "n-9aa6983f0eb5e7d2de37d5fa",
+      "text": "A mbira, também chamada piano de dedo, é muito importante no Zimbábue, junto com tambores, canto e danças como jit.",
+      "file": "n-9aa6983f0eb5e7d2de37d5fa.mp3",
+      "sources": [
+        "world:zwe:music"
+      ]
+    },
+    {
+      "id": "n-9aa7273c04711421db97cd5a",
+      "text": "Agora monte o",
+      "file": "n-9aa7273c04711421db97cd5a.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-9b24146c15fcabd880d59f32",
+      "text": "três",
+      "file": "n-9b24146c15fcabd880d59f32.mp3",
+      "sources": [
+        "blocks:number-feminine:3",
+        "blocks:number:3"
+      ]
+    },
+    {
+      "id": "n-9b6c40144a21358fdb45879f",
+      "text": "Guardar água no caule ajuda o mandacaru em lugares secos.",
+      "file": "n-9b6c40144a21358fdb45879f.mp3",
+      "sources": [
+        "biomes:mandacaru:adaptation:success"
+      ]
+    },
+    {
+      "id": "n-9b8dd342f51ea9847477a568",
+      "text": "No Pampa tem campo aberto e andar bastante, mas falta frutos. Procure outro lugar no mapa.",
+      "file": "n-9b8dd342f51ea9847477a568.mp3",
+      "sources": [
+        "biomes:loboGuara:pampa:feedback"
+      ]
+    },
+    {
+      "id": "n-9bba9ebe4e5bb14158bd0fcc",
+      "text": "setenta e oito",
+      "file": "n-9bba9ebe4e5bb14158bd0fcc.mp3",
+      "sources": [
+        "blocks:number:78"
+      ]
+    },
+    {
+      "id": "n-9be39452e7d31a5358225b45",
+      "text": "sessenta e um",
+      "file": "n-9be39452e7d31a5358225b45.mp3",
+      "sources": [
+        "blocks:number:61"
+      ]
+    },
+    {
+      "id": "n-9c1618bc036bb860d559c4b7",
+      "text": "Eu sou o",
+      "file": "n-9c1618bc036bb860d559c4b7.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-9cca918132903034141fed39",
+      "text": "Micronésia.",
+      "file": "n-9cca918132903034141fed39.mp3",
+      "sources": [
+        "world:fsm:name"
+      ]
+    },
+    {
+      "id": "n-9e640966a7924bb67a56ebf6",
+      "text": "Aruba.",
+      "file": "n-9e640966a7924bb67a56ebf6.mp3",
+      "sources": [
+        "world:abw:name"
+      ]
+    },
+    {
+      "id": "n-9f9e7c2367c4f1a9cf0da40a",
+      "text": "Fiji.",
+      "file": "n-9f9e7c2367c4f1a9cf0da40a.mp3",
+      "sources": [
+        "world:fji:name"
+      ]
+    },
+    {
+      "id": "n-9fb4a855d3849dbf699171ce",
+      "text": "Ilhas Salomão.",
+      "file": "n-9fb4a855d3849dbf699171ce.mp3",
+      "sources": [
+        "world:slb:name"
+      ]
+    },
+    {
+      "id": "n-a0d9fc9b9b61dcf6fc5de27b",
+      "text": "setenta e sete",
+      "file": "n-a0d9fc9b9b61dcf6fc5de27b.mp3",
+      "sources": [
+        "blocks:number:77"
+      ]
+    },
+    {
+      "id": "n-a138ba746bdb8b3eaca9d5ae",
+      "text": "Guiné-Bissau.",
+      "file": "n-a138ba746bdb8b3eaca9d5ae.mp3",
+      "sources": [
+        "world:gnb:name"
+      ]
+    },
+    {
+      "id": "n-a1a45a2ad0145331e21f3f0f",
+      "text": "para eles se juntarem!",
+      "file": "n-a1a45a2ad0145331e21f3f0f.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-a1f82cc7124bd7a3f7cd5087",
+      "text": "vinte e um",
+      "file": "n-a1f82cc7124bd7a3f7cd5087.mp3",
+      "sources": [
+        "blocks:number:21"
+      ]
+    },
+    {
+      "id": "n-a205c47c454c90326801df4b",
+      "text": "Bielorússia.",
+      "file": "n-a205c47c454c90326801df4b.mp3",
+      "sources": [
+        "world:blr:name"
+      ]
+    },
+    {
+      "id": "n-a20cdc62be5b213c4394a95f",
+      "text": "Na Bélgica há música clássica, bandas, jazz e canções em francês, neerlandês e alemão.",
+      "file": "n-a20cdc62be5b213c4394a95f.mp3",
+      "sources": [
+        "world:bel:music"
+      ]
+    },
+    {
+      "id": "n-a23762ef0aa65b06aea0db32",
+      "text": "cento e dois",
+      "file": "n-a23762ef0aa65b06aea0db32.mp3",
+      "sources": [
+        "blocks:number:102"
+      ]
+    },
+    {
+      "id": "n-a2b6356a941e7488faa9ac25",
+      "text": "Libéria.",
+      "file": "n-a2b6356a941e7488faa9ac25.mp3",
+      "sources": [
+        "world:lbr:name"
+      ]
+    },
+    {
+      "id": "n-a3947037cd08bc11aa13a260",
+      "text": "Na Argélia há raï, música chaabi e bedoui, com canto, tambores, cordas e ritmos do norte da África.",
+      "file": "n-a3947037cd08bc11aa13a260.mp3",
+      "sources": [
+        "world:dza:music"
+      ]
+    },
+    {
+      "id": "n-a3f3003549c15eaee29fd32e",
+      "text": "Investigue mais um pouquinho.",
+      "file": "n-a3f3003549c15eaee29fd32e.mp3",
+      "sources": [
+        "biomes:adaptation:retry-title"
+      ]
+    },
+    {
+      "id": "n-a4256bffdcd9448aa21cbdf0",
+      "text": "Guiné Equatorial.",
+      "file": "n-a4256bffdcd9448aa21cbdf0.mp3",
+      "sources": [
+        "world:gnq:name"
+      ]
+    },
+    {
+      "id": "n-a4b5b29c7be9d4f2218e5bbe",
+      "text": "Vanuatu.",
+      "file": "n-a4b5b29c7be9d4f2218e5bbe.mp3",
+      "sources": [
+        "world:vut:name"
+      ]
+    },
+    {
+      "id": "n-a4f1edf3c58261e54d86279b",
+      "text": "setenta e seis",
+      "file": "n-a4f1edf3c58261e54d86279b.mp3",
+      "sources": [
+        "blocks:number:76"
+      ]
+    },
+    {
+      "id": "n-a50a454627365ab50a6119f6",
+      "text": "Neste país, muitas pessoas falam Norwegian.",
+      "file": "n-a50a454627365ab50a6119f6.mp3",
+      "sources": [
+        "world:bvt:music-language",
+        "world:sjm:music-language"
+      ]
+    },
+    {
+      "id": "n-a51fa1e117e0985652901d92",
+      "text": "Belize.",
+      "file": "n-a51fa1e117e0985652901d92.mp3",
+      "sources": [
+        "world:blz:name"
+      ]
+    },
+    {
+      "id": "n-a52cb1a49c12076d86337a8f",
+      "text": "Ilhas Caimão.",
+      "file": "n-a52cb1a49c12076d86337a8f.mp3",
+      "sources": [
+        "world:cym:name"
+      ]
+    },
+    {
+      "id": "n-a55c0e59e4e6af23d42306d7",
+      "text": "dezessete unidades",
+      "file": "n-a55c0e59e4e6af23d42306d7.mp3",
+      "sources": [
+        "blocks:units:17"
+      ]
+    },
+    {
+      "id": "n-a564910598996d3e0fdd4562",
+      "text": "Anguilla.",
+      "file": "n-a564910598996d3e0fdd4562.mp3",
+      "sources": [
+        "world:aia:name"
+      ]
+    },
+    {
+      "id": "n-a5f6bf41f92d933015108a78",
+      "text": "Tunísia.",
+      "file": "n-a5f6bf41f92d933015108a78.mp3",
+      "sources": [
+        "world:tun:name"
+      ]
+    },
+    {
+      "id": "n-a61750c368e0f1136ac38ecf",
+      "text": "uma unidade",
+      "file": "n-a61750c368e0f1136ac38ecf.mp3",
+      "sources": [
+        "blocks:units:1"
+      ]
+    },
+    {
+      "id": "n-a691bb094a6880be473a03cb",
+      "text": "Luxemburgo.",
+      "file": "n-a691bb094a6880be473a03cb.mp3",
+      "sources": [
+        "world:lux:name"
+      ]
+    },
+    {
+      "id": "n-a709041f071da5b1ce68cf6d",
+      "text": "dezessete",
+      "file": "n-a709041f071da5b1ce68cf6d.mp3",
+      "sources": [
+        "blocks:number-feminine:17",
+        "blocks:number:17"
+      ]
+    },
+    {
+      "id": "n-a7826c346d1296682dfd0ab5",
+      "text": "Na Amazônia falta campo aberto, frutos e andar bastante. Procure outro lugar no mapa.",
+      "file": "n-a7826c346d1296682dfd0ab5.mp3",
+      "sources": [
+        "biomes:loboGuara:amazonia:feedback"
+      ]
+    },
+    {
+      "id": "n-a7c839bf7bd0cdffc16b66cb",
+      "text": "cento e dez",
+      "file": "n-a7c839bf7bd0cdffc16b66cb.mp3",
+      "sources": [
+        "blocks:number:110"
+      ]
+    },
+    {
+      "id": "n-a84ec725ec3a613a0bc59ae6",
+      "text": "Turquemenistão.",
+      "file": "n-a84ec725ec3a613a0bc59ae6.mp3",
+      "sources": [
+        "world:tkm:name"
+      ]
+    },
+    {
+      "id": "n-a8c2acdb4f4b53bb27965d21",
+      "text": "quarenta e seis",
+      "file": "n-a8c2acdb4f4b53bb27965d21.mp3",
+      "sources": [
+        "blocks:number:46"
+      ]
+    },
+    {
+      "id": "n-aa8f6702977b4b591805d057",
+      "text": "Áustria.",
+      "file": "n-aa8f6702977b4b591805d057.mp3",
+      "sources": [
+        "world:aut:name"
+      ]
+    },
+    {
+      "id": "n-aa9b167c8c48b899aff95a1f",
+      "text": "Bangladesh.",
+      "file": "n-aa9b167c8c48b899aff95a1f.mp3",
+      "sources": [
+        "world:bgd:name"
+      ]
+    },
+    {
+      "id": "n-aad6ae9d2efa59cb48ec58e6",
+      "text": "sessenta e seis",
+      "file": "n-aad6ae9d2efa59cb48ec58e6.mp3",
+      "sources": [
+        "blocks:number:66"
+      ]
+    },
+    {
+      "id": "n-aadabf82d12a0d5e882d545d",
+      "text": "A valsa e a música clássica são muito lembradas na Áustria.",
+      "file": "n-aadabf82d12a0d5e882d545d.mp3",
+      "sources": [
+        "world:aut:music"
+      ]
+    },
+    {
+      "id": "n-aafc36be36fade162ec9ccd5",
+      "text": "Portugal.",
+      "file": "n-aafc36be36fade162ec9ccd5.mp3",
+      "sources": [
+        "world:prt:name"
+      ]
+    },
+    {
+      "id": "n-ac27a4d72bababf2d8b34fd3",
+      "text": "Ajude o Lobo-guará. O lobo-guará quer um lugar aberto para andar bastante e procurar frutos entre arbustos. Toque nas fotos para ver as pistas e arraste o Lobo-guará até o lugar certo no mapa do Brasil.",
+      "file": "n-ac27a4d72bababf2d8b34fd3.mp3",
+      "sources": [
+        "biomes:loboGuara:prompt"
+      ]
+    },
+    {
+      "id": "n-ac6329eacb4c3ba08b40ec18",
+      "text": "O quadro está vazio. Arraste as peças para ele.",
+      "file": "n-ac6329eacb4c3ba08b40ec18.mp3",
+      "sources": [
+        "arithmetic:static"
+      ]
+    },
+    {
+      "id": "n-acbbb521064d33f0e4e2b11f",
+      "text": "Na Caatinga falta árvores, frutos e abrigo. Procure outro lugar no mapa.",
+      "file": "n-acbbb521064d33f0e4e2b11f.mp3",
+      "sources": [
+        "biomes:mico:caatinga:feedback"
+      ]
+    },
+    {
+      "id": "n-ad6276b240df42d4f7c15075",
+      "text": "mais",
+      "file": "n-ad6276b240df42d4f7c15075.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-ad96d69386b0b207dc08b63d",
+      "text": "cinquenta e nove",
+      "file": "n-ad96d69386b0b207dc08b63d.mp3",
+      "sources": [
+        "blocks:number:59"
+      ]
+    },
+    {
+      "id": "n-adcba6a8532e65d3d66a733e",
+      "text": "A cueca é uma dança tradicional chilena com lenços, palmas, violão e jeito de brincadeira dançada.",
+      "file": "n-adcba6a8532e65d3d66a733e.mp3",
+      "sources": [
+        "world:chl:music"
+      ]
+    },
+    {
+      "id": "n-ae89fb6be3f253c6a796ea1d",
+      "text": "Brasil.",
+      "file": "n-ae89fb6be3f253c6a796ea1d.mp3",
+      "sources": [
+        "world-fallback:brazil:name",
+        "world:bra:name"
+      ]
+    },
+    {
+      "id": "n-aeab39994248caed0652a12b",
+      "text": "Olhe para o corpo do Mico-leão-dourado e para as pistas do lugar.",
+      "file": "n-aeab39994248caed0652a12b.mp3",
+      "sources": [
+        "biomes:mico:adaptation:retry"
+      ]
+    },
+    {
+      "id": "n-aebb6fdecc427d42b18dcfb6",
+      "text": "Islândia.",
+      "file": "n-aebb6fdecc427d42b18dcfb6.mp3",
+      "sources": [
+        "world:isl:name"
+      ]
+    },
+    {
+      "id": "n-aef21947c1adbcbae26652d3",
+      "text": "A música mongol é lembrada pelo morin khuur, um instrumento de cordas, e pelo canto de garganta, que parece fazer mais de um som ao mesmo tempo.",
+      "file": "n-aef21947c1adbcbae26652d3.mp3",
+      "sources": [
+        "world:mng:music"
+      ]
+    },
+    {
+      "id": "n-af1ddb12ec5223b6ce612383",
+      "text": "Canções com tambores, palmas e coros aparecem em festas, cerimônias e histórias de comunidades do Nilo e das savanas.",
+      "file": "n-af1ddb12ec5223b6ce612383.mp3",
+      "sources": [
+        "world:ssd:music"
+      ]
+    },
+    {
+      "id": "n-afe0aa902e1bb8737db4f5f9",
+      "text": "Chanson francesa e acordeão: canções narrativas com clima de rua e café.",
+      "file": "n-afe0aa902e1bb8737db4f5f9.mp3",
+      "sources": [
+        "world-fallback:france:music"
+      ]
+    },
+    {
+      "id": "n-b0257b5d3de17604f008e098",
+      "text": "Camboja.",
+      "file": "n-b0257b5d3de17604f008e098.mp3",
+      "sources": [
+        "world:khm:name"
+      ]
+    },
+    {
+      "id": "n-b0b6673a33ab4ab82d415863",
+      "text": "cento e cinco",
+      "file": "n-b0b6673a33ab4ab82d415863.mp3",
+      "sources": [
+        "blocks:number:105"
+      ]
+    },
+    {
+      "id": "n-b12919934adae9158c477d2e",
+      "text": "Na Mata Atlântica tem frutos, mas falta campo aberto e andar bastante. Procure outro lugar no mapa.",
+      "file": "n-b12919934adae9158c477d2e.mp3",
+      "sources": [
+        "biomes:loboGuara:mata:feedback"
+      ]
+    },
+    {
+      "id": "n-b1331f460eb46539c16b9829",
+      "text": "cem",
+      "file": "n-b1331f460eb46539c16b9829.mp3",
+      "sources": [
+        "blocks:number:100"
+      ]
+    },
+    {
+      "id": "n-b137c09a927c11d10fe2b566",
+      "text": "Trinidade e Tobago.",
+      "file": "n-b137c09a927c11d10fe2b566.mp3",
+      "sources": [
+        "world:tto:name"
+      ]
+    },
+    {
+      "id": "n-b1571895e5eebcd70e9d9500",
+      "text": "Na Mata Atlântica falta rio grande, muita água e peixes. Procure outro lugar no mapa.",
+      "file": "n-b1571895e5eebcd70e9d9500.mp3",
+      "sources": [
+        "biomes:boto:mata:feedback"
+      ]
+    },
+    {
+      "id": "n-b1bf4c2ee875f7a3d5eef980",
+      "text": "As pernas compridas ajudam o tuiuiú a caminhar na água rasa.",
+      "file": "n-b1bf4c2ee875f7a3d5eef980.mp3",
+      "sources": [
+        "biomes:tuiuiu:adaptation:success"
+      ]
+    },
+    {
+      "id": "n-b1ccf047da61fdf8d1244bda",
+      "text": "Benin.",
+      "file": "n-b1ccf047da61fdf8d1244bda.mp3",
+      "sources": [
+        "world:ben:name"
+      ]
+    },
+    {
+      "id": "n-b1e573e03fe0f0bccccef50b",
+      "text": "oitenta e cinco",
+      "file": "n-b1e573e03fe0f0bccccef50b.mp3",
+      "sources": [
+        "blocks:number:85"
+      ]
+    },
+    {
+      "id": "n-b1e9bd1e24ef11377a1ab938",
+      "text": "até o outro para eles se juntarem!",
+      "file": "n-b1e9bd1e24ef11377a1ab938.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-b2b794ac959909b6414bf3ce",
+      "text": "Tailândia.",
+      "file": "n-b2b794ac959909b6414bf3ce.mp3",
+      "sources": [
+        "world:tha:name"
+      ]
+    },
+    {
+      "id": "n-b2e9d3ffac95ed0ab78c4905",
+      "text": "Senegal.",
+      "file": "n-b2e9d3ffac95ed0ab78c4905.mp3",
+      "sources": [
+        "world:sen:name"
+      ]
+    },
+    {
+      "id": "n-b35f4ea4134f45c52d174e15",
+      "text": "Em Andorra aparecem músicas de montanha, danças tradicionais e sons de festa popular.",
+      "file": "n-b35f4ea4134f45c52d174e15.mp3",
+      "sources": [
+        "world:and:music"
+      ]
+    },
+    {
+      "id": "n-b3c2357bb5c702d09de39700",
+      "text": "Bahrein.",
+      "file": "n-b3c2357bb5c702d09de39700.mp3",
+      "sources": [
+        "world:bhr:name"
+      ]
+    },
+    {
+      "id": "n-b3c4d60c6346beb3359f02d2",
+      "text": "Kiribati.",
+      "file": "n-b3c4d60c6346beb3359f02d2.mp3",
+      "sources": [
+        "world:kir:name"
+      ]
+    },
+    {
+      "id": "n-b40563e24c25cdf1da425c83",
+      "text": "No Cerrado tem campo aberto, mas falta gramíneas e correr. Procure outro lugar no mapa.",
+      "file": "n-b40563e24c25cdf1da425c83.mp3",
+      "sources": [
+        "biomes:ema:cerrado:feedback"
+      ]
+    },
+    {
+      "id": "n-b45ebbb79dbf31e6e933e19d",
+      "text": "Didgeridoo e canções aborígenes: sons graves, respiração contínua e histórias da paisagem.",
+      "file": "n-b45ebbb79dbf31e6e933e19d.mp3",
+      "sources": [
+        "world-fallback:australia:music"
+      ]
+    },
+    {
+      "id": "n-b492f0e42ea533c33d2f8d49",
+      "text": "No Pantanal falta muito sol, pouca água e guardar água. Procure outro lugar no mapa.",
+      "file": "n-b492f0e42ea533c33d2f8d49.mp3",
+      "sources": [
+        "biomes:mandacaru:pantanal:feedback"
+      ]
+    },
+    {
+      "id": "n-b4d637e202b9e59ec3473e2a",
+      "text": "França.",
+      "file": "n-b4d637e202b9e59ec3473e2a.mp3",
+      "sources": [
+        "world-fallback:france:name",
+        "world:fra:name"
+      ]
+    },
+    {
+      "id": "n-b5059000a9ed646d906ee206",
+      "text": "cento e seis",
+      "file": "n-b5059000a9ed646d906ee206.mp3",
+      "sources": [
+        "blocks:number:106"
+      ]
+    },
+    {
+      "id": "n-b5c1a53e4bbbae635d6f4872",
+      "text": "República Democrática do Congo.",
+      "file": "n-b5c1a53e4bbbae635d6f4872.mp3",
+      "sources": [
+        "world:cod:name"
+      ]
+    },
+    {
+      "id": "n-b6527c360f6bfe1cd7ae0926",
+      "text": "setenta e nove",
+      "file": "n-b6527c360f6bfe1cd7ae0926.mp3",
+      "sources": [
+        "blocks:number:79"
+      ]
+    },
+    {
+      "id": "n-b7d72dc6a97b8cafb7dc0685",
+      "text": "Comores.",
+      "file": "n-b7d72dc6a97b8cafb7dc0685.mp3",
+      "sources": [
+        "world:com:name"
+      ]
+    },
+    {
+      "id": "n-b7db00ab88a951a9abc3e1c7",
+      "text": "quatro dezenas",
+      "file": "n-b7db00ab88a951a9abc3e1c7.mp3",
+      "sources": [
+        "blocks:tens:4"
+      ]
+    },
+    {
+      "id": "n-b8096e8c3c5cab4073103a3a",
+      "text": "Neste país, muitas pessoas falam Carolinian e Chamorro.",
+      "file": "n-b8096e8c3c5cab4073103a3a.mp3",
+      "sources": [
+        "world:mnp:music-language"
+      ]
+    },
+    {
+      "id": "n-b8622e6c7d2d82ba727553f0",
+      "text": "cinquenta e sete",
+      "file": "n-b8622e6c7d2d82ba727553f0.mp3",
+      "sources": [
+        "blocks:number:57"
+      ]
+    },
+    {
+      "id": "n-b86c5f033ddab0d677b7cb81",
+      "text": "dezesseis unidades",
+      "file": "n-b86c5f033ddab0d677b7cb81.mp3",
+      "sources": [
+        "blocks:units:16"
+      ]
+    },
+    {
+      "id": "n-b8eb4426fa24f98f7ff7eafe",
+      "text": "Liechtenstein.",
+      "file": "n-b8eb4426fa24f98f7ff7eafe.mp3",
+      "sources": [
+        "world:lie:name"
+      ]
+    },
+    {
+      "id": "n-b918991d0d827765b8c25842",
+      "text": "sete dezenas",
+      "file": "n-b918991d0d827765b8c25842.mp3",
+      "sources": [
+        "blocks:tens:7"
+      ]
+    },
+    {
+      "id": "n-b92f0de25ff80596d4fb01d6",
+      "text": "Tokelau.",
+      "file": "n-b92f0de25ff80596d4fb01d6.mp3",
+      "sources": [
+        "world:tkl:name"
+      ]
+    },
+    {
+      "id": "n-b96c6fc349c601e2bd6ff552",
+      "text": "Kuwait.",
+      "file": "n-b96c6fc349c601e2bd6ff552.mp3",
+      "sources": [
+        "world:kwt:name"
+      ]
+    },
+    {
+      "id": "n-ba120f91bebec367905f728c",
+      "text": "Gibraltar.",
+      "file": "n-ba120f91bebec367905f728c.mp3",
+      "sources": [
+        "world:gib:name"
+      ]
+    },
+    {
+      "id": "n-ba8cbe2cbe9e196bbea6e338",
+      "text": "O flamenco usa palmas, violão, canto e dança forte; a Espanha também tem muitas músicas regionais diferentes.",
+      "file": "n-ba8cbe2cbe9e196bbea6e338.mp3",
+      "sources": [
+        "world:esp:music"
+      ]
+    },
+    {
+      "id": "n-babb27a9f1f227789ed72ef2",
+      "text": "cento e três",
+      "file": "n-babb27a9f1f227789ed72ef2.mp3",
+      "sources": [
+        "blocks:number:103"
+      ]
+    },
+    {
+      "id": "n-baedcafe2987bf3c3f99e3e4",
+      "text": "Morna e funaná são músicas de Cabo Verde com voz, dança e instrumentos de corda.",
+      "file": "n-baedcafe2987bf3c3f99e3e4.mp3",
+      "sources": [
+        "world:cpv:music"
+      ]
+    },
+    {
+      "id": "n-bb416950cc9d19e6dbbe4226",
+      "text": "Ainda não. Conte os cubinhos soltos.",
+      "file": "n-bb416950cc9d19e6dbbe4226.mp3",
+      "sources": [
+        "arithmetic:static"
+      ]
+    },
+    {
+      "id": "n-bb45cbb60a258451aaa4a34d",
+      "text": "Neste país, muitas pessoas falam Italian.",
+      "file": "n-bb45cbb60a258451aaa4a34d.mp3",
+      "sources": [
+        "world:smr:music-language"
+      ]
+    },
+    {
+      "id": "n-bc12b84bc41cd1e11a087016",
+      "text": "nove",
+      "file": "n-bc12b84bc41cd1e11a087016.mp3",
+      "sources": [
+        "blocks:number-feminine:9",
+        "blocks:number:9"
+      ]
+    },
+    {
+      "id": "n-bd63057afb47d39556b20c64",
+      "text": "Em Botswana há cantos, palmas, tambores, setinkane, danças tradicionais e músicas que acompanham encontros da comunidade.",
+      "file": "n-bd63057afb47d39556b20c64.mp3",
+      "sources": [
+        "world:bwa:music"
+      ]
+    },
+    {
+      "id": "n-bdbe71d6dd502b61c1657c8f",
+      "text": "Macedónia do Norte.",
+      "file": "n-bdbe71d6dd502b61c1657c8f.mp3",
+      "sources": [
+        "world:mkd:name"
+      ]
+    },
+    {
+      "id": "n-bdfefd20952099a64037b563",
+      "text": "No Pantanal falta árvores, frutos e abrigo. Procure outro lugar no mapa.",
+      "file": "n-bdfefd20952099a64037b563.mp3",
+      "sources": [
+        "biomes:mico:pantanal:feedback"
+      ]
+    },
+    {
+      "id": "n-bed4a67e794c6ce67ff46b13",
+      "text": "Azerbeijão.",
+      "file": "n-bed4a67e794c6ce67ff46b13.mp3",
+      "sources": [
+        "world:aze:name"
+      ]
+    },
+    {
+      "id": "n-bee6cab0b79c24239e5b6780",
+      "text": "No Japão há koto, shamisen, flautas shakuhachi, tambores taiko e também músicas pop muito animadas.",
+      "file": "n-bee6cab0b79c24239e5b6780.mp3",
+      "sources": [
+        "world:jpn:music"
+      ]
+    },
+    {
+      "id": "n-c02ec8b8746e3ce53b5ba778",
+      "text": "Sri Lanka.",
+      "file": "n-c02ec8b8746e3ce53b5ba778.mp3",
+      "sources": [
+        "world:lka:name"
+      ]
+    },
+    {
+      "id": "n-c0d83d75603db30f99e103c5",
+      "text": "doze",
+      "file": "n-c0d83d75603db30f99e103c5.mp3",
+      "sources": [
+        "blocks:number-feminine:12",
+        "blocks:number:12"
+      ]
+    },
+    {
+      "id": "n-c22083f10ec31092df3176cd",
+      "text": "duas unidades",
+      "file": "n-c22083f10ec31092df3176cd.mp3",
+      "sources": [
+        "blocks:units:2"
+      ]
+    },
+    {
+      "id": "n-c24750afb8a5317acddbb82f",
+      "text": "Na Caatinga falta campo aberto, frutos e andar bastante. Procure outro lugar no mapa.",
+      "file": "n-c24750afb8a5317acddbb82f.mp3",
+      "sources": [
+        "biomes:loboGuara:caatinga:feedback"
+      ]
+    },
+    {
+      "id": "n-c38bb79f82861d7f781525a6",
+      "text": "Chade.",
+      "file": "n-c38bb79f82861d7f781525a6.mp3",
+      "sources": [
+        "world:tcd:name"
+      ]
+    },
+    {
+      "id": "n-c39b75c28d247a2012271d89",
+      "text": "Polónia.",
+      "file": "n-c39b75c28d247a2012271d89.mp3",
+      "sources": [
+        "world:pol:name"
+      ]
+    },
+    {
+      "id": "n-c412c9d61018835d4d0a7aa9",
+      "text": "A música boliviana usa flautas andinas, charango, tambores e danças como morenada, caporales e tinku.",
+      "file": "n-c412c9d61018835d4d0a7aa9.mp3",
+      "sources": [
+        "world:bol:music"
+      ]
+    },
+    {
+      "id": "n-c49c6743fc54b9a4e593e2a7",
+      "text": "O que ajuda a ema a correr no campo aberto?",
+      "file": "n-c49c6743fc54b9a4e593e2a7.mp3",
+      "sources": [
+        "biomes:ema:adaptation:question"
+      ]
+    },
+    {
+      "id": "n-c4d0ea307baf0d84b15782c6",
+      "text": "Neste país, muitas pessoas falam Portuguese e Upper Guinea Creole.",
+      "file": "n-c4d0ea307baf0d84b15782c6.mp3",
+      "sources": [
+        "world:gnb:music-language"
+      ]
+    },
+    {
+      "id": "n-c529823141b0c1048a203471",
+      "text": "Em Aruba há tumba, calipso, salsa e músicas animadas de carnaval.",
+      "file": "n-c529823141b0c1048a203471.mp3",
+      "sources": [
+        "world:abw:music"
+      ]
+    },
+    {
+      "id": "n-c52f3c2b779d9decdc883375",
+      "text": "Madagáscar.",
+      "file": "n-c52f3c2b779d9decdc883375.mp3",
+      "sources": [
+        "world:mdg:name"
+      ]
+    },
+    {
+      "id": "n-c5dfd2b2e812e2d0e5ae28d2",
+      "text": "sessenta e nove",
+      "file": "n-c5dfd2b2e812e2d0e5ae28d2.mp3",
+      "sources": [
+        "blocks:number:69"
+      ]
+    },
+    {
+      "id": "n-c5e889b3c8338be4d409ca69",
+      "text": "Croácia.",
+      "file": "n-c5e889b3c8338be4d409ca69.mp3",
+      "sources": [
+        "world:hrv:name"
+      ]
+    },
+    {
+      "id": "n-c63e1c7a99022e815649a9b5",
+      "text": "Olhe para o corpo do Lobo-guará e para as pistas do lugar.",
+      "file": "n-c63e1c7a99022e815649a9b5.mp3",
+      "sources": [
+        "biomes:loboGuara:adaptation:retry"
+      ]
+    },
+    {
+      "id": "n-c66005d0ca9d5b78cc2111d2",
+      "text": "Butão.",
+      "file": "n-c66005d0ca9d5b78cc2111d2.mp3",
+      "sources": [
+        "world:btn:name"
+      ]
+    },
+    {
+      "id": "n-c6738c1c3cdcd67f70bf20de",
+      "text": "Botswana.",
+      "file": "n-c6738c1c3cdcd67f70bf20de.mp3",
+      "sources": [
+        "world:bwa:name"
+      ]
+    },
+    {
+      "id": "n-c6cff76b36f992385defefbd",
+      "text": "A polca paraguaia e a guarania usam harpa paraguaia, violões e melodias doces que muita gente canta em família.",
+      "file": "n-c6cff76b36f992385defefbd.mp3",
+      "sources": [
+        "world:pry:music"
+      ]
+    },
+    {
+      "id": "n-c73a1523dc588bb1c4c9c0e8",
+      "text": "Quênia.",
+      "file": "n-c73a1523dc588bb1c4c9c0e8.mp3",
+      "sources": [
+        "world-fallback:kenya:name"
+      ]
+    },
+    {
+      "id": "n-c757fa41806167049724a708",
+      "text": "Na Mata Atlântica falta gramíneas, campo aberto e correr. Procure outro lugar no mapa.",
+      "file": "n-c757fa41806167049724a708.mp3",
+      "sources": [
+        "biomes:ema:mata:feedback"
+      ]
+    },
+    {
+      "id": "n-c7d0fc72a987c965d62e846f",
+      "text": "sessenta e cinco",
+      "file": "n-c7d0fc72a987c965d62e846f.mp3",
+      "sources": [
+        "blocks:number:65"
+      ]
+    },
+    {
+      "id": "n-c819c959244617b88a4c56d5",
+      "text": "Coreia do Norte.",
+      "file": "n-c819c959244617b88a4c56d5.mp3",
+      "sources": [
+        "world:prk:name"
+      ]
+    },
+    {
+      "id": "n-c89fbf2fcd98a946ce50a2c1",
+      "text": "A música cipriota mistura sons gregos, turcos e instrumentos de corda.",
+      "file": "n-c89fbf2fcd98a946ce50a2c1.mp3",
+      "sources": [
+        "world:cyp:music"
+      ]
+    },
+    {
+      "id": "n-c9a0b23bd9297dd0a1f7e4ab",
+      "text": "A música afegã usa rubab, tabla, harmônio e cantos que contam histórias de família, viagem e saudade.",
+      "file": "n-c9a0b23bd9297dd0a1f7e4ab.mp3",
+      "sources": [
+        "world:afg:music"
+      ]
+    },
+    {
+      "id": "n-c9b7f7acc7ca2754b4b6c53f",
+      "text": "Colômbia.",
+      "file": "n-c9b7f7acc7ca2754b4b6c53f.mp3",
+      "sources": [
+        "world:col:name"
+      ]
+    },
+    {
+      "id": "n-c9d1b6d4ba0266749e1af89d",
+      "text": "A música somali mistura poesia cantada, oud, tambores, palmas e melodias que muitas vezes contam histórias de coragem e família.",
+      "file": "n-c9d1b6d4ba0266749e1af89d.mp3",
+      "sources": [
+        "world:som:music"
+      ]
+    },
+    {
+      "id": "n-c9e0debedfb4c881a99a91e1",
+      "text": "cinco unidades",
+      "file": "n-c9e0debedfb4c881a99a91e1.mp3",
+      "sources": [
+        "blocks:units:5"
+      ]
+    },
+    {
+      "id": "n-c9e836200cae154e79c06cb9",
+      "text": "Neste país, muitas pessoas falam English e Tongan.",
+      "file": "n-c9e836200cae154e79c06cb9.mp3",
+      "sources": [
+        "world:ton:music-language"
+      ]
+    },
+    {
+      "id": "n-caebfe08a5e8e7825a4f5b94",
+      "text": "Maldivas.",
+      "file": "n-caebfe08a5e8e7825a4f5b94.mp3",
+      "sources": [
+        "world:mdv:name"
+      ]
+    },
+    {
+      "id": "n-cb1a028eff6a8b2d6aeb6848",
+      "text": "México.",
+      "file": "n-cb1a028eff6a8b2d6aeb6848.mp3",
+      "sources": [
+        "world:mex:name"
+      ]
+    },
+    {
+      "id": "n-cbfda8e888a4367d59aec21c",
+      "text": "A música etíope usa escalas especiais, canto, krar, masenqo e tambores; muitas melodias têm um balanço diferente do que se ouve em outros lugares.",
+      "file": "n-cbfda8e888a4367d59aec21c.mp3",
+      "sources": [
+        "world:eth:music"
+      ]
+    },
+    {
+      "id": "n-cc0e0da80afeba07156717bf",
+      "text": "Neste país, muitas pessoas falam Dutch.",
+      "file": "n-cc0e0da80afeba07156717bf.mp3",
+      "sources": [
+        "world:nld:music-language"
+      ]
+    },
+    {
+      "id": "n-cc1e96994144de22eab18116",
+      "text": "trinta e sete",
+      "file": "n-cc1e96994144de22eab18116.mp3",
+      "sources": [
+        "blocks:number:37"
+      ]
+    },
+    {
+      "id": "n-cc4e2ad337d7526f09a78908",
+      "text": "ilha da Curação.",
+      "file": "n-cc4e2ad337d7526f09a78908.mp3",
+      "sources": [
+        "world:cuw:name"
+      ]
+    },
+    {
+      "id": "n-ccbd436cd1aa5fbb0857cb78",
+      "text": "Ilhas Menores Distantes dos Estados Unidos.",
+      "file": "n-ccbd436cd1aa5fbb0857cb78.mp3",
+      "sources": [
+        "world:umi:name"
+      ]
+    },
+    {
+      "id": "n-cd4fc4854f216d840801ba30",
+      "text": "A música marroquina mistura gnawa, chaabi, música amazigh, tambores, cordas, canto e palmas.",
+      "file": "n-cd4fc4854f216d840801ba30.mp3",
+      "sources": [
+        "world:mar:music"
+      ]
+    },
+    {
+      "id": "n-cd6a2db23323fe17d8831a2f",
+      "text": "zero dezenas",
+      "file": "n-cd6a2db23323fe17d8831a2f.mp3",
+      "sources": [
+        "blocks:tens:0"
+      ]
+    },
+    {
+      "id": "n-ceb51fadb7350df873b4a229",
+      "text": "Turquia.",
+      "file": "n-ceb51fadb7350df873b4a229.mp3",
+      "sources": [
+        "world:tur:name"
+      ]
+    },
+    {
+      "id": "n-cf299ac3108868021937b401",
+      "text": "vinte e quatro",
+      "file": "n-cf299ac3108868021937b401.mp3",
+      "sources": [
+        "blocks:number:24"
+      ]
+    },
+    {
+      "id": "n-cf4c0f2a1857542aa0e665ec",
+      "text": "Toque na resposta certa.",
+      "file": "n-cf4c0f2a1857542aa0e665ec.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-cf5eb312b9635e55baf665d8",
+      "text": "Namíbia.",
+      "file": "n-cf5eb312b9635e55baf665d8.mp3",
+      "sources": [
+        "world:nam:name"
+      ]
+    },
+    {
+      "id": "n-cfc83687750ec3d15b2451ea",
+      "text": "Na Caatinga falta gramíneas, campo aberto e correr. Procure outro lugar no mapa.",
+      "file": "n-cfc83687750ec3d15b2451ea.mp3",
+      "sources": [
+        "biomes:ema:caatinga:feedback"
+      ]
+    },
+    {
+      "id": "n-d1002fd14b51b13a82cf6cd9",
+      "text": "Na Caatinga tem muito sol e pouca água. O Mandacaru encontrou sua casa!",
+      "file": "n-d1002fd14b51b13a82cf6cd9.mp3",
+      "sources": [
+        "biomes:mandacaru:caatinga:feedback"
+      ]
+    },
+    {
+      "id": "n-d1097cd9caf092a36289e139",
+      "text": "Agora vamos juntar! Passe as peças de um quadro para o outro, até ficar tudo num quadro só.",
+      "file": "n-d1097cd9caf092a36289e139.mp3",
+      "sources": [
+        "arithmetic:static"
+      ]
+    },
+    {
+      "id": "n-d171f93a767bbbc11cc92d61",
+      "text": "Samoa.",
+      "file": "n-d171f93a767bbbc11cc92d61.mp3",
+      "sources": [
+        "world:wsm:name"
+      ]
+    },
+    {
+      "id": "n-d18cb0f41e5c68c9e3714370",
+      "text": "Há cantos em grupo, tambores e polifonias de povos da floresta, em que várias vozes se encaixam como peças de música.",
+      "file": "n-d18cb0f41e5c68c9e3714370.mp3",
+      "sources": [
+        "world:caf:music"
+      ]
+    },
+    {
+      "id": "n-d19103977aafafb4ba891ba8",
+      "text": "doze unidades",
+      "file": "n-d19103977aafafb4ba891ba8.mp3",
+      "sources": [
+        "blocks:units:12"
+      ]
+    },
+    {
+      "id": "n-d1c328018969c6057ac28fef",
+      "text": "Neste país, muitas pessoas falam English e Swazi.",
+      "file": "n-d1c328018969c6057ac28fef.mp3",
+      "sources": [
+        "world:swz:music-language"
+      ]
+    },
+    {
+      "id": "n-d20f0fc314acd5c8c1518456",
+      "text": "Ilha de Man.",
+      "file": "n-d20f0fc314acd5c8c1518456.mp3",
+      "sources": [
+        "world:imn:name"
+      ]
+    },
+    {
+      "id": "n-d25cc612daa44b2774369259",
+      "text": "Eritreia.",
+      "file": "n-d25cc612daa44b2774369259.mp3",
+      "sources": [
+        "world:eri:name"
+      ]
+    },
+    {
+      "id": "n-d304045dc52652870ee5b80e",
+      "text": "Costa do Marfim.",
+      "file": "n-d304045dc52652870ee5b80e.mp3",
+      "sources": [
+        "world:civ:name"
+      ]
+    },
+    {
+      "id": "n-d331ccd4707dd3af57f4de8a",
+      "text": "setenta e cinco",
+      "file": "n-d331ccd4707dd3af57f4de8a.mp3",
+      "sources": [
+        "blocks:number:75"
+      ]
+    },
+    {
+      "id": "n-d3e34f2862fbd1c5c6106631",
+      "text": "Ilha do Natal.",
+      "file": "n-d3e34f2862fbd1c5c6106631.mp3",
+      "sources": [
+        "world:cxr:name"
+      ]
+    },
+    {
+      "id": "n-d42765e5fe77c2a880ce90a5",
+      "text": "Togo.",
+      "file": "n-d42765e5fe77c2a880ce90a5.mp3",
+      "sources": [
+        "world:tgo:name"
+      ]
+    },
+    {
+      "id": "n-d4569ec6b607ff1d84b6d488",
+      "text": "Agora monte o número",
+      "file": "n-d4569ec6b607ff1d84b6d488.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-d48889c27ff4d6f9f61cf3b3",
+      "text": "Neste país, muitas pessoas falam Seychellois Creole e English.",
+      "file": "n-d48889c27ff4d6f9f61cf3b3.mp3",
+      "sources": [
+        "world:syc:music-language"
+      ]
+    },
+    {
+      "id": "n-d488a1c9ece01ee02b9d4c55",
+      "text": "Paraguai.",
+      "file": "n-d488a1c9ece01ee02b9d4c55.mp3",
+      "sources": [
+        "world:pry:name"
+      ]
+    },
+    {
+      "id": "n-d4b16a852d637c310652072c",
+      "text": "Neste país, muitas pessoas falam Latvian.",
+      "file": "n-d4b16a852d637c310652072c.mp3",
+      "sources": [
+        "world:lva:music-language"
+      ]
+    },
+    {
+      "id": "n-d50a50e4611c82675522d48a",
+      "text": "quatro",
+      "file": "n-d50a50e4611c82675522d48a.mp3",
+      "sources": [
+        "blocks:number-feminine:4",
+        "blocks:number:4"
+      ]
+    },
+    {
+      "id": "n-d5b1de46ed57010b756eeed8",
+      "text": "Neste país, muitas pessoas falam French e Portuguese.",
+      "file": "n-d5b1de46ed57010b756eeed8.mp3",
+      "sources": [
+        "world:gnq:music-language"
+      ]
+    },
+    {
+      "id": "n-d657b8f3feb213068094bf1d",
+      "text": "dez",
+      "file": "n-d657b8f3feb213068094bf1d.mp3",
+      "sources": [
+        "blocks:number-feminine:10",
+        "blocks:number:10"
+      ]
+    },
+    {
+      "id": "n-d65b38273ae4a1cc3795bc1f",
+      "text": "Mbalax, sabar, kora, tambores e cantos de griôs fazem a música senegalesa soar viva e cheia de ritmo.",
+      "file": "n-d65b38273ae4a1cc3795bc1f.mp3",
+      "sources": [
+        "world:sen:music"
+      ]
+    },
+    {
+      "id": "n-d67263c378a3bf82289b7607",
+      "text": "A música norueguesa usa hardanger fiddle, canto, danças e melodias que lembram vales e montanhas.",
+      "file": "n-d67263c378a3bf82289b7607.mp3",
+      "sources": [
+        "world:nor:music"
+      ]
+    },
+    {
+      "id": "n-d75ad424c1dce8c7708015c5",
+      "text": "A música gabonesa usa tambores, canto, danças de máscaras e instrumentos de corda como o mvett em algumas tradições.",
+      "file": "n-d75ad424c1dce8c7708015c5.mp3",
+      "sources": [
+        "world:gab:music"
+      ]
+    },
+    {
+      "id": "n-d788436a1e3d392b320084af",
+      "text": "Moçambique.",
+      "file": "n-d788436a1e3d392b320084af.mp3",
+      "sources": [
+        "world:moz:name"
+      ]
+    },
+    {
+      "id": "n-d827bc1fbdb3a22b096e34de",
+      "text": "Marrabenta, timbila, tufo e ritmos de dança misturam xilos, tambores, guitarras e vozes de festas populares.",
+      "file": "n-d827bc1fbdb3a22b096e34de.mp3",
+      "sources": [
+        "world:moz:music"
+      ]
+    },
+    {
+      "id": "n-d89a1a04624260968bde1ca9",
+      "text": "A música guineense usa djembê, balafon, kora, canto e ritmos que chamam pessoas para dançar em roda.",
+      "file": "n-d89a1a04624260968bde1ca9.mp3",
+      "sources": [
+        "world:gin:music"
+      ]
+    },
+    {
+      "id": "n-d8e458a35253c0ce7bcc1956",
+      "text": "Eslovénia.",
+      "file": "n-d8e458a35253c0ce7bcc1956.mp3",
+      "sources": [
+        "world:svn:name"
+      ]
+    },
+    {
+      "id": "n-d90adbfd9891b6e85dc86797",
+      "text": "Tuvalu.",
+      "file": "n-d90adbfd9891b6e85dc86797.mp3",
+      "sources": [
+        "world:tuv:name"
+      ]
+    },
+    {
+      "id": "n-d9ab187f97b8df8ae1f27304",
+      "text": "Indonésia.",
+      "file": "n-d9ab187f97b8df8ae1f27304.mp3",
+      "sources": [
+        "world:idn:name"
+      ]
+    },
+    {
+      "id": "n-d9c26697db6026faf74f2d4a",
+      "text": "noventa e nove",
+      "file": "n-d9c26697db6026faf74f2d4a.mp3",
+      "sources": [
+        "blocks:number:99"
+      ]
+    },
+    {
+      "id": "n-d9f6acbedf158699791ab244",
+      "text": "No Pantanal falta gramíneas, campo aberto e correr. Procure outro lugar no mapa.",
+      "file": "n-d9f6acbedf158699791ab244.mp3",
+      "sources": [
+        "biomes:ema:pantanal:feedback"
+      ]
+    },
+    {
+      "id": "n-da0e9e24a84055f95f08e54a",
+      "text": "Mónaco.",
+      "file": "n-da0e9e24a84055f95f08e54a.mp3",
+      "sources": [
+        "world:mco:name"
+      ]
+    },
+    {
+      "id": "n-daba28e75cf6f8cf2e6d45c7",
+      "text": "Irlanda.",
+      "file": "n-daba28e75cf6f8cf2e6d45c7.mp3",
+      "sources": [
+        "world:irl:name"
+      ]
+    },
+    {
+      "id": "n-db5e510c5943894ed55ea1d6",
+      "text": "Ajude o Boto-cor-de-rosa. O boto-cor-de-rosa precisa de um rio grande, muita água e peixes para nadar. Toque nas fotos para ver as pistas e arraste o Boto-cor-de-rosa até o lugar certo no mapa do Brasil.",
+      "file": "n-db5e510c5943894ed55ea1d6.mp3",
+      "sources": [
+        "biomes:boto:prompt"
+      ]
+    },
+    {
+      "id": "n-dbc193266bb069bdf5fbdba7",
+      "text": "Ainda não. Conte as barras de dez.",
+      "file": "n-dbc193266bb069bdf5fbdba7.mp3",
+      "sources": [
+        "arithmetic:static"
+      ]
+    },
+    {
+      "id": "n-dbc56f8357e34f891a78a9e4",
+      "text": "quarenta e um",
+      "file": "n-dbc56f8357e34f891a78a9e4.mp3",
+      "sources": [
+        "blocks:number:41"
+      ]
+    },
+    {
+      "id": "n-dcb77becaac600937ded78d3",
+      "text": "Bolívia.",
+      "file": "n-dcb77becaac600937ded78d3.mp3",
+      "sources": [
+        "world:bol:name"
+      ]
+    },
+    {
+      "id": "n-dd62c6944196ae9e1d9345a7",
+      "text": "Qawwali, ghazal e músicas folclóricas usam vozes fortes, tabla, harmônio e palmas para criar canções cheias de energia.",
+      "file": "n-dd62c6944196ae9e1d9345a7.mp3",
+      "sources": [
+        "world:pak:music"
+      ]
+    },
+    {
+      "id": "n-dd791e37f33d40d1f546e2f3",
+      "text": "Tem cubinhos demais.",
+      "file": "n-dd791e37f33d40d1f546e2f3.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-ddb79e843e3934c9c01adebe",
+      "text": "Rússia.",
+      "file": "n-ddb79e843e3934c9c01adebe.mp3",
+      "sources": [
+        "world:rus:name"
+      ]
+    },
+    {
+      "id": "n-de5a378429e88d8a72e895f2",
+      "text": "cento e quatro",
+      "file": "n-de5a378429e88d8a72e895f2.mp3",
+      "sources": [
+        "blocks:number:104"
+      ]
+    },
+    {
+      "id": "n-de90db345dba6b01308d9c6c",
+      "text": "Neste país, muitas pessoas falam Korean.",
+      "file": "n-de90db345dba6b01308d9c6c.mp3",
+      "sources": [
+        "world:prk:music-language"
+      ]
+    },
+    {
+      "id": "n-dec7832f5b1134a751acc5e0",
+      "text": "Kalindula, tambores, coros e canções de dança aparecem em festas e contam histórias das comunidades zambianas.",
+      "file": "n-dec7832f5b1134a751acc5e0.mp3",
+      "sources": [
+        "world:zmb:music"
+      ]
+    },
+    {
+      "id": "n-dee31c09cde1af2a8ec2c537",
+      "text": "Japão.",
+      "file": "n-dee31c09cde1af2a8ec2c537.mp3",
+      "sources": [
+        "world-fallback:japan:name",
+        "world:jpn:name"
+      ]
+    },
+    {
+      "id": "n-dfb928b5a1ae6fac404d3deb",
+      "text": "Na Coreia do Sul há música tradicional com tambores e também K-pop.",
+      "file": "n-dfb928b5a1ae6fac404d3deb.mp3",
+      "sources": [
+        "world:kor:music"
+      ]
+    },
+    {
+      "id": "n-e00f8755ca40e2b3aaf75b5c",
+      "text": "quarenta e dois",
+      "file": "n-e00f8755ca40e2b3aaf75b5c.mp3",
+      "sources": [
+        "blocks:number:42"
+      ]
+    },
+    {
+      "id": "n-e0c1eafe298b2240e0c441ea",
+      "text": "Neste país, muitas pessoas falam Chinese.",
+      "file": "n-e0c1eafe298b2240e0c441ea.mp3",
+      "sources": [
+        "world:twn:music-language"
+      ]
+    },
+    {
+      "id": "n-e15cd3c8205a90129eebc65a",
+      "text": "Kosovo.",
+      "file": "n-e15cd3c8205a90129eebc65a.mp3",
+      "sources": [
+        "world:unk:name"
+      ]
+    },
+    {
+      "id": "n-e192b1164f251c73aef634f7",
+      "text": "Tente de novo!",
+      "file": "n-e192b1164f251c73aef634f7.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-e1b21c8472a549d36f04c4f2",
+      "text": "Monte o número",
+      "file": "n-e1b21c8472a549d36f04c4f2.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-e2b5033c653e0888719b51d5",
+      "text": "Neste país, muitas pessoas falam English e Spanish.",
+      "file": "n-e2b5033c653e0888719b51d5.mp3",
+      "sources": [
+        "world:pri:music-language"
+      ]
+    },
+    {
+      "id": "n-e2d8674f71cdd28d1995b14a",
+      "text": "A música búlgara tem coros fortes, gaitas de fole e ritmos diferentes.",
+      "file": "n-e2d8674f71cdd28d1995b14a.mp3",
+      "sources": [
+        "world:bgr:music"
+      ]
+    },
+    {
+      "id": "n-e325b09105bef7e49f918b1b",
+      "text": "Coreia do Sul.",
+      "file": "n-e325b09105bef7e49f918b1b.mp3",
+      "sources": [
+        "world:kor:name"
+      ]
+    },
+    {
+      "id": "n-e341172c6b5e5ace56540950",
+      "text": "Neste país, muitas pessoas falam English e Norfuk.",
+      "file": "n-e341172c6b5e5ace56540950.mp3",
+      "sources": [
+        "world:nfk:music-language"
+      ]
+    },
+    {
+      "id": "n-e3ffe6e7aa63a37663201146",
+      "text": "dezoito",
+      "file": "n-e3ffe6e7aa63a37663201146.mp3",
+      "sources": [
+        "blocks:number-feminine:18",
+        "blocks:number:18"
+      ]
+    },
+    {
+      "id": "n-e40284a331e8a027ea4b5a23",
+      "text": "A polonaise, a mazurka e músicas com violino e acordeão aparecem em danças e festas polonesas.",
+      "file": "n-e40284a331e8a027ea4b5a23.mp3",
+      "sources": [
+        "world:pol:music"
+      ]
+    },
+    {
+      "id": "n-e40e26b0b7142db195403aef",
+      "text": "Tem barras demais.",
+      "file": "n-e40e26b0b7142db195403aef.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-e4db987b14fa1b9cd60d3a88",
+      "text": "Quanto é",
+      "file": "n-e4db987b14fa1b9cd60d3a88.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-e55d04b6d4e3691fb8523453",
+      "text": "Panamá.",
+      "file": "n-e55d04b6d4e3691fb8523453.mp3",
+      "sources": [
+        "world:pan:name"
+      ]
+    },
+    {
+      "id": "n-e6157105778b6c4b618de2ae",
+      "text": "Neste país, muitas pessoas falam Greenlandic.",
+      "file": "n-e6157105778b6c4b618de2ae.mp3",
+      "sources": [
+        "world:grl:music-language"
+      ]
+    },
+    {
+      "id": "n-e6e5ba89b0c47a874e8715c3",
+      "text": "Arménia.",
+      "file": "n-e6e5ba89b0c47a874e8715c3.mp3",
+      "sources": [
+        "world:arm:name"
+      ]
+    },
+    {
+      "id": "n-e76c076a4c6ec33401667294",
+      "text": "A música do Mali usa kora, ngoni, balafon, tambores e vozes que contam histórias de famílias, viajantes e griôs.",
+      "file": "n-e76c076a4c6ec33401667294.mp3",
+      "sources": [
+        "world:mli:music"
+      ]
+    },
+    {
+      "id": "n-e776ef3a507b45ba28affb8f",
+      "text": "Neste país, muitas pessoas falam Spanish.",
+      "file": "n-e776ef3a507b45ba28affb8f.mp3",
+      "sources": [
+        "world:cri:music-language",
+        "world:cub:music-language",
+        "world:dom:music-language",
+        "world:gtm:music-language",
+        "world:hnd:music-language",
+        "world:nic:music-language",
+        "world:pan:music-language",
+        "world:slv:music-language"
+      ]
+    },
+    {
+      "id": "n-e7ffd4ad4c54fcd99e1b6460",
+      "text": "África do Sul.",
+      "file": "n-e7ffd4ad4c54fcd99e1b6460.mp3",
+      "sources": [
+        "world:zaf:name"
+      ]
+    },
+    {
+      "id": "n-e804970b876c5b1857c36f19",
+      "text": "E quantas dezenas?",
+      "file": "n-e804970b876c5b1857c36f19.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-e811eb7830249bae4b61145a",
+      "text": "uma",
+      "file": "n-e811eb7830249bae4b61145a.mp3",
+      "sources": [
+        "blocks:number-feminine:1"
+      ]
+    },
+    {
+      "id": "n-e823adb9af10a5e158ff625f",
+      "text": "setenta e quatro",
+      "file": "n-e823adb9af10a5e158ff625f.mp3",
+      "sources": [
+        "blocks:number:74"
+      ]
+    },
+    {
+      "id": "n-e8b698991c33a7a2c62540dc",
+      "text": "Vietname.",
+      "file": "n-e8b698991c33a7a2c62540dc.mp3",
+      "sources": [
+        "world:vnm:name"
+      ]
+    },
+    {
+      "id": "n-e8b90d55f1088c10692ace07",
+      "text": "Isso!",
+      "file": "n-e8b90d55f1088c10692ace07.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-e8ea497f7e87d2c1188060e3",
+      "text": "Kundiman, kulintang e rondalla mostram canções românticas, gongos, cordas e sons de muitas ilhas filipinas.",
+      "file": "n-e8ea497f7e87d2c1188060e3.mp3",
+      "sources": [
+        "world:phl:music"
+      ]
+    },
+    {
+      "id": "n-e909915c9ea16e94f7fb2d8b",
+      "text": "Guadalupe.",
+      "file": "n-e909915c9ea16e94f7fb2d8b.mp3",
+      "sources": [
+        "world:glp:name"
+      ]
+    },
+    {
+      "id": "n-e90ccc937b259027cc034b06",
+      "text": "setenta e um",
+      "file": "n-e90ccc937b259027cc034b06.mp3",
+      "sources": [
+        "blocks:number:71"
+      ]
+    },
+    {
+      "id": "n-e914339b8e43f5a7e93827df",
+      "text": "treze",
+      "file": "n-e914339b8e43f5a7e93827df.mp3",
+      "sources": [
+        "blocks:number-feminine:13",
+        "blocks:number:13"
+      ]
+    },
+    {
+      "id": "n-e92f02bc327d6fa40dd8bcab",
+      "text": "A música bengali tem canções poéticas, tambores e instrumentos de corda.",
+      "file": "n-e92f02bc327d6fa40dd8bcab.mp3",
+      "sources": [
+        "world:bgd:music"
+      ]
+    },
+    {
+      "id": "n-e97fd462e5246559bb0c0acf",
+      "text": "Jazz, blues, country, hip hop, gospel e rock são estilos importantes; muitos nasceram do encontro de povos indígenas, africanos, europeus e imigrantes.",
+      "file": "n-e97fd462e5246559bb0c0acf.mp3",
+      "sources": [
+        "world:usa:music"
+      ]
+    },
+    {
+      "id": "n-e9a10074c8c3bbade1a24279",
+      "text": "Ilhas Pitcairn.",
+      "file": "n-e9a10074c8c3bbade1a24279.mp3",
+      "sources": [
+        "world:pcn:name"
+      ]
+    },
+    {
+      "id": "n-ea4d4c8a2624d83b37a8985d",
+      "text": "República Dominicana.",
+      "file": "n-ea4d4c8a2624d83b37a8985d.mp3",
+      "sources": [
+        "world:dom:name"
+      ]
+    },
+    {
+      "id": "n-ea8d12709aefb90955fbfd1b",
+      "text": "Neste país, muitas pessoas falam English e Dutch.",
+      "file": "n-ea8d12709aefb90955fbfd1b.mp3",
+      "sources": [
+        "world:bes:music-language",
+        "world:cuw:music-language"
+      ]
+    },
+    {
+      "id": "n-eabc89c74f7a439416ab5798",
+      "text": "Ajude o Tuiuiú. O tuiuiú está procurando um lugar com água rasa, peixes e espaço para caminhar. Toque nas fotos para ver as pistas e arraste o Tuiuiú até o lugar certo no mapa do Brasil.",
+      "file": "n-eabc89c74f7a439416ab5798.mp3",
+      "sources": [
+        "biomes:tuiuiu:prompt"
+      ]
+    },
+    {
+      "id": "n-eb100fa9c2651359eb917b7b",
+      "text": "noventa e oito",
+      "file": "n-eb100fa9c2651359eb917b7b.mp3",
+      "sources": [
+        "blocks:number:98"
+      ]
+    },
+    {
+      "id": "n-eba140358edd41c2670e5982",
+      "text": "Somália.",
+      "file": "n-eba140358edd41c2670e5982.mp3",
+      "sources": [
+        "world:som:name"
+      ]
+    },
+    {
+      "id": "n-ebf8f66964ccea047fed6a70",
+      "text": "Bahamas.",
+      "file": "n-ebf8f66964ccea047fed6a70.mp3",
+      "sources": [
+        "world:bhs:name"
+      ]
+    },
+    {
+      "id": "n-ec2e58fffefdaef0902ff642",
+      "text": "Candombe, murga e tango uruguaio usam tambores, coros, teatro de rua e melodias do Rio da Prata.",
+      "file": "n-ec2e58fffefdaef0902ff642.mp3",
+      "sources": [
+        "world:ury:music"
+      ]
+    },
+    {
+      "id": "n-ec607d46ff3e03ec10dcd9b2",
+      "text": "A sevdalinka é uma canção tradicional da Bósnia, cantada com muita emoção.",
+      "file": "n-ec607d46ff3e03ec10dcd9b2.mp3",
+      "sources": [
+        "world:bih:music"
+      ]
+    },
+    {
+      "id": "n-ec7acba8fb08dd294f41bf34",
+      "text": "Paquistão.",
+      "file": "n-ec7acba8fb08dd294f41bf34.mp3",
+      "sources": [
+        "world:pak:name"
+      ]
+    },
+    {
+      "id": "n-ed06efb7b9f1cc7ca0bbb095",
+      "text": "trinta e seis",
+      "file": "n-ed06efb7b9f1cc7ca0bbb095.mp3",
+      "sources": [
+        "blocks:number:36"
+      ]
+    },
+    {
+      "id": "n-ed6e1f4552e6b4900c3a79a5",
+      "text": "Neste país, muitas pessoas falam Maldivian.",
+      "file": "n-ed6e1f4552e6b4900c3a79a5.mp3",
+      "sources": [
+        "world:mdv:music-language"
+      ]
+    },
+    {
+      "id": "n-ed934c6fbbd409ad10c6b0e9",
+      "text": "Neste país, muitas pessoas falam English e Manx.",
+      "file": "n-ed934c6fbbd409ad10c6b0e9.mp3",
+      "sources": [
+        "world:imn:music-language"
+      ]
+    },
+    {
+      "id": "n-edd93501e4d98d11d3ddcf7f",
+      "text": "Moldávia.",
+      "file": "n-edd93501e4d98d11d3ddcf7f.mp3",
+      "sources": [
+        "world:mda:name"
+      ]
+    },
+    {
+      "id": "n-eee184c9e85e2a4d67591763",
+      "text": "noventa e dois",
+      "file": "n-eee184c9e85e2a4d67591763.mp3",
+      "sources": [
+        "blocks:number:92"
+      ]
+    },
+    {
+      "id": "n-ef3cbaa7b854d425ff6dfcf2",
+      "text": "Santa Lúcia.",
+      "file": "n-ef3cbaa7b854d425ff6dfcf2.mp3",
+      "sources": [
+        "world:lca:name"
+      ]
+    },
+    {
+      "id": "n-efc2e3f71af465a041493124",
+      "text": "Egito.",
+      "file": "n-efc2e3f71af465a041493124.mp3",
+      "sources": [
+        "world-fallback:egypt:name",
+        "world:egy:name"
+      ]
+    },
+    {
+      "id": "n-f03b4f96f604f704f997486e",
+      "text": "Mali.",
+      "file": "n-f03b4f96f604f704f997486e.mp3",
+      "sources": [
+        "world:mli:name"
+      ]
+    },
+    {
+      "id": "n-f06f09f07d1b655e7819f60e",
+      "text": "oitenta e seis",
+      "file": "n-f06f09f07d1b655e7819f60e.mp3",
+      "sources": [
+        "blocks:number:86"
+      ]
+    },
+    {
+      "id": "n-f1c5fb14a4623ed98a88e8a4",
+      "text": "No Cerrado tem muito sol, mas falta pouca água e guardar água. Procure outro lugar no mapa.",
+      "file": "n-f1c5fb14a4623ed98a88e8a4.mp3",
+      "sources": [
+        "biomes:mandacaru:cerrado:feedback"
+      ]
+    },
+    {
+      "id": "n-f2e28ec849dde64eb56a4b2a",
+      "text": "Ilha Norfolk.",
+      "file": "n-f2e28ec849dde64eb56a4b2a.mp3",
+      "sources": [
+        "world:nfk:name"
+      ]
+    },
+    {
+      "id": "n-f360df43c0768fd03b830c68",
+      "text": "vinte e cinco",
+      "file": "n-f360df43c0768fd03b830c68.mp3",
+      "sources": [
+        "blocks:number:25"
+      ]
+    },
+    {
+      "id": "n-f3679d936c40bf4b0d017dda",
+      "text": "Saara Ocidental.",
+      "file": "n-f3679d936c40bf4b0d017dda.mp3",
+      "sources": [
+        "world:esh:name"
+      ]
+    },
+    {
+      "id": "n-f39f2cd9da386e859c5f67fd",
+      "text": "Ajude o Mandacaru. O mandacaru precisa de muito sol e sabe guardar água para viver em lugares secos. Toque nas fotos para ver as pistas e arraste o Mandacaru até o lugar certo no mapa do Brasil.",
+      "file": "n-f39f2cd9da386e859c5f67fd.mp3",
+      "sources": [
+        "biomes:mandacaru:prompt"
+      ]
+    },
+    {
+      "id": "n-f3d3286e70105b411d75c906",
+      "text": "Na Mata Atlântica tem árvores, frutos e abrigo. O Mico-leão-dourado encontrou sua casa!",
+      "file": "n-f3d3286e70105b411d75c906.mp3",
+      "sources": [
+        "biomes:mico:mata:feedback"
+      ]
+    },
+    {
+      "id": "n-f48339aad8904b4ea693b385",
+      "text": "Reunião.",
+      "file": "n-f48339aad8904b4ea693b385.mp3",
+      "sources": [
+        "world:reu:name"
+      ]
+    },
+    {
+      "id": "n-f4b8ce7cf31112012fe52ecb",
+      "text": "Zouglou, coupé-décalé, tambores, balafon e cantos de dança fazem parte dos sons marfinenses.",
+      "file": "n-f4b8ce7cf31112012fe52ecb.mp3",
+      "sources": [
+        "world:civ:music"
+      ]
+    },
+    {
+      "id": "n-f52299768a54ec3d49604916",
+      "text": "A música ugandense usa tambores, amadinda, harpas, canto e danças de diferentes reinos e comunidades.",
+      "file": "n-f52299768a54ec3d49604916.mp3",
+      "sources": [
+        "world:uga:music"
+      ]
+    },
+    {
+      "id": "n-f613cf13e58ec91b3c77a1ab",
+      "text": "nove unidades",
+      "file": "n-f613cf13e58ec91b3c77a1ab.mp3",
+      "sources": [
+        "blocks:units:9"
+      ]
+    },
+    {
+      "id": "n-f669d74a83197a08e2608e2d",
+      "text": "Equador.",
+      "file": "n-f669d74a83197a08e2608e2d.mp3",
+      "sources": [
+        "world:ecu:name"
+      ]
+    },
+    {
+      "id": "n-f67a444e6155f530bf47f901",
+      "text": "quinze unidades",
+      "file": "n-f67a444e6155f530bf47f901.mp3",
+      "sources": [
+        "blocks:units:15"
+      ]
+    },
+    {
+      "id": "n-f748b686c870457b04bc451c",
+      "text": "Martinica.",
+      "file": "n-f748b686c870457b04bc451c.mp3",
+      "sources": [
+        "world:mtq:name"
+      ]
+    },
+    {
+      "id": "n-f789b862c34360235443ccdf",
+      "text": "A música cambojana usa roneat, gongos, flautas, tambores e danças delicadas.",
+      "file": "n-f789b862c34360235443ccdf.mp3",
+      "sources": [
+        "world:khm:music"
+      ]
+    },
+    {
+      "id": "n-f83ea8c20b49dfe7bfaa5cb6",
+      "text": "Na Amazônia falta gramíneas, campo aberto e correr. Procure outro lugar no mapa.",
+      "file": "n-f83ea8c20b49dfe7bfaa5cb6.mp3",
+      "sources": [
+        "biomes:ema:amazonia:feedback"
+      ]
+    },
+    {
+      "id": "n-f83f490a662bc98de43df1ec",
+      "text": "noventa",
+      "file": "n-f83f490a662bc98de43df1ec.mp3",
+      "sources": [
+        "blocks:number:90"
+      ]
+    },
+    {
+      "id": "n-f8660cf0de6374a394a80c16",
+      "text": "O dombra é um instrumento de duas cordas muito importante; ele acompanha histórias cantadas, danças e melodias das estepes.",
+      "file": "n-f8660cf0de6374a394a80c16.mp3",
+      "sources": [
+        "world:kaz:music"
+      ]
+    },
+    {
+      "id": "n-f8ce6aedf4dd43c1143d485a",
+      "text": "quarenta e oito",
+      "file": "n-f8ce6aedf4dd43c1143d485a.mp3",
+      "sources": [
+        "blocks:number:48"
+      ]
+    },
+    {
+      "id": "n-f8da62bd5e43be71189a8529",
+      "text": "é igual a",
+      "file": "n-f8da62bd5e43be71189a8529.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-f8de9019fe8b2869e2b2b9dc",
+      "text": "Nigéria.",
+      "file": "n-f8de9019fe8b2869e2b2b9dc.mp3",
+      "sources": [
+        "world:nga:name"
+      ]
+    },
+    {
+      "id": "n-f9194e73f9e9459e3450ea10",
+      "text": "zero",
+      "file": "n-f9194e73f9e9459e3450ea10.mp3",
+      "sources": [
+        "blocks:number-feminine:0",
+        "blocks:number:0"
+      ]
+    },
+    {
+      "id": "n-f9353147f05ac28f88903309",
+      "text": "não tem dezenas. Tire as barras.",
+      "file": "n-f9353147f05ac28f88903309.mp3",
+      "sources": [
+        "arithmetic:composition"
+      ]
+    },
+    {
+      "id": "n-f9b4bb16aeaf932c406c58c1",
+      "text": "Ilha Formosa.",
+      "file": "n-f9b4bb16aeaf932c406c58c1.mp3",
+      "sources": [
+        "world:twn:name"
+      ]
+    },
+    {
+      "id": "n-f9ff469f0d9f95badf35056d",
+      "text": "O que ajuda o tuiuiú a andar na água rasa?",
+      "file": "n-f9ff469f0d9f95badf35056d.mp3",
+      "sources": [
+        "biomes:tuiuiu:adaptation:question"
+      ]
+    },
+    {
+      "id": "n-fa6fdab7584a6c699c40ae76",
+      "text": "No Pampa tem gramíneas, campo aberto e correr. A Ema encontrou sua casa!",
+      "file": "n-fa6fdab7584a6c699c40ae76.mp3",
+      "sources": [
+        "biomes:ema:pampa:feedback"
+      ]
+    },
+    {
+      "id": "n-fa9a8dd5148646790516ef53",
+      "text": "A música de Burkina Faso usa balafon, tambores, coros animados, flautas e ritmos de festa.",
+      "file": "n-fa9a8dd5148646790516ef53.mp3",
+      "sources": [
+        "world:bfa:music"
+      ]
+    },
+    {
+      "id": "n-fb9f26e31dca8819cb220daa",
+      "text": "Zimbabwe.",
+      "file": "n-fb9f26e31dca8819cb220daa.mp3",
+      "sources": [
+        "world:zwe:name"
+      ]
+    },
+    {
+      "id": "n-fbc19c6a6103ab66d262bddd",
+      "text": "Calipso, soca e tuk band aparecem em festas de Barbados.",
+      "file": "n-fbc19c6a6103ab66d262bddd.mp3",
+      "sources": [
+        "world:brb:music"
+      ]
+    },
+    {
+      "id": "n-fc230b7c7765f65d80c50b3c",
+      "text": "A música peruana usa quenas, charangos, tambores e danças dos Andes; alguns ritmos parecem caminhar pelas montanhas.",
+      "file": "n-fc230b7c7765f65d80c50b3c.mp3",
+      "sources": [
+        "world:per:music"
+      ]
+    },
+    {
+      "id": "n-fc3b728186ade507ad1722ae",
+      "text": "Grécia.",
+      "file": "n-fc3b728186ade507ad1722ae.mp3",
+      "sources": [
+        "world:grc:name"
+      ]
+    },
+    {
+      "id": "n-fd933a16849874503ad6801e",
+      "text": "Neste país, muitas pessoas falam Slovak.",
+      "file": "n-fd933a16849874503ad6801e.mp3",
+      "sources": [
+        "world:svk:music-language"
+      ]
+    },
+    {
+      "id": "n-fda2ee49e993d103767372a1",
+      "text": "Neste país, muitas pessoas falam English e Nauru.",
+      "file": "n-fda2ee49e993d103767372a1.mp3",
+      "sources": [
+        "world:nru:music-language"
+      ]
+    },
+    {
+      "id": "n-fdcdca097b21a1079049f18e",
+      "text": "trinta e um",
+      "file": "n-fdcdca097b21a1079049f18e.mp3",
+      "sources": [
+        "blocks:number:31"
+      ]
+    },
+    {
+      "id": "n-fdf2a2f149a3e52b975b1e42",
+      "text": "Descoberta guardada! Isso!",
+      "file": "n-fdf2a2f149a3e52b975b1e42.mp3",
+      "sources": [
+        "biomes:adaptation:success-title"
+      ]
+    },
+    {
+      "id": "n-fe7ef33572e582dfdd449188",
+      "text": "dezesseis",
+      "file": "n-fe7ef33572e582dfdd449188.mp3",
+      "sources": [
+        "blocks:number-feminine:16",
+        "blocks:number:16"
+      ]
+    },
+    {
+      "id": "n-feb9acece5c1485543f84e25",
+      "text": "Perú.",
+      "file": "n-feb9acece5c1485543f84e25.mp3",
+      "sources": [
+        "world:per:name"
+      ]
+    },
+    {
+      "id": "n-ff7ea677eb97cc754c711685",
+      "text": "Neste país, muitas pessoas falam Estonian.",
+      "file": "n-ff7ea677eb97cc754c711685.mp3",
+      "sources": [
+        "world:est:music-language"
+      ]
+    },
+    {
+      "id": "n-ffef91be50ab10159691cf0c",
+      "text": "A música congolesa tem rumba, soukous, guitarras brilhantes, vozes em grupo e ritmos de dança.",
+      "file": "n-ffef91be50ab10159691cf0c.mp3",
+      "sources": [
+        "world:cog:music"
+      ]
+    }
+  ]
+}

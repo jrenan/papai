@@ -71,6 +71,19 @@ teclado e confirmação de saída.
 Para outro endereço, defina `BASE_URL`.
 Para conferir apenas sintaxe e arquivos, use `npm run test:assets`.
 
+## Narrações
+
+Os quatro jogos compartilham MP3 da **Jessica**, gerados com **Eleven v4** em
+português. O navegador carrega somente os trechos pedidos, sem acessar a API
+ElevenLabs. Os dois jogos de soma mantêm os ajustes locais de velocidade e som.
+Toque em **Ouvir** para repetir ou liberar a reprodução quando o navegador pedir.
+
+O inventário completo, os comandos de geração e as verificações estão em
+[`scripts/NARRATION.md`](scripts/NARRATION.md). Ao editar uma fala, atualize o
+inventário e gere o áudio correspondente antes de publicar. A publicação exige
+cobertura completa dos textos e hashes dos arquivos; não envia ferramentas,
+credenciais ou áudios do DinoFala.
+
 ## O que está implementado
 
 ### Tela Inicial
@@ -157,7 +170,7 @@ Dados locais usados pelo jogo de países:
 - Cálculo automático de compatibilidade usando características compartilhadas.
 - Feedback por adequação: combina muito, combina um pouco e combina pouco.
 - Pergunta de adaptação depois da melhor escolha.
-- Botão de narração usando `speechSynthesis` do navegador.
+- Botão de narração com arquivos MP3 da Jessica, gerados no Eleven v4.
 
 ## Como adicionar conteúdo aos biomas
 

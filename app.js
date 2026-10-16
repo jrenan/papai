@@ -142,17 +142,16 @@ function setActionVisibility({ tryAgain = false, next = false }) {
 }
 
 function openHub() {
+  window.TrioNarration?.stop();
   resetRescueInteraction();
   show(gameHub);
   hide(worldGame);
   biomeScreens.forEach(hide);
   window.scrollTo(0, 0);
-  if ("speechSynthesis" in window) {
-    window.speechSynthesis.cancel();
-  }
 }
 
 function openBiomes() {
+  window.TrioNarration?.stop();
   resetRescueInteraction();
   hide(gameHub);
   hide(worldGame);
@@ -163,6 +162,7 @@ function openBiomes() {
 }
 
 function openWorld() {
+  window.TrioNarration?.stop();
   resetRescueInteraction();
   hide(gameHub);
   biomeScreens.forEach(hide);
@@ -353,6 +353,7 @@ function renderHiddenClues(habitatId) {
 }
 
 function renderMission() {
+  window.TrioNarration?.stop();
   const missionData = currentMission();
   const animal = currentSpecies();
   selectedHabitat = null;
@@ -411,6 +412,7 @@ function renderHabitatChoices() {
 }
 
 function exploreHabitat(habitatId) {
+  window.TrioNarration?.stop();
   const hadFocus = choiceGrid.contains(document.activeElement);
   selectedHabitat = habitatId;
   exploredHabitats.add(habitatId);
@@ -743,6 +745,7 @@ async function flyGhostHome(ghost) {
 }
 
 function dropOnBiome(habitatId, drop = {}) {
+  window.TrioNarration?.stop();
   if (missionPlaced) {
     return;
   }
@@ -886,6 +889,7 @@ function renderAdaptation() {
 }
 
 function chooseAdaptation(option) {
+  window.TrioNarration?.stop();
   const missionData = currentMission();
   const living = currentSpecies();
   const isRight = option === missionData.adaptationAnswer;
@@ -907,6 +911,7 @@ function chooseAdaptation(option) {
 }
 
 function nextMission() {
+  window.TrioNarration?.stop();
   if (missionIndex < missions.length - 1) {
     missionIndex += 1;
     renderMission();
@@ -935,10 +940,6 @@ function restartGame() {
 }
 
 function speakCurrentPrompt() {
-  if (!("speechSynthesis" in window)) {
-    return;
-  }
-
   const animal = currentSpecies();
   let text = `Ajude ${withArticle(animal)}. ${currentMission().story} Toque nas fotos para ver as pistas e arraste ${withArticle(animal)} até o lugar certo no mapa do Brasil.`;
   if (!feedback.classList.contains("is-hidden")) {
@@ -947,11 +948,7 @@ function speakCurrentPrompt() {
       text += ` ${adaptationQuestion.textContent}`;
     }
   }
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "pt-BR";
-  utterance.rate = 0.9;
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(utterance);
+  window.TrioNarration?.speak(text);
 }
 
 function formatNumber(value) {
@@ -1324,6 +1321,7 @@ function renderCountryPanel() {
 }
 
 function selectCountry(countryId, { openDetails = true, focusGlobe = false } = {}) {
+  window.TrioNarration?.stop();
   selectedCountryId = countryId;
   selectedLandmarkIndex = 0;
   renderCountryStrip();
@@ -1341,17 +1339,22 @@ function selectLandmark(index) {
 }
 
 function speakCountryMusic() {
-  if (!("speechSynthesis" in window)) {
-    return;
-  }
-
   const country = getSelectedCountry();
-  const utterance = new SpeechSynthesisUtterance(`${country.name}. ${country.music}`);
-  utterance.lang = "pt-BR";
-  utterance.rate = 0.88;
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(utterance);
+  window.TrioNarration?.speak(`${country.name}. ${country.music}`);
 }
+
+function updateNarrationControls() {
+  const state = window.TrioNarration?.getState();
+  const error = state?.status === "error" ? state.error : "";
+  for (const button of [voiceButton, musicButton]) {
+    button.textContent = error ? "Áudio indisponível · tentar" : button === voiceButton ? "🔊 Ouvir" : "Ouvir";
+    button.title = error;
+    button.setAttribute("aria-label", error || "Ouvir");
+    button.dataset.audioStatus = state?.status || "unavailable";
+  }
+}
+window.addEventListener("trionarrationchange", updateNarrationControls);
+updateNarrationControls();
 
 function latLonToVector3(lat, lon, radius) {
   const phi = (90 - lat) * (Math.PI / 180);
@@ -2282,6 +2285,7 @@ biomeMap.addEventListener("keydown", (event) => {
 });
 // Só aparece depois de errar a pista do corpo: o ser vivo já está em casa no mapa.
 tryAgainButton.addEventListener("click", () => {
+  window.TrioNarration?.stop();
   hide(feedback);
   setActionVisibility({});
   adaptationSolved = false;
@@ -2309,6 +2313,7 @@ closeCountryBrowser.addEventListener("click", () => {
   hide(countryBrowser);
 });
 closeCountryPanel.addEventListener("click", () => {
+  window.TrioNarration?.stop();
   hide(countryPanel);
 });
 globeControlButtons.forEach((button) => {

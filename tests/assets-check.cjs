@@ -5,7 +5,7 @@ const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 
-for (const file of ['app.js', 'game-data.js', 'world-data.js', 'country-content.js', 'biome-geometry.js', 'numberblocks-somar/numberblocks.js', 'numberblocks-1-100/game-voice.js']) {
+for (const file of ['app.js', 'game-data.js', 'world-data.js', 'country-content.js', 'biome-geometry.js', 'assets/narration-player.js', 'numberblocks-somar/numberblocks.js', 'numberblocks-1-100/game-voice.js']) {
   new vm.Script(read(file), { filename: file });
 }
 for (const file of ['index.html', 'numberblocks-somar/index.html', 'numberblocks-1-100/blocos-de-somar.html', 'fono-do-leo/index.html']) {
@@ -15,7 +15,7 @@ for (const file of ['index.html', 'numberblocks-somar/index.html', 'numberblocks
   }
   for (const [, link] of html.matchAll(/\b(?:src|href)="([^"#]+)"/g)) {
     if (!/^(https?:|data:|blob:)|\$\{/.test(link)) {
-      assert.ok(fs.existsSync(path.resolve(root, path.dirname(file), link)), `${file}: missing ${link}`);
+      assert.ok(fs.existsSync(path.resolve(root, path.dirname(file), link.split(/[?#]/, 1)[0])), `${file}: missing ${link}`);
     }
   }
 }

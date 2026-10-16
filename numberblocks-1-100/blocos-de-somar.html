@@ -416,7 +416,9 @@ html,body{height:100%;height:100dvh}
 </div>
 <div id="fx" aria-hidden="true"></div>
 
-<script src="game-voice.js"></script>
+<script src="../assets/narration/manifest.js?v=20261016-jessica1"></script>
+<script src="../assets/narration-player.js?v=20261016-jessica1"></script>
+<script src="game-voice.js?v=20261016-jessica1"></script>
 <script>
 (() => {
 'use strict';
@@ -553,7 +555,6 @@ function sfx(k, v){
     }
   } catch(e){}
 }
-const hasTTS = 'speechSynthesis' in window;
 function say(text){
   if (!text) return;
   S.lastSay = text;
@@ -563,9 +564,11 @@ function populateVoiceSettings(){
   const select = document.getElementById('voice-choice');
   if (!select || !window.BlockVoice) return;
   const settings = BlockVoice.getSettings();
-  select.replaceChildren(new Option('Automática · melhor voz disponível',''));
+  select.replaceChildren();
   for (const v of BlockVoice.voices()) select.add(new Option(v.name, v.voiceURI));
-  select.value = settings.voiceURI || '';
+  select.value = settings.voiceURI;
+  select.disabled = true;
+  BlockVoice.refreshControls();
   document.getElementById('voice-speed').value = String(settings.rate);
 }
 addEventListener('blockvoiceschanged', populateVoiceSettings);
@@ -645,7 +648,7 @@ function homeHTML(){
       <div class="lv-grid">${lv}</div>
       <p class="note">Arraste ou toque com calma. Toque em <b>Ouvir</b> para repetir a instrução e ver uma mãozinha mostrando o que fazer. Para corrigir, use <b>Desfazer</b>.</p>
       <details class="voice-settings"><summary>Ajustar voz · para adultos</summary>
-        <label for="voice-choice">Voz em português</label><select id="voice-choice"><option value="">Automática · melhor voz disponível</option></select>
+        <label for="voice-choice">Voz da narração</label><select id="voice-choice" disabled><option value="jessica-eleven-v4">Jessica · português brasileiro</option></select>
         <label for="voice-speed">Velocidade da fala</label><select id="voice-speed"><option value="0.82">Mais devagar</option><option value="0.9">Calma</option><option value="1">Normal</option></select>
         <button class="btn alt" data-act="voice-test">Ouvir a voz</button>
       </details>
@@ -761,6 +764,7 @@ function renderTop(){
       ${game ? `<button class="ib say" data-act="repeat" aria-label="Ouvir de novo">${IC.speak}<span>Ouvir</span></button>` : ''}
       <button class="ib" data-act="sound" aria-pressed="${S.sound}" aria-label="${S.sound ? 'Desligar som e voz' : 'Ligar som e voz'}">${S.sound ? IC.note : IC.noteOff}</button>
     </div>`;
+  window.BlockVoice?.refreshControls();
   if (game && S.step !== topStep){ popEl(topBar.querySelector('.steps li.now'), .28); }
   topStep = game ? S.step : -1;
 }
@@ -1240,6 +1244,7 @@ addEventListener('keydown', () => { hideHand(); armIdle(); });
 /* ---------- sair no meio da conta: pergunta antes, para um toque sem querer não apagar tudo ---------- */
 const inProgress = () => !(S.step === 4 && S.solved) && (S.step > 1 || cnt('M') > 0);
 function askLeave(){
+  window.BlockVoice?.stop();
   if (document.querySelector('.confirm')) return;
   clearTimeout(idleT); hideHand();
   const box = document.createElement('div');
@@ -1305,6 +1310,7 @@ function newProblem(silent){
   enterStep(1, silent);
 }
 function enterStep(n, silent){
+  window.BlockVoice?.stop();
   if (!silent && S.screen === 'game' && stage.querySelector('.scene')) leaveScene(() => doEnter(n, silent));
   else doEnter(n, silent);
 }

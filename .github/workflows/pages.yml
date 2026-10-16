@@ -28,10 +28,25 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Test site packaging
+        run: |
+          node scripts/export-narration.cjs --check
+          node tests/narration-assets.cjs
+          node tests/assets-check.cjs
+          node tests/pages-package.cjs
+
+      - name: Package runtime files
+        run: node scripts/package-pages.cjs _site
+
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment

@@ -2,6 +2,10 @@
 Thumbs.db
 *.log
 node_modules/
+_site/
+.narration-staging/
+__pycache__/
+*.py[cod]
 data/Biomas_5000mil.zip
 data/biomas_5000mil/
 numberblocks-1-100/Claude outputs/

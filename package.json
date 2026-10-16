@@ -2,8 +2,10 @@
   "name": "trio-do-saber",
   "private": true,
   "scripts": {
-    "test": "node tests/assets-check.cjs && node tests/site-smoke.cjs && node tests/biomes-regression.cjs && node tests/blocks-regression.cjs && node tests/join-regression.cjs",
-    "test:assets": "node tests/assets-check.cjs"
+    "test": "npm run test:unit && npm run test:assets && node tests/site-smoke.cjs && node tests/biomes-regression.cjs && node tests/blocks-regression.cjs && node tests/join-regression.cjs && node tests/narration-browser.cjs && node tests/narration-live.cjs",
+    "test:assets": "node tests/assets-check.cjs && node tests/narration-assets.cjs",
+    "test:unit": "node tests/narration-corpus.cjs && node tests/narration-runtime.cjs && node tests/narration-counting.cjs && node tests/pages-package.cjs && python3 -m unittest discover -s tests -p \"test_*.py\"",
+    "test:narration-live": "node tests/narration-live.cjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"

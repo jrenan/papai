@@ -1,105 +1,65 @@
-/* Narração local do aparelho: português brasileiro, clara e sem sobreposição. */
+/* Narrações Jessica compartilhadas pelos dois jogos; preferências continuam locais. */
 (() => {
   'use strict';
-  const synth = window.speechSynthesis;
-  const supported = !!synth && typeof window.SpeechSynthesisUtterance === 'function';
+  const player = window.TrioNarration;
   const storageKey = 'triodosaber.blockvoice.v1';
-  const settings = { rate: 0.9, voiceURI: '' };
-  let available = [], voiceSignature = '', current = null, revision = 0;
-
+  const settings = { rate: 0.9, voiceURI: 'jessica-eleven-v4' };
+  let lastAnnouncedError = '';
   function applySettings(value) {
-    if (!value || typeof value !== 'object') return;
-    if (typeof value.rate === 'number' && Number.isFinite(value.rate)) {
-      settings.rate = Math.min(1.1, Math.max(0.75, value.rate));
-    }
-    if (typeof value.voiceURI === 'string') settings.voiceURI = value.voiceURI.slice(0, 500);
+    if (typeof value?.rate === 'number' && Number.isFinite(value.rate)) settings.rate = Math.min(1.1, Math.max(0.75, value.rate));
   }
   try { applySettings(JSON.parse(localStorage.getItem(storageKey))); } catch (_) {}
-
-  const language = voice => String(voice.lang || '').replace(/_/g, '-').toLowerCase();
-  function quality(voice) {
-    const name = `${voice.name} ${voice.voiceURI}`.toLowerCase();
-    let score = language(voice) === 'pt-br' ? 1000 : 0;
-    // Quality labels are hints; the user can always choose a different voice.
-    if (/premium|superior/.test(name)) score += 100;
-    if (/enhanced|aprimorada|melhorada/.test(name)) score += 70;
-    if (/natural|neural/.test(name)) score += 60;
-    if (/google/.test(name)) score += 30;
-    if (/luciana|francisca|thalita|antonio/.test(name)) score += 15;
-    if (/eddy|grandma|grandpa|rocko|sandy|shelley/.test(name)) score -= 15;
-    if (/compact/.test(name)) score -= 20;
-    if (voice.localService) score += 5;
-    if (voice.default) score += 2;
-    return score;
-  }
-  function refreshVoices() {
-    if (!supported) return [];
-    try {
-      available = synth.getVoices()
-        .filter(v => /^pt(?:-|$)/.test(language(v)))
-        .sort((a, b) => quality(b) - quality(a) || a.name.localeCompare(b.name, 'pt-BR'));
-      const signature = available.map(v => `${v.voiceURI}:${v.name}:${v.lang}`).join('|');
-      if (signature !== voiceSignature) {
-        voiceSignature = signature;
-        window.dispatchEvent(new Event('blockvoiceschanged'));
-      }
-    } catch (_) {}
-    return available.slice();
-  }
-  function stop() {
-    revision++;
-    if (current) current.onend = current.onerror = null;
-    current = null;
-    if (supported) { try { synth.cancel(); } catch (_) {} }
-  }
-  function unlock() {
-    if (!supported) return false;
-    refreshVoices();
-    try { if (synth.paused) synth.resume(); } catch (_) {}
-    return true;
-  }
-  function speak(text) {
-    if (!supported || typeof text !== 'string' || !text.trim() || document.hidden) return false;
-    stop();
-    unlock();
-    const token = revision;
-    const utterance = new SpeechSynthesisUtterance(text.trim());
-    const voice = available.find(v => v.voiceURI === settings.voiceURI) || available[0];
-    if (voice) utterance.voice = voice;
-    utterance.lang = voice ? voice.lang : 'pt-BR';
-    utterance.rate = settings.rate;
-    utterance.pitch = 1;
-    utterance.volume = 1;
-    utterance.onend = utterance.onerror = () => {
-      if (token === revision) current = null;
-    };
-    current = utterance;
-    // Keep this synchronous so a tap's browser audio permission is preserved.
-    try { synth.speak(utterance); return true; }
-    catch (_) { current = null; return false; }
-  }
   function configure(value) {
     applySettings(value);
     try { localStorage.setItem(storageKey, JSON.stringify(settings)); } catch (_) {}
     return { ...settings };
   }
-
-  window.BlockVoice = Object.freeze({
-    speak, stop, configure, unlock, init: unlock,
-    voices: refreshVoices,
-    getSettings: () => ({ ...settings }),
-    supported
-  });
-  if (supported) {
-    synth.addEventListener('voiceschanged', refreshVoices);
-    refreshVoices();
-    window.addEventListener('pageshow', refreshVoices);
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) stop(); else refreshVoices();
-    });
-    window.addEventListener('pagehide', stop);
-    // Some engines expose their installed voices only after the first gesture.
-    document.addEventListener('pointerdown', unlock, { passive: true, once: true });
-    document.addEventListener('keydown', unlock, { once: true });
+  function updateStatus() {
+    const state = player?.getState();
+    const error = state?.status === 'error' ? state.error : '';
+    if (error && error !== lastAnnouncedError) {
+      // A failure may arrive while focus stays on a block rather than Ouvir.
+      // Defer until the game's synchronous render has restored its instructions.
+      Promise.resolve().then(() => {
+        if (player?.getState().error !== error || document.hidden) return;
+        const announcement = document.querySelector('#announcement');
+        if (announcement) announcement.textContent = error;
+      });
+    }
+    lastAnnouncedError = error;
+    for (const button of document.querySelectorAll('[data-act="repeat"], [data-act="voice-test"]')) {
+      const test = button.dataset.act === 'voice-test';
+      button.title = error;
+      button.setAttribute('aria-label', error || (test ? 'Ouvir a voz Jessica' : 'Ouvir de novo'));
+      if (test) button.textContent = error ? 'Áudio indisponível · tentar' : 'Ouvir a voz';
+      else {
+        const label = button.querySelector('span:not([data-audio-warning])');
+        if (label) label.textContent = error ? 'Áudio indisponível' : 'Ouvir';
+        const icon = button.querySelector('svg');
+        if (icon) icon.style.display = error ? 'none' : '';
+        let warning = button.querySelector('[data-audio-warning]');
+        if (error && !warning) {
+          warning = document.createElement('span');
+          warning.dataset.audioWarning = '';
+          warning.setAttribute('aria-hidden', 'true');
+          warning.style.display = 'inline';
+          warning.textContent = '⚠';
+          button.prepend(warning);
+        } else if (!error) warning?.remove();
+      }
+      button.dataset.audioStatus = state?.status || 'unavailable';
+    }
   }
+  window.BlockVoice = Object.freeze({
+    speak: text => player?.speak(text, { rate: settings.rate }) || false,
+    stop: () => player?.stop(),
+    finished: () => player?.finished() || Promise.resolve(false),
+    configure, unlock: () => player?.unlock(), init: () => player?.unlock(),
+    voices: () => [{ name: 'Jessica · português brasileiro', voiceURI: settings.voiceURI, lang: 'pt-BR' }],
+    getSettings: () => ({ ...settings }),
+    getState: () => player?.getState() || { supported: false, ready: false, status: 'unavailable' },
+    refreshControls: updateStatus,
+    supported: !!player?.supported,
+  });
+  window.addEventListener('trionarrationchange', updateStatus);
 })();
