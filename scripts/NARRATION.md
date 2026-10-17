@@ -189,6 +189,89 @@ sem credenciais, para reaproveitamento e auditoria. Não o publique. Alteraçõe
 futuras de texto exigem reexportar o corpus, gerar os trechos correspondentes e
 conferir novamente o pacote completo antes da publicação.
 
+## Correção contextual dos números e símbolos
+
+`scripts/regenerate-math-narration.py` prepara dois áudios contínuos, mantendo
+Jessica e `eleven_v4`, sempre com `language_code: "pt"`. O primeiro conta de 0
+a 110; o segundo reúne “uma”, “duas”, “mais”, “é igual a”, dezenas e unidades.
+O total é de 146 trechos existentes. As pausas usam pontuação e `[pause]`, sem
+SSML. O staging conserva roteiros, respostas e o journal; não contém a chave.
+
+```sh
+python3 scripts/regenerate-math-narration.py plan \
+  --staging .narration-staging/math-pt-20261017
+python3 scripts/regenerate-math-narration.py generate \
+  --staging .narration-staging/math-pt-20261017
+```
+
+A chave vem de `ELEVENLABS_API_KEY` ou de `--env-file` apontando para arquivo
+privado fora do projeto. O journal usa as mesmas regras de retomada do gerador
+original. Após recarregar a mesma chave, `--resume-after-quota` permite retomar
+uma rejeição explícita de quota; não libera resultados ambíguos.
+
+Transcreva cada master com o auxiliar `video-use-hermes`, usando `whisper-1`,
+idioma `pt` e timestamps por palavra. Por exemplo, com o ambiente já instalado:
+
+```sh
+/Users/jrenan/Developer/video-use-hermes/.venv/bin/python \
+  /Users/jrenan/Developer/video-use-hermes/helpers/transcribe.py \
+  .narration-staging/math-pt-20261017/audio/numbers.mp3 \
+  --language pt --edit-dir .narration-staging/math-pt-20261017/edit
+python3 scripts/split-narration-sequence.py \
+  --audio .narration-staging/math-pt-20261017/audio/numbers.mp3 \
+  --plan .narration-staging/math-pt-20261017/numbers-plan.json \
+  --transcript .narration-staging/math-pt-20261017/edit/transcripts/numbers.json \
+  --output .narration-staging/math-pt-20261017/cuts/numbers
+```
+
+Repita os dois últimos comandos trocando `numbers` por `math`. O separador exige
+correspondência entre o roteiro e o Whisper, inclusive numerais escritos como
+dígitos, e escolhe os limites em silêncios entre os itens. Divergências impedem
+os cortes. `cuts.json` registra fontes, hashes, limites e texto reconhecido.
+
+Quando os tempos do Whisper atravessam pausas, `--ordered-silences` permite usar
+somente os limites acústicos, exigindo exatamente uma pausa interna entre cada
+par de itens e o mesmo texto reconhecido. No lote de 17 de outubro, a contagem
+usou silêncio mínimo de 0,12 s; o vocabulário matemático usou 0,20 s para ignorar
+uma pausa de 0,129 s dentro de uma expressão. Os dois preservam margens de 80 ms
+e fades de 25 ms dentro do silêncio.
+
+O Whisper pode omitir palavras na sequência longa. Nesse caso, confira uma janela
+curta em uma nova chamada e preserve as duas respostas originais. Um arquivo
+`numbers-alignment.json` pode reunir somente as palavras comprovadas pelas duas
+transcrições, com os hashes e a origem de cada resposta; não invente palavras
+para passar a validação. O relatório registra o basename e hash dessa evidência.
+Confira também montagens feitas a partir dos MP3 finais antes de instalar.
+
+```sh
+python3 scripts/regenerate-math-narration.py install \
+  --staging .narration-staging/math-pt-20261017
+```
+
+`install` exige os dois relatórios completos e `qa/cut-verification.json`
+(status `pass`, 146 clipes, modelo `whisper-1`, idioma `pt` e hashes atuais dos
+relatórios de corte). Verifica os hashes antes de
+preparar o pacote completo de 706 trechos e instalar os dois manifestos juntos.
+Depois execute o verificador completo e o teste de integração descritos acima.
+Atualize também a versão de `manifest.js` nos três HTML antes da publicação;
+o cache individual dos MP3 já usa seus hashes.
+
+### Lote corrigido em 17 de outubro de 2026
+
+Foram substituídos os 146 trechos numéricos e matemáticos (164,728163 segundos),
+mantendo Jessica, Eleven v4 e `language_code: "pt"`. A contagem fonte tem
+126,12 segundos e a sequência matemática, 50,36 segundos. Os dois masters e as
+montagens dos arquivos finais foram transcritos com `whisper-1` em português.
+A omissão de “um” nas transcrições longas foi resolvida com conferências curtas
+independentes, que reconheceram “zero, um, dois, três”. As respostas originais
+foram preservadas.
+
+O pacote continua com 706 MP3 (2.208,53 segundos e 35.661.486 bytes). O
+staging `.narration-staging/math-pt-20261017/` guarda fontes, cortes e evidências;
+`qa/cut-verification.json` registra a conferência dos arquivos finais. Os hashes
+desses relatórios também constam em `sequenceRegeneration` no manifesto.
+Essa transcrição comprova o texto reconhecido, sem certificar sotaque regional.
+
 Referências oficiais: [Text to Speech](https://elevenlabs.io/docs/api-reference/text-to-speech/convert),
 [modelos](https://elevenlabs.io/docs/overview/models) e
 [autenticação](https://elevenlabs.io/docs/api-reference/authentication).
