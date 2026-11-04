@@ -2,6 +2,7 @@ from concurrent.futures import ThreadPoolExecutor
 from contextlib import closing
 import io
 import json
+import os
 from pathlib import Path
 import tempfile
 import unittest
@@ -13,6 +14,7 @@ from scripts.family_server import Problem, client_address, create_app, db_connec
 
 class FamilyTest(unittest.TestCase):
     origin = "https://trio.example"
+    host = "trio.example"
     password = "Minha frase de teste com espaços"
 
     def setUp(self):
@@ -21,18 +23,87 @@ class FamilyTest(unittest.TestCase):
         self.database = Path(temporary.name) / "private" / "families.sqlite3"
         self.app = create_app(database=self.database, origins={self.origin})
 
-    def call(self, method, route, data=None, cookie="", origin=None, status=200):
+    def call(self, method, route, data=None, cookie="", origin=None, status=200, **overrides):
         raw = json.dumps(data).encode() if data is not None else b""
         env = {"PATH_INFO": "/api/family/" + route, "REQUEST_METHOD": method,
-               "HTTP_HOST": "trio.example", "HTTP_ORIGIN": self.origin if origin is None else origin,
+               "HTTP_HOST": self.host, "HTTP_ORIGIN": self.origin if origin is None else origin,
                "CONTENT_LENGTH": str(len(raw)), "CONTENT_TYPE": "application/json",
                "wsgi.input": io.BytesIO(raw), "HTTP_COOKIE": cookie, "REMOTE_ADDR": "127.0.0.1"}
         response = {}
-        body = json.loads(b"".join(self.app(env, lambda s, h: response.update(status=s, headers=dict(h)))))
+        env.update(overrides)
+        env = {key: value for key, value in env.items() if value is not None}
+        raw = b"".join(self.app(env, lambda s, h: response.update(status=s, headers=dict(h))))
+        body = json.loads(raw) if raw else None
         self.assertEqual(int(response["status"][:3]), status, body)
         self.assertEqual(response["headers"]["Cache-Control"], "no-store")
         self.headers = response["headers"]
         return body
+
+    def test_separate_api_host_credentialed_cors_and_csrf(self):
+        self.origin = "https://triodosaber.profjonas.com"
+        self.host = "familia-trio.profjonas.com"
+        with patch.dict(os.environ, {"FAMILY_ORIGIN": self.origin, "FAMILY_API_ORIGIN": "https://" + self.host}, clear=True):
+            self.app = create_app(database=self.database)
+        preflight = {"HTTP_ACCESS_CONTROL_REQUEST_METHOD": "POST",
+                     "HTTP_ACCESS_CONTROL_REQUEST_HEADERS": "content-type", "HTTP_SEC_FETCH_SITE": "same-site"}
+        self.assertIsNone(self.call("OPTIONS", "register", status=204, **preflight))
+        self.assertEqual(self.headers["Access-Control-Allow-Origin"], self.origin)
+        self.assertEqual(self.headers["Access-Control-Allow-Credentials"], "true")
+        self.assertEqual(self.headers["Access-Control-Allow-Methods"], "GET, POST")
+        self.assertEqual(self.headers["Access-Control-Allow-Headers"], "Content-Type")
+        self.assertEqual(set(self.headers["Vary"].split(", ")),
+                         {"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"})
+        self.assertNotIn("Set-Cookie", self.headers)
+        cookie = self.register("adulto@example.org")
+        self.assertNotIn("Domain=", self.headers["Set-Cookie"])
+        self.assertEqual(self.headers["Access-Control-Allow-Origin"], self.origin)
+        self.assertEqual(self.headers["Access-Control-Allow-Credentials"], "true")
+        self.add_child(cookie, "Lia")
+        self.call("POST", "login", {"email": "adulto@example.org", "password": "errada"}, status=401)
+        self.assertEqual(self.headers["Access-Control-Allow-Origin"], self.origin)
+
+        for override in ({"HTTP_ORIGIN": None}, {"HTTP_ORIGIN": "null"}, {"HTTP_ORIGIN": "https://" + self.host},
+                         {"HTTP_ORIGIN": "https://outro.profjonas.com"}, {"HTTP_SEC_FETCH_SITE": "cross-site"},
+                         {"HTTP_HOST": "triodosaber.profjonas.com"}, {"HTTP_HOST": "localhost"}):
+            with self.subTest(override=override):
+                self.call("OPTIONS", "logout", status=403, **{**preflight, **override})
+                self.assertNotIn("Access-Control-Allow-Origin", self.headers)
+                self.call("POST", "logout", {}, cookie, status=403, **override)
+                self.assertNotIn("Access-Control-Allow-Origin", self.headers)
+        for override in ({"HTTP_ACCESS_CONTROL_REQUEST_METHOD": "DELETE"},
+                         {"HTTP_ACCESS_CONTROL_REQUEST_METHOD": None},
+                         {"HTTP_ACCESS_CONTROL_REQUEST_HEADERS": "content-type, authorization"}):
+            self.call("OPTIONS", "logout", status=403, **{**preflight, **override})
+            self.assertNotIn("Access-Control-Allow-Methods", self.headers)
+        self.call("GET", "session", cookie=cookie, origin="https://outro.profjonas.com", status=403)
+        self.assertNotIn("Access-Control-Allow-Origin", self.headers)
+        session = self.call("GET", "session", cookie=cookie, HTTP_SEC_FETCH_SITE="same-site")
+        self.assertEqual(session["children"][0]["name"], "Lia")
+        self.assertEqual(self.headers["Access-Control-Allow-Origin"], self.origin)
+        self.assertEqual(self.headers["Access-Control-Allow-Credentials"], "true")
+
+    def test_same_origin_default_and_loopback(self):
+        with patch.dict(os.environ, {"FAMILY_ORIGIN": self.origin}, clear=True):
+            self.app = create_app(database=self.database)
+        cookie = self.register("adulto@example.org")
+        self.assertEqual(self.call("GET", "session", cookie=cookie, HTTP_ORIGIN=None)["parent"]["email"], "adulto@example.org")
+        self.assertNotIn("Access-Control-Allow-Origin", self.headers)
+        self.host = "localhost:8000"
+        self.origin = "http://" + self.host
+        self.app = create_app(database=self.database, origins={self.origin, "http://127.0.0.1:8000"})
+        self.call("POST", "login", self.credentials("adulto@example.org"))
+        self.assertTrue(self.headers["Set-Cookie"].startswith("trio_family_dev="))
+        self.assertNotIn("; Secure", self.headers["Set-Cookie"])
+        self.call("POST", "logout", {}, origin="http://127.0.0.1:8000", status=403)
+
+    def test_invalid_production_origins(self):
+        for key in ("FAMILY_ORIGIN", "FAMILY_API_ORIGIN"):
+            for invalid in ("http://trio.example", "https://trio.example/path", "https://*.example",
+                            "https://user@trio.example"):
+                with self.subTest(key=key, invalid=invalid), patch.dict(
+                        os.environ, {"FAMILY_ORIGIN": self.origin, key: invalid}, clear=True):
+                    with self.assertRaises(ValueError):
+                        create_app(database=self.database)
 
     def credentials(self, email):
         return {"email": email, "password": self.password}

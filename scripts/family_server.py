@@ -224,14 +224,9 @@ def client_address(env, trusted_proxy):
     return peer
 
 
-def dispatch(db, env, origins, trusted_proxy):
+def dispatch(db, env, secure, trusted_proxy):
     route = env["PATH_INFO"].removeprefix(PREFIX)
     method = env["REQUEST_METHOD"]
-    host = env.get("HTTP_HOST", "")
-    origin = next((value for value in origins if urlsplit(value).netloc == host), None)
-    if not origin:
-        raise Problem(403, "Endereço de acesso inválido.")
-    secure = origin.startswith("https://")
     cookie_name = "__Host-trio_family" if secure else "trio_family_dev"
     cookie = SimpleCookie()
     try:
@@ -240,8 +235,6 @@ def dispatch(db, env, origins, trusted_proxy):
         pass
     token = cookie[cookie_name].value if cookie_name in cookie else ""
     if method == "POST":
-        if env.get("HTTP_ORIGIN") != origin or env.get("HTTP_SEC_FETCH_SITE") == "cross-site":
-            raise Problem(403, "Abra o jogo novamente para continuar.")
         data = read_body(env)
         if route in ("register", "login"):
             return authenticate(db, route, data, client_address(env, trusted_proxy), token, cookie_name, secure)
@@ -282,17 +275,34 @@ def dispatch(db, env, origins, trusted_proxy):
     raise Problem(404, "Endereço não encontrado.")
 
 
+def https_origin(name, value):
+    parsed = urlsplit(value)
+    if (parsed.scheme != "https" or value != f"https://{parsed.netloc}" or not parsed.hostname
+            or parsed.username is not None or re.search(r"[\s*\\]", parsed.netloc)):
+        raise ValueError(f"{name} deve ser uma origem HTTPS, sem caminho.")
+    return value
+
+
+def check_preflight(env):
+    method = env.get("HTTP_ACCESS_CONTROL_REQUEST_METHOD")
+    requested_headers = env.get("HTTP_ACCESS_CONTROL_REQUEST_HEADERS", "")
+    if method not in ("GET", "POST") or any(
+            name.strip().lower() != "content-type" for name in requested_headers.split(",") if name.strip()):
+        raise Problem(403, "Requisição de acesso inválida.")
+
+
 def create_app(*, database=None, origins=None):
     """API-only production entry point. A reverse proxy serves the static package."""
     trusted_proxy = None
     if origins is None:
         if os.environ.get("FAMILY_TRUSTED_PROXY"):
             trusted_proxy = str(ipaddress.ip_address(os.environ["FAMILY_TRUSTED_PROXY"]))
-        origin = os.environ["FAMILY_ORIGIN"]
-        parsed = urlsplit(origin)
-        if parsed.scheme != "https" or origin != f"https://{parsed.netloc}" or not parsed.hostname or parsed.username:
-            raise ValueError("FAMILY_ORIGIN deve ser uma origem HTTPS, sem caminho.")
-        origins = {origin}
+        frontend = https_origin("FAMILY_ORIGIN", os.environ["FAMILY_ORIGIN"])
+        api = https_origin("FAMILY_API_ORIGIN", os.environ.get("FAMILY_API_ORIGIN", frontend))
+        sites = {urlsplit(api).netloc: (frontend, True)}
+    else:
+        # Each local address serves its own frontend and API.
+        sites = {urlsplit(origin).netloc: (origin, origin.startswith("https://")) for origin in origins}
     database = Path(database or os.environ.get("FAMILY_DB") or Path.home() / ".local/share/trio-do-saber/family.sqlite3").resolve()
     if database.is_relative_to(ROOT):
         raise ValueError("Guarde FAMILY_DB fora da pasta pública do projeto.")
@@ -306,12 +316,30 @@ def create_app(*, database=None, origins=None):
 
     def application(env, start_response):
         headers = [("Cache-Control", "no-store"), ("Content-Type", "application/json; charset=utf-8"),
-                   ("X-Content-Type-Options", "nosniff")]
+                   ("X-Content-Type-Options", "nosniff"),
+                   ("Vary", "Origin, Access-Control-Request-Method, Access-Control-Request-Headers")]
         try:
             if not env["PATH_INFO"].startswith(PREFIX):
                 raise Problem(404, "Endereço não encontrado.")
+            site = sites.get(env.get("HTTP_HOST", ""))
+            if site is None:
+                raise Problem(403, "Endereço de acesso inválido.")
+            frontend, secure = site
+            origin = env.get("HTTP_ORIGIN")
+            method = env["REQUEST_METHOD"]
+            if env.get("HTTP_SEC_FETCH_SITE") == "cross-site" or (
+                    (origin is not None or method in ("POST", "OPTIONS")) and origin != frontend):
+                raise Problem(403, "Abra o jogo novamente para continuar.")
+            if origin == frontend:
+                headers.extend([("Access-Control-Allow-Origin", frontend), ("Access-Control-Allow-Credentials", "true")])
+            if method == "OPTIONS":
+                check_preflight(env)
+                headers.extend([("Access-Control-Allow-Methods", "GET, POST"),
+                                ("Access-Control-Allow-Headers", "Content-Type")])
+                start_response("204 No Content", headers)
+                return []
             with closing(db_connect(database)) as db, db:
-                result, extra = dispatch(db, env, origins, trusted_proxy)
+                result, extra = dispatch(db, env, secure, trusted_proxy)
             headers.extend(extra)
             status = 200
         except Problem as error:

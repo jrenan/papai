@@ -1,0 +1,25 @@
+FROM python:3.13-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    FAMILY_ORIGIN=https://triodosaber.profjonas.com \
+    FAMILY_API_ORIGIN=https://familia-trio.profjonas.com \
+    FAMILY_DB=/var/lib/trio/family.sqlite3
+
+# The sync worker requires no third-party runtime dependencies.
+RUN printf '%s\n' 'gunicorn==26.2.0 --hash=sha256:bd249d0b3f7972f7432f0a6b6ff3b3ee2d129f70cd1ff6c09a9dd9e29a2b88e3' \
+      | python -m pip install --no-cache-dir --require-hashes --only-binary=:all: -r /dev/stdin \
+    && groupadd --gid 10001 trio \
+    && useradd --uid 10001 --gid 10001 --no-create-home --shell /usr/sbin/nologin trio \
+    && install -d -m 0700 -o trio -g trio /var/lib/trio
+
+WORKDIR /app
+COPY scripts/family_server.py scripts/family_server.py
+COPY deploy/family_healthcheck.py deploy/family_healthcheck.py
+
+USER 10001:10001
+VOLUME ["/var/lib/trio"]
+EXPOSE 8000
+HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
+    CMD ["python", "deploy/family_healthcheck.py"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "2", "--preload", "--worker-tmp-dir", "/dev/shm", "scripts.family_server:create_app()"]

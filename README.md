@@ -49,24 +49,28 @@ dura apenas naquela aba.
 
 ## Publicação
 
-O GitHub Pages serve a versão estática e a brincadeira como visitante. Para oferecer
-contas e progresso compartilhado entre aparelhos, hospede o pacote de
-`node scripts/package-pages.cjs _site` em HTTPS e encaminhe `/api/family/*` na
-mesma origem ao aplicativo WSGI. Use um volume persistente para o banco, com
-backups, e preserve o cabeçalho Host no proxy. Por exemplo, em um ambiente com
-Gunicorn instalado, a partir da raiz do projeto:
+O site público usa o GitHub Pages em `triodosaber.profjonas.com` e uma API própria
+em `familia-trio.profjonas.com`. O frontend só usa esse segundo endereço quando
+carregado no domínio público. A API aceita requisições autenticadas do navegador
+apenas da origem HTTPS configurada em `FAMILY_ORIGIN`.
 
-```bash
-FAMILY_ORIGIN=https://triodosaber.profjonas.com \
-FAMILY_DB=/var/lib/trio/family.sqlite3 \
-gunicorn --bind 127.0.0.1:8001 'scripts.family_server:create_app()'
-```
+No Coolify, use o repositório com `Dockerfile.family`, porta interna 8000, domínio
+`https://familia-trio.profjonas.com` e um **volume persistente nomeado** montado
+em `/var/lib/trio`. O registro A desse subdomínio deve apontar para o proxy do
+servidor. Preserve o cabeçalho Host e mantenha backups do banco. A imagem já
+configura as duas origens e o caminho do SQLite. Seu healthcheck abre a API e
+consulta a sessão de visitante.
+
+Em uma instalação que serve os jogos e a API no mesmo host, defina
+`FAMILY_ORIGIN` como a origem HTTPS desse site, omita `FAMILY_API_ORIGIN` ou
+defina o mesmo valor, e encaminhe `/api/family/*` ao aplicativo WSGI
+`scripts.family_server:create_app()`.
 
 Em HTTPS a sessão recebe o atributo Secure. Se o proxy sobrescreve X-Real-IP
 com o IP real de cada cliente, configure `FAMILY_TRUSTED_PROXY` com o IP exato
 desse proxy para aplicar o limite de tentativas por endereço.
 
-### Publicar o modo visitante no GitHub Pages
+### Publicar os jogos no GitHub Pages
 
 Depois de criar o repositório no GitHub:
 

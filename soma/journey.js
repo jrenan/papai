@@ -78,6 +78,11 @@
     return '<svg class="avatar" width="42" height="42" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="29" fill="'+animal.bg+'"/><g fill="'+animal.fur+'">'+ears+'<ellipse cx="30" cy="32" rx="20" ry="16"/></g>'+cheeks+'<g fill="#343934"><circle cx="21" cy="30" r="2"/><circle cx="39" cy="30" r="2"/><path d="M26 36q4-3 8 0l-4 4Z"/></g></svg>';
   }
   const key = 'trio.somas.';
+  // The public games stay on Pages. Only this first-party HTTPS origin uses
+  // the dedicated family host; development and self-hosted copies use /api.
+  const familyApi = location.origin === 'https://triodosaber.profjonas.com'
+    ? 'https://familia-trio.profjonas.com/api/family/'
+    : '/api/family/';
   const pendingPrefix = key + 'pending.';
   const fresh = () => ({attempts:[], total:0, independent:0, counts:{friends:0, blocks:0}});
   let parent = null, children = [], child = null, available = false, progressReady = true;
@@ -114,8 +119,8 @@
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 8000);
     try {
-      const response = await fetch('/api/family/' + path, {method, credentials:'same-origin',
-        cache:'no-store', signal:controller.signal,
+      const response = await fetch(familyApi + path, {method, credentials:'include',
+        cache:'no-store', redirect:'error', signal:controller.signal,
         ...(body === undefined ? {} : {headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)})});
       if (!response.headers.get('content-type')?.includes('application/json')) throw Error('Não conseguimos falar com a área da família. Tente novamente.');
       const data = await response.json();

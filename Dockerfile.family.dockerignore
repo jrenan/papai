@@ -1,0 +1,8 @@
+**
+!Dockerfile.family
+!scripts/
+scripts/**
+!scripts/family_server.py
+!deploy/
+deploy/**
+!deploy/family_healthcheck.py
