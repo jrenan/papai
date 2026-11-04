@@ -403,6 +403,35 @@ html,body{height:100%;height:100dvh}
 .confirm-s{margin:0 0 18px; font:700 1.05rem/1.35 var(--f-body); color:var(--ink-soft)}
 .confirm-b{display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
 .confirm-b .btn.alt{background:#EEF3F6; color:var(--ink); box-shadow:0 5px 0 var(--grid-strong)}
+.journey-launch{display:flex;align-items:center;gap:12px;margin:22px 0 12px}
+.journey-launch svg{width:25px;height:25px;fill:currentColor}
+.profile-link{max-width:11em;min-width:0;flex-shrink:1;box-sizing:border-box}
+#top .tools{min-width:0}
+.profile-link span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.profile-link svg{width:26px;height:26px}
+.logo-pal{position:relative;display:inline-flex;align-items:flex-end;gap:5px}
+.pal-face{position:absolute;top:calc(var(--s)*1.3);left:-2px;width:calc(var(--s)*1.5);height:auto;transform:rotate(-6deg)}
+.logo-pal:last-child .pal-face{top:calc(var(--s)*2);transform:rotate(7deg)}
+.game-loading{margin:auto;color:var(--chalk);font:700 1.25rem var(--f-display)}
+.after a.btn{display:inline-flex;align-items:center;text-decoration:none;box-sizing:border-box}
+@media(max-width:1020px){#top:has(.steps) .brand{display:none}}
+@media(max-width:670px){
+  .steps li:not(.now):not(:last-child.done){display:none}
+  .steps li.now span{display:inline}
+  .profile-link{max-width:8em}
+}
+@media(max-width:465px){
+  #top:has(.steps) .profile-link{max-width:6em}
+  .steps li.now span{display:none}
+  .tools{gap:5px}
+  .ib.site-home{padding-inline:9px}
+  .ib.site-home .garden-full{display:none}
+}
+@media(max-width:365px){
+  .build[data-l="stack"] .tray .rod{--s:12px}
+  .count[data-l^="stack"] .q-b{grid-template-columns:repeat(var(--columns,5),minmax(0,1fr));gap:5px}
+  .nb{min-width:0}
+}
 
 @media (prefers-reduced-motion: reduce){ *,*::before,*::after{animation:none!important; transition:none!important} }
 </style>
@@ -411,7 +440,7 @@ html,body{height:100%;height:100dvh}
 
 <div id="app">
   <header id="top"></header>
-  <main id="stage" aria-label="Jogo de somar"></main>
+  <main id="stage" aria-label="Jogo de somar"><p class="game-loading" role="status">Abrindo a caixa de blocos…</p></main>
   <div id="announcement" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 </div>
 <div id="fx" aria-hidden="true"></div>
@@ -419,6 +448,7 @@ html,body{height:100%;height:100dvh}
 <script src="../assets/narration/manifest.js?v=20261017-jessica-pt2"></script>
 <script src="../assets/narration-player.js?v=20261017-jessica-pt2"></script>
 <script src="game-voice.js?v=20261016-jessica1"></script>
+<script src="../soma/journey.js"></script>
 <script>
 (() => {
 'use strict';
@@ -426,6 +456,8 @@ const root = document.documentElement;
 const stage = document.getElementById('stage');
 const topBar = document.getElementById('top');
 const fx = document.getElementById('fx');
+const journey = window.SumJourney;
+let booted = false;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const phoneMQ = matchMedia('(max-width:560px), (max-height:560px)');
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -485,10 +517,23 @@ const S = {
   ready3:false, countShown:false, countTimer:0, fullPrompted:false, ans:{t:null,u:null}, wrongBtn:null,
   opts:[], optBad:[], solved:false, lastSay:'', flash:null, lastKey:'', moves:0, lastTo:null
 };
-/* estrelas ficam guardadas no aparelho entre uma visita e outra */
+/* As estrelas antigas do aparelho pertencem à brincadeira sem perfil. */
 const STAR_KEY = 'triodosaber.blocos.estrelas.v1';
-try { const v = Math.floor(+localStorage.getItem(STAR_KEY)); if (v > 0) S.score = v; } catch(e){}
-function saveStars(){ try { localStorage.setItem(STAR_KEY, String(S.score)); } catch(e){} }
+let problem = null;
+const mistakes = new Set();
+let assisted = false;
+function loadStars(){
+  if (journey?.child) return journey.count('blocks');
+  try { return Math.max(0, Math.floor(Number(localStorage.getItem(STAR_KEY))) || 0); } catch { return 0; }
+}
+function finishProblem(){
+  if (problem) journey.complete(problem, { mistakes:mistakes.size, assisted });
+  if (journey?.child) S.score = journey.count('blocks');
+  else {
+    S.score++;
+    try { localStorage.setItem(STAR_KEY, String(S.score)); } catch {}
+  }
+}
 let uid = 0;
 const mk = (kind, colors) => ({ id:'p' + (++uid), kind, colors });
 const emptyZ = () => ({ tens:[], ones:[] });
@@ -558,7 +603,7 @@ function sfx(k, v){
 function say(text){
   if (!text) return;
   S.lastSay = text;
-  if (S.sound) window.BlockVoice?.speak(text);
+  if (S.sound && navigator.userActivation?.hasBeenActive !== false) window.BlockVoice?.speak(text);
 }
 function populateVoiceSettings(){
   const select = document.getElementById('voice-choice');
@@ -579,6 +624,7 @@ stage.addEventListener('change', e => {
 
 /* ---------- ícones ---------- */
 const IC = {
+  profile:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="8" r="4"/><path d="M2 21v-2a8 8 0 0 1 16 0v2z"/><path d="m18 6 3 3-3 3" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   home:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 3.5l9 7.7V20a1 1 0 0 1-1 1h-5.2v-6.3H9.2V21H4a1 1 0 0 1-1-1z"/></svg>',
   speak:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.2h3.8L12 5v14l-5.2-4.2H3z"/><path d="M15.3 8.6a4.8 4.8 0 0 1 0 6.8M17.9 6a8.4 8.4 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
   note:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 17.5V6.2l10-2.2v11.3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="6.6" cy="17.6" r="2.6"/><circle cx="16.6" cy="15.4" r="2.6"/></svg>',
@@ -619,6 +665,7 @@ function matHTML(k, o){
 
 /* ---------- telas ---------- */
 function homeHTML(){
+  const face = '<svg class="pal-face" aria-hidden="true" viewBox="0 0 28 24"><g fill="white"><ellipse cx="7" cy="8" rx="6" ry="7"/><ellipse cx="21" cy="8" rx="6" ry="7"/></g><g fill="#1e2b33"><circle cx="8" cy="9" r="3"/><circle cx="22" cy="9" r="3"/></g><path d="M9 18q5 6 10-1" fill="none" stroke="#1e2b33" stroke-width="2.5" stroke-linecap="round"/></svg>';
   const lv = Object.entries(LEVELS).map(([id, L]) => `
     <button class="lv" data-act="level" data-lv="${id}">
       <span class="lv-ex">${L.ex ? `<i class="ca">${L.ex[0]}</i> + <i class="cb">${L.ex[1]}</i>` : `<i class="ca">?</i> + <i class="cb">?</i>`}</span>
@@ -627,15 +674,16 @@ function homeHTML(){
   return `<div class="home">
     <section>
       <div class="logo" aria-hidden="true">
-        <div class="rod static">${cubes(Array(10).fill('a'))}</div><div class="rod static">${cubes(Array(10).fill('a'))}</div>
-        <div class="ucol static">${cubes(Array(7).fill('a'))}</div>
+        <div class="logo-pal"><div class="rod static">${cubes(Array(10).fill('a'))}</div><div class="rod static">${cubes(Array(10).fill('a'))}</div>
+        <div class="ucol static">${cubes(Array(7).fill('a'))}</div>${face}</div>
         <span class="plus">+</span>
-        <div class="rod static">${cubes(Array(10).fill('b'))}</div>
-        <div class="ucol static">${cubes(Array(5).fill('b'))}</div>
+        <div class="logo-pal"><div class="rod static">${cubes(Array(10).fill('b'))}</div>
+        <div class="ucol static">${cubes(Array(5).fill('b'))}</div>${face}</div>
       </div>
       <h1>Blocos de Somar</h1>
       <svg class="chalkline" viewBox="0 0 330 14" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9c40-6 70 3 110-1s72-6 110-2 70 2 104-3" fill="none" stroke="var(--sun)" stroke-width="5" stroke-linecap="round"/></svg>
       <p class="lead">Monte os números com dezenas e unidades, junte as peças e descubra quanto dá a conta.</p>
+      ${journey ? '<button class="btn journey-launch" data-act="level" data-lv="trilha"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 3.8a1.4 1.4 0 0 1 2.1-1.2l12.2 8.2a1.5 1.5 0 0 1 0 2.4L9.1 21.4A1.4 1.4 0 0 1 7 20.2Z"/></svg>Jogar no meu ritmo</button>' : ''}
       <ol class="how">
         <li><b>1</b>Monte o primeiro número</li>
         <li><b>2</b>Monte o segundo número</li>
@@ -644,7 +692,7 @@ function homeHTML(){
       </ol>
     </section>
     <section class="levels">
-      <h2>Escolha o nível</h2>
+      <h2>Escolher um nível</h2>
       <div class="lv-grid">${lv}</div>
       <p class="note">Arraste ou toque com calma. Toque em <b>Ouvir</b> para repetir a instrução e ver uma mãozinha mostrando o que fazer. Para corrigir, use <b>Desfazer</b>.</p>
       <details class="voice-settings"><summary>Ajustar voz · para adultos</summary>
@@ -742,7 +790,7 @@ function sumHTML(){
       <div class="eq"><span class="chip chip-a">${S.a}</span><span class="op">+</span><span class="chip chip-b">${S.b}</span><span class="op">=</span><span class="ans ${S.solved ? 'ok' : ''}" data-drop="ans">${S.solved ? c : ''}</span></div>
       <div class="opts">${opts}</div>
       ${bubble('Toque no número certo ou arraste até a caixa.')}
-      <div class="after ${S.solved ? '' : 'invis'}"><button class="btn go" data-act="new">Nova conta</button><button class="btn alt" data-act="home">Trocar nível</button></div>
+      <div class="after ${S.solved ? '' : 'invis'}"><button class="btn go" data-act="new">Nova conta</button>${S.level === 'trilha' ? '<a class="btn alt" href="../soma/">Voltar ao jardim</a>' : '<button class="btn alt" data-act="home">Trocar nível</button>'}</div>
     </section>
   </div>`;
 }
@@ -756,14 +804,18 @@ function renderTop(){
       const n = i + 1, st = (n < S.step || (n === 4 && S.solved)) ? 'done' : (n === S.step ? 'now' : '');
       return `<li class="${st}"><b>${n}</b><span>${l}</span>${dots[i]}</li>`; }).join('')}</ol>` : '';
   topBar.innerHTML = `
-    ${game ? `<button class="ib" data-act="home" aria-label="Escolher nível">${IC.home}</button>` : `<a class="ib site-home" href="../index.html">${IC.home}<span>Trio do Saber</span></a>`}
+    ${game ? `<button class="ib" data-act="home" aria-label="Escolher nível">${IC.home}</button>` : `<a class="ib site-home" href="../soma/" aria-label="Voltar ao Jardim das somas">${IC.home}<span>Jardim<span class="garden-full"> das somas</span></span></a>`}
     <div class="brand">Blocos de Somar</div>
     ${steps}
     <div class="tools">
+      <a href="../soma/#perfis" class="ib profile-link" data-act="profiles">${journey?.child && journey.avatar ? journey.avatar(journey.child.avatar) : IC.profile}<span class="profile-name"></span></a>
       <span class="stars" title="Contas certas">${IC.star}<b>${S.score}</b></span>
       ${game ? `<button class="ib say" data-act="repeat" aria-label="Ouvir de novo">${IC.speak}<span>Ouvir</span></button>` : ''}
       <button class="ib" data-act="sound" aria-pressed="${S.sound}" aria-label="${S.sound ? 'Desligar som e voz' : 'Ligar som e voz'}">${S.sound ? IC.note : IC.noteOff}</button>
     </div>`;
+  const profileLink = topBar.querySelector('.profile-link');
+  profileLink.querySelector('.profile-name').textContent = journey?.child?.name || 'Quem joga?';
+  profileLink.setAttribute('aria-label', journey?.child ? 'Trocar de criança. Jogando com ' + journey.child.name : 'Escolher quem vai jogar');
   window.BlockVoice?.refreshControls();
   if (game && S.step !== topStep){ popEl(topBar.querySelector('.steps li.now'), .28); }
   topStep = game ? S.step : -1;
@@ -834,8 +886,8 @@ function fit(){
   if (best.s >= MIN) stage.classList.add('clip');
 }
 let rq = 0;
-addEventListener('resize', () => { cancelAnimationFrame(rq); rq = requestAnimationFrame(() => { cancelDrag(); anims.clear(); fitKey = ''; render(); }); });
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { anims.clear(); fitKey = ''; render(); });
+addEventListener('resize', () => { if (!booted) return; cancelAnimationFrame(rq); rq = requestAnimationFrame(() => { cancelDrag(); anims.clear(); fitKey = ''; render(); }); });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (booted){ anims.clear(); fitKey = ''; render(); } });
 
 /* =====================================================================
    MOTOR DE FÍSICA DOS BLOQUINHOS
@@ -1243,16 +1295,18 @@ addEventListener('keydown', () => { hideHand(); armIdle(); });
 
 /* ---------- sair no meio da conta: pergunta antes, para um toque sem querer não apagar tudo ---------- */
 const inProgress = () => !(S.step === 4 && S.solved) && (S.step > 1 || cnt('M') > 0);
-function askLeave(){
+let leaveLink = null;
+function askLeave(link = null){
   window.BlockVoice?.stop();
   if (document.querySelector('.confirm')) return;
+  leaveLink = link;
   clearTimeout(idleT); hideHand();
   const box = document.createElement('div');
   box.className = 'confirm';
   box.innerHTML = `<div class="confirm-card" role="alertdialog" aria-modal="true" aria-labelledby="confirm-t" aria-describedby="confirm-s">
-      <p id="confirm-t" class="confirm-t">Sair desta conta?</p>
-      <p id="confirm-s" class="confirm-s">As peças montadas vão sumir.</p>
-      <div class="confirm-b"><button class="btn" data-act="stay">Continuar jogando</button><button class="btn alt" data-act="leave">Sair</button></div>
+      <p id="confirm-t" class="confirm-t">${link ? 'Trocar de criança?' : 'Sair desta conta?'}</p>
+      <p id="confirm-s" class="confirm-s">As peças desta rodada voltam para a caixa.</p>
+      <div class="confirm-b"><button class="btn" data-act="stay">Continuar jogando</button><button class="btn alt" data-act="leave">${link ? 'Trocar' : 'Sair'}</button></div>
     </div>`;
   box.addEventListener('click', e => { if (e.target === box) closeLeave(); });
   document.body.appendChild(box);
@@ -1263,7 +1317,8 @@ function askLeave(){
 function closeLeave(){
   const box = document.querySelector('.confirm'); if (!box) return;
   box.remove(); document.getElementById('app').inert = false; armIdle();
-  topBar.querySelector('[data-act="home"]')?.focus();
+  (leaveLink || topBar.querySelector('[data-act="home"]'))?.focus();
+  leaveLink = null;
 }
 addEventListener('keydown', e => {
   const box = document.querySelector('.confirm'); if (!box) return;
@@ -1303,9 +1358,16 @@ function uprightRect(r){
 /* ---------- fluxo do jogo ---------- */
 function startLevel(lv){ S.level = lv; S.screen = 'game'; newProblem(); }
 function newProblem(silent){
-  let a, b, k, i = 0;
-  do { [a, b] = gen(S.level); k = a + '+' + b; } while (k === S.lastKey && ++i < 20);
-  S.lastKey = k; S.a = a; S.b = b; S.pid++;
+  if (S.level === 'trilha'){
+    problem = journey.next('blocks');
+    S.a = problem.a; S.b = problem.b;
+  } else {
+    let i = 0;
+    do { [S.a, S.b] = gen(S.level); } while (S.a + '+' + S.b === S.lastKey && ++i < 20);
+    problem = journey?.problem('blocks', S.a, S.b);
+  }
+  S.lastKey = S.a + '+' + S.b; S.pid++;
+  mistakes.clear(); assisted = false;
   S.Z = { M:emptyZ(), A:emptyZ(), B:emptyZ() }; S.jk = null;
   enterStep(1, silent);
 }
@@ -1392,6 +1454,8 @@ function checkBuild(){
     return;
   }
   S.tries++; sfx('no');
+  if (tot > 0) mistakes.add(`montar-${S.step}-${t}-${u}`);
+  if (S.tries > 1 && tot > 0) assisted = true;
   let text, speak;
   if (tot === 0){ text = 'O quadro está vazio. Arraste as peças para ele.'; speak = text; }
   else if (S.tries === 1){ text = `Você montou ${tot}. O número é ${n}. Tente de novo!`; speak = `Você montou ${ext(tot)}. O número é ${ext(n)}. Tente de novo!`; }
@@ -1494,6 +1558,7 @@ function answer(k, n){
     else say(k === 't' ? `Isso! ${dzF(n)}. E quantas unidades?` : `Isso! ${unF(n)}. E quantas dezenas?`);
   } else {
     S.wrongBtn = { k, n };
+    mistakes.add(`contar-${k}-${n}`);
     S.msg = { kind:'no', text: k === 't' ? 'Ainda não. Conte as barras na casa D.' : 'Ainda não. Conte os cubinhos na casa U.' };
     render(); sfx('no'); say(k === 't' ? 'Ainda não. Conte as barras de dez.' : 'Ainda não. Conte os cubinhos soltos.');
     const col = stage.querySelector(k === 't' ? `[data-drop="${S.jk}-D"]` : `[data-drop="${S.jk}"] .col-u`);
@@ -1509,7 +1574,7 @@ function tryOpt(v, g, el){
   const c = S.a + S.b;
   const box = stage.querySelector('[data-drop="ans"]');
   if (v === c){
-    S.solved = true; S.score++; saveStars();
+    S.solved = true; finishProblem();
     S.msg = { kind:'ok', text:`${S.a} + ${S.b} = ${c}. Muito bem!` };
     settleGhost(g, box, () => {
       if (S.pid !== problemId || S.step !== 4) return;
@@ -1532,6 +1597,7 @@ function tryOpt(v, g, el){
     sfx('win'); say(`Isso! ${ext(S.a)} mais ${ext(S.b)} é igual a ${ext(c)}!`);
   } else {
     S.optBad.push(v);
+    mistakes.add('somar-' + v);
     const J = S.Z[S.jk];
     S.msg = { kind:'no', text:`${v} não é. Olhe o quadro: ${dzT(J.tens.length)} e ${unT(J.ones.length)}.` };
     rejectGhost(g, box, el, () => { if (S.pid !== problemId || S.step !== 4) return; S.busy = false; render(); });
@@ -1780,15 +1846,23 @@ stage.addEventListener('keydown', e => {
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
   const act = b.dataset.act;
-  if ((S.busy || S.grouping) && !['sound','repeat','home','stay','leave'].includes(act)) return;
+  if ((S.busy || S.grouping) && !['sound','repeat','home','profiles','stay','leave'].includes(act)) return;
   unlockAudio();
   switch (act){
     case 'level': startLevel(b.dataset.lv); break;
+    case 'profiles':
+      if (S.screen === 'game' && inProgress() && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey){ e.preventDefault(); askLeave(b); }
+      break;
     case 'home':
       if (S.screen === 'game' && inProgress()){ askLeave(); break; }
       S.busy = false; goHome(); break;
     case 'stay': closeLeave(); break;
-    case 'leave': closeLeave(); S.busy = false; goHome(); break;
+    case 'leave': {
+      const url = leaveLink?.href;
+      closeLeave();
+      if (url) location.assign(url); else goHome();
+      break;
+    }
     case 'repeat': say(S.lastSay); popEl(b, .15); showHint(true); break;
     case 'join-rest': joinRest(); break;
     case 'sound': S.sound = !S.sound; if (!S.sound) window.BlockVoice?.stop(); renderTop(); break;
@@ -1810,13 +1884,17 @@ document.addEventListener('click', e => {
 const hot = window.claude && window.claude.hot;
 try { if (hot && hot.snapshot) hot.snapshot(() => ({ level:S.level, score:S.score, sound:S.sound, screen:S.screen })); } catch(e){}
 function boot(data){
+  if (journey?.entryGate) { location.replace('../soma/' + journey.entryGate); return; }
+  booted = true;
   data = data || {};
-  if (typeof data.score === 'number') S.score = data.score;
+  S.score = loadStars();
   if (data.sound === false) S.sound = false;
-  if (data.screen === 'game' && data.level && LEVELS[data.level]){ S.level = data.level; S.screen = 'game'; newProblem(true); }
+  if (journey && new URLSearchParams(location.search).get('trilha') === '1'){ startLevel('trilha'); }
+  else if (data.screen === 'game' && data.level && LEVELS[data.level]){ S.level = data.level; S.screen = 'game'; newProblem(true); }
   else goHome();
 }
-if (hot && hot.ready) hot.ready(boot); else boot(hot && hot.data);
+const start = () => { if (hot && hot.ready) hot.ready(boot); else boot(hot && hot.data); };
+if (journey) journey.ready.then(start); else start();
 })();
 </script>
 

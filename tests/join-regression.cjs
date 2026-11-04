@@ -119,9 +119,52 @@ async function animatedDragRound(browser) {
   console.log('PASS joining: animated dragging, missed drop, wrong and correct answers');
 }
 
+async function adaptiveRound(browser) {
+  const page = await browser.newPage({ viewport: { width: 320, height: 700 }, hasTouch: true, reducedMotion: 'reduce' });
+  try {
+    await page.route('**/soma/journey.js', route => route.fulfill({ contentType: 'text/javascript', body: `
+      window.rounds = [];
+      localStorage.setItem('triodosaber.numberblocks.estrelas.v1', '91');
+      window.SumJourney = {
+        ready: Promise.resolve(),
+        child: {id:'child-1', name:'Ana Maria da Conceição', avatar:'fox'},
+        avatar: () => '<svg viewBox="0 0 24 24" aria-hidden="true"></svg>',
+        count: () => 7 + rounds.length,
+        next: game => ({id:'round', childId:'child-1', game, a:1, b:2}),
+        complete: (problem, result) => { rounds.push({problem, result}); return Promise.resolve(); },
+        recommendedGame: () => rounds.length ? 'blocks' : 'friends'
+      };
+    ` }));
+    await page.goto(`${baseURL}/numberblocks-somar/index.html?trilha=1`);
+    const profile = page.locator('.profile');
+    await profile.waitFor();
+    assert.match(await profile.textContent(), /Ana Maria/);
+    assert.equal(await page.locator('.stars b').textContent(), '7');
+    await page.locator('[data-act="sound"]').click();
+    await page.locator('.src').press('Enter');
+    await profile.click();
+    await page.locator('.confirm').waitFor();
+    await page.locator('[data-act="stay"]').click();
+    assert.equal(await page.evaluate(() => document.activeElement.dataset.act), 'profile');
+    await solveRound(page, { keyboard: true, assisted: true });
+    const recorded = await page.evaluate(() => window.rounds);
+    assert.deepEqual(recorded, [{
+      problem: {id:'round', childId:'child-1', game:'friends', a:1, b:2},
+      result: {mistakes:1, assisted:true}
+    }]);
+    assert.equal(await page.locator('.stars b').textContent(), '8');
+    assert.equal(await page.evaluate(() => localStorage.getItem('triodosaber.numberblocks.estrelas.v1')), '91');
+    assert.match(await page.locator('.next-path').getAttribute('href'), /blocos-de-somar\.html\?trilha=1/);
+    await profile.click();
+    await page.waitForURL('**/soma/#perfis');
+    console.log('PASS joining: adaptive round, child attribution, assisted counting, profile switch and next game');
+  } finally { await page.close(); }
+}
+
 (async () => {
   const browser = await chromium.launch({ headless: true });
   try {
+    await adaptiveRound(browser);
     for (const viewport of [{ width: 1280, height: 800 }, { width: 390, height: 844 }, { width: 667, height: 375 }]) {
       const page = await browser.newPage({ viewport, hasTouch: viewport.width < 800, reducedMotion: 'reduce' });
       page.setDefaultTimeout(15000);

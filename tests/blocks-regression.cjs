@@ -23,7 +23,7 @@ async function scenario(browser, mobile) {
   page.on('pageerror', error => errors.push(error.message));
   await page.route('https://fonts.googleapis.com/**', route => route.abort());
   await page.route('https://fonts.gstatic.com/**', route => route.abort());
-  await page.route('**/blocos-de-somar.html', route => route.fulfill({ contentType: 'text/html', body: html }));
+  await page.route('**/blocos-de-somar.html*', route => route.fulfill({ contentType: 'text/html', body: html }));
   const ready = () => page.waitForFunction(() => {
     const { S } = window.__blocksTest;
     return !S.busy && !S.grouping;
@@ -44,6 +44,7 @@ async function scenario(browser, mobile) {
     }, { a, b });
   };
   await page.goto(`${baseURL}/numberblocks-1-100/blocos-de-somar.html`);
+  await page.locator('[data-lv="l1"]').waitFor();
   await setProblem(23, 14);
   await page.evaluate(() => {
     const { S, mk, render } = window.__blocksTest;
@@ -111,6 +112,48 @@ async function scenario(browser, mobile) {
     assert.equal(dimensions.length, 100);
     assert.equal(dimensions.every(([width, height]) => width > 0 && height > 0), true, 'all 100 WebP assets must load and decode');
   }
+
+  // Exercise a signed-in round independently of the backend and its chosen sums.
+  await page.route('**/soma/journey.js', route => route.fulfill({ contentType:'text/javascript', body:`
+    let wins = 4;
+    window.SumJourney = {
+      ready: Promise.resolve(), child: { id:'kid-1', name:'Sol <3' },
+      count: () => wins,
+      next: game => ({ id:'round-1', game, childId:'kid-1', a:3, b:1 }),
+      complete: (problem, result) => {
+        window.__roundResult = { problem, result };
+        wins++;
+        return Promise.resolve();
+      }
+    };
+  ` }));
+  await page.goto(`${baseURL}/numberblocks-1-100/blocos-de-somar.html?trilha=1`);
+  assert.equal(await page.locator('.bignum').textContent(), '3');
+  assert.equal(await page.locator('.profile-link span').textContent(), 'Sol <3');
+  assert.equal(await page.locator('.stars b').textContent(), '4');
+  await activate('[data-drag="src-one"]');
+  await activate('[data-act="profiles"]');
+  assert.match(await page.locator('#confirm-t').textContent(), /Trocar de criança/);
+  await activate('[data-act="stay"]');
+  await activate('[data-act="check"]');
+  await activate('[data-act="check"]');
+  for (let i = 0; i < 2; i++) await activate('[data-drag="src-one"]');
+  await activate('[data-act="check"]');
+  await activate('[data-act="next-step"]');
+  await activate('[data-drag="src-one"]');
+  await activate('[data-act="check"]');
+  await activate('[data-act="next-step"]');
+  await activate('[data-drop="B"] [data-drag="piece"]');
+  await page.waitForFunction(() => window.__blocksTest.S.countShown && !window.__blocksTest.S.busy);
+  await activate('[data-act="ans"][data-k="t"][data-n="0"]');
+  await activate('[data-act="ans"][data-k="u"][data-n="4"]');
+  await activate('[data-act="to4"]');
+  await activate('[data-drag="opt"][data-val="4"]');
+  const recorded = await page.evaluate(() => window.__roundResult);
+  assert.equal(recorded.problem.id, 'round-1');
+  assert.deepEqual(recorded.result, { mistakes:1, assisted:true });
+  assert.equal(await page.locator('.stars b').textContent(), '5');
+  assert.equal(await page.evaluate(() => localStorage.getItem('triodosaber.blocos.estrelas.v1')), '1', 'profile wins must not overwrite guest stars');
   assert.deepEqual(errors, [], 'there must be no JavaScript runtime errors');
   console.log(`PASS blocks: ${mobile ? 'mobile touch with animation' : 'desktop keyboard, reduced motion'}`);
   await context.close();

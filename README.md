@@ -19,22 +19,54 @@ O módulo web foi retirado do Trio do Saber. O endereço antigo
 
 ## Como abrir
 
-Rode um servidor estático local:
+Com Node.js, Python 3.9+ e SQLite 3.35+ disponíveis, rode o site e a API da família:
 
 ```bash
-python3 -m http.server 8000
+npm start
 ```
 
-Depois acesse `http://localhost:8000`.
+Abra <http://localhost:8000/soma/> para entrar no **Jardim das somas**. Em
+**Para os pais**, crie uma conta com e-mail e senha, cadastre um nome ou apelido e
+escolha um bichinho. O seletor de perfil também aparece dentro de cada jogo. Em
+**Para os pais**, o adulto pode ver as rodadas, os acertos sem ajuda ou erro e
+as habilidades praticadas pela criança selecionada.
 
-Abrir `index.html` diretamente pode bloquear os arquivos JSON locais em alguns
-navegadores.
+A trilha começa no **Juntar e Somar**, com totais até 5, até 10 e até 20.
+Depois, o **Blocos de Somar** trabalha dezenas e unidades, somas até 50 sem
+reagrupamento e trocas de dez unidades até 100. A recomendação usa as últimas
+cinco rodadas por habilidade. Quatro acertos independentes em pelo menos três
+contas diferentes sugerem avançar. O jogo intercala revisões, volta a combinações
+que exigiram ajuda e permite escolher qualquer uma das paradas. A velocidade da
+criança não altera o nível.
 
-## Publicar no GitHub Pages
+O progresso dos perfis fica em SQLite, por padrão em
+`~/.local/share/trio-do-saber/family.sqlite3`. Use `FAMILY_DB` para definir outro
+arquivo privado fora do projeto. A senha é protegida com scrypt e salt individual.
+A sessão usa cookie HttpOnly com duração de 14 dias. Uma rodada concluída durante
+uma falha de conexão fica na fila deste navegador, vinculada ao perfil que a
+jogou, para sincronização. O visitante brinca sem cadastro e a trilha de visitante
+dura apenas naquela aba.
 
-Este projeto funciona no GitHub Pages porque é um site estático. O Pages também
-serve por HTTPS, que é necessário para o modo WebXR/VR em navegadores
-compatíveis.
+## Publicação
+
+O GitHub Pages serve a versão estática e a brincadeira como visitante. Para oferecer
+contas e progresso compartilhado entre aparelhos, hospede o pacote de
+`node scripts/package-pages.cjs _site` em HTTPS e encaminhe `/api/family/*` na
+mesma origem ao aplicativo WSGI. Use um volume persistente para o banco, com
+backups, e preserve o cabeçalho Host no proxy. Por exemplo, em um ambiente com
+Gunicorn instalado, a partir da raiz do projeto:
+
+```bash
+FAMILY_ORIGIN=https://triodosaber.profjonas.com \
+FAMILY_DB=/var/lib/trio/family.sqlite3 \
+gunicorn --bind 127.0.0.1:8001 'scripts.family_server:create_app()'
+```
+
+Em HTTPS a sessão recebe o atributo Secure. Se o proxy sobrescreve X-Real-IP
+com o IP real de cada cliente, configure `FAMILY_TRUSTED_PROXY` com o IP exato
+desse proxy para aplicar o limite de tentativas por endereço.
+
+### Publicar o modo visitante no GitHub Pages
 
 Depois de criar o repositório no GitHub:
 
@@ -65,6 +97,9 @@ Mantenha o servidor local acima rodando e execute em outro terminal:
 npm test
 ```
 
+O teste de família também pode ser executado com `npm run test:family`. Ele abre
+seu próprio servidor local e usa um banco descartável.
+
 Os testes verificam arquivos locais, as seis missões dos Biomas, a navegação
 pelos países e os fluxos de soma, incluindo respostas erradas, novas contas,
 teclado e confirmação de saída.
@@ -94,7 +129,7 @@ credenciais ou áudios do DinoFala.
 
 ### Blocos de Somar
 
-- Acesso pela tela inicial ou por `numberblocks-1-100/blocos-de-somar.html`.
+- Segunda parada do Jardim das somas, também acessível em `numberblocks-1-100/blocos-de-somar.html`.
 - Jogo de adição com blocos coloridos e três níveis: até 20, até 50 e até 100.
 - Interação de arrastar e soltar com peças e áreas de encaixe maiores para crianças.
 - Layout adaptado a iPhone e iPad e orientação por voz em português.
@@ -107,11 +142,11 @@ credenciais ou áudios do DinoFala.
 - Uma mãozinha mostra o gesto esperado depois de 9 segundos parado ou ao tocar
   em **Ouvir**. Na conta final ela não entrega a resposta.
 - Sair no meio de uma conta pede confirmação, e as estrelas ficam guardadas no
-  aparelho.
+  perfil ativo. No modo visitante, o placar antigo continua disponível no aparelho.
 
 ### Juntar e Somar
 
-- Acesso pela tela inicial ou por `numberblocks-somar/index.html`.
+- Primeira parada do Jardim das somas, também acessível em `numberblocks-somar/index.html`.
 - Versão do jogo de somar com os personagens Numberblocks, pensada para crianças
   pequenas: níveis até 5, até 10, até 20 (com o Dez) e surpresa.
 - Etapas: montar o primeiro amigo bloco por bloco, montar o segundo, arrastar um

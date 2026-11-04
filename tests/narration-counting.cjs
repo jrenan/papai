@@ -133,7 +133,7 @@ function setupBuild({ muted = false } = {}) {
   assert.equal(mutedBuild.classes.has('vivo'), true);
   assert.match(mutedBuild.context.dockHTML(), />Continuar<\/button>/);
 
-  assert.match(source, /function askLeave\(\)\{\s*interruptCounting\(\)/);
+  assert.match(source, /function askLeave\([^)]*\)\{\s*interruptCounting\(\)/);
   assert.match(source, /visibilitychange[^]*?if \(document\.hidden\)\{ interruptCounting\(\)/);
   assert.match(source, /addEventListener\('pagehide', interruptCounting\)/);
   console.log('PASS counting narration: modal/background/pagehide cancellation, false/timeout handling, newer speech preserved, final-count resume, completeBuild cancellation and muted visual counting');

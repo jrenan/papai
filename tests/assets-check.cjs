@@ -5,10 +5,10 @@ const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 
-for (const file of ['app.js', 'game-data.js', 'world-data.js', 'country-content.js', 'biome-geometry.js', 'assets/narration-player.js', 'numberblocks-somar/numberblocks.js', 'numberblocks-1-100/game-voice.js']) {
+for (const file of ['soma/garden.js', 'soma/journey.js', 'app.js', 'game-data.js', 'world-data.js', 'country-content.js', 'biome-geometry.js', 'assets/narration-player.js', 'numberblocks-somar/numberblocks.js', 'numberblocks-1-100/game-voice.js']) {
   new vm.Script(read(file), { filename: file });
 }
-for (const file of ['index.html', 'numberblocks-somar/index.html', 'numberblocks-1-100/blocos-de-somar.html', 'fono-do-leo/index.html']) {
+for (const file of ['index.html', 'soma/index.html', 'numberblocks-somar/index.html', 'numberblocks-1-100/blocos-de-somar.html', 'fono-do-leo/index.html']) {
   const html = read(file);
   for (const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
     if (!/\bsrc=/.test(match[1])) new vm.Script(match[2], { filename: file });

@@ -11,6 +11,7 @@ const runtimeFiles = [
   'numberblocks-1-100/blocos-de-somar.html', 'numberblocks-1-100/game-voice.js',
   'numberblocks-somar/index.html', 'numberblocks-somar/numberblocks.js',
   'numberblocks-somar/numberblocks.css',
+  'soma/index.html', 'soma/garden.css', 'soma/garden.js', 'soma/journey.js', 'soma/meadow.svg',
   'fono-do-leo/index.html', 'fono-do-leo/sw.js',
   'assets/narration-player.js',
   'assets/narration/manifest.json', 'assets/narration/manifest.js',

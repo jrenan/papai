@@ -787,34 +787,8 @@ p {
   transform: rotate(5deg);
 }
 
-.number-tile {
-  grid-template-columns: minmax(0, 1fr);
-  background: #fffaf0;
-}
-
-.number-preview {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  min-height: 190px;
-  padding: 16px 24px;
-  background: #fff0be;
-}
-
-.number-preview img {
-  width: min(36%, 140px);
-  height: 160px;
-  object-fit: contain;
-}
-
-.number-preview span {
-  color: #735013;
-  font-size: 3rem;
-  font-weight: 900;
-}
-
 .numberblocks-tile {
-  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 1fr);
   background: #fffaf0;
 }
 

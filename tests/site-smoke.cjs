@@ -22,7 +22,7 @@ async function verify(engine, name, viewport) {
       }
     });
     await page.goto(baseURL);
-    assert.equal(await page.locator('.game-tile').count(), 4);
+    assert.equal(await page.locator('.game-tile').count(), 3);
     assert.equal(await page.locator('.numberblocks-preview .nb').count(), 3);
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'hub overflows horizontally');
 
