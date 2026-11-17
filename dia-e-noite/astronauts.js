@@ -21,7 +21,7 @@
       hair: ['#5c3618', '#6f431f', '#86562b'], brow: '#8a5f38', lash: '#3d2717',
       iris: ['#3b200d', '#7c4921', '#b47a38'],
       head: [.452, .462, .412], jaw: .04, cheeks: .05, chin: 0,
-      eye: { x: .18, y: -.012, r: .185, out: .031, tilt: 4, upper: 32.5, lower: 31.5, iris: .372 },
+      eye: { x: .18, y: -.012, r: .185, out: .031, tilt: 4, upper: 32.5, lower: 38, iris: .372 },
       brow3d: { w: .015, pts: [[10.5, 20.5], [23, 23.5], [37, 19.5]] },
       nose: { pitch: -14, scale: [.058, .045, .048] },
       ear: { scale: [.058, .098, .045], flare: .3 },
@@ -36,7 +36,7 @@
       hair: ['#6b431f', '#84582a', '#a07038'], brow: '#7a5330', lash: '#3a2515',
       iris: ['#2f4a60', '#6c93ad', '#b3cfdb'],
       head: [.432, .478, .402], jaw: .13, cheeks: .02, chin: .022,
-      eye: { x: .177, y: -.005, r: .195, out: .032, tilt: 1.5, upper: 31, lower: 32.5, iris: .374 },
+      eye: { x: .177, y: -.005, r: .195, out: .032, tilt: 1.5, upper: 31, lower: 38, iris: .374 },
       brow3d: { w: .017, pts: [[9.5, 21.5], [22.5, 25], [37, 20.5]] },
       nose: { pitch: -13.5, scale: [.052, .05, .054] },
       ear: { scale: [.066, .118, .05], flare: .46 },
@@ -390,7 +390,7 @@
       return texture;
     })() : null;
     const irisMaterial = irisTexture ? new T.MeshBasicMaterial({ map: irisTexture }) : flat(look.iris[1]);
-    const lidGeometry = new T.SphereGeometry(1, 20, 8, 0, TAU, 0, Math.PI / 2);
+    const lidGeometry = new T.SphereGeometry(1, 24, 10, 0, TAU, 0, Math.PI / 2);
     for (const side of [-1, 1]) {
       const { x, y, r, out, tilt } = look.eye;
       const surface = hz * Math.sqrt(Math.max(.05, 1 - Math.pow(x / hx, 2) - Math.pow(y / hy, 2)));
@@ -403,11 +403,11 @@
       ellipsoid(materials.light, [-r * .13, r * .17, r * .982], [.021, .024, .008], eye);
       ellipsoid(materials.light, [r * .12, -r * .12, r * .99], [.009, .009, .005], eye);
       const upper = new T.Group(); eye.add(upper);
-      mesh(lidGeometry, materials.skin, null, [r * 1.03, r * 1.03, r * 1.03], upper);
-      const lash = mesh(new T.TorusGeometry(r * 1.03, .0066, 6, 20, 150 * DEG), materials.lash, null, null, upper);
+      mesh(lidGeometry, materials.skin, null, [r * 1.035, r * 1.035, r * 1.035], upper);
+      const lash = mesh(new T.TorusGeometry(r * 1.035, .0066, 6, 20, 150 * DEG), materials.lash, null, null, upper);
       lash.rotation.set(Math.PI / 2, 0, 15 * DEG);
       const lower = new T.Group(); eye.add(lower);
-      mesh(lidGeometry, materials.skin, null, [r * 1.012, r * 1.012, r * 1.012], lower);
+      mesh(lidGeometry, materials.skin, null, [r * 1.03, r * 1.03, r * 1.03], lower); // tucked inside the cheek until a blink or a laugh
       eyes.push({ gaze, upper, lower });
     }
 
@@ -579,8 +579,8 @@
     const target = rig.target || { x: 0, y: 0 };
     const glanceX = target.x * 13 + (still ? 0 : Math.sin(t * .37 + offset) * 4 + Math.sin(t * .93) * 1.5);
     const glanceY = target.y * 9 + (still ? 0 : Math.sin(t * .29 + offset * 2) * 2.5);
-    const upper = mix(look.eye.upper + glanceY * .35, -look.eye.lower + 2, blink) - celebrate * 5;
-    const lower = mix(look.eye.lower, 13, Math.max(celebrate * .75, blink * .25));
+    const upper = mix(look.eye.upper + glanceY * .35, -22, blink) - celebrate * 5;
+    const lower = mix(look.eye.lower, 14, Math.max(celebrate * .8, blink * .6));
     for (const eye of rig.eyes) {
       eye.gaze.rotation.set(-glanceY * DEG, glanceX * DEG, 0);
       eye.upper.rotation.x = -upper * DEG;

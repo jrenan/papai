@@ -109,3 +109,4 @@ input[type="range"]:disabled{opacity:.6}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 .lesson-meta>div>span:first-child{white-space:nowrap}.lesson-meta .lesson-exit span{white-space:nowrap}
 @media(max-width:760px){.lesson-meta .lesson-exit{font-size:.78rem;gap:5px}.lesson-meta .lesson-exit svg{width:20px;height:20px}.lesson-dots{gap:5px}.lesson-dots i{width:10px;height:10px}.lesson-dots i[data-now]{width:13px;height:13px}.learning-mode>span{flex-basis:100%;margin:0 12px 5px}}
+.drag-hint{left:62%}.render-notice{left:auto;right:14px;bottom:54px;margin:0;font-weight:700;text-align:right}
