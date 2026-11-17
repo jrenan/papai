@@ -12,6 +12,11 @@ const runtimeFiles = [
   'numberblocks-somar/index.html', 'numberblocks-somar/numberblocks.js',
   'numberblocks-somar/numberblocks.css',
   'soma/index.html', 'soma/garden.css', 'soma/garden.js', 'soma/journey.js', 'soma/meadow.svg',
+  'dia-e-noite/index.html', 'dia-e-noite/style.css', 'dia-e-noite/app.js', 'dia-e-noite/astronauts.js',
+  'dia-e-noite/lesson.js',
+  'dia-e-noite/astronaut-blue.png', 'dia-e-noite/astronaut-red.png',
+  'dia-e-noite/astronomy.js', 'dia-e-noite/vendor/three.min.js', 'dia-e-noite/vendor/THREE-LICENSE.txt',
+  'dia-e-noite/audio/manifest.json',
   'fono-do-leo/index.html', 'fono-do-leo/sw.js',
   'assets/narration-player.js',
   'assets/narration/manifest.json', 'assets/narration/manifest.js',
@@ -24,6 +29,7 @@ function listRuntimeFiles(sourceDirectory) {
   for (const [directory, allowed] of [
     ['assets', /\.(?:png|jpe?g|webp|svg|gif|ico)$/i],
     ['assets/narration', /^[a-zA-Z0-9_-]+\.mp3$/],
+    ['dia-e-noite/audio', /^[a-zA-Z0-9_-]+\.mp3$/],
   ]) {
     for (const entry of fs.readdirSync(path.join(sourceDirectory, directory), { withFileTypes: true })) {
       if (entry.isFile() && allowed.test(entry.name)) files.push(`${directory}/${entry.name}`);

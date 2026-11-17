@@ -763,6 +763,113 @@ p {
   padding: clamp(22px, 4vw, 42px);
 }
 
+.daynight-tile {
+  grid-column: 1 / -1;
+  color: #243d63;
+  background: #fff4d2;
+}
+
+.daynight-tile .tile-copy p {
+  max-width: 26ch;
+  color: #405274;
+}
+
+.daynight-preview {
+  isolation: isolate;
+  min-height: 300px;
+  background: #142947;
+}
+
+.daynight-earth {
+  position: relative;
+  width: 174px;
+  height: 174px;
+  margin-left: 70px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #4baee4;
+  box-shadow: 0 16px 30px #07162d66;
+}
+
+.daynight-earth::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0 0 0 50%;
+  background: #10213cb8;
+  content: "";
+}
+
+.daynight-earth i,
+.daynight-earth b {
+  position: absolute;
+  display: block;
+  background: #74ca75;
+}
+
+.daynight-earth i {
+  top: 22px;
+  left: 25px;
+  width: 85px;
+  height: 69px;
+  clip-path: polygon(0 25%, 23% 0, 48% 10%, 62% 0, 100% 33%, 83% 65%, 47% 73%, 24% 100%, 10% 65%);
+}
+
+.daynight-earth b {
+  top: 90px;
+  left: 65px;
+  width: 63px;
+  height: 67px;
+  clip-path: polygon(0 0, 62% 4%, 100% 35%, 62% 64%, 38% 100%, 21% 51%);
+}
+
+.daynight-sun {
+  position: absolute;
+  z-index: 1;
+  left: calc(50% - 153px);
+  width: 62px;
+  height: 62px;
+  border: 6px solid #ffe6a2;
+  border-radius: 50%;
+  background: #ffd361;
+  box-shadow: 0 10px 24px #ffbd4326;
+}
+
+.daynight-light {
+  position: absolute;
+  left: calc(50% - 115px);
+  width: 150px;
+  height: 140px;
+  background: #ffd36118;
+  clip-path: polygon(0 32%, 100% 0, 100% 100%, 0 68%);
+}
+
+.daynight-star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #d9e8ff;
+}
+
+.daynight-star-one { top: 20%; left: 72%; }
+.daynight-star-two { top: 75%; left: 82%; }
+.daynight-star-three { top: 16%; left: 40%; }
+
+.daynight-game-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 64px;
+  text-align: center;
+  text-decoration: none;
+  touch-action: manipulation;
+}
+
+.daynight-game-link:focus-visible {
+  outline: 4px solid #0f4c89;
+  outline-offset: 5px;
+}
+
 .biome-preview {
   align-content: center;
   gap: 12px;

@@ -17,6 +17,7 @@ try {
   for (const file of [
     'assets/trio-do-saber.png', 'assets/bioma-pantanal.png',
     'assets/narration/clip-0123_abcd.mp3',
+    'dia-e-noite/audio/intro.mp3',
   ]) write(file);
   for (const file of [
     'README.md', 'scripts/generate-narration.py', 'tests/test.cjs',
@@ -26,10 +27,11 @@ try {
     'data/Biomas_5000mil.zip', 'data/biomes-ibge.geojson',
     'numberblocks-1-100/Claude outputs/draft.html',
     'fono-do-leo/old-game.js', 'DinoFala/Resources/narration.mp3',
+    'dia-e-noite/audio/key.env', 'dia-e-noite/audio/failed.mp3.part',
   ]) write(file);
 
   const files = packagePages(source, output);
-  assert.equal(files.length, runtimeFiles.length + 3);
+  assert.equal(files.length, runtimeFiles.length + 4);
   assert.ok(files.includes('.nojekyll'));
   assert.ok(files.includes('CNAME'));
   assert.ok(files.includes('fono-do-leo/index.html'));
@@ -37,6 +39,10 @@ try {
   assert.ok(files.includes('assets/narration/manifest.json'));
   assert.ok(files.includes('assets/narration/manifest.js'));
   assert.ok(files.includes('assets/narration/clip-0123_abcd.mp3'));
+  assert.ok(files.includes('dia-e-noite/index.html'));
+  assert.ok(files.includes('dia-e-noite/audio/intro.mp3'));
+  assert.equal(files.includes('dia-e-noite/audio/key.env'), false);
+  assert.equal(files.includes('dia-e-noite/audio/failed.mp3.part'), false);
   for (const file of files) {
     assert.equal(fs.readFileSync(path.join(output, file), 'utf8'), fs.readFileSync(path.join(source, file), 'utf8'));
   }

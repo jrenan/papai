@@ -1,7 +1,7 @@
 # Trio do Saber - Jogos Infantis
 
 Tela inicial de jogos infantis em HTML, CSS e JavaScript puro. O projeto reúne
-**Guardiões dos Biomas**, **Viagem pelo Mundo**, **Blocos de Somar**
+**Guardiões dos Biomas**, **Viagem pelo Mundo**, **Dia e noite**, **Blocos de Somar**
 e **Juntar e Somar**.
 
 ## DinoFala — aplicativo nativo para iOS
@@ -130,6 +130,18 @@ credenciais ou áudios do DinoFala.
 - Tela inicial com a marca **Trio do Saber** e seletor de jogos.
 - Estrutura pronta para adicionar novas aventuras sem refazer a navegação.
 - Botões de retorno ao início em cada jogo.
+
+### Dia e noite
+
+- Experiência em `dia-e-noite/`, acessível pela tela inicial.
+- Duas vistas conectam a Terra no espaço ao céu visto por uma criança na superfície.
+- Arraste a Terra para girar; botões grandes permitem escolher dia, noite ou giro automático.
+- O Sol permanece no mesmo lugar enquanto a Terra gira, mostrando por que um lugar recebe luz e depois fica no escuro.
+- Amanhecer, entardecer, desafio de encontrar a luz e modo leve para aparelhos sem WebGL.
+- Descoberta guiada com um adulto: brincar de girar, comparar corpo/Terra/lugar, prever, testar, explicar e investigar outro lugar. A exploração livre continua acessível. A sequência é informada por estudos científicos, detalhados em [`dia-e-noite/RESEARCH.md`](dia-e-noite/RESEARCH.md); testes técnicos não equivalem à validação de aprendizagem com crianças.
+- Leo e Rafa aparecem como astronautas 3D, inspirados na arte do cabeçalho, com capacetes, mochilas e aceno suave. A flutuação tem pausa própria e respeita a preferência de movimento reduzido. Os modelos reutilizáveis ficam em `dia-e-noite/models/`; `scripts/render-astronauts.cjs` gera os JSON Three.js e os PNG do modo leve.
+- Narração masculina preparada em `scripts/day-night-narration.py`. Os MP3 ainda não foram gerados: a credencial local do ElevenLabs foi recusada. Enquanto `audio/manifest.json` indicar `available: false`, a experiência funciona sem voz e oculta o botão de áudio. Com uma credencial válida, use `discover` para escolher a voz e `generate --voice-id ID --model-id eleven_multilingual_v2` para gerar os sete trechos. O script instala o pacote completo após validar os arquivos.
+- Verificação específica: `npm run test:day-night` com o servidor local ativo.
 
 ### Blocos de Somar
 

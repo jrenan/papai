@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101c39">
+  <meta name="description" content="Gire a Terra em 3D e descubra por que o dia vira noite. Uma experiência do Trio do Saber para aprender brincando.">
+  <title>Dia e noite • Trio do Saber</title>
+  <link rel="icon" href="../assets/trio-do-saber.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- THESIS: One place, two connected views. Moving Earth changes the child's sky.
+  OWN-WORLD: Trio's rounded friendly type; deep blue space, golden sunlight and a small green 3D garden.
+  STORY: Drag Earth, notice the light, discover night, then make a full day.
+  FIRST VIEWPORT: A shared split stage, large Earth left and eye-level garden right; tactile controls beneath.
+  FORM: A working science toy with one continuous rotation, short narration and a gentle discovery challenge. -->
+  <svg class="icon-definitions" aria-hidden="true"><defs>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="m14 5-7 7 7 7M7 12h14"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="m11 4-6 5H2v6h3l6 5ZM15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 4 12 8-12 8Z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol>
+    <symbol id="i-night" viewBox="0 0 24 24"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z"/></symbol>
+    <symbol id="i-horizon" viewBox="0 0 24 24"><path d="M2 17h20M6 17a6 6 0 0 1 12 0M12 3v4M3 9l3 2m15-2-3 2M4 21h16"/></symbol>
+    <symbol id="i-turn" viewBox="0 0 24 24"><path d="M19 8a8 8 0 1 0 1 8M19 3v5h-5"/></symbol>
+  </defs></svg>
+  <header class="topbar">
+    <a class="home-link" href="../"><svg><use href="#i-back"/></svg><span>Início</span></a>
+    <h1>Dia <span>e</span> noite</h1>
+    <button class="listen-button" id="listenButton" type="button"><svg><use href="#i-sound"/></svg><span>Ouvir</span></button>
+  </header>
+  <main>
+    <nav class="learning-mode" aria-label="Jeito de brincar"><button id="startLesson" type="button" aria-pressed="true">Descobrir juntos</button><button id="freeExplore" type="button" aria-pressed="false">Explorar livremente</button><span>Com um adulto</span></nav>
+    <section class="lesson-panel" id="lessonPanel" aria-label="Descoberta guiada"></section>
+    <div class="invitation"><p id="instruction">Gire a Terra. O que muda no céu?</p><span class="same-place" id="placeLegend"><i></i><span id="placeLegendText">Nosso lugar nas duas vistas</span></span></div>
+    <section class="experience" aria-label="A Terra e o céu vistos ao mesmo tempo">
+      <div class="space-view" id="spaceView">
+        <h2>Visto do espaço</h2>
+        <button class="crew-motion" id="crewMotion" type="button" aria-label="Pausar flutuação dos astronautas" aria-pressed="false" title="Pausar flutuação dos astronautas"><svg><use href="#i-pause"/></svg></button>
+        <canvas id="spaceCanvas" tabindex="0" aria-label="Leo e Rafa astronautas flutuam perto da Terra 3D. Arraste para os lados ou use as setas do teclado para girar."></canvas>
+        <span class="astronaut-name astronaut-name-blue" id="blueAstronautName">Leo</span>
+        <span class="astronaut-name astronaut-name-red" id="redAstronautName">Rafa</span>
+        <div class="sun-label" aria-hidden="true">Sol</div>
+        <div id="personLabel" class="person-label" aria-hidden="true"><span></span>Você está aqui</div>
+        <div id="otherPlaceLabel" class="person-label other-place-label" aria-hidden="true" hidden>Outro lugar</div>
+        <p class="drag-hint" id="dragHint"><svg><use href="#i-turn"/></svg> Arraste para girar</p>
+        <p class="render-notice" id="renderNotice" hidden>Modo leve · você ainda pode girar a Terra.</p>
+      </div>
+      <div class="sky-view" id="skyView">
+        <h2 id="skyHeading">O céu onde você está</h2>
+        <canvas id="skyCanvas" aria-label="Paisagem que muda junto com a posição da Terra" role="img"></canvas>
+        <div class="phase-card" id="phaseCard"><span class="phase-dot"></span><div><h3 id="phaseTitle">É dia!</h3><p id="phaseText">A luz do Sol chega até você.</p></div></div>
+        <div class="you-badge"><i></i><span id="placeName">Nosso lugar na Terra</span></div>
+      </div>
+    </section>
+    <section class="controls" aria-label="Controles da Terra">
+      <div class="rotation-row">
+        <button class="play-button" id="playButton" type="button" aria-pressed="false"><svg><use href="#i-play"/></svg><span>Girar sozinha</span></button>
+        <div class="rotation-control"><label id="rotationLabel" for="rotation">Gire com o dedo</label><input id="rotation" type="range" min="0" max="360" step="0.5" value="0" aria-valuetext="É dia"><span class="rotation-caption">Uma volta: um dia inteiro</span></div>
+        <button class="reset-button" id="resetButton" type="button" aria-label="Voltar ao começo"><svg><use href="#i-turn"/></svg></button>
+      </div>
+      <div class="moments" aria-label="Escolha um momento do dia">
+        <button data-phase="sunrise" type="button"><svg><use href="#i-horizon"/></svg>Amanhecer</button>
+        <button data-phase="day" type="button" aria-pressed="true"><svg><use href="#i-sun"/></svg>Dia</button>
+        <button data-phase="sunset" type="button"><svg><use href="#i-horizon"/></svg>Entardecer</button>
+        <button data-phase="night" type="button"><svg><use href="#i-night"/></svg>Noite</button>
+      </div>
+    </section>
+    <section class="discovery" aria-label="Descoberta">
+      <div class="discovery-copy"><span class="little-orbit" aria-hidden="true"></span><p id="challengeStatus" role="status">A Terra gira. O dia vira noite. E começa outro dia!</p></div>
+      <button id="challengeButton" type="button">Vamos descobrir?</button>
+    </section>
+    <p id="audioStatus" class="audio-status" role="status"></p>
+    <details class="grownups"><summary>Para explorar juntos</summary><div>
+      <p>Comecem com a brincadeira corporal e comparem: o corpo representa a Terra; o rosto, um lugar nela. Usem uma luminária comum parada ou girem um boneco. A criança pode participar sentada ou imaginar o movimento. Depois, mostrem o ponto rosa e a criança do jardim: são o mesmo lugar.</p>
+      <p>Antes de girar, acolha a previsão sem corrigi-la. Depois pergunte: “O que mudou? O Sol continuou aceso?” Peça também que a criança mostre com o modelo por que anoiteceu. Em outro dia, repitam começando de uma posição diferente. Concluir o percurso não comprova que a criança aprendeu.</p>
+      <p>A Terra gira sobre si mesma. O ciclo de um dia e uma noite dura cerca de 24 horas. Aqui o tempo está acelerado, os tamanhos e as distâncias estão reduzidos e o lugar marcado fica perto do Equador. O modelo destaca a rotação; estações do ano e órbita não são representadas. O Sol fica fixo nesta demonstração. A Lua não causa a noite e também pode aparecer durante o dia.</p>
+      <p>Referência: <a href="https://www.nasa.gov/learning-resources/for-kids-and-students/what-is-earth-grades-k-4/" target="_blank" rel="noopener noreferrer">NASA · A Terra para crianças</a>. <span id="voiceCredit" hidden>Narração: ElevenLabs. </span>Biblioteca 3D: Three.js (MIT).</p>
+      <details class="research-notes"><summary>Pesquisas que orientam a atividade</summary><p>Um experimento com 79 crianças de 5–8 anos encontrou ganhos mais consistentes ao combinar uma atividade corporal com comparações explícitas no modelo. É evidência para essa estratégia, não uma validação deste aplicativo: <a href="https://doi.org/10.1016/j.appdev.2026.101994" target="_blank" rel="noopener noreferrer">Jee, Ruel, Stone e Anggoro (2026)</a>.</p><p>Comparações guiadas também ajudaram alunos do 3º ano: <a href="https://doi.org/10.1177/0956797619864601" target="_blank" rel="noopener noreferrer">Jee e Anggoro (2019)</a>. Estudos com crianças de 5 anos investigaram suas explicações com modelos e atividades de manipulação, com limites de amostra e desenho: <a href="https://doi.org/10.12738/estp.2015.4.2741" target="_blank" rel="noopener noreferrer">Saçkes (2015)</a> e <a href="https://doi.org/10.17345/ute.2020.3.2959" target="_blank" rel="noopener noreferrer">Biosca Cavero (2021)</a>. A sequência de previsão, investigação e transferência é nossa adaptação dessas evidências.</p></details>
+    </div></details>
+  </main>
+  <script src="vendor/three.min.js"></script>
+  <script src="astronomy.js"></script>
+  <script src="astronauts.js"></script>
+  <script src="lesson.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
