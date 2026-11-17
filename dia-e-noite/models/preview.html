@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Leo e Rafa • modelos 3D</title>
+  <style>
+    html,body{margin:0;height:100%;background:#101c39;color:#dceaff;font-family:"Arial Rounded MT Bold","Trebuchet MS",sans-serif}
+    canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+    nav{position:fixed;left:0;right:0;bottom:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+    button{font:inherit;font-weight:700;border:0;border-radius:14px;padding:12px 18px;background:#ffcf63;color:#382c12;cursor:pointer}
+    p{position:fixed;top:10px;left:0;right:0;margin:0;text-align:center;font-size:.9rem;opacity:.75}
+  </style>
+</head>
+<body>
+  <p>Arraste para girar · Leo (azul) e Rafa (vermelho)</p>
+  <canvas id="stage"></canvas>
+  <nav><button id="cheer" type="button">Comemorar</button><button id="pause" type="button">Pausar</button><button id="front" type="button">De frente</button></nav>
+  <script src="../vendor/three.min.js"></script>
+  <script>document.write('<script src="../astronauts.js?v=' + Date.now() + '"><\/script>');</script>
+  <script>
+    // ?only=red|blue · ?zoom=head · ?yaw=35 · ?still=1 · ?face=wow|laugh · ?t=1.2 (quadro fixo) · ?cheer=0.4
+    const query = new URLSearchParams(location.search), T = THREE;
+    const canvas = document.getElementById('stage');
+    const renderer = new T.WebGLRenderer({ canvas, antialias: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.outputEncoding = T.sRGBEncoding;
+    const scene = new T.Scene(); scene.background = new T.Color(query.get('bg') || '#101c39');
+    const camera = new T.OrthographicCamera(-1, 1, 1, -1, .1, 50); camera.position.set(0, 0, 10);
+    const only = query.get('only'), head = query.get('zoom') === 'head';
+    const crew = [{ name: 'Leo', variant: 'blue' }, { name: 'Rafa', variant: 'red' }].filter(member => !only || member.variant === only);
+    const holders = crew.map((member, index) => {
+      const model = TrioAstronauts.create(T, member), holder = new T.Group();
+      holder.add(model); holder.position.x = (index - (crew.length - 1) / 2) * (head ? 1.6 : 2.5);
+      if (query.get('face')) model.userData.rig.setExpression(query.get('face'));
+      scene.add(holder); return { model, holder };
+    });
+    let yaw = Number(query.get('yaw') || 0) * Math.PI / 180, pitch = Number(query.get('pitch') || 0) * Math.PI / 180;
+    const fixed = query.has('t') ? Number(query.get('t')) : null;
+    let playing = !query.get('still') && fixed === null, time = fixed || 0, last = 0, drag = null;
+    if (query.has('cheer')) holders.forEach(({ model }) => TrioAstronauts.cheer(model, Number(query.get('cheer'))));
+    function resize() {
+      const width = innerWidth, height = innerHeight, aspect = width / height;
+      renderer.setSize(width, height, false);
+      const half = head ? Math.max(.82, (crew.length * .85) / aspect) : Math.max(1.75, (crew.length * 1.35) / aspect);
+      camera.left = -half * aspect; camera.right = half * aspect; camera.top = half; camera.bottom = -half;
+      camera.position.y = head ? 1 : .2; camera.updateProjectionMatrix();
+    }
+    addEventListener('resize', resize); resize();
+    canvas.addEventListener('pointerdown', event => { drag = { x: event.clientX, y: event.clientY }; canvas.setPointerCapture(event.pointerId); });
+    canvas.addEventListener('pointermove', event => { if (!drag) return; yaw += (event.clientX - drag.x) * .01; pitch = Math.max(-.6, Math.min(.6, pitch + (event.clientY - drag.y) * .006)); drag = { x: event.clientX, y: event.clientY }; });
+    canvas.addEventListener('pointerup', () => { drag = null; });
+    document.getElementById('cheer').onclick = () => holders.forEach(({ model }) => TrioAstronauts.cheer(model, time));
+    document.getElementById('pause').onclick = event => { playing = !playing; event.target.textContent = playing ? 'Pausar' : 'Animar'; };
+    document.getElementById('front').onclick = () => { yaw = pitch = 0; };
+    function frame(now) {
+      const dt = last ? Math.min((now - last) / 1000, .05) : 0; last = now;
+      if (playing) time += dt;
+      holders.forEach(({ model, holder }) => { holder.rotation.set(pitch, yaw, 0); TrioAstronauts.animate(model, time, !playing && fixed === null); });
+      renderer.render(scene, camera);
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  </script>
+</body>
+</html>

@@ -50,17 +50,45 @@ horizonte, tanto em 3D quanto no modo leve. As extremidades da trajetória ficam
 visíveis entre os elementos da paisagem. O título da fase e sua explicação ficam
 abaixo do céu, sem cobrir o nascer ou o pôr do sol.
 
-Leo e Rafa são companheiros astronautas, modelados em geometria 3D a partir da
-arte do cabeçalho `assets/trio-do-saber.png`. O traje azul identifica Leo; o
-vermelho, Rafa. Rafa tem olhos azuis. Rostos, cabelo, olhos, capacetes, mochilas e membros articulados
-são volumes reais. Uma cena separada ilumina os personagens sem clarear a face
-noturna da Terra. Eles flutuam acima e abaixo do Sol, longe dos controles e do
-marcador. O movimento é pausável, respeita movimento reduzido e para fora da tela.
-O modo sem WebGL usa PNG transparentes renderizados dos mesmos modelos.
+Leo e Rafa são companheiros astronautas, modelados em geometria 3D a partir das
+fotos da família. O traje azul identifica Leo; o vermelho, Rafa. Leo tem cabelo
+castanho curto com franja reta para a frente, olhos castanhos sorridentes,
+bochechas rosadas e um sorriso largo com a janelinha dos dentes da frente. Rafa
+tem cabelo castanho-dourado mais comprido, penteado de lado, olhos
+azul-acinzentados grandes, sobrancelhas marcadas e um sorriso suave. Cabelo
+(calota e mechas afiladas), olhos com pálpebras, sobrancelhas, nariz, orelhas,
+capacetes, mochilas e membros articulados são volumes reais; só o rubor, as
+sombras suaves e a boca são pintados na pele. O sombreado é pré-calculado em
+pequenas texturas (matcap), então os personagens não dependem de luzes e não
+clareiam a face noturna da Terra. Eles flutuam acima e abaixo do Sol, piscam,
+acenam, acompanham o ponto rosa com o olhar e comemoram as descobertas; tocar em
+um deles também o faz comemorar. O movimento é pausável, respeita movimento
+reduzido e para fora da tela. O modo sem WebGL usa PNG transparentes
+renderizados dos mesmos modelos.
 
-`astronauts.js` fornece construtores e animação reutilizáveis. Os arquivos em
-`models/` podem ser abertos com `THREE.ObjectLoader`; `scripts/render-astronauts.cjs`
-gera esses arquivos e os PNG a partir da geometria.
+`astronauts.js` fornece construtores e animação reutilizáveis (`create`,
+`animate`, `cheer`, `lookAt`). `models/preview.html` mostra os dois personagens
+de perto, para conferir a semelhança. Os arquivos JSON em `models/` podem ser
+abertos com `THREE.ObjectLoader`; `scripts/render-astronauts.cjs` gera esses
+arquivos e os PNG a partir da geometria.
+
+## Cenário e interface
+
+`scenery.js` desenha a decoração das duas vistas: no espaço, fundo com nebulosa,
+estrelas que cintilam, Sol com coroa e raios, setas de luz indo do Sol à Terra,
+nuvens e o brilho da atmosfera no lado iluminado; no jardim, céu em degradê que
+muda com a hora, nuvens, colinas, casa com janelas que acendem ao escurecer,
+árvores, flores, vaga-lumes à noite, sombras que acompanham o Sol e a criança
+vista de costas. O modelo, os marcadores e o disco solar testado continuam em
+`app.js`. A Lua continua fora do cenário, para não sugerir que ela causa a
+noite. Toda animação decorativa usa o mesmo relógio pausável dos astronautas.
+
+A interface usa tipografia arredondada do sistema, botões com relevo, um
+controle deslizante cuja trilha mostra o ciclo do dia, um cartão de fase com
+ícone e cor próprios, pontinhos de progresso na descoberta guiada e uma chuva
+curta de papéis e estrelas ao concluir uma descoberta. Soltar a Terra no meio
+do gesto a mantém girando por um instante. Com movimento reduzido não há
+inércia, confete nem animações decorativas.
 
 A condução por voz tem 25 clipes no roteiro `narration-texts.json`. Um gesto no
 botão de reprodução libera um único elemento de áudio, reutilizado entre etapas

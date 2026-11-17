@@ -12,7 +12,7 @@ const runtimeFiles = [
   'numberblocks-somar/index.html', 'numberblocks-somar/numberblocks.js',
   'numberblocks-somar/numberblocks.css',
   'soma/index.html', 'soma/garden.css', 'soma/garden.js', 'soma/journey.js', 'soma/meadow.svg',
-  'dia-e-noite/index.html', 'dia-e-noite/style.css', 'dia-e-noite/app.js', 'dia-e-noite/astronauts.js',
+  'dia-e-noite/index.html', 'dia-e-noite/style.css', 'dia-e-noite/app.js', 'dia-e-noite/astronauts.js', 'dia-e-noite/scenery.js',
   'dia-e-noite/lesson.js', 'dia-e-noite/voice.js', 'dia-e-noite/globe-map.js',
   'dia-e-noite/astronaut-blue.png', 'dia-e-noite/astronaut-red.png',
   'dia-e-noite/astronomy.js', 'dia-e-noite/vendor/three.min.js', 'dia-e-noite/vendor/THREE-LICENSE.txt',

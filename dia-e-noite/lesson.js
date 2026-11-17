@@ -110,7 +110,8 @@
       panel.hidden = !active;
       panel.dataset.stage = stages[step];
       panel.dataset.result = result;
-      panel.innerHTML = `<div class="lesson-meta"><span>${step + 1} de ${stages.length}</span>${action('Explorar livremente', 'exit', false, 'lesson-exit')}</div>
+      const dots = stages.map((_, index) => `<i${index < step ? ' data-done' : index === step ? ' data-now' : ''}></i>`).join('');
+      panel.innerHTML = `<div class="lesson-meta"><div><span>${step + 1} de ${stages.length}</span><span class="lesson-dots" aria-hidden="true">${dots}</span></div>${action('Explorar livremente', 'exit', false, 'lesson-exit')}</div>
         <h2 id="lessonTitle" tabindex="-1">${view.title}</h2>
         <p class="lesson-copy">${view.copy}</p>
         ${view.extra}
@@ -217,6 +218,7 @@
         if (causeFirstAnswer === null) causeFirstAnswer = value;
         causeChoice = value;
         causeCorrect = value === 'earth';
+        if (causeCorrect) adapter.celebrate?.();
         result = causeCorrect ? 'explained' : 'retry';
         feedback = causeCorrect
           ? 'A Terra girou! Taubaté ficou sem luz, mas o Sol continua iluminando o outro lado.'
@@ -229,6 +231,7 @@
         transferAnswered = true;
         observer = 1;
         result = value === 'day' ? 'confirmed' : 'compared';
+        if (value === 'day') adapter.celebrate?.();
         feedback = 'No outro lugar é dia: a luz do Sol chega até lá. Ao mesmo tempo, em Taubaté é noite.';
         render(false);
         adapter.setObserver(1);
@@ -250,7 +253,7 @@
       if (button.dataset.lessonAnswer) { answer(button.dataset.lessonAnswer); return; }
       switch (button.dataset.lessonAction) {
         case 'exit': exit(); break;
-        case 'finish': exit(); speak('lesson-finish'); break;
+        case 'finish': exit(); speak('lesson-finish'); adapter.celebrate?.(); break;
         case 'body-done': case 'body-imagine': if (step === 0) enter(1); break;
         case 'next':
           if (step === 1 || (step === 2 && prediction !== null) || (step === 3 && observed) || (step === 4 && causeCorrect)) enter(step + 1);

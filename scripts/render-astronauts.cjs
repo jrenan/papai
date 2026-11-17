@@ -17,13 +17,12 @@ const root = path.resolve(__dirname, '..');
         const scene = new T.Scene();
         const renderer = new T.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
         renderer.setSize(512, 640); renderer.outputEncoding = T.sRGBEncoding;
-        const camera = new T.OrthographicCamera(-1.36, 1.36, 1.7, -1.7, .1, 30);
+        const camera = new T.OrthographicCamera(-1.44, 1.44, 1.8, -1.8, .1, 30);
         camera.position.set(0, 0, 8);
-        scene.add(new T.HemisphereLight('#eaf6ff', '#798baf', .6));
-        const key = new T.DirectionalLight('#fff1d8', .75); key.position.set(-3, 5, 6); scene.add(key);
-        const rim = new T.DirectionalLight('#8ccfff', .35); rim.position.set(4, 1, -2); scene.add(rim);
+        // Shading is baked into the models, so no lights are needed. The reusable
+        // export uses the compact textures to keep the JSON small.
+        const exported = window.TrioAstronauts.create(T, { ...member, detail: 'low' }).toJSON();
         const model = window.TrioAstronauts.create(T, member);
-        const exported = model.toJSON();
         const bounds = new T.Box3().setFromObject(model);
         model.position.sub(bounds.getCenter(new T.Vector3()));
         scene.add(model); renderer.render(scene, camera);

@@ -19,3 +19,93 @@
 @media(max-height:550px) and (min-width:600px){.sky-view,body[data-lesson-active="true"] .sky-view{height:300px}.sky-scene,body[data-lesson-active="true"] .sky-scene{flex:1;height:auto}.phase-card{padding:10px 15px}}
 .voice-prompt{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:14px;padding:12px 16px;border-radius:16px;background:#ffefbf}.voice-prompt[hidden]{display:none}.voice-prompt button{display:inline-flex;align-items:center;gap:12px;min-height:60px;padding:10px 18px;border:0;border-radius:12px;background:#176f58;color:#fff;font:inherit;font-weight:bold;cursor:pointer}.voice-prompt button svg{width:32px;height:32px;fill:none;stroke:currentColor;stroke-width:2}.voice-prompt p{margin:0;max-width:33ch;line-height:1.4;font-size:.95rem}.voice-prompt button:disabled{opacity:.6;cursor:wait}.local-clock{position:absolute;right:14px;top:14px;z-index:2;display:grid;gap:2px;padding:8px 12px;border-radius:10px;background:#f8fbf5f2;color:#163252;text-align:center;pointer-events:none}.local-clock>span{font-size:.75rem;font-weight:bold}.local-clock time{font-size:1.65rem;font-weight:bold;font-variant-numeric:tabular-nums;line-height:1.05}.local-clock small{font-size:.65rem}.lesson-exit,.lesson-choices .lesson-action{display:inline-flex;align-items:center;justify-content:center;gap:7px}.lesson-action svg{flex:none;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2}
 @media(max-width:760px){.voice-prompt{gap:9px;padding:12px}.voice-prompt button{width:100%;justify-content:center}.voice-prompt p{max-width:none}.local-clock{top:10px;right:10px;padding:6px 9px}.local-clock time{font-size:1.4rem}.local-clock>span{font-size:.7rem}.local-clock small{font-size:.6rem}body[data-lesson-active="true"] .local-clock{padding:5px 7px}body[data-lesson-active="true"] .local-clock time{font-size:1.25rem}}
+/* ---- Visual refresh for young children: rounded type, tactile buttons, a livelier stage.
+   Appended as one layer so the tested layout rules above stay untouched. ---- */
+:root{font-family:ui-rounded,"SF Pro Rounded","Arial Rounded MT Bold","Nunito","Trebuchet MS",sans-serif;--day:#ffcf63;--dusk:#ff9d6c;--dawn:#ffb59a;--dark:#3b4a9a}
+body{background:linear-gradient(180deg,#e6f3fb 0,#f8f6ed 360px) no-repeat var(--paper);min-height:100vh}
+button{transition:transform .12s ease,box-shadow .12s ease,background-color .2s ease,color .2s ease}
+.topbar h1{display:flex;align-items:center;gap:.35em;letter-spacing:-.02em}
+.topbar h1 svg{width:.95em;height:.95em;stroke-width:2.4}
+.topbar h1 .word-day{color:#e08a00;font-size:1em}.topbar h1 .word-night{color:#33418f;font-size:1em}
+.topbar h1 svg:first-child{color:#f0a61a;fill:#ffd978}.topbar h1 svg:last-child{color:#33418f;fill:#aab6f2}
+.home-link{background:#fff;padding:8px 16px 8px 12px;border-radius:999px;box-shadow:0 3px 0 #cfd9e2,0 6px 14px #13274c12}
+.home-link:active{transform:translateY(3px);box-shadow:0 0 0 #cfd9e2}
+.listen-button{border-radius:999px;box-shadow:0 3px 0 #c3ced2}
+.learning-mode{background:#fff;border-radius:999px;padding:5px;width:fit-content;max-width:100%;box-shadow:0 3px 0 #d6dee4,0 8px 18px #13274c10}
+.learning-mode button{border:0;border-radius:999px;min-height:46px;padding:10px 20px}
+.learning-mode button[aria-pressed="true"]{box-shadow:0 3px 0 #0a1a36}
+.learning-mode>span{margin:0 14px 0 8px;font-weight:700}
+.invitation>p{font-size:clamp(1.2rem,2.2vw,1.6rem);letter-spacing:-.01em}
+.same-place{background:#fff;padding:7px 13px;border-radius:999px;font-weight:700;box-shadow:0 2px 0 #dbe2e6}
+.experience{position:relative;border-radius:30px;box-shadow:0 0 0 5px #fff,0 20px 46px #13274c2b}
+.space-view h2{background:#ffffff1c;padding:8px 14px;border-radius:999px;top:16px;left:16px;color:#e4eeff;border:1px solid #ffffff26}
+.sky-view h2{border-radius:999px;padding:8px 15px;box-shadow:0 3px 0 #13274c1f}
+.local-clock{border-radius:18px;box-shadow:0 4px 0 #13274c22;padding:9px 14px}
+.you-badge{border-radius:999px;padding:9px 15px;box-shadow:0 3px 0 #13274c22}
+.person-label{border-radius:999px;padding:7px 13px;font-size:.9rem;box-shadow:0 5px 14px #060a2166}
+.astronaut-name{font-size:.82rem;padding:5px 11px;border-radius:999px;border:2px solid #fff;color:#fff;background:#2f86d8;box-shadow:0 4px 10px #060a2155}
+.astronaut-name-red{background:#e2493d;border-bottom-color:#fff}
+.sun-label{left:9%;top:66%;color:#ffe9a8;text-shadow:0 2px 8px #0a1230}
+.crew-motion{border:1px solid #ffffff33;background:#ffffff1c;right:14px;top:13px}
+.drag-hint{left:50%;right:auto;transform:translateX(-50%);width:max-content;max-width:92%;background:#ffffff1f;border:1px solid #ffffff2b;padding:8px 16px;border-radius:999px;font-weight:700;color:#fff;transition:opacity .5s}
+.drag-hint svg{animation:nudge 2.2s ease-in-out infinite}.drag-hint[data-used="true"]{opacity:.45}.drag-hint[data-used="true"] svg{animation:none}
+.phase-card{align-items:center;gap:16px;padding:14px 22px;background:#fff6d5;transition:background-color .6s ease,color .6s ease}
+.sky-view[data-phase="sunrise"] .phase-card{background:#ffe9de}.sky-view[data-phase="sunset"] .phase-card{background:#ffdfcd}
+.phase-dot{width:56px;height:56px;margin:0;flex-shrink:0;background:var(--day) center/34px no-repeat;box-shadow:0 4px 0 #dba42c;transition:background-color .6s ease,box-shadow .6s ease;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23684a05' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='4.3' fill='%23fff6cf'/%3E%3Cpath d='M12 2v2.4m0 15.2V22M2 12h2.4m15.2 0H22M5 5l1.7 1.7m10.6 10.6L19 19M5 19l1.7-1.7m10.6-10.6L19 5'/%3E%3C/svg%3E")}
+.sky-view[data-phase="sunrise"] .phase-dot,.sky-view[data-phase="sunset"] .phase-dot{background-color:var(--dusk);box-shadow:0 4px 0 #dd7641;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235f2507' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M6 16a6 6 0 0 1 12 0Z' fill='%23fff0c4'/%3E%3Cpath d='M2 16h20M5 20h14M12 3v3M4 8l2 2m14-2-2 2'/%3E%3C/svg%3E")}
+.sky-view[data-phase="sunrise"] .phase-dot{background-color:var(--dawn);box-shadow:0 4px 0 #e58d6c}
+.sky-view[data-phase="night"] .phase-dot{background-color:var(--dark);box-shadow:0 4px 0 #1c2866;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z' fill='%23ffe9a8'/%3E%3C/svg%3E")}
+.phase-card h3{margin-bottom:3px}.phase-card p{max-width:34ch}
+.phase-card.pop .phase-dot{animation:pop .55s cubic-bezier(.3,1.7,.5,1)}.phase-card.pop h3{animation:rise .4s ease-out}
+.play-button{border-radius:22px;box-shadow:0 5px 0 #d99a1c,0 12px 20px #d99a1c33}
+.play-button:active{transform:translateY(4px);box-shadow:0 1px 0 #d99a1c}
+.play-button[aria-pressed="true"]{background:#fff;box-shadow:0 5px 0 #d6dee4,0 12px 20px #13274c14}
+.reset-button{background:#fff;box-shadow:0 4px 0 #d6dee4}.reset-button:active{transform:translateY(3px);box-shadow:0 1px 0 #d6dee4}
+.rotation-control label{font-size:1rem}.rotation-caption{font-size:.82rem}
+input[type="range"]{height:44px}
+input[type="range"]::-webkit-slider-runnable-track{height:16px;border-radius:16px;box-shadow:inset 0 2px 4px #0000002e;background:linear-gradient(90deg,#ffd45e,#ffb65c 20%,#f0876c 26%,#2c3a78 38%,#1b2452 50%,#2c3a78 62%,#f6a493 74%,#ffc873 80%,#ffd45e)}
+input[type="range"]::-webkit-slider-thumb{width:40px;height:40px;margin-top:-12px;border:4px solid #fff;background:radial-gradient(circle at 35% 30%,#8adcff,#2f9ad6 55%,#1d6fae);box-shadow:0 3px 10px #13274c66}
+input[type="range"]::-moz-range-track{height:16px;border-radius:16px;background:linear-gradient(90deg,#ffd45e,#ffb65c 20%,#f0876c 26%,#2c3a78 38%,#1b2452 50%,#2c3a78 62%,#f6a493 74%,#ffc873 80%,#ffd45e)}
+input[type="range"]::-moz-range-thumb{width:34px;height:34px;border:4px solid #fff;border-radius:50%;background:radial-gradient(circle at 35% 30%,#8adcff,#2f9ad6 55%,#1d6fae);box-shadow:0 3px 10px #13274c66}
+input[type="range"]:disabled{opacity:.6}
+.moments button{border:0;--face:#fff;--edge:#d6dee4;--deep:var(--ink);background:var(--face);border-radius:18px;box-shadow:0 4px 0 var(--edge),0 10px 16px #13274c12}
+.moments button:hover{background:var(--face);filter:brightness(1.03)}.moments button:active{transform:translateY(3px);box-shadow:0 1px 0 var(--edge)}
+.moments button[data-phase="sunrise"]{--face:#ffe6d8;--edge:#f0ab8c;--deep:#e2764c}
+.moments button[data-phase="day"]{--face:#fff1bd;--edge:#e7bf52;--deep:#e39a0b}
+.moments button[data-phase="sunset"]{--face:#ffd8c4;--edge:#ee946c;--deep:#d95f33}
+.moments button[data-phase="night"]{--face:#dde2fb;--edge:#97a3de;--deep:#34428f}
+.moments button[aria-pressed="true"]{background:var(--deep);color:#fff;box-shadow:0 4px 0 #0000002e,0 10px 18px #13274c26;transform:translateY(-2px)}
+.discovery{background:#fff;border:0;border-radius:24px;padding:16px 20px;box-shadow:0 4px 0 #dbe2e6,0 12px 24px #13274c12}
+.discovery button{border-radius:16px;min-height:52px;padding:12px 22px;background:#1c7158;color:#fff;box-shadow:0 4px 0 #0f4c3a}
+.discovery button:hover{background:#218263}.discovery button:active{transform:translateY(3px);box-shadow:0 1px 0 #0f4c3a}
+.discovery[data-complete="true"]{background:#e3f6ea}
+.lesson-panel{background:#fff;border-radius:26px;padding:20px 26px 22px;box-shadow:0 4px 0 #dbe2e6,0 14px 28px #13274c14;border-top:8px solid #9fe0c5}
+.lesson-panel>*{animation:rise .38s ease-out both}.lesson-panel>:nth-child(3){animation-delay:.05s}.lesson-panel>:nth-child(n+4){animation-delay:.1s}
+.lesson-meta{font-weight:700;color:#3d6a58}.lesson-meta>div{display:flex;align-items:center;gap:12px}
+.lesson-dots{display:inline-flex;gap:7px;align-items:center}.lesson-dots i{width:12px;height:12px;border-radius:50%;background:#d7e3dd}
+.lesson-dots i[data-done]{background:#36bfa0}.lesson-dots i[data-now]{background:var(--day);width:16px;height:16px;box-shadow:0 0 0 4px #ffcf6355}
+.lesson-panel h2{font-size:clamp(1.5rem,2.6vw,2.1rem)}.lesson-panel p{font-size:1.08rem}
+.lesson-actions button,.lesson-choice,.lesson-choices .lesson-action{border:0;border-radius:18px;min-height:58px;padding:12px 22px;font-size:1.05rem;background:#f1f6f2;box-shadow:0 4px 0 #cbdad2}
+.lesson-actions button:active,.lesson-choice:active,.lesson-choices .lesson-action:active{transform:translateY(3px);box-shadow:0 1px 0 #cbdad2}
+.lesson-choice svg,.lesson-action svg{width:28px;height:28px}
+.lesson-choice[aria-pressed="true"],.lesson-choices .lesson-action[aria-pressed="true"]{background:#1c7158;color:#fff;box-shadow:0 4px 0 #0f4c3a}
+.lesson-actions .lesson-primary,#lessonNext,.lesson-actions [data-lesson-action="body-done"],.lesson-actions [data-lesson-action="finish"]{box-shadow:0 4px 0 #0f4c3a}
+.lesson-turn{box-shadow:0 4px 0 #d99a1c!important}.lesson-actions .lesson-secondary{background:#f1f6f2}
+.lesson-actions button:disabled{box-shadow:0 4px 0 #dfe6e2;opacity:.55}
+.lesson-meta .lesson-exit{background:transparent;box-shadow:none;min-height:36px;padding:7px 0;font-size:.85rem}
+.lesson-feedback:not(:empty){background:#e9f8ef;border-radius:16px;padding:12px 16px;margin-top:6px}
+.lesson-mapping span{background:#f3f6ef;padding:8px 13px;border-radius:999px}
+.voice-prompt{border-radius:22px;box-shadow:0 4px 0 #ecd58f}.voice-prompt button{border-radius:16px;box-shadow:0 4px 0 #0f4c3a}
+.grownups summary{background:#fff;padding:9px 16px;border-radius:999px;font-weight:700;box-shadow:0 2px 0 #dbe2e6}
+.party{position:absolute;inset:0;z-index:5;pointer-events:none;overflow:hidden;border-radius:inherit}
+.party i{position:absolute;top:-26px;width:12px;height:17px;border-radius:4px;opacity:0;animation:party-fall var(--fall,1.2s) cubic-bezier(.25,.6,.5,1) var(--wait,0s) forwards}
+.party i.star{width:20px;height:20px;border-radius:0;clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+@keyframes party-fall{0%{opacity:1;transform:translate3d(0,0,0) rotate(0)}80%{opacity:1}100%{opacity:0;transform:translate3d(var(--sway,0),620px,0) rotate(var(--turn,360deg))}}
+@keyframes pop{0%{transform:scale(.55)}100%{transform:scale(1)}}
+@keyframes rise{0%{opacity:0;transform:translateY(9px)}100%{opacity:1;transform:none}}
+@keyframes nudge{0%,100%{transform:rotate(-18deg)}50%{transform:rotate(22deg)}}
+@media(min-width:761px) and (min-height:551px){.experience{height:clamp(380px,min(52vw,62vh),600px)}.play-button{min-height:64px;font-size:1.1rem;min-width:200px}.moments{gap:14px;margin-top:20px}.moments button{min-height:60px;padding:10px 22px;font-size:1.04rem}.moments button svg{width:26px;height:26px}.astronaut-name{font-size:.9rem}}
+@media(max-width:760px){.learning-mode{border-radius:22px;width:auto}.learning-mode button{padding:9px 13px;min-height:44px}.learning-mode>span{margin:0 8px}.experience{border-radius:24px}.space-view h2{top:11px;left:11px;padding:6px 11px}.phase-dot{width:46px;height:46px;background-size:28px}.phase-card{gap:12px}.discovery{padding:14px 16px}.lesson-panel{padding:14px 16px 16px;border-radius:22px}.lesson-panel p{font-size:.95rem}.lesson-actions button,.lesson-choice,.lesson-choices .lesson-action{min-height:52px;padding:10px 14px;font-size:.92rem}.lesson-choice svg,.lesson-action svg{width:24px;height:24px}.drag-hint{padding:5px 12px}.astronaut-name{font-size:.68rem;padding:3px 8px}.person-label{font-size:.76rem;padding:6px 10px}.topbar h1 svg{display:none}.home-link{padding:7px 12px 7px 8px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+.lesson-meta>div>span:first-child{white-space:nowrap}.lesson-meta .lesson-exit span{white-space:nowrap}
+@media(max-width:760px){.lesson-meta .lesson-exit{font-size:.78rem;gap:5px}.lesson-meta .lesson-exit svg{width:20px;height:20px}.lesson-dots{gap:5px}.lesson-dots i{width:10px;height:10px}.lesson-dots i[data-now]{width:13px;height:13px}.learning-mode>span{flex-basis:100%;margin:0 12px 5px}}

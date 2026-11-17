@@ -15,14 +15,16 @@
   let phase = '', lastFrame = 0, dirty = true, renderScenes, resizeScenes;
   let turnProgress = 0, tilt = 0.28;
   let lesson = null, lessonLocked = false, observerIndex = 0, otherPlaceVisible = false;
-  let wasCrewMoving = false;
+  let wasCrewMoving = false, spin = 0, cheerClock = 0, crewModels = [], crewHits = [];
+  let slowFrames = 0, lowerQuality = null;
   const observedState = () => M.getState(angle + (observerIndex ? Math.PI : 0));
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const crew = [{ name: 'Leo', variant: 'blue', u: .29, v: .23 }, { name: 'Rafa', variant: 'red', u: .29, v: .75 }];
+  const crew = [{ name: 'Leo', variant: 'blue', u: .27, v: .265 }, { name: 'Rafa', variant: 'red', u: .27, v: .775 }];
+  const crewPixels = (height, compact) => Math.min(196, height * (compact ? .3 : .33));
   let crewMoving = !reducedMotion, crewTime = 0, lastCrewFrame = 0, spaceVisible = true;
   function updateCrewControl() {
     const button = $('crewMotion');
-    const label = `${crewMoving ? 'Pausar' : 'Retomar'} flutuação dos astronautas`;
+    const label = `${crewMoving ? 'Pausar' : 'Retomar'} movimentos do cenário`;
     button.setAttribute('aria-pressed', String(!crewMoving));
     button.setAttribute('aria-label', label); button.title = label;
     button.querySelector('use').setAttribute('href', crewMoving ? '#i-pause' : '#i-play');
@@ -41,8 +43,10 @@
   const stars = Array.from({ length: 100 }, (_, i) => ({ x: fract(Math.sin(i * 97.37 + 1) * 4258), y: fract(Math.sin(i * 43.21 + 3) * 8347), r: i % 7 === 0 ? 1.6 : 0.8 }));
   function fract(x) { return x - Math.floor(x); }
   function paintMap(geo) {
-    mapContext.fillStyle = '#2387bd'; mapContext.fillRect(0, 0, 1536, 768);
-    mapContext.strokeStyle = '#63b6cf'; mapContext.lineWidth = 1;
+    const sea = mapContext.createLinearGradient(0, 0, 0, 768);
+    sea.addColorStop(0, '#2b7fc6'); sea.addColorStop(.5, '#35a3dc'); sea.addColorStop(1, '#2b7fc6');
+    mapContext.fillStyle = sea; mapContext.fillRect(0, 0, 1536, 768);
+    mapContext.strokeStyle = '#6cc0e633'; mapContext.lineWidth = 1;
     for (let lat = 30; lat < 180; lat += 30) { mapContext.beginPath(); mapContext.moveTo(0, lat / 180 * 768); mapContext.lineTo(1536, lat / 180 * 768); mapContext.stroke(); }
     for (let lon = 0; lon < 360; lon += 30) { mapContext.beginPath(); mapContext.moveTo(lon / 360 * 1536, 0); mapContext.lineTo(lon / 360 * 1536, 768); mapContext.stroke(); }
     const fallback = [[[-165,65],[-130,70],[-65,50],[-85,10],[-115,25]], [[-82,10],[-45,0],[-36,-12],[-70,-55],[-78,-20]], [[-15,35],[30,38],[50,10],[20,-35],[-10,5]], [[-10,38],[-10,70],[80,72],[150,55],[130,10],[70,10],[40,35]], [[110,-10],[155,-12],[150,-40],[115,-33]]];
@@ -59,9 +63,14 @@
         });
         mapContext.closePath();
       }
-      mapContext.fillStyle = '#79c877'; mapContext.fill('evenodd');
+      mapContext.fillStyle = '#6cc66a'; mapContext.fill('evenodd');
+      mapContext.strokeStyle = '#b6e795'; mapContext.lineWidth = 1.4; mapContext.stroke();
     }
-    mapContext.fillStyle = '#deefeb'; mapContext.fillRect(0, 0, 1536, 25); mapContext.fillRect(0, 724, 1536, 44);
+    for (const [from, to] of [[0, 34], [768, 716]]) { // soft polar ice
+      const ice = mapContext.createLinearGradient(0, from, 0, to);
+      ice.addColorStop(0, '#f6fcff'); ice.addColorStop(.55, '#f6fcffee'); ice.addColorStop(1, '#f6fcff00');
+      mapContext.fillStyle = ice; mapContext.fillRect(0, Math.min(from, to), 1536, Math.abs(to - from));
+    }
     fallbackGlobe?.refresh();
   }
   paintMap();
@@ -92,13 +101,31 @@
     $('playButton').querySelector('span').textContent = value ? 'Pausar' : 'Girar sozinha';
     $('playButton').querySelector('use').setAttribute('href', value ? '#i-pause' : '#i-play');
   }
-  function manual() { setPlaying(false); tween = null; $('dragHint').style.opacity = '0.6'; }
+  function manual() { setPlaying(false); tween = null; spin = 0; }
+  const touched = () => { $('dragHint').dataset.used = 'true'; };
+  // A short shared reward: the astronauts cheer and paper stars fall over the stage.
+  const party = document.createElement('div'); party.className = 'party'; party.setAttribute('aria-hidden', 'true');
+  document.querySelector('.experience').append(party);
+  let partyTimer = 0;
+  function celebrate() {
+    if (reducedMotion || document.hidden) return;
+    cheerClock = 2.6;
+    crewModels.forEach((model, index) => window.TrioAstronauts.cheer(model, crewTime + index * .16));
+    const colors = ['#ffcf63', '#ec5c84', '#3f9cf0', '#36bfa0', '#ff8a5c', '#ffffff'];
+    party.replaceChildren(...Array.from({ length: 30 }, (_, i) => {
+      const piece = document.createElement('i');
+      piece.style.cssText = `left:${4 + fract(Math.sin(i * 12.9) * 43758) * 92}%;background:${colors[i % colors.length]};--fall:${.9 + fract(Math.sin(i * 7.3) * 9631) * .8}s;--wait:${fract(Math.sin(i * 3.1) * 5381) * .35}s;--sway:${Math.round((fract(Math.sin(i * 5.7) * 1237) - .5) * 120)}px;--turn:${Math.round((fract(Math.sin(i * 9.1) * 733) - .5) * 900)}deg`;
+      if (i % 3 === 0) piece.className = 'star';
+      return piece;
+    }));
+    clearTimeout(partyTimer); partyTimer = setTimeout(() => party.replaceChildren(), 2300);
+  }
   function setAngle(value, fromUser = false) {
     const delta = value - angle;
     angle = value;
     if (fromUser || playing) {
       turnProgress += delta;
-      if (Math.abs(turnProgress) >= M.TAU - 0.000001) { turnProgress = 0; if (!challenge) $('challengeStatus').textContent = 'Uma volta inteira! Passaram o dia e a noite.'; narrate('full-turn'); }
+      if (Math.abs(turnProgress) >= M.TAU - 0.000001) { turnProgress = 0; if (!challenge) $('challengeStatus').textContent = 'Uma volta inteira! Passaram o dia e a noite.'; narrate('full-turn'); celebrate(); }
     }
     dirty = true;
     updateUI();
@@ -111,7 +138,8 @@
       phase = state.phase;
       $('phaseTitle').textContent = copy[phase][0]; $('phaseTitle').dataset.phase = phase;
       $('phaseText').textContent = copy[phase][1];
-      $('skyView').dataset.phase = phase;
+      $('skyView').dataset.phase = phase; document.body.dataset.phase = phase;
+      const card = $('phaseCard'); card.classList.remove('pop'); void card.offsetWidth; card.classList.add('pop');
       skyCanvas.setAttribute('aria-label', `${copy[phase][0]} ${copy[phase][1]}`);
       document.querySelectorAll('[data-phase]').forEach(button => { if (button.tagName === 'BUTTON') button.setAttribute('aria-pressed', String(button.dataset.phase === phase)); });
       if (document.body.dataset.lessonActive === 'false') voice.schedule(phase);
@@ -130,9 +158,9 @@
       $('challengeStatus').dataset.status = 'complete';
       document.querySelector('.discovery').dataset.complete = 'true';
       $('challengeButton').textContent = 'Descobrir de novo';
-      setPlaying(false); narrate('day');
+      setPlaying(false); narrate('day'); celebrate();
     }
-    lesson?.update({ ...M.getState(angle), angle, settled: !tween });
+    lesson?.update({ ...M.getState(angle), angle, settled: !tween && !spin });
   }
   function goTo(target) {
     manual(); turnProgress = 0;
@@ -140,7 +168,7 @@
     let distance = M.normalize(target - M.normalize(angle));
     if (distance < 0.01) distance = 0;
     if (reducedMotion) setAngle(start + distance);
-    else tween = { start, distance, elapsed: 0, duration: Math.min(1.3, 0.5 + distance * 0.15) };
+    else tween = { start, distance, elapsed: 0, duration: Math.min(1.6, 0.6 + distance * 0.2) };
   }
   $('playButton').onclick = () => { if (lessonLocked) return; tween = null; setPlaying(!playing); if (playing) narrate(phase); };
   $('resetButton').onclick = () => { manual(); challenge = false; turnProgress = 0; tilt = 0.28; $('challengeStatus').textContent = 'A Terra gira. O dia vira noite. E começa outro dia!'; $('challengeStatus').dataset.status = ''; document.querySelector('.discovery').dataset.complete = 'false'; $('challengeButton').textContent = 'Vamos descobrir?'; setAngle(0); };
@@ -148,7 +176,7 @@
     if (lessonLocked) return;
     const value = Number(range.value) * M.TAU / 360;
     const delta = M.normalize(value - M.normalize(angle) + Math.PI) - Math.PI;
-    manual(); setAngle(angle + delta, true);
+    manual(); touched(); setAngle(angle + delta, true);
   });
   document.querySelectorAll('button[data-phase]').forEach(button => button.onclick = () => { if (document.body.dataset.lessonActive === 'true') return; goTo(M.targets[button.dataset.phase]); narrate(button.dataset.phase); });
   $('listenButton').onclick = () => { if (voice.isSpeaking()) voice.disable(); else voice.enable(currentNarration()); };
@@ -170,7 +198,7 @@
     gl.getExtension('WEBGL_lose_context')?.loseContext();
     const renderer = new T.WebGLRenderer({ canvas: spaceCanvas, antialias: true, alpha: false });
     const gardenRenderer = new T.WebGLRenderer({ canvas: skyCanvas, antialias: true, alpha: false });
-    for (const r of [renderer, gardenRenderer]) { r.setPixelRatio(Math.min(devicePixelRatio, 1.8)); r.outputEncoding = T.sRGBEncoding; }
+    for (const r of [renderer, gardenRenderer]) { r.setPixelRatio(Math.min(devicePixelRatio, 2)); r.outputEncoding = T.sRGBEncoding; }
     const scene = new T.Scene(); scene.background = new T.Color('#101c39');
     const camera = new T.OrthographicCamera(-5, 5, 3.5, -3.5, 0.1, 100);
     const earthRoot = new T.Group(); earthRoot.position.set(.65, -.05, 0); scene.add(earthRoot);
@@ -179,18 +207,8 @@
     earthTexture.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
     const earth = new T.Mesh(new T.SphereGeometry(1.64, 72, 48), new T.MeshPhongMaterial({ map: earthTexture, shininess: 10, specular: '#23566e' }));
     spinningEarth.add(earth);
-    const atmosphere = new T.Mesh(new T.SphereGeometry(1.675, 64, 40), new T.MeshBasicMaterial({ color:'#62bde0', transparent:true, opacity:.13, side:T.BackSide })); earthRoot.add(atmosphere);
     scene.add(new T.AmbientLight('#b4d2ff', .09));
     const sunLight = new T.DirectionalLight('#fff3d2', 1.65); sunLight.position.set(-10, 0, 0); sunLight.target = earthRoot; scene.add(sunLight);
-    const sun = new T.Mesh(new T.SphereGeometry(.48, 32, 24), new T.MeshBasicMaterial({ color: '#ffd364' })); sun.position.set(-2.95, 0, 0); scene.add(sun);
-    const glowCanvas = document.createElement('canvas'); glowCanvas.width=128;glowCanvas.height=128;
-    const gc=glowCanvas.getContext('2d'), gradient=gc.createRadialGradient(64,64,10,64,64,64);gradient.addColorStop(0,'#ffdf91cc');gradient.addColorStop(.4,'#ffc05a44');gradient.addColorStop(1,'#ffc05a00');gc.fillStyle=gradient;gc.fillRect(0,0,128,128);
-    const glow = new T.Sprite(new T.SpriteMaterial({map:new T.CanvasTexture(glowCanvas),transparent:true,depthWrite:false}));glow.position.copy(sun.position);glow.scale.set(2.5,2.5,1);scene.add(glow);
-    for (let y=-.55;y<=.56;y+=.55) {
-      const line=new T.BufferGeometry().setFromPoints([new T.Vector3(-2.25,y,0),new T.Vector3(-1.3,y,0)]);
-      scene.add(new T.Line(line,new T.LineBasicMaterial({color:'#ffe1a0',transparent:true,opacity:.5})));
-      const head=new T.Mesh(new T.ConeGeometry(.045,.14,6),new T.MeshBasicMaterial({color:'#ffe1a0'}));head.rotation.z=-Math.PI/2;head.position.set(-1.27,y,0);scene.add(head);
-    }
     const axis = new T.Line(new T.BufferGeometry().setFromPoints([new T.Vector3(0,-2,0),new T.Vector3(0,2,0)]),new T.LineDashedMaterial({color:'#90a8cd',dashSize:.09,gapSize:.09,transparent:true,opacity:.55}));axis.computeLineDistances();earthRoot.add(axis);
     const cityVector=M.geographicVector(M.location.latitude,M.location.longitude);
     const markerBase = new T.Vector3(cityVector.x,cityVector.y,cityVector.z);
@@ -203,17 +221,12 @@
     const otherMarker=marker.clone(true);otherMarker.position.copy(oppositeBase.clone().multiplyScalar(1.65));otherMarker.quaternion.setFromUnitVectors(new T.Vector3(0,1,0),oppositeBase);
     const otherPin=otherMarker.children[1];otherPin.material=new T.MeshBasicMaterial({color:'#36bfa0'});otherPin.geometry=new T.OctahedronGeometry(.11);
     otherMarker.visible=false;spinningEarth.add(otherMarker);
-    const starGeo=new T.BufferGeometry();starGeo.setAttribute('position',new T.Float32BufferAttribute(stars.flatMap(s=>[(s.x-.5)*18,(s.y-.5)*13,-5]),3));scene.add(new T.Points(starGeo,new T.PointsMaterial({color:'#d6e8ff',size:.026,transparent:true,opacity:.65})));
+    const spaceArt = window.DayNightScenery.space(T, { scene, earthRoot, spinningEarth, earthRadius: 1.64, sunPosition: new T.Vector3(-2.95, 0, 0), sunLight, pulse: pinRing });
 
-    // A separate foreground scene lights the children without changing Earth's night side.
+    // A separate foreground scene draws the children; their shading is baked, so the night side stays dark.
     const crewScene = new T.Scene();
     const crewCamera = new T.OrthographicCamera(-5, 5, 3.5, -3.5, .1, 30);
     crewCamera.position.set(0, 0, 8);
-    crewScene.add(new T.HemisphereLight('#eaf6ff', '#798baf', .6));
-    const crewLight = new T.DirectionalLight('#fff1d8', .75);
-    crewLight.position.set(-3, 5, 6); crewScene.add(crewLight);
-    const crewRim = new T.DirectionalLight('#8ccfff', .35);
-    crewRim.position.set(4, 1, -2); crewScene.add(crewRim);
     const astronauts = crew.map(member => {
       const model = window.TrioAstronauts.create(T, member);
       const bounds = new T.Box3().setFromObject(model);
@@ -222,48 +235,18 @@
       const holder = new T.Group(); holder.add(model); crewScene.add(holder);
       return { ...member, model, holder, size };
     });
+    crewModels = astronauts.map(member => member.model);
 
     const garden = new T.Scene();
     const gardenCamera=new T.PerspectiveCamera(47,1,.1,500);gardenCamera.position.set(0,2.6,8);gardenCamera.lookAt(0,2,-5);
-    const nightColor=new T.Color('#101d43'),dayColor=new T.Color('#8bd9ee'),twilightColor=new T.Color('#f2ae83');
-    const ambient=new T.HemisphereLight('#e3f4ff','#44875c',1);garden.add(ambient);
-    const daylight=new T.DirectionalLight('#fff1cd',1.8);garden.add(daylight);garden.add(daylight.target);daylight.target.position.set(0,0,-2);
-    function mesh(geometry,color,x,y,z,parent=garden){const m=new T.Mesh(geometry,new T.MeshLambertMaterial({color}));m.position.set(x,y,z);parent.add(m);return m;}
-    mesh(new T.PlaneGeometry(1200,1200),'#6da752',0,0,-20).rotation.x=-Math.PI/2;
-    mesh(new T.PlaneGeometry(1.4,20),'#dfc191',.8,.012,-1).rotation.x=-Math.PI/2;
-    for(const [x,z,s] of [[-4.4,-6,1.1],[5,-9,1.2],[-7,-14,1.5],[7,-18,1.5],[-3.7,-17,1.2]]){
-      mesh(new T.CylinderGeometry(.14*s,.23*s,1.9*s,7),'#8c6141',x,.95*s,z);
-      mesh(new T.IcosahedronGeometry(1.2*s,1),'#508f53',x,2.5*s,z);
-      mesh(new T.IcosahedronGeometry(.85*s,1),'#72aa55',x-.55*s,2*s,z+.2);
-    }
-    for(const [x,z,s] of [[-17,-34,12],[10,-40,15],[27,-42,14]]){const hill=mesh(new T.SphereGeometry(s,28,16),'#659969',x,-s*.72,z);hill.scale.z=.5;}
-    const home = new T.Group();home.position.set(3.35,0,-7);garden.add(home);
-    mesh(new T.BoxGeometry(2.6,2,2.3),'#f7dfad',0,1,0,home);
-    const roof=mesh(new T.ConeGeometry(2.15,1.35,4),'#cc7654',0,2.65,0,home);roof.rotation.y=Math.PI/4;
-    mesh(new T.BoxGeometry(.58,1.2,.04),'#5f7884',.3,.6,1.17,home);
-    const windowMaterial = new T.MeshBasicMaterial({color:'#fff4c3'});
-    for(const x of [-.78,.88]){const w=new T.Mesh(new T.BoxGeometry(.5,.55,.05),windowMaterial);w.position.set(x,1.35,1.18);home.add(w);}
-    for(let i=0;i<9;i++){mesh(new T.BoxGeometry(.1,.7,.09),'#e8dfbd',-4.7+i*.5,.35,-4);}
-    mesh(new T.BoxGeometry(4.2,.09,.08),'#e8dfbd',-2.7,.48,-4);
-    // The pink observer matches the pin on Earth. Seen from just behind their shoulder.
-    const child = new T.Group();child.position.set(-1.7,0,.45);garden.add(child);
-    const childShirt=mesh(new T.CylinderGeometry(.19,.26,.55,10),'#ec5c84',0,.85,0,child);
-    mesh(new T.SphereGeometry(.23,20,16),'#c58b60',0,1.34,0,child);
-    const hair=mesh(new T.SphereGeometry(.24,20,12,0,Math.PI*2,0,Math.PI*.6),'#453b37',0,1.38,0,child);
-    hair.rotation.x=-.15;
-    for(const x of [-.12,.12]){mesh(new T.CylinderGeometry(.075,.065,.42,8),'#384e77',x,.34,0,child);mesh(new T.BoxGeometry(.16,.1,.26),'#f1d694',x,.09,-.04,child);}
-    for(const x of [-.28,.28]){const arm=mesh(new T.CylinderGeometry(.065,.065,.48,8),'#c58b60',x,.81,0,child);arm.rotation.z=x>0?-.15:.15;}
-    const shadow=mesh(new T.CircleGeometry(.5,32),'#588349',-1.7,.022,.45);shadow.rotation.x=-Math.PI/2;shadow.scale.y=.6;
+    const gardenArt = window.DayNightScenery.garden(T, { scene: garden, camera: gardenCamera, renderer: gardenRenderer });
     // The Sun is a distant sky object. The horizon clips its disk continuously;
     // trees, the house and hills also occlude it through ordinary depth testing.
     gardenRenderer.localClippingEnabled=true;
     const solarHorizon=new T.Plane(new T.Vector3(0,1,0),-gardenCamera.position.y);
     const skySun=new T.Mesh(new T.SphereGeometry(8,48,32),new T.MeshBasicMaterial({color:'#ffed9b',fog:false,clippingPlanes:[solarHorizon]}));
     skySun.name='distant-sun';garden.add(skySun);
-    const cloudMaterial=new T.MeshBasicMaterial({color:'#eefbff',transparent:true,opacity:.85});
-    const clouds=new T.Group();garden.add(clouds);
-    for(const [x,y,z] of [[-5,5.5,-15],[5.5,6.7,-19],[-1,7,-23]]){for(let i=0;i<3;i++){const c=new T.Mesh(new T.SphereGeometry(.55+i*.1,16,12),cloudMaterial);c.position.set(x+i*.65,y+(i===1?.2:0),z);c.scale.y=.55;clouds.add(c);}}
-    const nightStarsGeometry=new T.BufferGeometry();nightStarsGeometry.setAttribute('position',new T.Float32BufferAttribute(stars.slice(0,65).flatMap(s=>[(s.x-.5)*42,4+s.y*17,-35]),3));const starMaterial=new T.PointsMaterial({color:'#e6edff',size:.065,transparent:true});garden.add(new T.Points(nightStarsGeometry,starMaterial));
+    let gardenTick=0;
     const position=new T.Vector3();
     resizeScenes = () => {
       const a=spaceCanvas.getBoundingClientRect(),b=skyCanvas.getBoundingClientRect();
@@ -276,44 +259,42 @@
       camera.position.set(0,Math.sin(tilt)*10,Math.cos(tilt)*10);camera.lookAt(-.25,0,0);
       spinningEarth.rotation.y = M.earthRotation(angle);
       otherMarker.visible=otherPlaceVisible;
-      childShirt.material.color.set(observerIndex?'#36bfa0':'#ec5c84');
-      const daylightAmount=state.daylight;
-      const warmth=Math.max(0,1-Math.abs(state.elevation)/.45)*.7;
-      const skyColor=nightColor.clone().lerp(dayColor,daylightAmount).lerp(twilightColor,warmth);
-      garden.background=skyColor;garden.fog=new T.Fog(skyColor,22,75);
-      ambient.intensity=.16+daylightAmount*.5;daylight.intensity=Math.max(0,state.elevation)*.75;
-      daylight.position.set(Math.sin(state.angle)*9,Math.max(.2,state.elevation*12),-12);
       const skyHalfWidth=208*Math.tan(gardenCamera.fov*Math.PI/360)*gardenCamera.aspect;
       skySun.position.set(Math.sin(state.angle)*skyHalfWidth*.88,gardenCamera.position.y+state.elevation*70,-200);
-      starMaterial.opacity=Math.pow(1-daylightAmount,3)*(1-warmth);cloudMaterial.opacity=daylightAmount*.8;
-      windowMaterial.color.set(daylightAmount>.5?'#9cc2cd':'#ffe6a0');
+      spaceArt.update(motionTime);
+      gardenArt.update(state,motionTime,observerIndex,skySun.position,worldChanged);
+      pinhead.getWorldPosition(position);position.project(camera);
+      const pinX=(position.x*.5+.5)*spaceCanvas.clientWidth,pinY=(-position.y*.5+.5)*spaceCanvas.clientHeight;
       renderer.render(scene,camera);
       const width=spaceCanvas.clientWidth,height=spaceCanvas.clientHeight;
       const worldHeight=crewCamera.top-crewCamera.bottom;
       astronauts.forEach((member,index) => {
         const compactLesson=document.body.dataset.lessonActive==='true'&&width<600;
-        const pixels=Math.min(142,height*(compactLesson?.20:.25));
+        const pixels=crewPixels(height,compactLesson);
         const bob=Math.sin(motionTime*.65+index*2.1)*4;
         const x=width*(compactLesson&&index===0?.16:member.u), y=height*(compactLesson&&index===0?.27:member.v)+bob;
         member.holder.scale.setScalar(pixels/height*worldHeight/member.size.y);
         member.holder.position.set(crewCamera.left+x/width*(crewCamera.right-crewCamera.left),crewCamera.top-y/height*worldHeight,0);
         member.holder.rotation.z=(index===0?-.13:.16)+Math.sin(motionTime*.4+index)*.035;
-        window.TrioAstronauts.animate(member.model,motionTime,false);
-        placeCrewLabel(member,x-pixels*.48,y+pixels*.12);
+        const gaze=Math.hypot(pinX-x,pinY-y)||1;window.TrioAstronauts.lookAt(member.model,(pinX-x)/gaze,(y-pinY)/gaze*.7);
+        window.TrioAstronauts.animate(member.model,motionTime,!crewMoving&&cheerClock<=0);
+        crewHits[index]={x,y,r:pixels*.46,model:member.model};
+        placeCrewLabel(member,x-pixels*.5,y+pixels*.2);
       });
       renderer.autoClear=false;renderer.clearDepth();renderer.render(crewScene,crewCamera);renderer.autoClear=true;
-      if(worldChanged) gardenRenderer.render(garden,gardenCamera);
-      pinhead.getWorldPosition(position);position.project(camera);
-      const behind=Math.sin(angle)<-.12;
-      placeLabel((position.x*.5+.5)*spaceCanvas.clientWidth,(-position.y*.5+.5)*spaceCanvas.clientHeight,behind);
+      if(worldChanged||gardenTick++%2===0) gardenRenderer.render(garden,gardenCamera);
+      placeLabel(pinX,pinY,Math.sin(angle)<-.12);
       if(otherPlaceVisible){otherPin.getWorldPosition(position);position.project(camera);placeOtherLabel((position.x*.5+.5)*spaceCanvas.clientWidth,(-position.y*.5+.5)*spaceCanvas.clientHeight,Math.sin(angle)> .12);}
     };
     for (const canvas of [spaceCanvas,skyCanvas]) canvas.addEventListener('webglcontextlost',event=>{event.preventDefault();setPlaying(false);stopAudio();fallbackAfterContextLoss();},{once:true});
+    // If frames stay slow, step down: first sharper pixels and shadows go, then the rest of the extra resolution.
+    let quality=0;
+    lowerQuality=()=>{if(quality>=2)return;quality++;const ratio=quality===1?Math.min(devicePixelRatio,1.25):1;renderer.setPixelRatio(ratio);gardenRenderer.setPixelRatio(ratio);gardenArt.setShadows(false);resizeScenes();};
     document.body.dataset.renderer='webgl';
   }
 
   let fallbackActive=false;
-  function fallbackAfterContextLoss(){if(fallbackActive)return;fallbackActive=true;for(const [id,canvas] of [['spaceCanvas',spaceCanvas],['skyCanvas',skyCanvas]]){const fresh=canvas.cloneNode(false);canvas.replaceWith(fresh);if(id==='spaceCanvas')spaceCanvas=fresh;else skyCanvas=fresh;}setup2D();bindCanvas();resizeScenes();dirty=true;}
+  function fallbackAfterContextLoss(){if(fallbackActive)return;fallbackActive=true;lowerQuality=null;crewModels=[];crewHits=[];for(const [id,canvas] of [['spaceCanvas',spaceCanvas],['skyCanvas',skyCanvas]]){const fresh=canvas.cloneNode(false);canvas.replaceWith(fresh);if(id==='spaceCanvas')spaceCanvas=fresh;else skyCanvas=fresh;}setup2D();bindCanvas();resizeScenes();dirty=true;}
   function placeLabel(x,y,behind){const label=$('personLabel');label.style.left=`${Math.max(85,Math.min(spaceCanvas.clientWidth-85,x))}px`;label.style.top=`${Math.max(100,Math.min(spaceCanvas.clientHeight-45,y))}px`;label.dataset.behind=String(behind);label.textContent=behind?'Taubaté · atrás':'Taubaté';}
   function placeOtherLabel(x,y,behind){const label=$('otherPlaceLabel');label.style.left=`${Math.max(70,Math.min(spaceCanvas.clientWidth-70,x))}px`;label.style.top=`${Math.max(90,Math.min(spaceCanvas.clientHeight-45,y))}px`;label.textContent=behind?'Outro lugar · atrás':'Outro lugar';}
   function placeCrewLabel(member,x,y){const label=$(`${member.variant}AstronautName`);label.style.left=`${Math.max(24,x)}px`;label.style.top=`${y}px`;}
@@ -337,7 +318,7 @@
       const px=cx+cityX*r,py=cy-city.y*r;circle(c,px,py,r*.045,'#fff');circle(c,px,py,r*.03,'#ec5c84');placeLabel(px/w*spaceCanvas.clientWidth,py/h*spaceCanvas.clientHeight,cityZ<-.12);
       if(otherPlaceVisible){const ox=cx-cityX*r,oy=cy+city.y*r;c.fillStyle='#36bfa0';c.beginPath();c.moveTo(ox,oy-r*.06);c.lineTo(ox+r*.06,oy);c.lineTo(ox,oy+r*.06);c.lineTo(ox-r*.06,oy);c.closePath();c.fill();placeOtherLabel(ox/w*spaceCanvas.clientWidth,oy/h*spaceCanvas.clientHeight,cityZ>.12);}
 
-      fallbackCrew.forEach((member,index)=>{const compact=document.body.dataset.lessonActive==='true'&&spaceCanvas.clientWidth<600,size=Math.min(142,spaceCanvas.clientHeight*(compact?.20:.25)),scale=w/spaceCanvas.clientWidth,x=w*(compact&&index===0?.16:member.u),y=h*(compact&&index===0?.27:member.v)+Math.sin(motionTime*.65+index*2.1)*4*scale;if(member.image.complete&&member.image.naturalWidth){c.save();c.translate(x,y);c.rotate(index===0?.13:-.16);c.drawImage(member.image,-size*scale*.4,-size*scale*.5,size*scale*.8,size*scale);c.restore();}placeCrewLabel(member,x/scale-size*.48,y/scale+size*.12);});
+      fallbackCrew.forEach((member,index)=>{const compact=document.body.dataset.lessonActive==='true'&&spaceCanvas.clientWidth<600,size=crewPixels(spaceCanvas.clientHeight,compact),scale=w/spaceCanvas.clientWidth,x=w*(compact&&index===0?.16:member.u),y=h*(compact&&index===0?.27:member.v)+Math.sin(motionTime*.65+index*2.1)*4*scale;if(member.image.complete&&member.image.naturalWidth){c.save();c.translate(x,y);c.rotate(index===0?.13:-.16);c.drawImage(member.image,-size*scale*.4,-size*scale*.5,size*scale*.8,size*scale);c.restore();}placeCrewLabel(member,x/scale-size*.5,y/scale+size*.2);});
       const sw=skyCanvas.width,sh=skyCanvas.height,d=state.daylight,blend=(a,b)=>`rgb(${a.map((v,i)=>Math.round(v+(b[i]-v)*d)).join(',')})`;
       const warmth=Math.max(0,1-Math.abs(state.elevation)/.45)*.7;
       const skyTint=(a,b)=>`rgb(${a.map((v,i)=>Math.round((v+(b[i]-v)*d)*(1-warmth)+[242,174,131][i]*warmth)).join(',')})`;
@@ -358,11 +339,14 @@
     };
   }
   function bindCanvas(){
-    let drag=null;
-    spaceCanvas.addEventListener('pointerdown',event=>{if(lessonLocked||event.isPrimary===false)return;manual();drag={id:event.pointerId,x:event.clientX,y:event.clientY};spaceCanvas.setPointerCapture(event.pointerId);});
-    spaceCanvas.addEventListener('pointermove',event=>{if(lessonLocked||!drag||event.pointerId!==drag.id)return;const dx=event.clientX-drag.x,dy=event.clientY-drag.y;drag.x=event.clientX;drag.y=event.clientY;tilt=Math.max(-.65,Math.min(.9,tilt+dy*.003));setAngle(angle+dx/spaceCanvas.clientWidth*M.TAU,true);});
-    const end=()=>{drag=null;};spaceCanvas.addEventListener('pointerup',end);spaceCanvas.addEventListener('pointercancel',end);spaceCanvas.addEventListener('lostpointercapture',end);
-    spaceCanvas.addEventListener('keydown',event=>{if(lessonLocked)return;if(['ArrowLeft','ArrowRight','Home'].includes(event.key)){event.preventDefault();manual();setAngle(event.key==='Home'?0:angle+(event.key==='ArrowRight'?1:-1)*Math.PI/36,true);}});
+    let drag=null,press=null;
+    spaceCanvas.addEventListener('pointerdown',event=>{if(event.isPrimary===false)return;press={x:event.clientX,y:event.clientY};if(lessonLocked)return;manual();touched();drag={id:event.pointerId,x:event.clientX,y:event.clientY,speed:0,at:performance.now()};spaceCanvas.setPointerCapture(event.pointerId);});
+    spaceCanvas.addEventListener('pointermove',event=>{if(lessonLocked||!drag||event.pointerId!==drag.id)return;const dx=event.clientX-drag.x,dy=event.clientY-drag.y,now=performance.now(),turn=dx/spaceCanvas.clientWidth*M.TAU;drag.speed=drag.speed*.4+turn/Math.max(.008,(now-drag.at)/1000)*.6;drag.at=now;drag.x=event.clientX;drag.y=event.clientY;tilt=Math.max(-.65,Math.min(.9,tilt+dy*.003));setAngle(angle+turn,true);});
+    // Letting go mid-swipe keeps the Earth turning for a moment, like a real globe.
+    const end=()=>{if(drag&&!reducedMotion&&!lessonLocked&&performance.now()-drag.at<80&&Math.abs(drag.speed)>.7)spin=Math.max(-6,Math.min(6,drag.speed));drag=null;};spaceCanvas.addEventListener('pointerup',end);spaceCanvas.addEventListener('pointercancel',end);spaceCanvas.addEventListener('lostpointercapture',end);
+    // Tapping Leo or Rafa makes that astronaut cheer.
+    spaceCanvas.addEventListener('click',event=>{if(reducedMotion||!press||Math.hypot(event.clientX-press.x,event.clientY-press.y)>8)return;const box=spaceCanvas.getBoundingClientRect(),x=event.clientX-box.left,y=event.clientY-box.top;const hit=crewHits.find(target=>target&&Math.hypot(x-target.x,y-target.y)<target.r);if(hit){window.TrioAstronauts.cheer(hit.model,crewTime);cheerClock=Math.max(cheerClock,2.6);}});
+    spaceCanvas.addEventListener('keydown',event=>{if(lessonLocked)return;if(['ArrowLeft','ArrowRight','Home'].includes(event.key)){event.preventDefault();manual();touched();setAngle(event.key==='Home'?0:angle+(event.key==='ArrowRight'?1:-1)*Math.PI/36,true);}});
   }
   try { setup3D(); } catch (error) {
     for (const [id,canvas] of [['spaceCanvas',spaceCanvas],['skyCanvas',skyCanvas]]){const fresh=canvas.cloneNode(false);canvas.replaceWith(fresh);if(id==='spaceCanvas')spaceCanvas=fresh;else skyCanvas=fresh;}
@@ -399,7 +383,8 @@
       $('instruction').textContent = active ? 'Acompanhe o lugar marcado nas duas vistas.' : 'Gire a Terra. O que muda no céu?';
       challenge = false; turnProgress = 0; dirty = true;
     },
-    pause() { setPlaying(false); tween = null; stopAudio(); },
+    pause() { setPlaying(false); tween = null; spin = 0; stopAudio(); },
+    celebrate,
     turnToNight() {
       manual(); setAngle(0);
       if (reducedMotion) setAngle(Math.PI);
@@ -411,10 +396,14 @@
   function frame(time){
     const dt=lastFrame?Math.min((time-lastFrame)/1000,.06):0;lastFrame=time;
     if(!document.hidden){
-      if(crewMoving&&spaceVisible)crewTime+=dt;
-      if(tween){tween.elapsed+=dt;const p=Math.min(1,tween.elapsed/tween.duration),ease=1-Math.pow(1-p,3);setAngle(tween.start+tween.distance*ease);if(p===1){tween=null;updateUI();}}
+      const lively=(crewMoving||cheerClock>0)&&spaceVisible;
+      if(lively)crewTime+=dt;
+      if(lively&&dt>0&&lowerQuality&&!reducedMotion){slowFrames=dt>.034?slowFrames+1:Math.max(0,slowFrames-2);if(slowFrames>50){slowFrames=0;lowerQuality();}}
+      if(cheerClock>0){cheerClock=Math.max(0,cheerClock-dt);if(!cheerClock)dirty=true;}
+      if(tween){tween.elapsed+=dt;const p=Math.min(1,tween.elapsed/tween.duration),ease=p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;setAngle(tween.start+tween.distance*ease);if(p===1){tween=null;updateUI();}}
+      if(spin){setAngle(angle+spin*dt,true);spin*=Math.exp(-dt*2.4);if(Math.abs(spin)<.04){spin=0;updateUI();}}
       if(playing&&!voice.isSpeaking())setAngle(angle+dt*M.TAU/36);
-      if(dirty||(crewMoving&&spaceVisible&&time-lastCrewFrame>=33)){renderScenes(observedState(),crewTime,dirty);dirty=false;lastCrewFrame=time;}
+      if(dirty||lively){renderScenes(observedState(),crewTime,dirty);dirty=false;lastCrewFrame=time;}
     }
     requestAnimationFrame(frame);
   }
