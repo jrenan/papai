@@ -246,14 +246,14 @@
     });
 
     const garden = new T.Scene();
-    const gardenCamera=new T.PerspectiveCamera(47,1,.1,150);gardenCamera.position.set(0,2.6,8);gardenCamera.lookAt(0,2,-5);
+    const gardenCamera=new T.PerspectiveCamera(47,1,.1,500);gardenCamera.position.set(0,2.6,8);gardenCamera.lookAt(0,2,-5);
     const nightColor=new T.Color('#101d43'),dayColor=new T.Color('#8bd9ee'),twilightColor=new T.Color('#f2ae83');
     const ambient=new T.HemisphereLight('#e3f4ff','#44875c',1);garden.add(ambient);
     const daylight=new T.DirectionalLight('#fff1cd',1.8);garden.add(daylight);garden.add(daylight.target);daylight.target.position.set(0,0,-2);
     function mesh(geometry,color,x,y,z,parent=garden){const m=new T.Mesh(geometry,new T.MeshLambertMaterial({color}));m.position.set(x,y,z);parent.add(m);return m;}
-    mesh(new T.PlaneGeometry(120,120),'#6da752',0,0,-20).rotation.x=-Math.PI/2;
+    mesh(new T.PlaneGeometry(1200,1200),'#6da752',0,0,-20).rotation.x=-Math.PI/2;
     mesh(new T.PlaneGeometry(1.4,20),'#dfc191',.8,.012,-1).rotation.x=-Math.PI/2;
-    for(const [x,z,s] of [[-5,-6,1.1],[5,-9,1.2],[-7,-14,1.5],[7,-18,1.5],[-3.7,-17,1.2]]){
+    for(const [x,z,s] of [[-4.4,-6,1.1],[5,-9,1.2],[-7,-14,1.5],[7,-18,1.5],[-3.7,-17,1.2]]){
       mesh(new T.CylinderGeometry(.14*s,.23*s,1.9*s,7),'#8c6141',x,.95*s,z);
       mesh(new T.IcosahedronGeometry(1.2*s,1),'#508f53',x,2.5*s,z);
       mesh(new T.IcosahedronGeometry(.85*s,1),'#72aa55',x-.55*s,2*s,z+.2);
@@ -276,7 +276,12 @@
     for(const x of [-.12,.12]){mesh(new T.CylinderGeometry(.075,.065,.42,8),'#384e77',x,.34,0,child);mesh(new T.BoxGeometry(.16,.1,.26),'#f1d694',x,.09,-.04,child);}
     for(const x of [-.28,.28]){const arm=mesh(new T.CylinderGeometry(.065,.065,.48,8),'#c58b60',x,.81,0,child);arm.rotation.z=x>0?-.15:.15;}
     const shadow=mesh(new T.CircleGeometry(.5,32),'#588349',-1.7,.022,.45);shadow.rotation.x=-Math.PI/2;shadow.scale.y=.6;
-    const skySun=new T.Mesh(new T.SphereGeometry(.55,24,20),new T.MeshBasicMaterial({color:'#ffed9b'}));garden.add(skySun);
+    // The Sun is a distant sky object. The horizon clips its disk continuously;
+    // trees, the house and hills also occlude it through ordinary depth testing.
+    gardenRenderer.localClippingEnabled=true;
+    const solarHorizon=new T.Plane(new T.Vector3(0,1,0),-gardenCamera.position.y);
+    const skySun=new T.Mesh(new T.SphereGeometry(8,48,32),new T.MeshBasicMaterial({color:'#ffed9b',fog:false,clippingPlanes:[solarHorizon]}));
+    skySun.name='distant-sun';garden.add(skySun);
     const cloudMaterial=new T.MeshBasicMaterial({color:'#eefbff',transparent:true,opacity:.85});
     const clouds=new T.Group();garden.add(clouds);
     for(const [x,y,z] of [[-5,5.5,-15],[5.5,6.7,-19],[-1,7,-23]]){for(let i=0;i<3;i++){const c=new T.Mesh(new T.SphereGeometry(.55+i*.1,16,12),cloudMaterial);c.position.set(x+i*.65,y+(i===1?.2:0),z);c.scale.y=.55;clouds.add(c);}}
@@ -300,7 +305,8 @@
       garden.background=skyColor;garden.fog=new T.Fog(skyColor,22,75);
       ambient.intensity=.16+daylightAmount*.5;daylight.intensity=Math.max(0,state.elevation)*.75;
       daylight.position.set(Math.sin(state.angle)*9,Math.max(.2,state.elevation*12),-12);
-      skySun.position.set(Math.sin(state.angle)*8,1.3+state.elevation*7,-15);skySun.visible=state.elevation>-.16;
+      const skyHalfWidth=208*Math.tan(gardenCamera.fov*Math.PI/360)*gardenCamera.aspect;
+      skySun.position.set(Math.sin(state.angle)*skyHalfWidth*.88,gardenCamera.position.y+state.elevation*70,-200);
       starMaterial.opacity=Math.pow(1-daylightAmount,3)*(1-warmth);cloudMaterial.opacity=daylightAmount*.8;
       windowMaterial.color.set(daylightAmount>.5?'#9cc2cd':'#ffe6a0');
       renderer.render(scene,camera);
@@ -351,15 +357,21 @@
       if(otherPlaceVisible){const ox=cx+Math.cos(angle)*r,oy=cy+Math.sin(angle)*r*.15;c.fillStyle='#36bfa0';c.beginPath();c.moveTo(ox,oy-r*.06);c.lineTo(ox+r*.06,oy);c.lineTo(ox,oy+r*.06);c.lineTo(ox-r*.06,oy);c.closePath();c.fill();placeOtherLabel(ox/w*spaceCanvas.clientWidth,oy/h*spaceCanvas.clientHeight,Math.sin(angle)>.12);}
       fallbackCrew.forEach((member,index)=>{const compact=document.body.dataset.lessonActive==='true'&&spaceCanvas.clientWidth<600,size=Math.min(142,spaceCanvas.clientHeight*(compact?.20:.25)),scale=w/spaceCanvas.clientWidth,x=w*(compact&&index===0?.16:member.u),y=h*(compact&&index===0?.27:member.v)+Math.sin(motionTime*.65+index*2.1)*4*scale;if(member.image.complete&&member.image.naturalWidth){c.save();c.translate(x,y);c.rotate(index===0?.13:-.16);c.drawImage(member.image,-size*scale*.4,-size*scale*.5,size*scale*.8,size*scale);c.restore();}placeCrewLabel(member,x/scale-size*.48,y/scale+size*.12);});
       const sw=skyCanvas.width,sh=skyCanvas.height,d=state.daylight,blend=(a,b)=>`rgb(${a.map((v,i)=>Math.round(v+(b[i]-v)*d)).join(',')})`;
-      const sky=g.createLinearGradient(0,0,0,sh);sky.addColorStop(0,blend([16,29,67],[139,217,238]));sky.addColorStop(1,blend([51,52,85],[225,239,191]));g.fillStyle=sky;g.fillRect(0,0,sw,sh);
-      if(d<.5)for(const s of stars.slice(0,60))circle(g,s.x*sw,s.y*sh*.7,1.4,'#e6edff');
-      if(state.elevation>-.1)circle(g,sw*(.5+Math.sin(state.angle)*.4),sh*(.67-state.elevation*.4),sh*.055,'#ffe8a1');
+      const warmth=Math.max(0,1-Math.abs(state.elevation)/.45)*.7;
+      const skyTint=(a,b)=>`rgb(${a.map((v,i)=>Math.round((v+(b[i]-v)*d)*(1-warmth)+[242,174,131][i]*warmth)).join(',')})`;
+      const sky=g.createLinearGradient(0,0,0,sh);sky.addColorStop(0,skyTint([16,29,67],[139,217,238]));sky.addColorStop(1,skyTint([51,52,85],[225,239,191]));g.fillStyle=sky;g.fillRect(0,0,sw,sh);
+      g.save();g.globalAlpha=Math.pow(1-d,3)*(1-warmth);for(const s of stars.slice(0,60))circle(g,s.x*sw,s.y*sh*.7,1.4,'#e6edff');g.restore();
+      const horizon=sh*.7;
+      g.save();g.beginPath();g.rect(0,0,sw,horizon);g.clip();
+      circle(g,sw*(.5+Math.sin(state.angle)*.44),horizon-state.elevation*sh*.52,sh*.045,'#ffe8a1');
+      g.restore();
+      g.fillStyle=blend([25,52,51],[105,162,80]);g.fillRect(0,horizon,sw,sh-horizon);
       g.fillStyle=blend([25,52,51],[105,162,80]);g.beginPath();g.moveTo(0,sh*.74);g.quadraticCurveTo(sw*.3,sh*.54,sw,sh*.78);g.lineTo(sw,sh);g.lineTo(0,sh);g.fill();
       g.fillStyle=blend([36,65,58],[133,184,91]);g.fillRect(0,sh*.82,sw,sh*.18);
       g.fillStyle=blend([80,66,63],[243,221,174]);g.fillRect(sw*.67,sh*.64,sw*.19,sh*.2);
       g.fillStyle=blend([77,49,55],[205,118,84]);g.beginPath();g.moveTo(sw*.64,sh*.64);g.lineTo(sw*.765,sh*.53);g.lineTo(sw*.89,sh*.64);g.fill();
       g.fillStyle=d<.5?'#ffe5a3':'#83b7bd';g.fillRect(sw*.7,sh*.68,sw*.04,sh*.05);g.fillRect(sw*.79,sh*.68,sw*.04,sh*.05);
-      for(const x of [.13,.93]){g.fillStyle='#66543b';g.fillRect(sw*x,sh*.65,sw*.018,sh*.2);circle(g,sw*(x+.01),sh*.64,sh*.085,blend([29,67,55],[68,139,78]));}
+      for(const x of [.18,.50]){g.fillStyle='#66543b';g.fillRect(sw*x,sh*.65,sw*.018,sh*.2);circle(g,sw*(x+.01),sh*.64,sh*.085,blend([29,67,55],[68,139,78]));}
       g.fillStyle=observerIndex?'#36bfa0':'#e35d83';g.fillRect(sw*.32,sh*.79,sw*.045,sh*.09);circle(g,sw*.342,sh*.76,sh*.028,'#c58b60');g.fillStyle='#384e77';g.fillRect(sw*.324,sh*.88,sw*.013,sh*.06);g.fillRect(sw*.35,sh*.88,sw*.013,sh*.06);
     };
   }
@@ -375,7 +387,9 @@
     setup2D();
   }
   bindCanvas();
-  new ResizeObserver(()=>resizeScenes()).observe(document.querySelector('.experience'));
+  const sceneResizeObserver=new ResizeObserver(()=>resizeScenes());
+  sceneResizeObserver.observe(document.querySelector('.experience'));
+  sceneResizeObserver.observe(document.querySelector('.sky-scene'));
   new IntersectionObserver(entries=>{spaceVisible=entries[0].isIntersecting;if(spaceVisible)dirty=true;}).observe($('spaceView'));
   window.addEventListener('resize',()=>resizeScenes());
   document.addEventListener('visibilitychange',()=>{if(document.hidden){setPlaying(false);tween=null;stopAudio();}lastFrame=0;dirty=true;});

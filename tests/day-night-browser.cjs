@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { chromium, webkit } = require('playwright');
 const { verifyLesson } = require('./day-night-lesson.cjs');
+const { verifySunset } = require('./day-night-sunset.cjs');
 
 const baseURL = process.env.BASE_URL || 'http://127.0.0.1:8000';
 const qaDirectory = process.env.QA_DIR || '/tmp/trio-day-night-qa';
@@ -93,6 +94,7 @@ async function verify(engine, name) {
     const manifest = await (await page.request.get(`${baseURL}/dia-e-noite/audio/manifest.json`)).json();
     if (manifest.available === false) await page.locator('#listenButton').waitFor({ state: 'hidden' });
     await verifyLesson(page, { name, qaDirectory });
+    await verifySunset(page, { name, qaDirectory });
     await page.waitForFunction(() => Boolean(window.TrioAstronauts));
     assert.equal(await page.locator('#crewMotion').getAttribute('aria-pressed'), 'true', 'reduced motion starts with still astronauts');
     const crewBefore = await page.locator('#spaceCanvas').screenshot();
@@ -188,6 +190,7 @@ async function verify(engine, name) {
     });
     await fallback.goto(`${baseURL}/dia-e-noite/`);
     await verifyLesson(fallback, { name: `${name} fallback`, qaDirectory, captureScreenshots: false });
+    await verifySunset(fallback, { name: `${name} fallback`, qaDirectory });
     await choosePhase(fallback, 'night');
     await choosePhase(fallback, 'day');
     assert.equal(await fallback.locator('body').getAttribute('data-renderer'), '2d', 'unsupported graphics use the lightweight renderer');

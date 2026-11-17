@@ -40,6 +40,11 @@ API ElevenLabs; sem um pacote de áudio gerado, o botão de voz fica oculto.
 Modelo pedagógico simplificado: lugar próximo ao Equador, sem estações ou órbita,
 tempo acelerado e dimensões fora de escala. As notas para adultos explicitam isso.
 
+O Sol do jardim fica atrás da paisagem e seu disco é recortado gradualmente pelo
+horizonte, tanto em 3D quanto no modo leve. As extremidades da trajetória ficam
+visíveis entre os elementos da paisagem. O título da fase e sua explicação ficam
+abaixo do céu, sem cobrir o nascer ou o pôr do sol.
+
 Leo e Rafa são companheiros astronautas, modelados em geometria 3D a partir da
 arte do cabeçalho `assets/trio-do-saber.png`. O traje azul identifica Leo; o
 vermelho, Rafa. Rafa tem olhos azuis. Rostos, cabelo, olhos, capacetes, mochilas e membros articulados

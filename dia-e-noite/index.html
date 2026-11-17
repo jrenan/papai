@@ -7,7 +7,7 @@
   <meta name="description" content="Gire a Terra em 3D e descubra por que o dia vira noite. Uma experiência do Trio do Saber para aprender brincando.">
   <title>Dia e noite • Trio do Saber</title>
   <link rel="icon" href="../assets/trio-do-saber.png">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20261116-horizon">
 </head>
 <body>
   <!-- THESIS: One place, two connected views. Moving Earth changes the child's sky.
@@ -48,10 +48,12 @@
         <p class="render-notice" id="renderNotice" hidden>Modo leve · você ainda pode girar a Terra.</p>
       </div>
       <div class="sky-view" id="skyView">
-        <h2 id="skyHeading">O céu onde você está</h2>
-        <canvas id="skyCanvas" aria-label="Paisagem que muda junto com a posição da Terra" role="img"></canvas>
+        <div class="sky-scene">
+          <h2 id="skyHeading">O céu onde você está</h2>
+          <canvas id="skyCanvas" aria-label="Paisagem que muda junto com a posição da Terra" role="img"></canvas>
+          <div class="you-badge"><i></i><span id="placeName">Nosso lugar na Terra</span></div>
+        </div>
         <div class="phase-card" id="phaseCard"><span class="phase-dot"></span><div><h3 id="phaseTitle">É dia!</h3><p id="phaseText">A luz do Sol chega até você.</p></div></div>
-        <div class="you-badge"><i></i><span id="placeName">Nosso lugar na Terra</span></div>
       </div>
     </section>
     <section class="controls" aria-label="Controles da Terra">
@@ -84,6 +86,6 @@
   <script src="astronomy.js"></script>
   <script src="astronauts.js"></script>
   <script src="lesson.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=20261116-horizon"></script>
 </body>
 </html>
