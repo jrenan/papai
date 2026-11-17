@@ -37,8 +37,13 @@ Os recursos gráficos são locais. Sem WebGL, as duas vistas usam Canvas 2D e os
 mesmos controles e cálculos. A integração de voz usa MP3 locais e nunca expõe a
 API ElevenLabs; sem um pacote de áudio gerado, o botão de voz fica oculto.
 
-Modelo pedagógico simplificado: lugar próximo ao Equador, sem estações ou órbita,
-tempo acelerado e dimensões fora de escala. As notas para adultos explicitam isso.
+O ponto rosa usa as coordenadas de Taubaté (23°01′36″ S, 45°33′20″ O), com o mesmo
+mapeamento geográfico em 3D e no modo leve. O relógio de 24 horas acompanha o
+ângulo da simulação e muda ao observar o ponto oposto.
+
+Modelo pedagógico simplificado: sem estações ou órbita, tempo acelerado,
+amanhecer às 06:00, entardecer às 18:00 e dimensões fora de escala. Não é um
+relógio em tempo real nem uma previsão dos horários solares da cidade. As notas para adultos explicitam isso.
 
 O Sol do jardim fica atrás da paisagem e seu disco é recortado gradualmente pelo
 horizonte, tanto em 3D quanto no modo leve. As extremidades da trajetória ficam
@@ -56,3 +61,10 @@ O modo sem WebGL usa PNG transparentes renderizados dos mesmos modelos.
 `astronauts.js` fornece construtores e animação reutilizáveis. Os arquivos em
 `models/` podem ser abertos com `THREE.ObjectLoader`; `scripts/render-astronauts.cjs`
 gera esses arquivos e os PNG a partir da geometria.
+
+A condução por voz tem 25 clipes no roteiro `narration-texts.json`. Um gesto no
+botão de reprodução libera um único elemento de áudio, reutilizado entre etapas
+para compatibilidade com iOS. As orientações explicam também os ícones das
+opções. Não há reprodução antes do gesto; ocultar a página interrompe a voz.
+A geração no ElevenLabs ficou para depois, por decisão do usuário. Até o
+manifesto indicar um pacote disponível, os controles de voz ficam ocultos.

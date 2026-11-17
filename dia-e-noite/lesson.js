@@ -25,13 +25,31 @@
     let observer = 0;
     let result = '';
     let feedback = '';
+    let narrationId = null;
+
+    function speak(id) {
+      narrationId = id;
+      adapter.speak?.(id);
+    }
 
     function icon(name) {
+      const drawings = {
+        next: '<path d="M4 12h16m-6-6 6 6-6 6"/>',
+        done: '<path d="m5 12 4 4L19 6"/>',
+        imagine: '<path d="M7 16a5 5 0 0 1-2-9 5 5 0 0 1 8-3 5 5 0 1 1 4 12H7Z"/><circle cx="6" cy="20" r="1"/>',
+        explore: '<circle cx="12" cy="12" r="9"/><path d="m16 8-2 6-6 2 2-6Z"/>',
+        'sun-off': '<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M3 21 21 3"/>',
+        away: '<circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2"/><path d="M6 12H1m3-3-3 3 3 3m14-3h5m-3-3 3 3-3 3"/>',
+        'home-marker': '<circle cx="12" cy="12" r="6" fill="#ec5c84" stroke="#ec5c84"/>',
+        'other-marker': '<path d="m12 4 8 8-8 8-8-8Z" fill="#36bfa0" stroke="#36bfa0"/>',
+      };
+      if (drawings[name]) return `<svg viewBox="0 0 24 24" aria-hidden="true">${drawings[name]}</svg>`;
       return `<svg aria-hidden="true"><use href="#i-${name}"></use></svg>`;
     }
 
     function action(label, name, disabled = false, extraClass = '') {
-      return `<button type="button" class="lesson-action ${extraClass}" data-lesson-action="${name}"${disabled ? ' disabled' : ''}>${label}</button>`;
+      const symbols = { next: 'next', 'body-done': 'done', 'body-imagine': 'imagine', exit: 'explore', finish: 'explore', 'view-home': 'home-marker', 'view-other': 'other-marker', turn: 'turn' };
+      return `<button type="button" class="lesson-action ${extraClass}" data-lesson-action="${name}"${disabled ? ' disabled' : ''}>${icon(symbols[name])}<span>${label}</span></button>`;
     }
 
     function choice(label, answer, symbol, selected = false, disabled = false) {
@@ -50,14 +68,14 @@
         case 1:
           return {
             title: 'É o mesmo lugar',
-            copy: 'Na brincadeira, seu corpo era a Terra e seu rosto era um lugar. Aqui, o ponto rosa é o lugar da criança no jardim.',
+            copy: 'Na brincadeira, seu corpo era a Terra e seu rosto era um lugar. Aqui, o ponto rosa marca Taubaté, o lugar da criança no jardim.',
             extra: '<div class="lesson-mapping"><span>Seu corpo <b>→</b> Terra</span><span>Seu rosto <b>→</b> ponto rosa <b>→</b> criança</span></div>',
             actions: action('Vamos prever', 'next'),
           };
         case 2:
           return {
             title: 'Como vai ficar?',
-            copy: 'Se a Terra der meia volta, como ficará o céu no lugar da criança?',
+            copy: 'Se a Terra der meia volta, como ficará o céu em Taubaté?',
             extra: `<div class="lesson-choices">${choice('Claro, de dia', 'day', 'sun', prediction === 'day')}${choice('Escuro, de noite', 'night', 'night', prediction === 'night')}</div>`,
             actions: action('Testar minha ideia', 'next', prediction === null),
           };
@@ -66,21 +84,21 @@
             title: observed ? 'Olhe o que aconteceu' : 'Vamos girar e conferir',
             copy: observed ? 'Compare o ponto rosa com o céu da criança.' : 'Arraste a Terra ou toque no botão. Acompanhe o ponto rosa e o céu juntos.',
             extra: '',
-            actions: action(`${icon('turn')}<span>Girar meia volta</span>`, 'turn', observed, 'lesson-turn') + action('O que fez mudar?', 'next', !observed),
+            actions: action('Girar meia volta', 'turn', observed, 'lesson-turn') + action('O que fez mudar?', 'next', !observed),
           };
         case 4:
           return {
             title: 'Por que ficou de noite?',
-            copy: 'O que fez nosso lugar deixar de receber a luz do Sol?',
-            extra: `<div class="lesson-choices lesson-causes">${choice('A Terra girou', 'earth', 'turn', causeChoice === 'earth', causeCorrect)}${choice('O Sol apagou', 'sun-off', 'sun', causeChoice === 'sun-off', causeCorrect)}${choice('A Terra se afastou', 'away', 'back', causeChoice === 'away', causeCorrect)}</div>`,
+            copy: 'O que fez Taubaté deixar de receber a luz do Sol?',
+            extra: `<div class="lesson-choices lesson-causes">${choice('A Terra girou', 'earth', 'turn', causeChoice === 'earth', causeCorrect)}${choice('O Sol apagou', 'sun-off', 'sun-off', causeChoice === 'sun-off', causeCorrect)}${choice('A Terra se afastou', 'away', 'away', causeChoice === 'away', causeCorrect)}</div>`,
             actions: action('E no outro lugar?', 'next', !causeCorrect),
           };
         default:
           return {
             title: transferAnswered ? 'Dois lugares, ao mesmo tempo' : 'E no outro lugar?',
-            copy: transferAnswered ? 'Compare os dois lugares sem girar a Terra.' : 'No ponto rosa é noite. Como estará o céu no ponto do outro lado da Terra?',
+            copy: transferAnswered ? 'Compare os dois lugares sem girar a Terra.' : 'Em Taubaté, no ponto rosa, é noite. Como estará o céu no ponto do outro lado da Terra?',
             extra: transferAnswered
-              ? `<div class="lesson-choices">${action('Ver nosso lugar', 'view-home', false, observer === 0 ? 'is-selected' : 'lesson-secondary')}${action('Ver outro lugar', 'view-other', false, observer === 1 ? 'is-selected' : 'lesson-secondary')}</div>`
+              ? `<div class="lesson-choices">${action('Ver Taubaté', 'view-home', false, observer === 0 ? 'is-selected' : 'lesson-secondary')}${action('Ver outro lugar', 'view-other', false, observer === 1 ? 'is-selected' : 'lesson-secondary')}</div>`
               : `<div class="lesson-choices">${choice('Dia', 'day', 'sun')}${choice('Noite', 'night', 'night')}</div>`,
             actions: transferAnswered ? action('Continuar explorando', 'finish') : '',
           };
@@ -128,6 +146,7 @@
         adapter.setAngle(Math.PI);
         adapter.showOtherPlace(true);
       }
+      speak(`lesson-${stages[step]}`);
     }
 
     function start() {
@@ -151,10 +170,13 @@
       adapter.setObserver(0);
       adapter.setAngle(0);
       render(true);
+      speak('lesson-body');
     }
 
     function exit() {
       active = false;
+      narrationId = null;
+      adapter.stopSpeech?.();
       panel.hidden = true;
       adapter.setObserver(0);
       adapter.showOtherPlace(false);
@@ -169,7 +191,7 @@
       observed = true;
       result = 'observed';
       const predicted = prediction === 'night' ? 'noite' : 'dia';
-      feedback = `Você imaginou ${predicted}. Depois do giro, nosso lugar ficou sem a luz do Sol. Ficou de noite!`;
+      feedback = `Você imaginou ${predicted}. Depois do giro, Taubaté ficou sem a luz do Sol. Ficou de noite!`;
       adapter.pause();
       adapter.setLock(true);
       panel.dataset.result = result;
@@ -178,39 +200,47 @@
       panel.querySelector('#lessonFeedback').textContent = feedback;
       panel.querySelector('[data-lesson-action="turn"]').disabled = true;
       panel.querySelector('[data-lesson-action="next"]').disabled = false;
+      speak(`observed-${prediction}`);
     }
 
     function answer(value) {
+      let nextNarration;
       if (step === 2 && (value === 'day' || value === 'night')) {
+        if (prediction === value) return;
         if (firstPrediction === null) firstPrediction = value;
         prediction = value;
         result = 'predicted';
         feedback = 'Sua ideia está escolhida. Agora vamos testar.';
+        nextNarration = `prediction-${value}`;
       } else if (step === 4 && !causeCorrect && ['earth', 'sun-off', 'away'].includes(value)) {
+        if (causeChoice === value) return;
         if (causeFirstAnswer === null) causeFirstAnswer = value;
         causeChoice = value;
         causeCorrect = value === 'earth';
         result = causeCorrect ? 'explained' : 'retry';
         feedback = causeCorrect
-          ? 'A Terra girou! Nosso lugar ficou sem luz, mas o Sol continua iluminando o outro lado.'
+          ? 'A Terra girou! Taubaté ficou sem luz, mas o Sol continua iluminando o outro lado.'
           : value === 'sun-off'
             ? 'Olhe o Sol: ele continua aceso. Observe o que a Terra fez e tente de novo.'
             : 'A Terra não se afastou do Sol. Ela continuou no mesmo lugar. Observe o que mudou e tente de novo.';
+        nextNarration = causeCorrect ? 'cause-correct' : `cause-${value}`;
       } else if (step === 5 && !transferAnswered && (value === 'day' || value === 'night')) {
         transferFirstAnswer = value;
         transferAnswered = true;
         observer = 1;
         result = value === 'day' ? 'confirmed' : 'compared';
-        feedback = 'No outro lugar é dia: a luz do Sol chega até lá. Ao mesmo tempo, no ponto rosa é noite.';
+        feedback = 'No outro lugar é dia: a luz do Sol chega até lá. Ao mesmo tempo, em Taubaté é noite.';
         render(false);
         adapter.setObserver(1);
         panel.querySelector('[data-lesson-action="view-other"]').focus({ preventScroll: true });
+        speak(`transfer-${value}`);
         return;
       } else return;
       render(false);
       const selected = panel.querySelector(`[data-lesson-answer="${value}"]`);
       if (causeCorrect && step === 4) panel.querySelector('#lessonNext').focus({ preventScroll: true });
       else selected?.focus({ preventScroll: true });
+      speak(nextNarration);
     }
 
     panel.addEventListener('click', event => {
@@ -219,7 +249,8 @@
       if (!button || !panel.contains(button) || button.disabled) return;
       if (button.dataset.lessonAnswer) { answer(button.dataset.lessonAnswer); return; }
       switch (button.dataset.lessonAction) {
-        case 'exit': case 'finish': exit(); break;
+        case 'exit': exit(); break;
+        case 'finish': exit(); speak('lesson-finish'); break;
         case 'body-done': case 'body-imagine': if (step === 0) enter(1); break;
         case 'next':
           if (step === 1 || (step === 2 && prediction !== null) || (step === 3 && observed) || (step === 4 && causeCorrect)) enter(step + 1);
@@ -227,16 +258,19 @@
         case 'turn': if (step === 3 && !observed) adapter.turnToNight(); break;
         case 'view-home': case 'view-other':
           if (step !== 5 || !transferAnswered) return;
-          observer = button.dataset.lessonAction === 'view-other' ? 1 : 0;
+          const nextObserver = button.dataset.lessonAction === 'view-other' ? 1 : 0;
+          if (observer === nextObserver) return;
+          observer = nextObserver;
           adapter.setObserver(observer);
           render(false);
           panel.querySelector(`[data-lesson-action="${observer ? 'view-other' : 'view-home'}"]`).focus({ preventScroll: true });
+          speak(observer ? 'view-other' : 'view-home');
           break;
       }
     });
     document.getElementById('startLesson')?.addEventListener('click', start);
     render(false);
-    return { start, exit, update };
+    return { start, exit, update, currentNarration: () => active ? narrationId : null };
   }
 
   return { create };

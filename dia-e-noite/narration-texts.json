@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "locale": "pt-BR",
+  "clips": [
+    {
+      "id": "intro",
+      "file": "intro.mp3",
+      "text": "Vamos descobrir o dia e a noite com Leo e Rafa? O ponto rosa marca Taubaté. Gire a Terra com o dedo e veja o céu do jardim mudar. O relógio usa vinte e quatro horas. Ele mostra a hora da brincadeira, não a hora de agora!"
+    },
+    {
+      "id": "day",
+      "file": "day.mp3",
+      "text": "É dia em Taubaté! A luz do Sol chega ao nosso lugar. A Terra continua girando devagar, mesmo quando a gente não percebe. Aqui na brincadeira, o giro é mais rápido."
+    },
+    {
+      "id": "night",
+      "file": "night.mp3",
+      "text": "É noite em Taubaté! Nosso lugar ficou do lado que não recebe a luz do Sol. O Sol continua aceso e ilumina o outro lado da Terra."
+    },
+    {
+      "id": "sunrise",
+      "file": "sunrise.mp3",
+      "text": "Está amanhecendo em Taubaté! A Terra gira, e nosso lugar começa a receber a luz do Sol. Parece que o Sol está subindo no céu, por trás da paisagem."
+    },
+    {
+      "id": "sunset",
+      "file": "sunset.mp3",
+      "text": "Está entardecendo em Taubaté! A Terra gira, e nosso lugar vai deixando de receber a luz do Sol. Parece que o Sol está descendo e se escondendo atrás da paisagem."
+    },
+    {
+      "id": "full-turn",
+      "file": "full-turn.mp3",
+      "text": "Uma volta completa! Passaram o dia e a noite. A Terra leva cerca de vinte e quatro horas para dar uma volta. Nosso relógio também deu uma volta inteira!"
+    },
+    {
+      "id": "challenge",
+      "file": "challenge.mp3",
+      "text": "Agora é com você! Está de noite em Taubaté. Gire a Terra até o Sol iluminar nosso ponto rosa. Olhe o céu da criança para descobrir quando ficou de dia!"
+    },
+    {
+      "id": "lesson-body",
+      "file": "lesson-body.mp3",
+      "text": "Vamos brincar de ser a Terra? Peça a um adulto uma luminária parada para fazer de conta que é o Sol. Seu corpo é a Terra, e seu rosto é um lugar nela. Vire devagar, de frente para a luz e depois de costas. Pode girar um boneco também! Quando terminar, toque no primeiro botão, com a marca de certo. Para só imaginar o giro, toque no segundo, com a nuvem de pensamento."
+    },
+    {
+      "id": "lesson-compare",
+      "file": "lesson-compare.mp3",
+      "text": "Na brincadeira, seu corpo era a Terra e seu rosto era um lugar. Aqui, nosso lugar é Taubaté, no ponto rosa. A criança do jardim está nesse mesmo lugar. Compare o ponto com o céu. O relógio mostra as horas da brincadeira, de zero a vinte e três. Não é a hora de agora. Toque na seta para seguir."
+    },
+    {
+      "id": "lesson-predict",
+      "file": "lesson-predict.mp3",
+      "text": "Se a Terra der meia volta, como ficará o céu em Taubaté? Escolha sua ideia. O primeiro botão, com o Sol, é céu claro, de dia. O segundo, com a estrela, é céu escuro, de noite. Depois vamos testar!"
+    },
+    {
+      "id": "prediction-day",
+      "file": "prediction-day.mp3",
+      "text": "Você imaginou céu claro, de dia. Sua ideia está escolhida! Toque no botão com a seta para testar."
+    },
+    {
+      "id": "prediction-night",
+      "file": "prediction-night.mp3",
+      "text": "Você imaginou céu escuro, de noite. Sua ideia está escolhida! Toque no botão com a seta para testar."
+    },
+    {
+      "id": "lesson-rotate",
+      "file": "lesson-rotate.mp3",
+      "text": "Vamos girar e conferir! Arraste a Terra para acompanhar o ponto rosa. Se preferir, toque no botão com a seta que faz uma volta. Ele gira a Terra até o outro lado. Olhe o ponto rosa e o céu da criança juntos!"
+    },
+    {
+      "id": "observed-day",
+      "file": "observed-day.mp3",
+      "text": "Você imaginou dia. Olhe o que aconteceu depois do giro: Taubaté ficou sem a luz do Sol. Ficou de noite! Compare o ponto rosa com o céu escuro. Toque na seta para seguir."
+    },
+    {
+      "id": "observed-night",
+      "file": "observed-night.mp3",
+      "text": "Você imaginou noite. Depois do giro, Taubaté ficou sem a luz do Sol. Ficou de noite! Compare o ponto rosa com o céu escuro. Toque na seta para seguir."
+    },
+    {
+      "id": "lesson-explain",
+      "file": "lesson-explain.mp3",
+      "text": "Por que ficou de noite em Taubaté? Escolha uma ideia. No primeiro botão, com a seta circular: a Terra girou. No segundo, com o Sol riscado: o Sol apagou. No terceiro, com as setas se afastando: a Terra se afastou do Sol. O que aconteceu?"
+    },
+    {
+      "id": "cause-correct",
+      "file": "cause-correct.mp3",
+      "text": "A Terra girou! Taubaté ficou sem luz, mas o Sol continua iluminando o outro lado. Toque na seta para investigar outro lugar."
+    },
+    {
+      "id": "cause-sun-off",
+      "file": "cause-sun-off.mp3",
+      "text": "Olhe o Sol: ele continua aceso. Observe o que a Terra fez. Qual das três ideias explica a noite? Você pode escolher de novo."
+    },
+    {
+      "id": "cause-away",
+      "file": "cause-away.mp3",
+      "text": "A Terra não se afastou do Sol nesta brincadeira. Observe o que mudou no ponto rosa. Qual das três ideias explica a noite? Escolha de novo."
+    },
+    {
+      "id": "lesson-transfer",
+      "file": "lesson-transfer.mp3",
+      "text": "Agora vamos investigar outro lugar! Em Taubaté, no ponto rosa, é noite. Veja o losango verde, do outro lado da Terra. Como estará o céu lá? Toque no primeiro botão, com o Sol, para escolher dia. Ou no segundo, com a estrela, para escolher noite."
+    },
+    {
+      "id": "transfer-day",
+      "file": "transfer-day.mp3",
+      "text": "Você imaginou dia no outro lugar. Veja: a luz do Sol chega até lá! Ao mesmo tempo, em Taubaté é noite. Toque no círculo rosa para ver Taubaté, ou no losango verde para ver o outro lugar. A Terra fica parada enquanto você compara. Para explorar por sua conta, toque na bússola de baixo."
+    },
+    {
+      "id": "transfer-night",
+      "file": "transfer-night.mp3",
+      "text": "Você imaginou noite no outro lugar. Vamos olhar: lá é dia, porque a luz do Sol chega até lá! Ao mesmo tempo, em Taubaté é noite. Toque no círculo rosa para ver Taubaté, ou no losango verde para ver o outro lugar, sem girar a Terra. Para explorar por sua conta, toque na bússola de baixo."
+    },
+    {
+      "id": "view-home",
+      "file": "view-home.mp3",
+      "text": "Este é o céu em Taubaté, nosso lugar do ponto rosa. É noite aqui. Para comparar, toque no botão com o losango verde. Para brincar por sua conta, toque na bússola de baixo."
+    },
+    {
+      "id": "view-other",
+      "file": "view-other.mp3",
+      "text": "Este é o céu do outro lugar, marcado pelo losango verde. É dia aqui. Para voltar a Taubaté, toque no botão com o círculo rosa. Para brincar por sua conta, toque na bússola de baixo."
+    },
+    {
+      "id": "lesson-finish",
+      "file": "lesson-finish.mp3",
+      "text": "Agora você pode explorar! Gire a Terra com o dedo e acompanhe Taubaté. Olhe a luz, o céu e o relógio. Se quiser ouvir de novo, toque no botão de som, lá em cima."
+    }
+  ]
+}

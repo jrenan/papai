@@ -7,7 +7,7 @@
   <meta name="description" content="Gire a Terra em 3D e descubra por que o dia vira noite. Uma experiência do Trio do Saber para aprender brincando.">
   <title>Dia e noite • Trio do Saber</title>
   <link rel="icon" href="../assets/trio-do-saber.png">
-  <link rel="stylesheet" href="style.css?v=20261116-horizon">
+  <link rel="stylesheet" href="style.css?v=20261116-voice-taubate">
 </head>
 <body>
   <!-- THESIS: One place, two connected views. Moving Earth changes the child's sky.
@@ -32,8 +32,9 @@
   </header>
   <main>
     <nav class="learning-mode" aria-label="Jeito de brincar"><button id="startLesson" type="button" aria-pressed="true">Descobrir juntos</button><button id="freeExplore" type="button" aria-pressed="false">Explorar livremente</button><span>Com um adulto</span></nav>
+    <div class="voice-prompt" id="voicePrompt"><button type="button" id="startVoiceButton"><svg aria-hidden="true"><use href="#i-play"/></svg><span>Começar com voz</span></button><p id="voicePromptText">Toque para ouvir. Eu vou te guiar!</p></div>
     <section class="lesson-panel" id="lessonPanel" aria-label="Descoberta guiada"></section>
-    <div class="invitation"><p id="instruction">Gire a Terra. O que muda no céu?</p><span class="same-place" id="placeLegend"><i></i><span id="placeLegendText">Nosso lugar nas duas vistas</span></span></div>
+    <div class="invitation"><p id="instruction">Gire a Terra. O que muda no céu?</p><span class="same-place" id="placeLegend"><i></i><span id="placeLegendText">Taubaté nas duas vistas</span></span></div>
     <section class="experience" aria-label="A Terra e o céu vistos ao mesmo tempo">
       <div class="space-view" id="spaceView">
         <h2>Visto do espaço</h2>
@@ -42,16 +43,17 @@
         <span class="astronaut-name astronaut-name-blue" id="blueAstronautName">Leo</span>
         <span class="astronaut-name astronaut-name-red" id="redAstronautName">Rafa</span>
         <div class="sun-label" aria-hidden="true">Sol</div>
-        <div id="personLabel" class="person-label" aria-hidden="true"><span></span>Você está aqui</div>
+        <div id="personLabel" class="person-label" aria-hidden="true"><span></span>Taubaté</div>
         <div id="otherPlaceLabel" class="person-label other-place-label" aria-hidden="true" hidden>Outro lugar</div>
         <p class="drag-hint" id="dragHint"><svg><use href="#i-turn"/></svg> Arraste para girar</p>
         <p class="render-notice" id="renderNotice" hidden>Modo leve · você ainda pode girar a Terra.</p>
       </div>
       <div class="sky-view" id="skyView">
         <div class="sky-scene">
-          <h2 id="skyHeading">O céu onde você está</h2>
+          <h2 id="skyHeading">O céu em Taubaté</h2>
+          <div class="local-clock"><span id="clockPlace">Taubaté</span><time id="localTime" datetime="12:00">12:00</time><small>Na experiência</small></div>
           <canvas id="skyCanvas" aria-label="Paisagem que muda junto com a posição da Terra" role="img"></canvas>
-          <div class="you-badge"><i></i><span id="placeName">Nosso lugar na Terra</span></div>
+          <div class="you-badge"><i></i><span id="placeName">Taubaté, SP</span></div>
         </div>
         <div class="phase-card" id="phaseCard"><span class="phase-dot"></span><div><h3 id="phaseTitle">É dia!</h3><p id="phaseText">A luz do Sol chega até você.</p></div></div>
       </div>
@@ -77,15 +79,17 @@
     <details class="grownups"><summary>Para explorar juntos</summary><div>
       <p>Comecem com a brincadeira corporal e comparem: o corpo representa a Terra; o rosto, um lugar nela. Usem uma luminária comum parada ou girem um boneco. A criança pode participar sentada ou imaginar o movimento. Depois, mostrem o ponto rosa e a criança do jardim: são o mesmo lugar.</p>
       <p>Antes de girar, acolha a previsão sem corrigi-la. Depois pergunte: “O que mudou? O Sol continuou aceso?” Peça também que a criança mostre com o modelo por que anoiteceu. Em outro dia, repitam começando de uma posição diferente. Concluir o percurso não comprova que a criança aprendeu.</p>
-      <p>A Terra gira sobre si mesma. O ciclo de um dia e uma noite dura cerca de 24 horas. Aqui o tempo está acelerado, os tamanhos e as distâncias estão reduzidos e o lugar marcado fica perto do Equador. O modelo destaca a rotação; estações do ano e órbita não são representadas. O Sol fica fixo nesta demonstração. A Lua não causa a noite e também pode aparecer durante o dia.</p>
+      <p>A Terra gira sobre si mesma. O ciclo de um dia e uma noite dura cerca de 24 horas. O ponto rosa fica em Taubaté, São Paulo. O relógio de 24 horas acompanha o tempo acelerado da experiência; não é a hora atual da cidade. Neste modelo simplificado, o amanhecer é às 06:00 e o entardecer às 18:00. Na vida real, esses horários variam ao longo do ano. Os tamanhos e as distâncias estão reduzidos; estações do ano e órbita não são representadas. O Sol fica fixo nesta demonstração. A Lua não causa a noite e também pode aparecer durante o dia.</p>
       <p>Referência: <a href="https://www.nasa.gov/learning-resources/for-kids-and-students/what-is-earth-grades-k-4/" target="_blank" rel="noopener noreferrer">NASA · A Terra para crianças</a>. <span id="voiceCredit" hidden>Narração: ElevenLabs. </span>Biblioteca 3D: Three.js (MIT).</p>
       <details class="research-notes"><summary>Pesquisas que orientam a atividade</summary><p>Um experimento com 79 crianças de 5–8 anos encontrou ganhos mais consistentes ao combinar uma atividade corporal com comparações explícitas no modelo. É evidência para essa estratégia, não uma validação deste aplicativo: <a href="https://doi.org/10.1016/j.appdev.2026.101994" target="_blank" rel="noopener noreferrer">Jee, Ruel, Stone e Anggoro (2026)</a>.</p><p>Comparações guiadas também ajudaram alunos do 3º ano: <a href="https://doi.org/10.1177/0956797619864601" target="_blank" rel="noopener noreferrer">Jee e Anggoro (2019)</a>. Estudos com crianças de 5 anos investigaram suas explicações com modelos e atividades de manipulação, com limites de amostra e desenho: <a href="https://doi.org/10.12738/estp.2015.4.2741" target="_blank" rel="noopener noreferrer">Saçkes (2015)</a> e <a href="https://doi.org/10.17345/ute.2020.3.2959" target="_blank" rel="noopener noreferrer">Biosca Cavero (2021)</a>. A sequência de previsão, investigação e transferência é nossa adaptação dessas evidências.</p></details>
     </div></details>
   </main>
   <script src="vendor/three.min.js"></script>
-  <script src="astronomy.js"></script>
+  <script src="astronomy.js?v=20261116-voice-taubate"></script>
+  <script src="globe-map.js?v=20261116-voice-taubate"></script>
   <script src="astronauts.js"></script>
-  <script src="lesson.js"></script>
-  <script src="app.js?v=20261116-horizon"></script>
+  <script src="lesson.js?v=20261116-voice-taubate"></script>
+  <script src="voice.js?v=20261116-voice-taubate"></script>
+  <script src="app.js?v=20261116-voice-taubate"></script>
 </body>
 </html>

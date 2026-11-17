@@ -11,13 +11,12 @@
     night: ['É noite!', 'Este lugar está virado para longe do Sol.'],
     sunrise: ['Amanhecer', 'Este lugar está voltando para a luz do Sol.'],
   };
-  let angle = 0, playing = false, tween = null, interacted = false, challenge = false;
+  let angle = 0, playing = false, tween = null, challenge = false;
   let phase = '', lastFrame = 0, dirty = true, renderScenes, resizeScenes;
   let turnProgress = 0, tilt = 0.28;
   let lesson = null, lessonLocked = false, observerIndex = 0, otherPlaceVisible = false;
   let wasCrewMoving = false;
   const observedState = () => M.getState(angle + (observerIndex ? Math.PI : 0));
-  let manifest = null, audio = null, audioEnabled = false, pendingNarration = null;
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const crew = [{ name: 'Leo', variant: 'blue', u: .29, v: .23 }, { name: 'Rafa', variant: 'red', u: .29, v: .75 }];
   let crewMoving = !reducedMotion, crewTime = 0, lastCrewFrame = 0, spaceVisible = true;
@@ -38,6 +37,7 @@
   const mapCanvas = document.createElement('canvas');
   mapCanvas.width = 1536; mapCanvas.height = 768;
   const mapContext = mapCanvas.getContext('2d');
+  let fallbackGlobe = null;
   const stars = Array.from({ length: 100 }, (_, i) => ({ x: fract(Math.sin(i * 97.37 + 1) * 4258), y: fract(Math.sin(i * 43.21 + 3) * 8347), r: i % 7 === 0 ? 1.6 : 0.8 }));
   function fract(x) { return x - Math.floor(x); }
   function paintMap(geo) {
@@ -62,55 +62,37 @@
       mapContext.fillStyle = '#79c877'; mapContext.fill('evenodd');
     }
     mapContext.fillStyle = '#deefeb'; mapContext.fillRect(0, 0, 1536, 25); mapContext.fillRect(0, 724, 1536, 44);
+    fallbackGlobe?.refresh();
   }
   paintMap();
   let earthTexture;
   fetch('../data/countries-lite.geojson').then(r => { if (!r.ok) throw new Error('map'); return r.json(); }).then(geo => { paintMap(geo); if (earthTexture) earthTexture.needsUpdate = true; dirty = true; }).catch(() => {});
-  let manifestRequest = null;
-  function loadManifest() {
-    if (manifest) return Promise.resolve(manifest);
-    if (!manifestRequest) manifestRequest = fetch('audio/manifest.json').then(r => { if (!r.ok) throw new Error('audio'); return r.json(); }).then(data => { manifest = data; $('listenButton').hidden = data.available === false; $('voiceCredit').hidden = data.available === false; return data; }).finally(() => { manifestRequest = null; });
-    return manifestRequest;
-  }
-  loadManifest().catch(() => {});
-
-  function stopAudio() {
-    pendingNarration = null;
-    if (audio) { audio.pause(); audio.currentTime = 0; }
-    $('listenButton').dataset.playing = 'false';
-    $('listenButton').querySelector('span').textContent = 'Ouvir';
-  }
+  const voice = window.DayNightVoice.create(state => {
+    const speaking = state.status === 'playing' || (state.status === 'loading' && state.enabled);
+    $('listenButton').hidden = !state.available && state.status !== 'error';
+    $('listenButton').dataset.playing = String(speaking);
+    $('listenButton').setAttribute('aria-pressed', String(state.enabled));
+    $('listenButton').querySelector('span').textContent = speaking ? 'Pausar voz' : state.enabled ? 'Ouvir de novo' : 'Ouvir';
+    $('voicePrompt').hidden = state.status === 'unavailable' || (state.available && state.enabled && state.status !== 'error');
+    $('startVoiceButton').disabled = state.status === 'loading' && !state.available;
+    $('voicePromptText').textContent = state.error || 'Toque para ouvir. Eu vou te guiar!';
+    $('audioStatus').textContent = state.error;
+    $('voiceCredit').hidden = !state.available;
+  });
+  function stopAudio() { voice.stop(); }
   function narrate(id, explicit = false) {
-    if (!manifest || manifest.available === false) return;
-    if (!audioEnabled && !explicit) return;
-    if (explicit) audioEnabled = true;
-    const clip = manifest?.clips?.[id];
-    if (!clip) { if (explicit) $('audioStatus').textContent = 'A voz ainda não carregou. Toque em Ouvir para tentar de novo.'; return; }
-    if (!explicit && audio && !audio.paused) { pendingNarration = id; return; }
-    stopAudio();
-    const path = clip.file || clip.path || `${id}.mp3`;
-    audio = new Audio(path.startsWith('audio/') ? path : `audio/${path}`);
-    audio.preload = 'auto';
-    const current = audio;
-    audio.onended = () => {
-      if (current !== audio) return;
-      $('listenButton').dataset.playing = 'false'; $('listenButton').querySelector('span').textContent = 'Ouvir';
-      const next = pendingNarration; pendingNarration = null;
-      if (next && next === observedState().phase) narrate(next);
-    };
-    audio.onerror = () => { if (current === audio) { stopAudio(); $('audioStatus').textContent = 'Não deu para ouvir. Toque em Ouvir para tentar de novo.'; } };
-    audio.play().then(() => {
-      if (current !== audio) return;
-      $('audioStatus').textContent = ''; $('listenButton').dataset.playing = 'true'; $('listenButton').querySelector('span').textContent = 'Pausar voz';
-    }).catch(() => { if (current === audio) { stopAudio(); $('audioStatus').textContent = 'Toque em Ouvir para liberar a voz.'; } });
+    if (explicit) voice.enable(id);
+    else voice.speak(id);
   }
+  function currentNarration() { return lesson?.currentNarration() || (challenge ? 'challenge' : phase || 'intro'); }
+  $('startVoiceButton').onclick = () => voice.enable(currentNarration());
   function setPlaying(value) {
     playing = value;
     $('playButton').setAttribute('aria-pressed', String(value));
     $('playButton').querySelector('span').textContent = value ? 'Pausar' : 'Girar sozinha';
     $('playButton').querySelector('use').setAttribute('href', value ? '#i-pause' : '#i-play');
   }
-  function manual() { setPlaying(false); tween = null; interacted = true; stopAudio(); $('dragHint').style.opacity = '0.6'; }
+  function manual() { setPlaying(false); tween = null; $('dragHint').style.opacity = '0.6'; }
   function setAngle(value, fromUser = false) {
     const delta = value - angle;
     angle = value;
@@ -132,13 +114,16 @@
       $('skyView').dataset.phase = phase;
       skyCanvas.setAttribute('aria-label', `${copy[phase][0]} ${copy[phase][1]}`);
       document.querySelectorAll('[data-phase]').forEach(button => { if (button.tagName === 'BUTTON') button.setAttribute('aria-pressed', String(button.dataset.phase === phase)); });
-      if (playing) narrate(phase);
+      if (document.body.dataset.lessonActive === 'false') voice.schedule(phase);
     }
     $('skyView').dataset.observer = observerIndex ? 'other' : 'home';
-    $('skyHeading').textContent = observerIndex ? 'O céu no outro lugar' : 'O céu no nosso lugar';
-    $('placeName').textContent = observerIndex ? 'Outro lugar na Terra' : 'Nosso lugar na Terra';
+    $('skyHeading').textContent = observerIndex ? 'O céu no outro lugar' : 'O céu em Taubaté';
+    $('localTime').textContent = state.localTime;
+    $('clockPlace').textContent = observerIndex ? 'Outro lugar' : 'Taubaté';
+    $('localTime').setAttribute('datetime', state.localTime);
+    $('placeName').textContent = observerIndex ? 'Outro lugar na Terra' : 'Taubaté, SP';
     $('placeLegend').dataset.observer = observerIndex ? 'other' : 'home';
-    $('placeLegendText').textContent = observerIndex ? 'Outro lugar nas duas vistas' : 'Nosso lugar nas duas vistas';
+    $('placeLegendText').textContent = observerIndex ? 'Outro lugar nas duas vistas' : 'Taubaté nas duas vistas';
     if (challenge && state.elevation > 0.55) {
       challenge = false;
       $('challengeStatus').textContent = 'Você descobriu! Nosso lugar recebeu luz. Ficou de dia!';
@@ -157,7 +142,7 @@
     if (reducedMotion) setAngle(start + distance);
     else tween = { start, distance, elapsed: 0, duration: Math.min(1.3, 0.5 + distance * 0.15) };
   }
-  $('playButton').onclick = () => { if (lessonLocked) return; interacted = true; tween = null; setPlaying(!playing); if (playing) narrate(phase); };
+  $('playButton').onclick = () => { if (lessonLocked) return; tween = null; setPlaying(!playing); if (playing) narrate(phase); };
   $('resetButton').onclick = () => { manual(); challenge = false; turnProgress = 0; tilt = 0.28; $('challengeStatus').textContent = 'A Terra gira. O dia vira noite. E começa outro dia!'; $('challengeStatus').dataset.status = ''; document.querySelector('.discovery').dataset.complete = 'false'; $('challengeButton').textContent = 'Vamos descobrir?'; setAngle(0); };
   range.addEventListener('input', () => {
     if (lessonLocked) return;
@@ -166,15 +151,7 @@
     manual(); setAngle(angle + delta, true);
   });
   document.querySelectorAll('button[data-phase]').forEach(button => button.onclick = () => { if (document.body.dataset.lessonActive === 'true') return; goTo(M.targets[button.dataset.phase]); narrate(button.dataset.phase); });
-  $('listenButton').onclick = async () => {
-    if (audio && !audio.paused) { stopAudio(); return; }
-    if (!manifest) {
-      $('listenButton').disabled = true;
-      try { await loadManifest(); } catch (_) { $('audioStatus').textContent = 'Não deu para carregar a voz. Toque em Ouvir para tentar de novo.'; return; }
-      finally { $('listenButton').disabled = false; }
-    }
-    narrate(challenge ? 'challenge' : interacted ? phase : 'intro', true);
-  };
+  $('listenButton').onclick = () => { if (voice.isSpeaking()) voice.disable(); else voice.enable(currentNarration()); };
   $('challengeButton').onclick = () => {
     manual(); turnProgress = 0; setAngle(Math.PI); challenge = true;
     $('challengeStatus').textContent = 'Está de noite. Gire a Terra até o Sol iluminar nosso lugar!';
@@ -215,7 +192,8 @@
       const head=new T.Mesh(new T.ConeGeometry(.045,.14,6),new T.MeshBasicMaterial({color:'#ffe1a0'}));head.rotation.z=-Math.PI/2;head.position.set(-1.27,y,0);scene.add(head);
     }
     const axis = new T.Line(new T.BufferGeometry().setFromPoints([new T.Vector3(0,-2,0),new T.Vector3(0,2,0)]),new T.LineDashedMaterial({color:'#90a8cd',dashSize:.09,gapSize:.09,transparent:true,opacity:.55}));axis.computeLineDistances();earthRoot.add(axis);
-    const markerBase = new T.Vector3(Math.cos(50*Math.PI/180),0,Math.sin(50*Math.PI/180));
+    const cityVector=M.geographicVector(M.location.latitude,M.location.longitude);
+    const markerBase = new T.Vector3(cityVector.x,cityVector.y,cityVector.z);
     const marker = new T.Group();marker.position.copy(markerBase.clone().multiplyScalar(1.65));marker.quaternion.setFromUnitVectors(new T.Vector3(0,1,0),markerBase);spinningEarth.add(marker);
     const markerMat = new T.MeshBasicMaterial({color:'#ed5b86'});
     const pin=new T.Mesh(new T.CylinderGeometry(.018,.018,.2,8),new T.MeshBasicMaterial({color:'#fff4df'}));pin.position.y=.1;marker.add(pin);
@@ -296,7 +274,7 @@
     };
     renderScenes = (state, motionTime = 0, worldChanged = true) => {
       camera.position.set(0,Math.sin(tilt)*10,Math.cos(tilt)*10);camera.lookAt(-.25,0,0);
-      spinningEarth.rotation.y = -130*Math.PI/180+angle;
+      spinningEarth.rotation.y = M.earthRotation(angle);
       otherMarker.visible=otherPlaceVisible;
       childShirt.material.color.set(observerIndex?'#36bfa0':'#ec5c84');
       const daylightAmount=state.daylight;
@@ -336,13 +314,14 @@
 
   let fallbackActive=false;
   function fallbackAfterContextLoss(){if(fallbackActive)return;fallbackActive=true;for(const [id,canvas] of [['spaceCanvas',spaceCanvas],['skyCanvas',skyCanvas]]){const fresh=canvas.cloneNode(false);canvas.replaceWith(fresh);if(id==='spaceCanvas')spaceCanvas=fresh;else skyCanvas=fresh;}setup2D();bindCanvas();resizeScenes();dirty=true;}
-  function placeLabel(x,y,behind){const label=$('personLabel');label.style.left=`${Math.max(85,Math.min(spaceCanvas.clientWidth-85,x))}px`;label.style.top=`${Math.max(100,Math.min(spaceCanvas.clientHeight-45,y))}px`;label.dataset.behind=String(behind);label.textContent=behind?'Nosso lugar · atrás':'Nosso lugar';}
+  function placeLabel(x,y,behind){const label=$('personLabel');label.style.left=`${Math.max(85,Math.min(spaceCanvas.clientWidth-85,x))}px`;label.style.top=`${Math.max(100,Math.min(spaceCanvas.clientHeight-45,y))}px`;label.dataset.behind=String(behind);label.textContent=behind?'Taubaté · atrás':'Taubaté';}
   function placeOtherLabel(x,y,behind){const label=$('otherPlaceLabel');label.style.left=`${Math.max(70,Math.min(spaceCanvas.clientWidth-70,x))}px`;label.style.top=`${Math.max(90,Math.min(spaceCanvas.clientHeight-45,y))}px`;label.textContent=behind?'Outro lugar · atrás':'Outro lugar';}
   function placeCrewLabel(member,x,y){const label=$(`${member.variant}AstronautName`);label.style.left=`${Math.max(24,x)}px`;label.style.top=`${y}px`;}
   function setup2D(){
     document.body.dataset.renderer='2d';$('renderNotice').hidden=false;
     fallbackCrew.forEach(member=>{if(!member.image.src)member.image.src=`astronaut-${member.variant}.png`;});
     const c=spaceCanvas.getContext('2d'),g=skyCanvas.getContext('2d');
+    fallbackGlobe=window.DayNightGlobeMap.create(mapCanvas);
     resizeScenes=()=>{for(const canvas of [spaceCanvas,skyCanvas]){const b=canvas.getBoundingClientRect();canvas.width=Math.round(b.width*Math.min(devicePixelRatio,1.5));canvas.height=Math.round(b.height*Math.min(devicePixelRatio,1.5));}dirty=true;};
     function circle(ctx,x,y,r,color){ctx.fillStyle=color;ctx.beginPath();ctx.arc(x,y,r,0,M.TAU);ctx.fill();}
     renderScenes=(state,motionTime=0)=>{
@@ -351,10 +330,13 @@
       circle(c,w*.14,cy,r*.25,'#ffd364');
       c.strokeStyle='#ffe1a0';c.lineWidth=2;for(const dy of [-.35,0,.35]){c.beginPath();c.moveTo(w*.24,cy+dy*r);c.lineTo(cx-r*1.13,cy+dy*r);c.stroke();}
       c.save();c.beginPath();c.arc(cx,cy,r,0,M.TAU);c.clip();
-      for(let x=-r;x<r;x+=2){const longitude=Math.asin(x/r),u=M.normalize(longitude-angle+Math.PI*.72)/M.TAU;const sh=Math.sqrt(1-x*x/(r*r));c.drawImage(mapCanvas,u*1535,0,2,768,cx+x,cy-r*sh,2.5,2*r*sh);}
+      fallbackGlobe.paint(c,{cx,cy,r,rotation:M.earthRotation(angle)});
       const shade=c.createLinearGradient(cx-r,0,cx+r,0);shade.addColorStop(0,'#06132c00');shade.addColorStop(.45,'#06132c22');shade.addColorStop(.55,'#06132cbb');shade.addColorStop(1,'#06132cdd');c.fillStyle=shade;c.fillRect(cx-r,cy-r,2*r,2*r);c.restore();
-      const px=cx-Math.cos(angle)*r,py=cy-Math.sin(angle)*r*.15;circle(c,px,py,r*.045,'#fff');circle(c,px,py,r*.03,'#ec5c84');placeLabel(px/w*spaceCanvas.clientWidth,py/h*spaceCanvas.clientHeight,Math.sin(angle)<-.12);
-      if(otherPlaceVisible){const ox=cx+Math.cos(angle)*r,oy=cy+Math.sin(angle)*r*.15;c.fillStyle='#36bfa0';c.beginPath();c.moveTo(ox,oy-r*.06);c.lineTo(ox+r*.06,oy);c.lineTo(ox,oy+r*.06);c.lineTo(ox-r*.06,oy);c.closePath();c.fill();placeOtherLabel(ox/w*spaceCanvas.clientWidth,oy/h*spaceCanvas.clientHeight,Math.sin(angle)>.12);}
+      const city=M.geographicVector(M.location.latitude,M.location.longitude),rotation=M.earthRotation(angle);
+      const cityX=city.x*Math.cos(rotation)+city.z*Math.sin(rotation),cityZ=-city.x*Math.sin(rotation)+city.z*Math.cos(rotation);
+      const px=cx+cityX*r,py=cy-city.y*r;circle(c,px,py,r*.045,'#fff');circle(c,px,py,r*.03,'#ec5c84');placeLabel(px/w*spaceCanvas.clientWidth,py/h*spaceCanvas.clientHeight,cityZ<-.12);
+      if(otherPlaceVisible){const ox=cx-cityX*r,oy=cy+city.y*r;c.fillStyle='#36bfa0';c.beginPath();c.moveTo(ox,oy-r*.06);c.lineTo(ox+r*.06,oy);c.lineTo(ox,oy+r*.06);c.lineTo(ox-r*.06,oy);c.closePath();c.fill();placeOtherLabel(ox/w*spaceCanvas.clientWidth,oy/h*spaceCanvas.clientHeight,cityZ>.12);}
+
       fallbackCrew.forEach((member,index)=>{const compact=document.body.dataset.lessonActive==='true'&&spaceCanvas.clientWidth<600,size=Math.min(142,spaceCanvas.clientHeight*(compact?.20:.25)),scale=w/spaceCanvas.clientWidth,x=w*(compact&&index===0?.16:member.u),y=h*(compact&&index===0?.27:member.v)+Math.sin(motionTime*.65+index*2.1)*4*scale;if(member.image.complete&&member.image.naturalWidth){c.save();c.translate(x,y);c.rotate(index===0?.13:-.16);c.drawImage(member.image,-size*scale*.4,-size*scale*.5,size*scale*.8,size*scale);c.restore();}placeCrewLabel(member,x/scale-size*.48,y/scale+size*.12);});
       const sw=skyCanvas.width,sh=skyCanvas.height,d=state.daylight,blend=(a,b)=>`rgb(${a.map((v,i)=>Math.round(v+(b[i]-v)*d)).join(',')})`;
       const warmth=Math.max(0,1-Math.abs(state.elevation)/.45)*.7;
@@ -397,6 +379,8 @@
   resizeScenes();updateUI();
   lesson = window.DayNightLesson.create({
     getAngle: () => angle,
+    speak(id) { voice.speak(id); },
+    stopSpeech() { voice.stop(); },
     setAngle(value) { manual(); setAngle(value); },
     setObserver(index) { observerIndex = index === 1 ? 1 : 0; dirty = true; updateUI(); },
     showOtherPlace(visible) { otherPlaceVisible = Boolean(visible); $('otherPlaceLabel').hidden = !otherPlaceVisible; dirty = true; },
@@ -429,7 +413,7 @@
     if(!document.hidden){
       if(crewMoving&&spaceVisible)crewTime+=dt;
       if(tween){tween.elapsed+=dt;const p=Math.min(1,tween.elapsed/tween.duration),ease=1-Math.pow(1-p,3);setAngle(tween.start+tween.distance*ease);if(p===1){tween=null;updateUI();}}
-      if(playing)setAngle(angle+dt*M.TAU/36);
+      if(playing&&!voice.isSpeaking())setAngle(angle+dt*M.TAU/36);
       if(dirty||(crewMoving&&spaceVisible&&time-lastCrewFrame>=33)){renderScenes(observedState(),crewTime,dirty);dirty=false;lastCrewFrame=time;}
     }
     requestAnimationFrame(frame);

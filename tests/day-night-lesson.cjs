@@ -107,13 +107,15 @@ async function verifyLesson(page, { name, qaDirectory, captureScreenshots = true
   await stage('transfer');
   await phase('night');
   await angleIs(180, 'the transfer task keeps Earth in the observed position');
-  assert.match(await page.locator('#skyHeading').textContent(), /nosso lugar/i, 'the other sky is not revealed before a choice');
+  assert.equal(await page.locator('#localTime').textContent(), '00:00');
+  assert.match(await page.locator('#skyHeading').textContent(), /Taubaté/i, 'the other sky is not revealed before a choice');
   assert.equal(await page.locator('#skyView').getAttribute('data-observer'), 'home');
   assert.equal(await page.locator('#otherPlaceLabel').isVisible(), true, 'the new location is visible on the same Earth');
   assert.equal(await panel.locator('[data-lesson-action="view-other"]').count(), 0, 'the answer view waits for the transfer choice');
   assert.equal(await page.locator('#lessonFeedback').textContent(), '');
   await answer('night'); // Deliberately incorrect: the second view provides the comparison.
   await phase('day');
+  assert.equal(await page.locator('#localTime').textContent(), '12:00', 'the opposite location has its own simulated local time');
   assert.equal(await panel.getAttribute('data-result'), 'compared');
   assert.match(await page.locator('#skyHeading').textContent(), /outro lugar/i);
   assert.equal(await page.locator('#placeLegend').getAttribute('data-observer'), 'other');

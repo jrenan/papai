@@ -13,24 +13,28 @@ spec = importlib.util.spec_from_file_location("narration", ROOT / "scripts/gener
 generator = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(generator)
 
-TEXTS = {
-    "intro": "Vamos descobrir o dia e a noite? Gire a Terra com o dedo. Veja o nosso lugar no planeta e o céu que a criança vê!",
-    "day": "É dia! A luz do Sol chega ao nosso lugar. A Terra continua girando devagar, mesmo quando a gente não percebe.",
-    "night": "É noite! Nosso lugar ficou virado para o lado que não recebe a luz do Sol. Mas, do outro lado da Terra, é dia!",
-    "sunrise": "Está amanhecendo! A Terra gira, e nosso lugar começa a receber a luz do Sol. Parece que o Sol está subindo no céu.",
-    "sunset": "Está anoitecendo! A Terra gira, e nosso lugar vai deixando de receber a luz do Sol. Parece que o Sol está descendo no céu.",
-    "full-turn": "Uma volta completa! Passaram o dia e a noite. A Terra leva cerca de vinte e quatro horas para dar uma volta. Aqui, aceleramos para você ver!",
-    "challenge": "Agora é com você! Gire a Terra até o Sol iluminar o nosso lugar. Olhe o céu da criança para descobrir quando ficou de dia!",
-}
+SCRIPT = ROOT / "dia-e-noite/narration-texts.json"
+
+
+def read_clips():
+    """Use the shared script validator; IDs and filenames must stay unambiguous."""
+    return generator.read_script(SCRIPT)
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=["discover", "generate"])
+    parser.add_argument("command", choices=["plan", "discover", "generate"])
     parser.add_argument("--env-file", type=Path)
     parser.add_argument("--voice-id")
     parser.add_argument("--model-id", default="eleven_v3")
     parser.add_argument("--staging", type=Path, default=Path("/tmp/trio-day-night-narration"))
     args = parser.parse_args()
+    clips = read_clips()
+    characters = sum(len(clip["text"]) for clip in clips)
+    if args.command == "plan":
+        print(json.dumps({"clips": len(clips), "characters": characters,
+                          "script": str(SCRIPT.relative_to(ROOT)),
+                          "ids": [clip["id"] for clip in clips]}, ensure_ascii=False))
+        return
     if args.env_file:
         for line in args.env_file.read_text().splitlines():
             if line.strip().startswith("ELEVENLABS_API_KEY="):
@@ -51,20 +55,27 @@ def main():
         return
     if not args.voice_id:
         raise SystemExit("Select a voice from discovery with --voice-id.")
+    if not shutil.which("ffprobe"):
+        raise ValueError("ffprobe is required before any paid generation.")
     config = {"voiceID": args.voice_id, "modelID": args.model_id, "outputFormat": generator.FORMAT,
               "languageCode": "pt", "voiceSettings": {"stability": 0.5},
               "seed": 42, "applyTextNormalization": "auto"}
     if args.model_id == "eleven_v4":
         config["voiceSettings"]["similarity_boost"] = 0.75
     voice = generator.validate_provider(client, config)
-    print(f"Generating {len(TEXTS)} clips; {sum(map(len, TEXTS.values()))} characters; {voice['voiceName']} / {args.model_id}", flush=True)
+    if str(voice.get("labels", {}).get("gender", "")).lower() != "male":
+        raise ValueError("Select a voice labelled male by ElevenLabs for this narration. No audio was generated.")
+    print(f"Generating {len(clips)} clips; {characters} characters; {voice['voiceName']} / {args.model_id}", flush=True)
     args.staging.mkdir(parents=True, exist_ok=True)
     results = {}
     with generator.exclusive_job(args.staging):
-        for identity, text in TEXTS.items():
-            clip = {"id": identity, "text": text, "file": identity + ".mp3"}
+        for clip in clips:
+            identity, text = clip["id"], clip["text"]
+            # generate_one only reuses audio when text, full provider configuration
+            # (including voice/model), and the saved audio hash all match.
             result = generator.generate_one(client, clip, config, args.staging, "narration")
-            results[identity] = {"text": text, "file": clip["file"], "sha256": result["audioSHA256"], "durationSeconds": result["durationSeconds"]}
+            results[identity] = {"text": text, "file": clip["file"], "sha256": result["audioSHA256"],
+                                 "textSHA256": result["textSHA256"], "durationSeconds": result["durationSeconds"]}
             print(f"{identity}: {result['durationSeconds']} s", flush=True)
             if not result.get("reusedExistingAudio"):
                 time.sleep(2)
@@ -72,9 +83,11 @@ def main():
     target.mkdir(parents=True, exist_ok=True)
     for clip in results.values():
         shutil.copy2(args.staging / "audio" / clip["file"], target / clip["file"])
-    manifest = {"schemaVersion": 1, "locale": "pt-BR", "provider": "ElevenLabs", "modelID": args.model_id,
+    manifest = {"schemaVersion": 1, "locale": "pt-BR", "provider": "ElevenLabs", "available": True, "modelID": args.model_id,
                 "voiceID": args.voice_id, "voiceName": voice["voiceName"], "generatedAt": generator.now(),
-                "credit": "Voz gerada com ElevenLabs.", "characters": sum(map(len, TEXTS.values())), "clips": results}
+                "configSHA256": generator.digest(generator.json_bytes(config)),
+                "scriptSHA256": generator.digest(generator.json_bytes(clips)),
+                "credit": "Voz gerada com ElevenLabs.", "characters": characters, "clips": results}
     generator.atomic_json(target / "manifest.json", manifest)
     print("Complete bundle installed; all files passed ffprobe.")
 

@@ -5,6 +5,7 @@ const path = require('node:path');
 const { chromium, webkit } = require('playwright');
 const { verifyLesson } = require('./day-night-lesson.cjs');
 const { verifySunset } = require('./day-night-sunset.cjs');
+const { verifyNarratedLesson } = require('./day-night-narrated.cjs');
 
 const baseURL = process.env.BASE_URL || 'http://127.0.0.1:8000';
 const qaDirectory = process.env.QA_DIR || '/tmp/trio-day-night-qa';
@@ -62,6 +63,9 @@ async function choosePhase(page, phase) {
     return Math.min(difference, 360 - difference) < 0.1;
   }, phase);
   await waitForPhase(page, phase);
+  assert.equal(await page.locator('#localTime').textContent(), { day: '12:00', sunset: '18:00', night: '00:00', sunrise: '06:00' }[phase], 'the 24-hour teaching clock follows Earth rotation');
+  assert.equal(await page.locator('#clockPlace').textContent(), 'Taubaté');
+  assert.match(await page.locator('#personLabel').textContent(), /Taubaté/);
   assert.equal(await page.locator('#playButton').getAttribute('aria-pressed'), 'false', 'choosing a moment pauses automatic rotation');
 }
 
@@ -94,6 +98,8 @@ async function verify(engine, name) {
     const manifest = await (await page.request.get(`${baseURL}/dia-e-noite/audio/manifest.json`)).json();
     if (manifest.available === false) await page.locator('#listenButton').waitFor({ state: 'hidden' });
     await verifyLesson(page, { name, qaDirectory });
+    if (manifest.available === false) assert.equal(await page.locator('#voicePrompt').isVisible(), false, 'unavailable narration stays hidden throughout the lesson');
+    if (manifest.available !== false) await verifyNarratedLesson(page, { name });
     await verifySunset(page, { name, qaDirectory });
     await page.waitForFunction(() => Boolean(window.TrioAstronauts));
     assert.equal(await page.locator('#crewMotion').getAttribute('aria-pressed'), 'true', 'reduced motion starts with still astronauts');
