@@ -17,11 +17,12 @@
   let lesson = null, lessonLocked = false, observerIndex = 0, otherPlaceVisible = false;
   let wasCrewMoving = false, spin = 0, cheerClock = 0, crewModels = [], crewHits = [];
   let slowFrames = 0, lowerQuality = null;
+  let vr = null, vrGarden = null, mapVersion = 0;
   const observedState = () => M.getState(angle + (observerIndex ? Math.PI : 0));
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const crew = [{ name: 'Leo', variant: 'blue', u: .27, v: .265 }, { name: 'Rafa', variant: 'red', u: .27, v: .775 }];
   const crewPixels = (height, compact) => Math.min(196, height * (compact ? .3 : .33));
-  let crewMoving = !reducedMotion, crewTime = 0, lastCrewFrame = 0, spaceVisible = true;
+  let crewMoving = !reducedMotion, crewTime = 0, spaceVisible = true;
   function updateCrewControl() {
     const button = $('crewMotion');
     const label = `${crewMoving ? 'Pausar' : 'Retomar'} movimentos do cenário`;
@@ -71,6 +72,7 @@
       ice.addColorStop(0, '#f6fcff'); ice.addColorStop(.55, '#f6fcffee'); ice.addColorStop(1, '#f6fcff00');
       mapContext.fillStyle = ice; mapContext.fillRect(0, Math.min(from, to), 1536, Math.abs(to - from));
     }
+    mapVersion++;
     fallbackGlobe?.refresh();
   }
   paintMap();
@@ -246,6 +248,12 @@
     const solarHorizon=new T.Plane(new T.Vector3(0,1,0),-gardenCamera.position.y);
     const skySun=new T.Mesh(new T.SphereGeometry(8,48,32),new T.MeshBasicMaterial({color:'#ffed9b',fog:false,clippingPlanes:[solarHorizon]}));
     skySun.name='distant-sun';garden.add(skySun);
+    function updateGarden(state, motionTime, worldChanged, aspect = gardenCamera.aspect) {
+      const skyHalfWidth = 208 * Math.tan(gardenCamera.fov * Math.PI / 360) * aspect;
+      skySun.position.set(Math.sin(state.angle) * skyHalfWidth * .88, gardenCamera.position.y + state.elevation * 70, -200);
+      gardenArt.update(state, motionTime, observerIndex, skySun.position, worldChanged);
+    }
+    vrGarden = { scene: garden, camera: gardenCamera, update: updateGarden };
     let gardenTick=0;
     const position=new T.Vector3();
     resizeScenes = () => {
@@ -259,10 +267,8 @@
       camera.position.set(0,Math.sin(tilt)*10,Math.cos(tilt)*10);camera.lookAt(-.25,0,0);
       spinningEarth.rotation.y = M.earthRotation(angle);
       otherMarker.visible=otherPlaceVisible;
-      const skyHalfWidth=208*Math.tan(gardenCamera.fov*Math.PI/360)*gardenCamera.aspect;
-      skySun.position.set(Math.sin(state.angle)*skyHalfWidth*.88,gardenCamera.position.y+state.elevation*70,-200);
       spaceArt.update(motionTime);
-      gardenArt.update(state,motionTime,observerIndex,skySun.position,worldChanged);
+      updateGarden(state,motionTime,worldChanged);
       pinhead.getWorldPosition(position);position.project(camera);
       const pinX=(position.x*.5+.5)*spaceCanvas.clientWidth,pinY=(-position.y*.5+.5)*spaceCanvas.clientHeight;
       renderer.render(scene,camera);
@@ -286,7 +292,12 @@
       placeLabel(pinX,pinY,Math.sin(angle)<-.12);
       if(otherPlaceVisible){otherPin.getWorldPosition(position);position.project(camera);placeOtherLabel((position.x*.5+.5)*spaceCanvas.clientWidth,(-position.y*.5+.5)*spaceCanvas.clientHeight,Math.sin(angle)> .12);}
     };
-    for (const canvas of [spaceCanvas,skyCanvas]) canvas.addEventListener('webglcontextlost',event=>{event.preventDefault();setPlaying(false);stopAudio();fallbackAfterContextLoss();},{once:true});
+    for (const canvas of [spaceCanvas,skyCanvas]) canvas.addEventListener('webglcontextlost',event=>{
+      event.preventDefault(); manual(); stopAudio();
+      vr?.dispose(); vr = null; vrGarden = null;
+      showVRStatus({ status: 'unsupported', message: 'Modo leve ativo. Recarregue a página nos óculos para tentar o VR.' });
+      fallbackAfterContextLoss();
+    },{once:true});
     // If frames stay slow, step down: first sharper pixels and shadows go, then the rest of the extra resolution.
     let quality=0;
     lowerQuality=()=>{if(quality>=2)return;quality++;const ratio=quality===1?Math.min(devicePixelRatio,1.25):1;renderer.setPixelRatio(ratio);gardenRenderer.setPixelRatio(ratio);gardenArt.setShadows(false);resizeScenes();};
@@ -393,18 +404,88 @@
   });
   $('freeExplore').onclick = () => lesson.exit();
   lesson.start();
-  function frame(time){
-    const dt=lastFrame?Math.min((time-lastFrame)/1000,.06):0;lastFrame=time;
-    if(!document.hidden){
-      const lively=(crewMoving||cheerClock>0)&&spaceVisible;
+
+  function showVRStatus({ status, message }) {
+    const button = $('enterVRButton');
+    const labels = { active: 'Sair do VR', starting: 'Abrindo VR…', error: 'Tentar novamente' };
+    button.dataset.status = status;
+    button.disabled = !['ready', 'active', 'error'].includes(status);
+    button.setAttribute('aria-pressed', String(status === 'active'));
+    button.querySelector('span').textContent = labels[status] || 'Entrar em VR';
+    $('vrStatus').textContent = message || '';
+    $('vrHelp').hidden = !message;
+  }
+  function handleVRAction(action, value) {
+    switch (action) {
+      case 'angle':
+        if (Number.isFinite(value)) { manual(); setAngle(angle + value, true); }
+        break;
+      case 'phase':
+        if (Object.hasOwn(M.targets, value)) goTo(M.targets[value]);
+        break;
+      case 'toggle': {
+        const next = !playing;
+        manual(); setPlaying(next);
+        break;
+      }
+      case 'reset':
+        manual(); turnProgress = 0; setAngle(0);
+        break;
+      case 'pause':
+        manual();
+        break;
+    }
+  }
+  if (vrGarden && window.DayNightVR) {
+    vr = window.DayNightVR.create({
+      THREE: window.THREE, mapCanvas, getMapVersion: () => mapVersion,
+      gardenScene: vrGarden.scene, gardenCamera: vrGarden.camera,
+      getState: () => ({ angle, playing, crewTime, crewMoving, state: observedState() }),
+      onEnter() {
+        manual(); stopAudio();
+        if (document.body.dataset.lessonActive === 'true') lesson.exit();
+        if (challenge) {
+          challenge = false;
+          $('challengeStatus').dataset.status = '';
+          $('challengeStatus').textContent = 'Gire a Terra. O que muda no céu de Taubaté?';
+          $('challengeButton').textContent = 'Vamos descobrir?';
+        }
+        lastFrame = 0; dirty = true;
+      },
+      onExit() {
+        manual(); stopAudio(); lastFrame = 0; dirty = true;
+        resizeScenes();
+        $('enterVRButton').focus({ preventScroll: true });
+      },
+      onFrame(time, aspect) { advance(time, true, aspect); },
+      onAction: handleVRAction, onStatus: showVRStatus,
+    });
+    $('enterVRButton').onclick = () => vr?.isActive() ? vr.exit() : vr?.enter();
+    vr.checkSupport();
+  } else {
+    showVRStatus({ status: 'unsupported', message: 'Para explorar em VR, abra esta página no navegador dos óculos com suporte a 3D.' });
+  }
+
+  function advance(time, immersive, gardenAspect){
+    const dt = lastFrame ? Math.max(0, Math.min((time - lastFrame) / 1000, .06)) : 0;
+    lastFrame = time;
+    if(immersive || !document.hidden){
+      const lively=(crewMoving||cheerClock>0)&&(immersive||spaceVisible);
       if(lively)crewTime+=dt;
-      if(lively&&dt>0&&lowerQuality&&!reducedMotion){slowFrames=dt>.034?slowFrames+1:Math.max(0,slowFrames-2);if(slowFrames>50){slowFrames=0;lowerQuality();}}
+      if(!immersive&&lively&&dt>0&&lowerQuality&&!reducedMotion){slowFrames=dt>.034?slowFrames+1:Math.max(0,slowFrames-2);if(slowFrames>50){slowFrames=0;lowerQuality();}}
       if(cheerClock>0){cheerClock=Math.max(0,cheerClock-dt);if(!cheerClock)dirty=true;}
       if(tween){tween.elapsed+=dt;const p=Math.min(1,tween.elapsed/tween.duration),ease=p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;setAngle(tween.start+tween.distance*ease);if(p===1){tween=null;updateUI();}}
       if(spin){setAngle(angle+spin*dt,true);spin*=Math.exp(-dt*2.4);if(Math.abs(spin)<.04){spin=0;updateUI();}}
       if(playing&&!voice.isSpeaking())setAngle(angle+dt*M.TAU/36);
-      if(dirty||lively){renderScenes(observedState(),crewTime,dirty);dirty=false;lastCrewFrame=time;}
+      if(dirty||lively){
+        if (immersive) vrGarden?.update(observedState(), crewTime, dirty, gardenAspect);
+        else renderScenes(observedState(),crewTime,dirty);
+        dirty = false;
+      }
     }
+  }
+  function frame(time){
+    if (!vr?.isActive()) advance(time, false);
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);

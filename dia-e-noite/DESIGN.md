@@ -41,6 +41,13 @@ O ponto rosa usa as coordenadas de Taubaté (23°01′36″ S, 45°33′20″ O)
 mapeamento geográfico em 3D e no modo leve. O relógio de 24 horas acompanha o
 ângulo da simulação e muda ao observar o ponto oposto.
 
+O botão **Entrar em VR** abre a exploração livre no navegador dos óculos, pelo
+endereço HTTPS de `/dia-e-noite/`. O observador fica parado diante do globo.
+Aponte o controle para a Terra e segure o gatilho para girá-la ou escolha um
+dos quatro momentos. A janela do jardim e o relógio acompanham o mesmo ângulo.
+Sair do VR devolve a exploração à página na posição escolhida. Em família, um
+adulto pode usar os óculos e transmitir a imagem para as crianças menores.
+
 Modelo pedagógico simplificado: sem estações ou órbita, tempo acelerado,
 amanhecer às 06:00, entardecer às 18:00 e dimensões fora de escala. Não é um
 relógio em tempo real nem uma previsão dos horários solares da cidade. As notas para adultos explicitam isso.
