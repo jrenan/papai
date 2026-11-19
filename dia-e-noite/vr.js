@@ -443,6 +443,7 @@
       ownedTextures.forEach(map => map.dispose()); ownedTextures.clear(); gardenTarget?.dispose();
       renderer.domElement.removeEventListener('webglcontextlost', onContextLost);
       renderer.domElement.remove(); renderer.dispose();
+      if (!renderer.getContext().isContextLost()) renderer.forceContextLoss();
       renderer = scene = camera = content = earth = earthTurn = marker = sun = gardenTarget = windowMesh = gardenCamera = null;
       lastExplanation = ''; lastHUD = ''; lastHUDAt = -Infinity;
       targets.length = controllers.length = astronauts.length = 0;
